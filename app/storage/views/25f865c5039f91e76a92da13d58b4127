@@ -1,0 +1,64 @@
+<?php $class = ( $transaction->type == 'despesa' ) ? 'danger' : 'success' ?>
+<?php $done  = ( $transaction->done == '1' ) 	   ? 'done'   : '' ?>		
+
+	<tr class="transaction_type_<?php echo $transaction->type; ?> <?php echo ($transaction->done == 1) ? 'active' : '' ?> text-<?php echo $class; ?>" data-toggle="modal" href='#transaction_show_<?php echo $transaction->id; ?>' >
+
+		
+		<td class="text-left hidden-xs transaction_done_<?php echo $transaction->done; ?>" width="70">
+			<small class="pull-left">
+				<i class="text-muted"><?php echo $title; ?></i>
+				<br>
+
+					<!-- <i class="fa fa-refresh" title="Recorrente"></i> -->
+
+				<?php if( $transaction->isOverdue() ): ?>
+					
+					<i class="fa fa-warning text-danger" title="Atrasada"></i>
+					
+				<?php elseif( $transaction->done ): ?>
+
+					<i class="fa fa-check text-<?php echo $class; ?>"></i>
+
+				<?php endif; ?>
+			</small>
+		</td>
+
+		<td class="text-left transaction_done_<?php echo $transaction->done; ?>">			
+			<?php echo $transaction->description; ?>			
+		</td>
+		
+		<td class="text-right transaction_done_<?php echo $transaction->done; ?>" width="140">
+			<span class="lead font open_sanscondensed_light">
+			
+				<?php if( $transaction->type == 'receita' ): ?>
+					<?php if( $transaction->done == 1 ): ?>
+						<s>R$ <?php echo number_format( (float)$transaction->amount, '2', ',', '.'); ?></s>
+					<?php else: ?>
+						<strong>R$ <?php echo number_format( (float)$transaction->amount, '2', ',', '.'); ?></strong>
+					<?php endif; ?>							
+				<?php else: ?>						
+					<?php if( $transaction->done == 1 ): ?>
+						<s>R$ <?php echo number_format( (float)$transaction->amount, '2', ',', '.'); ?></s>
+					<?php else: ?>
+						<strong>R$ <?php echo number_format( (float)$transaction->amount, '2', ',', '.'); ?></strong>
+					<?php endif; ?>									
+				<?php endif; ?>					
+			
+			</span>
+
+		</td>
+
+	</tr>		
+
+				
+	<div class="modal fade" id="transaction_show_<?php echo $transaction->id; ?>">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				
+				<?php echo $__env->make( 'transactions.panels.show' , array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+	<?php $date = $transaction->date; ?>

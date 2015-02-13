@@ -1,0 +1,16 @@
+<?php $__env->startSection('content'); ?>
+
+<div class="container">  
+
+	<!-- Breadcrumbs -->
+    <ol class="breadcrumb breadcrumb-arrow hidden-print">
+        <li><a href="<?php echo url('/'); ?>"><i class="fa fa-home"></i></a></li>
+        <li class="active"><span>Pedidos</span></li>              
+    </ol>
+
+    <?php echo $__env->make('pedidos.panels.index', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+           
+</div>
+    
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

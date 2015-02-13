@@ -1,0 +1,50 @@
+{{ Form::open(array('url' => 'despesas')) }}
+
+	<div class="panel panel-default">
+		<div class="panel-body form-horizontal payment-form bg-info">
+
+			<div class="form-group">
+				<label for="valor" class="col-sm-3 control-label input-lg">R$</label>
+				<div class="col-sm-9">
+					<input type="number" placeholder="0,00" class="input-despesa form-control input-lg" id="valor" name="valor" min="" step="0.01" value="" title="Não utilize PONTO na separação de milhar." required>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="description" class="col-sm-3 control-label">Descrição</label>
+				<div class="col-sm-9">
+					<input type="text" value="" class="input-despesa form-control" id="descricao" name="descricao">
+				</div>
+			</div>             
+
+			<div class="form-group">
+				<label for="description" class="col-sm-3 control-label">Cidade</label>
+				<div class="col-sm-9">
+					<input type="text" class="input-despesa form-control" id="cidade" name="cidade" value="">
+				</div>
+			</div> 
+
+			<div class="form-group">
+				<label for="date" class="col-sm-3 control-label">Data</label>
+				<div class="col-sm-9">                                  
+
+					<input type="date" name="date"  class="form-control" value="{{date('Y-m-d')}}"/>
+
+				</div>
+			</div>   
+
+
+			<div class="form-group">
+				<div class="col-sm-12 text-right">
+
+					<button type="submit" class="btn btn-default despesa_add">
+						<span class="glyphicon glyphicon-plus"></span> Adicionar
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>   
+
+	{{Form::hidden( 'relatorio_id', @$relatorio->id)}}
+
+{{Form::close()}}

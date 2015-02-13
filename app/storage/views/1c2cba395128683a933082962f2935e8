@@ -1,0 +1,8 @@
+<tr class="<?php if( $despesa->valor < 0 ) echo 'bg-danger' ?>">
+    <td><?php echo date('d/m/Y', strtotime($despesa->date) ); ?></td>
+    <td><?php echo $despesa->cidade; ?></td>
+    <td><?php echo $despesa->descricao; ?></td>
+    <td class="text-right">
+        <strong>R$ <?php echo $despesa->valor; ?></strong>
+    </td>    
+</tr>

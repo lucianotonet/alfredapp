@@ -1,0 +1,66 @@
+<?php $class = ( $transaction->type == 'despesa' ) ? 'danger' : 'success' ?>
+<?php $done  = ( $transaction->done == '1' ) 	   ? 'done'   : '' ?>
+		
+<tbody>
+
+	<tr class="lead transaction_type_<?php echo $transaction->type; ?> <?php echo ($transaction->done == 1) ? 'active' : '' ?> text-<?php echo $class; ?>" data-toggle="modal" href='#transaction_show_<?php echo $transaction->id; ?>' >
+		<td width="50">
+			
+			<?php if( $transaction->done != 1 ): ?>
+																			
+				<i class="fa fa-circle <?php echo $class; ?>"></i>		
+
+			<?php endif; ?>
+		
+		</td>							
+		
+		<td class="text-left hidden-xs transaction_done_<?php echo $transaction->done; ?>">
+			<span><?php echo $transaction->description; ?></span>
+		</td>
+		
+		<td class="text-right  transaction_done_<?php echo $transaction->done; ?>" width="200">
+			<?php if( $transaction->type == 'receita' ): ?>
+				<?php if( $transaction->done == 1 ): ?>
+					<s>R$ <?php echo number_format( (float)$transaction->amount, '2', ',', '.'); ?></s>
+				<?php else: ?>
+					<strong>R$ <?php echo number_format( (float)$transaction->amount, '2', ',', '.'); ?></strong>
+				<?php endif; ?>							
+			<?php else: ?>						
+				<?php if( $transaction->done == 1 ): ?>
+					<s>R$ <?php echo number_format( (float)$transaction->amount, '2', ',', '.'); ?></s>
+				<?php else: ?>
+					<strong>R$ <?php echo number_format( (float)$transaction->amount, '2', ',', '.'); ?></strong>
+				<?php endif; ?>									
+			<?php endif; ?>					
+		</td>
+
+
+		<td class="text-left status" width="40">
+			
+			<?php if( $transaction->isOverdue() ): ?>
+				
+				<i class="fa fa-warning text-danger"></i>
+				
+			<?php elseif( $transaction->done ): ?>
+
+				<i class="fa fa-check text-<?php echo $class; ?>"></i>
+
+			<?php endif; ?>
+			
+		</td>
+
+	</tr>		
+
+				
+	<div class="modal fade" id="transaction_show_<?php echo $transaction->id; ?>" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				
+				<?php echo $__env->make( 'transactions.panels.show' , array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+
+</tbody>

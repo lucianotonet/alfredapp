@@ -1,0 +1,16 @@
+<?php $__env->startSection('styles'); ?>
+<!-- <link rel="stylesheet" href="<?php echo asset('css/contacts.css'); ?>"> -->
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+    <div class="container">        
+
+        <?php /* <?php echo $__env->make('clientes.panels.show', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?> */ ?>
+
+        <?php echo $__env->make('clientes.panels.details', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+    </div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

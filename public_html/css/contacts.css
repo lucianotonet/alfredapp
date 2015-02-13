@@ -1,0 +1,332 @@
+.contact .title {
+    border-bottom: 1px solid #ecf0f1;
+    padding-bottom: 0px;
+    vertical-align: middle;
+}
+
+.contact .title:after {
+    clear: both;
+    display: block;
+    content: '';
+}
+
+.contact .title h3 {
+    display: inline-block;
+    vertical-align: middle;
+    color: #7B8B9D;
+}
+
+.contact .title .share-profile {
+    font-size: 13px;
+    display: inline-block;
+    float: right;
+    vertical-align: middle;
+    color: #7B8B9D;
+    line-height: 26px;
+}
+
+.contact .title .share-profile:after {
+    content: '\f045';
+    font-family: 'FontAwesome';
+    color: #5ecad4;
+    font-size: 14px;
+    padding-left: 8px;
+}
+
+.contact h3 {
+    padding-bottom: 10px!important;
+}
+
+.contact .contact-data .contact-avatar {
+    /* border-radius: 50%; */
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.contact .contact-data .send-msg {
+    text-align: center;
+    margin-top: 20px;
+    display: inline-block;
+    width: 100%;
+}
+
+.contact .contact-data .send-msg .btn {
+    margin-left: 0px!important;
+    font-weight: normal;
+    font-size: 12px;
+}
+
+.contact .details {
+    margin-left: 0;
+    margin-top: 8px;
+    padding: 0;
+}
+
+.contact .details li {
+    padding-bottom: 0px;
+    font-size: 14px;
+    color: #353A41;
+    padding-left: 25px;
+}
+
+.contact .details li i {
+    color: #6D6D6D;
+    min-width: 22px;
+    text-align: center;
+    margin-left: -30px;
+}
+.contact a.btn-border {
+    border: 1px solid #cecece;
+    background: none;
+    font-size: 1.2em;
+}
+.contact .details li a {
+    color: #7f95a9;
+}
+
+.contact .details li a:hover {
+    color: #5ECAD4;
+}
+
+.contact .contact-stats {
+    margin: 10px -5px 10px -5px;
+    padding: 0;
+}
+
+.contact .contact-stats li {
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    padding: 25px 0px;
+}
+
+.contact .contact-stats li p {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 26px;
+    margin: 0;
+    padding: 0;
+}
+
+.contact .contact-stats li h3 {
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.contact .contact-stats li.followers {
+    background-color: #0384ce;
+}
+
+.contact .contact-stats li.following {
+    background-color: #1abc9c;
+}
+
+.contact .contact-stats li.projects {
+    background-color: #a78ed7;
+}
+
+.contact .contact-stats li.courses {
+    background-color: #f86868;
+}
+
+.contact .about-me {
+    padding: 20px 0px;
+}
+
+.contact .about-me p {
+    font-size: 13px;
+}
+
+.contact .about-me h3 {
+    margin-bottom: 15px;
+    font-size: 21px;
+}
+
+.contact .footer {
+    border-top: 1px solid #ecf0f1;
+    padding-top: 10px;
+    margin-top: 0px;
+    vertical-align: middle;
+}
+
+.contact .footer h4 {
+    line-height: 30px;
+}
+
+.contact .footer .contact-socials {
+    text-align: right;
+}
+
+.contact .footer .contact-socials li {
+    display: inline-block;
+    padding-left: 5px;
+}
+
+.contact .footer .contact-socials li a {
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: block;
+    text-align: center;
+}
+
+.contact .footer .contact-socials li a i {
+    line-height: 35px;
+    color: #ffffff;
+    font-size: 19px;
+}
+
+.contact .footer .contact-socials li a.facebook {
+    background-color: #335397;
+}
+
+.contact .footer .contact-socials li a.twitter {
+    background-color: #00c7f7;
+}
+
+.contact .footer .contact-socials li a.pinterest {
+    background-color: #cc2127;
+}
+
+.contact .footer .contact-socials li a.google-plus {
+    background-color: #dd4a38;
+}
+
+.contact .footer .contact-socials li a.linkedin {
+    background-color: #0073b2;
+}
+
+.contact .footer .contact-socials li a.dribbble {
+    background-color: #e04c86;
+}
+
+.contact.dark .inner {
+    background-color: #233242;
+}
+
+.contact.dark .title,.contact.dark .footer {
+    border-color: #364b61;
+}
+
+.contact.dark .contact-data h3 {
+    color: #ffffff;
+}
+
+.contact.dark .details li {
+    color: #7b8b9d;
+}
+
+.contact.dark .contact-stats li {
+    background-color: #14202d!important;
+    border-right: 1px solid #233242;
+}
+
+.contact.dark .contact-stats li:last-child {
+    border-right: 0px;
+}
+
+.contact.dark .send-msg .btn {
+    background-color: #36495e;
+    color: #8093a6;
+    border-color: #2b3e52;
+}
+
+.contact.dark .send-msg .btn:hover {
+    background-color: #14202d;
+    border-color: #2b3e52;
+}
+
+.contact.image .inner {
+    background: url('../_demo/images/profile-background-blurred.png') top left no-repeat transparent;
+    background-size: cover;
+}
+
+.contact.image .title,.contact.image .footer {
+    border-color: #ffffff;
+}
+
+.contact.image .title h3,.contact.image .title a,.contact.image .title a:after {
+    color: #ffffff;
+}
+
+.contact.image .contact-data h3 {
+    color: #ffffff;
+}
+
+.contact.image .details li {
+    color: #ffffff;
+}
+
+.contact.image .details li i {
+    color: #ffffff;
+}
+
+.contact.image .details li a {
+    color: #ffffff;
+}
+
+.contact.image .details li a:hover {
+    color: #14202d;
+}
+
+.contact.image .contact-stats li p {
+    color: #ffffff;
+}
+
+.contact.image .contact-stats li h3 {
+    color: #ffffff;
+}
+
+.contact.image .contact-stats li.followers {
+    background-color: rgba(3,132,206,0.5);
+}
+
+.contact.image .contact-stats li.following {
+    background-color: rgba(26,188,156,0.5);
+}
+
+.contact.image .contact-stats li.projects {
+    background-color: rgba(167,142,215,0.5);
+}
+
+.contact.image .contact-stats li.courses {
+    background-color: rgba(248,104,104,0.5);
+}
+
+.contact.image .about-me h3,.contact.image .about-me p {
+    color: #ffffff;
+}
+
+.contact.image .footer h4 {
+    color: #ffffff;
+}
+
+
+@media (max-width: 979px){
+    .contact .title {
+        border-bottom: 1px solid #ecf0f1;
+        padding-bottom: 10px;
+        margin-bottom: 25px;
+        vertical-align: middle;
+    
+        text-align: center;
+    }
+    .contact .subtitle {
+        /* border-bottom: 1px solid #ecf0f1; */
+        padding-bottom: 10px;
+        margin-bottom: 25px;
+        vertical-align: middle;
+        text-align: center;
+    
+    }
+
+    .contact .details li {
+        padding-bottom: 2px;
+        font-size: 13px;
+        color: #353A41;
+        padding-left: 30px;
+    }
+}

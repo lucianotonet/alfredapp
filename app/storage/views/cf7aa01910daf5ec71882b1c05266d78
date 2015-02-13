@@ -1,0 +1,95 @@
+<div class="panel panel-primary">
+    <!-- Default panel contents -->
+
+    <div class="panel-heading">
+        <div class="btn-group pull-right">
+            <a class="btn btn-default btn-sm" data-toggle="modal" href='#produto_create'>
+                <i class="fa fa-plus"></i> Adicionar produto
+            </a>
+        </div>
+        <h3 class="title">PRODUTOS</h3>                    
+    </div>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Cód</th>
+                <th>Nome</th>
+                <th width="auto">Acabamento</th>
+                <th>Preço</th>
+                <th>Un.</th>
+                <th class="text-right"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($produtos as $key => $produto): ?>
+            <tr>
+                <td width="60">
+                    <strong><?php echo $produto->cod; ?></strong>
+                </td>
+                <td>
+                    <a data-toggle="modal" href='#edit_produto_<?php echo $produto->id; ?>' class="btn btn-link">
+                        <?php echo $produto->nome; ?>
+
+                    </a>
+                </td>
+                <td width="auto"><?php echo @$produto->category->name; ?></td>
+                <td>R$ <?php echo $produto->preco; ?></td>
+                <td width="60"><?php echo $produto->unidade; ?></td>
+                <td class="text-right" width="140">
+                    <?php echo Form::open(array('url' => 'produtos/' . $produto->id, 'class' => 'btn-group btn-group-sm')); ?>
+
+                        <a data-toggle="modal" href='#edit_produto_<?php echo $produto->id; ?>' class="btn btn-primary btn-sm">
+                            <i class="fa fa-edit"></i>
+                        </a> 
+                        <?php echo Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-danger btn-sm', 'type'=>'submit', 'onclick'=>'javascript:return confirm("Deseja excluir este produto?")', 'role'=>"menuitem", 'tabindex'=>"-1" )); ?>
+
+                        <?php echo Form::hidden('_method', 'DELETE'); ?>
+
+                    <?php echo Form::close(); ?>  
+                </td>
+            </tr>
+
+            <!-- EDIT PRODUTO MODAL -->
+            <div class="modal fade" id="edit_produto_<?php echo $produto->id; ?>">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title title">Editar</h4>
+                        </div>
+                        
+                            
+                        <?php echo $__env->make('produtos.panels.edit', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                        
+                        &nbsp;
+                                               
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!-- / EDIT PRODUTO MODAL -->
+
+
+            <?php endforeach; ?>          
+        </tbody>
+    </table>
+
+</div>
+
+
+<!-- CREATE PRODUTO MODAL -->
+
+<div class="modal fade" id="produto_create">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title title">Novo produto</h4>
+            </div>
+            <div class="modal-body">
+                <?php echo $__env->make('produtos.panels.create', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                &nbsp;
+            </div>            
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

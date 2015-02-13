@@ -1,0 +1,26 @@
+<h3>
+    <small class="badge pull-right"><?php echo date('d/m/Y', strtotime($relatorio->updated_at) ); ?></small>
+    <small>Relatório Nº<?php echo $relatorio->id; ?></small><br>
+    Despesas
+</h3>
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th width="">Data</th>
+                <th width="">Cidade</th>
+                <th>Descrição</th>
+                <th width="" class="text-right">Valor</th>
+            </tr>
+        </thead>
+        <tbody>                          
+
+            <?php foreach($relatorio->despesas as $despesa): ?>             
+                <?php echo $__env->make('despesas.panels.item', $despesa, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>                  
+            <?php endforeach; ?>
+
+        </tbody>
+    </table>
+
+    <h3 class="text-right"><small>Total </small><?php echo "R$ ".$relatorio->total ?></h3>

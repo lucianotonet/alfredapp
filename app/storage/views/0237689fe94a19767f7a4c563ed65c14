@@ -1,0 +1,74 @@
+<tr>
+    <td>
+        <?php if( $pedido->status == '2'): ?>
+            <i class="fa fa-circle fa-led success" data-toggle="tooltip" data-placement="left" title="Enviado"></i>
+        <?php else: ?>            
+            <i class="fa fa-circle fa-led danger" data-toggle="tooltip" data-placement="left" title="Não enviado"></i>
+        <?php endif; ?>
+    </td>
+    <td><?php echo $pedido->id; ?></td>
+    <td><?php echo $pedido->data; ?></td>
+    <td>
+        <a href="<?php echo url('/pedidos/'.$pedido->id); ?>" >                                    
+            <?php echo ($pedido->cliente['empresa']) ? $pedido->cliente['empresa'] : @$pedido->cliente['nome']; ?>
+
+        </a>
+    </td>
+    <td><?php echo ($pedido->fornecedor->empresa)?$pedido->fornecedor->empresa: @$pedido->fornecedor->nome; ?></td>
+    <td>R$ <?php echo $pedido->total; ?></td>
+    
+    <td align="right">
+                                           
+            <div class="dropdown btn-group btn-group-justified">
+                <a href="<?php echo url('/emails/create/pedido/'.$pedido->id); ?>" class="btn btn-primary btn-sm send" data-toggle="modal" data-target="#email">
+                   <i class="fa fa-envelope"></i>
+                </a>                                
+                <a id="dLabel2" role="button" data-toggle="dropdown" data-target="#" href="" class="btn btn-primary btn-sm">
+                    Opções <i class="fa fa-caret-down"></i>
+                </a>
+
+                
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel2">
+                    <li role="presentation">
+                        <a href="<?php echo url('/pedidos/preview/'.$pedido->id); ?>" class="btn btn-primary btn-sm send" data-toggle="modal" data-target="#email">
+                           <i class="fa fa-eye"></i> Visualizar
+                        </a>                                      
+                    </li>
+                    <li role="presentation">
+                        <a href="<?php echo url('/pedidos/'.$pedido->id); ?>" role="menuitem" tabindex="-1" class="">
+                           <i class="fa fa-chevron-right"></i> Ver
+                        </a>                                        
+                    </li>
+                    <li role="presentation">
+                        <a href="<?php echo url('/pedidos/'.$pedido->id.'/edit'); ?>" class="" role="menuitem" tabindex="-1" >
+                            <i class="fa fa-edit"></i> Editar
+                        </a>                                        
+                    </li>                                    
+                    <li role="presentation" class="divider"></li>
+                    <!-- <li role="presentation">
+                        <a href="<?php echo url('/pedidos/send/'.$pedido->id); ?>" role="menuitem" tabindex="-1" class="">
+                           <i class="fa fa-envelope"></i> Enviar agora
+                        </a>                                        
+                    </li> -->
+                    <li role="presentation">
+                        <a href="<?php echo url('/pedidos/preview/'.$pedido->id); ?>" class="" role="menuitem" tabindex="-1" >
+                            <i class="fa fa-eye"></i> Visualizar impressão
+                        </a>                                        
+                    </li>                                    
+                    <li role="presentation" class="divider"></li>
+                    <li role="presentation">
+                        <?php echo Form::open(array('url' => 'pedidos/' . $pedido->id, 'class' => '')); ?>
+
+                            <?php echo Form::button('<i class="fa fa-times"></i> Excluir', array('class' => 'btn btn-danger btn-block btn-sm', 'type'=>'sumbit', 'onclick'=>'javascript:return confirm("Deseja excluir este pedido da lista?")', 'role'=>"menuitem", 'tabindex'=>"-1" )); ?>
+
+                            <?php echo Form::hidden('_method', 'DELETE'); ?>
+
+                        <?php echo Form::close(); ?>                                         
+                    </li>
+                
+                </ul>
+
+            
+        </div>
+    </td>
+</tr>

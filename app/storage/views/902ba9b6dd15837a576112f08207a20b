@@ -1,0 +1,12 @@
+<div class="alert alert-<?php echo $notification->class; ?> notification fade in" data-url="<?php echo url('notifications/'.$notification->id.'/close'); ?>" >	
+	<?php if($notification->status): ?>
+		<em class="pull-right" ><span class="icon-check"></span> lida</em>	
+	<?php else: ?>
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>	
+	<?php endif; ?>
+	<h4><?php echo $notification->title; ?></h4>
+	<p><?php echo $notification->message; ?></p>
+	<?php if( $notification->tarefa_id ): ?>
+		<p ><a class="btn btn-sm btn-<?php echo $notification->class; ?>" href="<?php echo url('tarefas/'.$notification->tarefa_id); ?>">Ver tarefa</a></p>		
+	<?php endif; ?>
+</div>

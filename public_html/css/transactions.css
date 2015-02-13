@@ -1,0 +1,78 @@
+/**	
+
+	TRANSACTIONS
+		Financeiro
+
+**/
+
+.check .btn.active i{
+	opacity: 1;
+}
+.check .btn i{
+	opacity: 0;
+}
+
+.btn.despesa.active {
+	background: #F01637;
+}
+.btn.receita.active {
+	background: #8cc152;
+}
+
+
+.selecter{
+	min-width: 150px;
+}
+.selecter .selecter-selected {
+position: relative;
+z-index: 2;
+display: block;
+padding: 6px 30px 6px 10px;
+overflow: hidden;
+text-overflow: clip;
+cursor: pointer;
+background-color: white;
+border: 1px solid #aab2bd;
+border-radius: 4px;
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+}
+
+.transaction_done_1 *{
+	text-decoration: line-through;
+	opacity: 0.5;
+}
+i.icon-check{
+	text-decoration: none  !important !important;
+	opacity: 1;
+}
+
+/* BALANCE STATUS */
+.balance_status h2 {
+	margin: 0;
+}
+
+
+/* TRANSACTIONS */
+.balance_status h1 {
+	font-size: 70px;
+	margin: 20px auto 0px;
+}
+
+.transaction_done .btn:not(.active) {                
+/* 	background: none; */
+}
+
+.transaction_done .btn span:nth-of-type(1)  {            	
+	display: none;
+}
+.transaction_done .btn span:last-child  {            	
+	display: block;		
+}
+
+.transaction_done .btn.active  span:nth-of-type(1)  {            	
+	display: block;		
+}
+.transaction_done .btn.active span:last-child  {            	
+	display: none;			
+}

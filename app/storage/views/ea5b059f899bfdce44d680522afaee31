@@ -1,0 +1,15 @@
+<?php $__env->startSection('content'); ?>
+
+    <div class="container">        
+
+        <?php echo $__env->make('transactions.panels.edit', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+    </div>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('scripts'); ?>	
+	<script src="<?php echo asset('js/transactions.js'); ?>" ></script>	
+	<link href="<?php echo asset('css/transactions.css'); ?>" media="all" type="text/css" rel="stylesheet">
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
