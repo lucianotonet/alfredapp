@@ -1,13 +1,11 @@
 <div class="panel panel-primary">
 
-
     <div class="panel-heading">
         <h3 class="title">NOVA TAREFA</h3>
     </div>
 
     {{ Form::open(array('url' => 'tarefas', 'id' => 'tarefa_create', 'method' => 'post')) }}
-
-        
+    
         <div class="panel-body form-horizontal ">
             @if ( !empty( $cliente ) )                
                 <div class="form-group">

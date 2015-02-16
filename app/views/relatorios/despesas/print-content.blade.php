@@ -1,26 +1,31 @@
-<h3>
-    <small class="badge pull-right">{{ date('d/m/Y', strtotime($relatorio->updated_at) ) }}</small>
-    <small>Relatório Nº{{$relatorio->id}}</small><br>
-    Despesas
-</h3>
+<table class="table twelve columns" width="100%">
+    <thead >        
+        <tr style="border-bottom: 1px solid #313131;">
+            <th style="text-align:left" width="">Data</th>
+            <th style="text-align:left" width="auto">Cidade</th>
+            <th style="text-align:left" width="">Descrição</th>
+            <th style="text-align:right" width="" align="right">Valor</th>            
+        </tr>                                
+    </thead>    
 
-<div class="table-responsive">
-    <table class="table">
-        <thead>
-            <tr>
-                <th width="">Data</th>
-                <th width="">Cidade</th>
-                <th>Descrição</th>
-                <th width="" class="text-right">Valor</th>
-            </tr>
-        </thead>
-        <tbody>                          
+    <?php $total = 0; ?>
+        
+    @foreach ($relatorio->get_despesas() as $despesa)      
+        <tr>
+            <td>{{ date('d/m/Y', strtotime($despesa->date) ) }}</td>
+            <td>{{ $despesa->cidade }}</td>
+            <td>{{ $despesa->descricao }}</td>
+            <td style="text-align:right"><strong>R$ {{ number_format($despesa->valor, '2', ',', '.') }}</strong></td>                
+        </tr>      
 
-            @foreach ($relatorio->despesas as $despesa)             
-                @include('despesas.panels.item', $despesa)                  
-            @endforeach
+        <?php $total = ($total + $despesa->valor); ?> 
+        {{-- @include('despesas.panels.item', $despesa) --}}
+    @endforeach
 
-        </tbody>
-    </table>
-
-    <h3 class="text-right"><small>Total </small><?php echo "R$ ".$relatorio->total ?></h3>
+    <tr>                
+        <td colspan="4">
+            <h3 style="text-align:right;"><small>Total </small><?php echo "R$ ".number_format($total, '2', ',', '.') ?></h3>
+        </td>
+    </tr>
+    
+</table>            

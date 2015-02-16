@@ -26,13 +26,7 @@
                     <dt>Endereço</dt>
                     <dd>{{@$cliente->endereco}}</dd>
                 </dl>
-
             </td>
-        </tr>
-        <tr>            
-            <td colspan="3" align="center">                
-                <small>{{count(@$cliente->pedidos)}} pedidos | {{count(@$cliente->conversas)}} conversas | {{count(@$cliente->tarefas)}} tarefas</small>
-            </td>                
-        </tr>
+        </tr>        
     </tbody>
 </table>    

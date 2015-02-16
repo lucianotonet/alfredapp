@@ -5,30 +5,22 @@ use Illuminate\Database\Schema\Blueprint;
 
 class CreateSettingsTable extends Migration {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
 	public function up()
 	{
-		// Schema::create('settings', function(Blueprint $table)
-		// {
-		// 	$table->increments('id');
+		Schema::create('settings', function(Blueprint $table) {
+			
+			$table->increments('id');
 
-		// 	$table->integer('user_id');
-		// 	$table->text('configs');
-
-		// 	$table->timestamps();
-		// });
+			$table->integer('user_id')->unsigned()->nullable();
+			$table->text('setting_type');
+			$table->text('setting_name');
+			$table->text('setting_value');
+			
+			$table->timestamps();
+		
+		});
 	}
 
-
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
 	public function down()
 	{
 		Schema::drop('settings');

@@ -20,27 +20,33 @@
     <![endif]-->
 
     <style>
-        .visible-print {
+        /*.visible-print {
             display: block !important;
-        }
+        }*/
     </style>
 
 </head>
 <body>
     <div class="container">
         
-        <div class="row">
+        <table class="table twelve columns" width="100%">
+            <tr>
+                <td width="auto">
+                    <h3><small>Relatório {{ $relatorio->id }}</small><br/>Despesas</h3>
+                </td>
+                <td style="text-align:right;font-size:12px;">
+                    <h3><small class="badge">{{ date('d/m/Y - H:i', strtotime($relatorio->updated_at) ) }}</small><h3>
+                </td>
+            </tr>
+        </table>
 
-            @include('relatorios.despesas.print-content')
+        @include('relatorios.despesas.print-content')
 
-        </div>        
-
-        </div>
     </div>
 
     <!-- jQuery -->
-    {{ HTML::script("http://code.jquery.com/jquery.js") }}
+    {{-- HTML::script("http://code.jquery.com/jquery.js") --}}
     <!-- Bootstrap JavaScript -->
-    {{ HTML::script("http://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js") }}
+    {{-- HTML::script("http://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js") --}}
 </body>
 </html>

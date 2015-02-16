@@ -14,9 +14,7 @@
 <body class="">
     &nbsp;
     <div class="container">
-        <div class="row">            
-            <?php echo $__env->make('relatorios.conversas.print-content', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>                            
-        </div>
+        <?php echo $__env->make('relatorios.conversas.print-content', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>                            
     </div>
 
     <!-- jQuery -->

@@ -2,7 +2,7 @@
 <html lang="br">
 <head>
     <meta charset="utf-8">
-    <title>Basaltos e Granitos</title>
+    <title>{{Config::get('settings.app_title')}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Bootcards CSS for desktop -->
@@ -33,9 +33,8 @@
 
     <!-- CSS Animations -->
     {{ HTML::style('css/animations.min.css') }}
-
-    {{-- HTML::style('http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css') --}}
-    {{ HTML::style('js/jquery-ui.min.css') }}
+    
+    {{ HTML::style('css/jquery-ui.min.css') }}
     {{ HTML::style('js/jquery-notifyjs/styles/metro/notify-metro.css') }}
 
     {{ HTML::style('css/icomoon/style.css')}}
@@ -119,7 +118,9 @@
 
                 <a id="logo" class="pull-right hidden-xs"  href="<?php echo url('/') ?>" >
 
-                    <img src="{{asset('img/logo.png')}}" alt="" class="img-responsive">
+                     <img src="{{Config::get('settings.app_logo')}}" alt="" class="img-responsive">
+
+                    <!-- <img src="{{asset('img/logo.png')}}" alt="" class="img-responsive"> -->
 
                 </a>
 
@@ -357,10 +358,12 @@
     echo HTML::script('js/jquery.price_format.min.js');
     echo HTML::script('js/jquery.maskedinput.js');
     //echo HTML::script('js/tinymce/tinymce.min.js');
-
-    echo HTML::script('js/wysihtml5-0.3.0.min.js');
-    echo HTML::style('css/bootstrap-wysihtml5.css');
-    echo HTML::script('js/bootstrap-wysihtml5-0.0.2.min.js');
+    
+    echo HTML::style('js/bootstrap3-wysihtml5.css');
+    
+    // echo HTML::script('js/bootstrap-wysihtml5-0.0.2.min.js');
+    echo HTML::script('js/bootstrap3-wysihtml5.min.js');
+    echo HTML::script('js/bootstrap3-wysihtml5.all.min.js');
     //echo HTML::style('css/bootstrap.min.css');
     //echo HTML::script('js/jquery-1.7.2.min.js');
     //echo HTML::script('js/bootstrap.min.js');

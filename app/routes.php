@@ -111,11 +111,14 @@ Route::group(array('prefix' => 'relatorios'), function()
 
 });
 Route::get('relatorios/{relatorio_id}/download', array('as' => 'relatorios.download', 'uses' => 'RelatoriosController@downloadpdf'));
-Route::get('relatorios/{relatorio_id}/stream', array('as' => 'relatorios.pdf', 'uses' => 'RelatoriosController@streampdf'));
+Route::get('relatorios/{relatorio_id}/pdf', array('as' => 'relatorios.pdf', 'uses' => 'RelatoriosController@streampdf'));
 Route::get('relatorios/{relatorio_id}/print', array('as' => 'relatorios.pdf', 'uses' => 'RelatoriosController@printThis'));
 //Route::get('relatorios', array('as' => 'relatorios.index', 'uses' => 'RelatoriosController@index'));
 Route::resource('relatorios', 'RelatoriosController');
-Route::when('relatorios*', 'auth');
+
+Route::when('relatorios/create*', 'auth');
+Route::when('relatorios/edit*', 'auth');
+Route::when('relatorios*', 'auth', array('post', 'delete'));
 
 
 
@@ -388,6 +391,7 @@ Route::when('movimentos*', 'auth');
 | CONFIGURAÇÕES
 |--------------------------------------------------------------------------
 */
+Route::get('settings/reset', array('uses' => 'SettingsController@reset'));
 Route::resource('settings', 'settingsController');
 Route::when('settings*', 'auth');
 
@@ -703,9 +707,9 @@ class AboutDate
  */
 App::missing(function($exception)
 {
-    $alert[] = [   'class' => 'alert-danger', 'message'   => '<strong><i class="fa fa-warning"></i></strong> Erro 404! Não foi possível encontrar o item solicitado.' ];
-    Session::flash('alerts', $alert);
-   // $url = URL::previous() ? : '/';
-   return Redirect::to( URL::previous() );  
+   //  $alert[] = [   'class' => 'alert-danger', 'message'   => '<strong><i class="fa fa-warning"></i></strong> Erro 404! Não foi possível encontrar o item solicitado.' ];
+   //  Session::flash('alerts', $alert);
+   // // $url = URL::previous() ? : '/';
+   // return Redirect::to( URL::previous() );  
 
 });

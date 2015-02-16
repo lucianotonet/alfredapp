@@ -1,0 +1,14 @@
+<form action="<?php echo Request::fullUrl(); ?>" method="POST" class="form-horizontal" role="form">
+	<div class="form-group">
+		<label for="input" class="col-sm-3 control-label">Teste:</label>
+		<div class="col-sm-9">
+			<input type="text" name="app_title" id="input" class="form-control" value="<?php echo Config::get('settings.app_title'); ?>" required="required" title="">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-sm-12 text-right">
+			<button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Salvar</button>
+		</div>
+	</div>
+</form>

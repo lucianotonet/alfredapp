@@ -12,4 +12,9 @@ class User extends Eloquent implements ConfideUserInterface {
     public function reports(){
       return $this->hasMany('Report', 'user_id');
     }
+
+    public function settings()
+	{
+		return $this->hasMany('Setting');
+	}
 }

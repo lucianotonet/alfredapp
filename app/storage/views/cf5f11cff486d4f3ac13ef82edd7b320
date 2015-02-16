@@ -26,13 +26,7 @@
                     <dt>Endereço</dt>
                     <dd><?php echo @$cliente->endereco; ?></dd>
                 </dl>
-
             </td>
-        </tr>
-        <tr>            
-            <td colspan="3" align="center">                
-                <small><?php echo count(@$cliente->pedidos); ?> pedidos | <?php echo count(@$cliente->conversas); ?> conversas | <?php echo count(@$cliente->tarefas); ?> tarefas</small>
-            </td>                
-        </tr>
+        </tr>        
     </tbody>
 </table>    

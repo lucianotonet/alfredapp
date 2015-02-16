@@ -67,7 +67,7 @@ class EmailsController extends \BaseController {
 					switch ($resource->type) {
 						case 'despesas':									
 							$email['subject']  		= "Relatório de despesas (".date('d/m/Y').")";	  						
-							$email['message']  		= "Novo relatório com ".count($resource->despesas)." registros.";	  
+							$email['message']  		= "Novo relatório com ".count( $resource->get_despesas() )." registros.";	  
 							$email['attachments']   = @$resource->getAttachment(); 						
 							break;
 						
@@ -169,6 +169,11 @@ class EmailsController extends \BaseController {
 			case 'relatorio':
 				$resource = Relatorio::find( $data['owner_id'] );    	  					
 				$view = 'relatorios.email';
+				unset( $data['attachments'] );
+				if($resource and Confide::user() ){
+					 $resource->status = '2';            
+					 $resource->save();               
+				}  
 				break;
 			
 			case 'cliente':
@@ -184,6 +189,11 @@ class EmailsController extends \BaseController {
 				break;
 		}
 
+			/**
+			*
+			*	SEND THE MAILS
+			*
+			**/
 
 			// SEND to EACH "TO"
 			foreach ($data['to'] as $to) {
@@ -191,14 +201,14 @@ class EmailsController extends \BaseController {
 				$content 	   = $data;
 				$content['to'] = $to; 
 
-				// print_r($resource);
+				// print_r($view);
 				// exit;
 
 				// DEBUG
 				// return View::make( $view, array('email'=>$content, 'resource'=>$resource) );
 				// exit;
 
-				Mail::queue( $view, array('email'=>$content, 'resource'=>$resource), function($message) use ($content, $to)
+				Mail::queue( $view, array('email'=>$content, 'resource'=>$resource ), function($message) use ($content, $to)
 				{
 				  	$message->to( $to )
 				            ->subject( @$content['subject'] );

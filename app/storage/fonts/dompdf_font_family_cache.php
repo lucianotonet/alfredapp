@@ -155,4 +155,28 @@
   array (
     'normal' => 'D:\\Works\\www\\basaltosegranitos.com.br\\app\\storage/fonts/0abbf72237f9b362f1b8c39dfdf2ef53',
   ),
+  'pt_sansregular' => 
+  array (
+    'normal' => 'D:\\Works\\www\\basaltosegranitos.com.br\\app\\storage/fonts/6422f641f0cc1823b4899b4fc6d00286',
+  ),
+  'pt_sansbold' => 
+  array (
+    'normal' => 'D:\\Works\\www\\basaltosegranitos.com.br\\app\\storage/fonts/cc25b2c318deb90f53f002a7c3ec89d0',
+  ),
+  'pt_sans_narrowregular' => 
+  array (
+    'normal' => 'D:\\Works\\www\\basaltosegranitos.com.br\\app\\storage/fonts/e09820914825b5407562c356ee3f1f69',
+  ),
+  'open_sans_condensedbold' => 
+  array (
+    'normal' => 'D:\\Works\\www\\basaltosegranitos.com.br\\app\\storage/fonts/74ab7d6b7063b8ae18f72750e50d2407',
+  ),
+  'open_sanscondensed_light' => 
+  array (
+    'normal' => 'D:\\Works\\www\\basaltosegranitos.com.br\\app\\storage/fonts/ce56a432edc52f6d9a8ec18d52c199e8',
+  ),
+  'open_sanscnltit' => 
+  array (
+    'normal' => 'D:\\Works\\www\\basaltosegranitos.com.br\\app\\storage/fonts/088c9639d2c10a715d067b125159097d',
+  ),
 ) ?>

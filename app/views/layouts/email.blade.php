@@ -99,7 +99,7 @@
 		------------------------------------- */
 		h1,h2,h3{
 			font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; line-height: 1.1; margin-bottom:15px; color:#000;
-			margin: 40px 0 10px;
+			margin: 10px 0 10px;
 			line-height: 1.2;
 			font-weight:200; 
 		}
@@ -123,6 +123,13 @@
 		ul li {
 			margin-left:5px;
 			list-style-position: inside;
+		}
+
+		small{
+			font-weight: 400;
+			line-height: 1;
+			color: #777;
+			font-size: 65%;
 		}
 
 		/* --------------------------------------------------- 
@@ -179,16 +186,19 @@
 							</tr>
 						</table>
 						
-						@yield('content')
-
+				
+					@yield('content')
+					{{-- @include( $email['owner_type'].'s.'.$resource->type.'.print-content', array('relatorio'=>$resource) )	--}}
+	
 						<table>
 							<tr>
 								<td>
 									<hr />
-									<strong style="">Olmar Primieri.</strong>
+									<?php echo Config::get('settings.mail_signature'); ?>
+									<!-- <strong style="">Olmar Primieri.</strong>
                         			<br/>
                     				(54) 9992-3377<br>
-                    				<a href="mailto:olmar.br@hotmail.com">olmar.br@hotmail.com</a> | <a href="mailto:olmar@basaltosegranitos.com.br">olmar@basaltosegranitos.com.br</a>                        			
+                    				<a href="mailto:olmar.br@hotmail.com">olmar.br@hotmail.com</a> | <a href="mailto:olmar@basaltosegranitos.com.br">olmar@basaltosegranitos.com.br</a> -->                        			
 								</td>
 							</tr>
 						</table>

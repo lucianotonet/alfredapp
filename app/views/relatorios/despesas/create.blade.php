@@ -7,15 +7,14 @@
         <!-- Breadcrumbs -->
         <ol class="breadcrumb breadcrumb-arrow hidden-print">
             <li><a href="{{url('/')}}"><i class="fa fa-home"></i></a></li>
-            <li><a href="{{url('relatorios')}}">Relatórios</a></li>         
-            <li><a href="{{url('relatorios#despesas')}}">Despesas</a></li>    
-            <li class="active"><span>Novo</span></li>  
+            <li><a href="{{url('relatorios#despesas')}}">Relatórios</a></li>                     
+            <li class="active"><span>Novo relatório</span></li>  
         </ol>
 
 
         <div class="panel panel-primary" ng-controller="despesasController">
             <div class="panel-heading">
-                <h3 class="panel-title title">RELATÓRIO DE DESPESAS</h3>
+                <h3 class="panel-title title">NOVO RELATÓRIO DE DESPESAS</h3>
             </div>
         
             <div class="panel-body">

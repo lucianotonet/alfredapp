@@ -1,14 +1,12 @@
 <div class="panel panel-primary">
 
-
     <div class="panel-heading">
         <h3 class="title">NOVA TAREFA</h3>
     </div>
 
     <?php echo Form::open(array('url' => 'tarefas', 'id' => 'tarefa_create', 'method' => 'post')); ?>
 
-
-        
+    
         <div class="panel-body form-horizontal ">
             <?php if( !empty( $cliente ) ): ?>                
                 <div class="form-group">

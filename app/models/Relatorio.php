@@ -11,9 +11,12 @@ class Relatorio extends \Eloquent {
 	protected $fillable = ['status','type','ids','email_id'];
 
 
-	// public function despesas(){
- //        return $this->hasMany('Despesa');
- //    }
+	public function get_despesas(){
+        //return $this->hasMany('Despesa', 'ids');
+        $despesas = explode(',', $this->ids);
+        $despesas = Despesa::whereIn('id',$despesas)->get();
+        return $despesas;
+    }
 
     public function conversas(){
         return $this->hasMany('Conversa');

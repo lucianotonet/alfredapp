@@ -21,29 +21,33 @@
     <![endif]-->
 
     <style>
-        .visible-print {
+        /*.visible-print {
             display: block !important;
-        }
+        }*/
     </style>
 
 </head>
 <body>
     <div class="container">
         
-        <div class="row">
+        <table class="table twelve columns" width="100%">
+            <tr>
+                <td width="auto">
+                    <h3><small>Relatório <?php echo $relatorio->id; ?></small><br/>Despesas</h3>
+                </td>
+                <td style="text-align:right;font-size:12px;">
+                    <h3><small class="badge"><?php echo date('d/m/Y - H:i', strtotime($relatorio->updated_at) ); ?></small><h3>
+                </td>
+            </tr>
+        </table>
 
-            <?php echo $__env->make('relatorios.despesas.print-content', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+        <?php echo $__env->make('relatorios.despesas.print-content', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
-        </div>        
-
-        </div>
     </div>
 
     <!-- jQuery -->
-    <?php echo HTML::script("http://code.jquery.com/jquery.js"); ?>
-
+    <?php /* HTML::script("http://code.jquery.com/jquery.js") */ ?>
     <!-- Bootstrap JavaScript -->
-    <?php echo HTML::script("http://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"); ?>
-
+    <?php /* HTML::script("http://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js") */ ?>
 </body>
 </html>

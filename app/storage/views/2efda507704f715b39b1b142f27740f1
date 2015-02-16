@@ -1,0 +1,97 @@
+<?php use Carbon\Carbon as Carbon; ?>
+
+<?php echo $__env->make('notifications.panels.create', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+<ul class="nav nav-tabs nav-justified">	
+	<?php if($notifications->naolidas): ?>
+		<?php /* expr */ ?>
+	<?php endif; ?>
+	<li class="active">
+		<a href="#naolidas" data-toggle="tab">
+			<h3 class="title <?php if( count($notifications->naolidas) ){ echo 'danger'; } ?>">Não lidas <span class="badge badge-danger"><?php echo count($notifications->naolidas); ?></span></h3>
+		</a>
+	</li>			
+	<li>
+		<a href="#proximas" data-toggle="tab">
+			<h3 class="title">Próximas <span class="badge badge-warning"><?php echo count($notifications->proximas); ?></span></h3>
+		</a>
+	</li>
+	<li>
+		<a href="#lidas" data-toggle="tab">
+			<h3 class="title">Lidas <span class="badge badge-success"><?php echo count($notifications->lidas); ?></span></h3>
+		</a>
+	</li>
+</ul>
+
+<div class="tab-content ">
+	
+	<div class="tab-pane fade active in " id="naolidas">
+		<?php if( count($notifications->naolidas) ): ?>
+
+			<?php foreach($notifications->naolidas as $notification): ?>
+			
+					<?php echo $__env->make('notifications.panels.item', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+			
+			<?php endforeach; ?>			
+
+		<?php else: ?>
+			<div class="panel-body text-center">
+				<div class="well well-lg">
+			  		<h2 class="title"><img class="axb m4a" src="//ssl.gstatic.com/s2/oz/images/notifications/jingles_eb4e5306b38f83915d82034fa93390d9/desktop_static_1x.png" alt="Mascote Jingles com um sorriso"> Tudo lido!</h2>
+					<a class="btn btn-success" data-toggle="modal" href='#modal-id'><i class="fa fa-plus"></i> Criar notificação</a>
+			  	</div>
+				
+			</div>
+		<?php endif; ?>
+	</div>
+	<div class="tab-pane fade" id="proximas">
+		
+		<?php if( count($notifications->proximas) ): ?>
+			
+			<?php foreach($notifications->proximas as $notification): ?>
+			
+					<?php echo $__env->make('notifications.panels.item', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+			
+			<?php endforeach; ?>
+
+		<?php else: ?>
+			<div class="panel-body text-center">
+				<div class="well well-lg">
+			  		<h2 class="title"><img class="axb m4a" src="//ssl.gstatic.com/s2/oz/images/notifications/jingles_eb4e5306b38f83915d82034fa93390d9/desktop_static_1x.png" alt="Mascote Jingles com um sorriso"> Nada agendado!</h2>
+					<a class="btn btn-success" data-toggle="modal" href='#modal-id'><i class="fa fa-plus"></i> Criar notificação</a>
+			  	</div>
+				
+			</div>
+		<?php endif; ?>
+
+	</div>
+	<div class="tab-pane fade" id="lidas">
+
+		<?php if( count($notifications->lidas) ): ?>
+			
+
+			<?php foreach($notifications->lidas as $notification): ?>
+			
+					<?php echo $__env->make('notifications.panels.item', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+			
+			<?php endforeach; ?>
+			<p class="">
+				<a href="<?php echo url('notifications/clean'); ?>" class="btn btn-danger" onclick="return confirm('Excluir notificações já lidas?')"><i class="icon-trash"></i> Limpar tudo</a>
+			</p>
+
+		<?php else: ?>
+			<div class="panel-body text-center">
+				<div class="well well-lg">
+			  		<h2 class="title"><img class="axb m4a" src="//ssl.gstatic.com/s2/oz/images/notifications/jingles_eb4e5306b38f83915d82034fa93390d9/desktop_static_1x.png" alt="Mascote Jingles com um sorriso"> Tudo certo!</h2>
+					<a class="btn btn-success" data-toggle="modal" href='#modal-id'><i class="fa fa-plus"></i> Criar notificação</a>
+			  	</div>
+				
+			</div>
+		<?php endif; ?>
+
+	
+	
+
+	</div>	
+
+</div>

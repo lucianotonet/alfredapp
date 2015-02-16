@@ -55,7 +55,7 @@ return array(
 	*/
 
 	// 'from' => array('address' => 'olmar@basaltosegranitos.com.br', 'name' => 'Olmar Primieri'),
-	'from' => array('address' => 'olmar.br@hotmail.com', 'name' => 'Olmar Primieri'),
+	'from' => array('address' => 'alfredapp@lucianotonet.com', 'name' => 'Alfred App'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -81,7 +81,7 @@ return array(
 	|
 	*/
 
-	'username' => 'contato@lucianotonet.com',
+	'username' => 'alfredapp@lucianotonet.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -94,7 +94,7 @@ return array(
 	|
 	*/
 
-	'password' => 'um4s3nh4b04',
+	'password' => 'ZNQ4y1IDRFmpkHLo_r5nJg',
 
 	/*
 	|--------------------------------------------------------------------------

@@ -13,9 +13,7 @@
 <body class="">
     &nbsp;
     <div class="container">
-        <div class="row">            
-            @include('relatorios.conversas.print-content')                            
-        </div>
+        @include('relatorios.conversas.print-content')                            
     </div>
 
     <!-- jQuery -->

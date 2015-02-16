@@ -7,8 +7,7 @@
         <!-- Breadcrumbs -->
         <ol class="breadcrumb breadcrumb-arrow hidden-print">
             <li><a href="{{url('/')}}"><i class="fa fa-home"></i></a></li>
-            <li><a href="{{url('relatorios')}}">Relatórios</a></li>         
-            <li><a href="{{url('relatorios#despesas')}}">Despesas</a></li>  
+            <li><a href="{{url('relatorios#despesas')}}">Relatórios</a></li>  
             <li><a href="{{url('relatorios/'.$relatorio->id)}}">Relatório n° {{$relatorio->id}}</a></li>    
             <li class="active"><span>Editar</span></li>  
         </ol>

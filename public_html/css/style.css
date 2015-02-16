@@ -760,6 +760,10 @@ span.selecter-selected.placeholder {
   padding: 0px;
   width: 100%;
 }
+nav.pushy li a i{
+  width: 25px;
+}
+
 
 
 .nav-sidebar {
@@ -1527,4 +1531,26 @@ SECTIONS
 	color: #fff;
 	background-color: transparent;
 	border-color: #cdbfe3;
+}
+
+
+.alert {
+  padding: 10px;
+  margin-bottom: 1px;
+  border: 1px solid transparent;  
+}
+input.checkbox {
+  width: 25px;
+  height: 25px;
+}
+
+
+
+/* WYSIHTML5 */
+ul.wysihtml5-toolbar{
+  margin: 0px 0px -10px 0px !important;
+  z-index:10000;
+}
+ul.wysihtml5-toolbar li{
+  margin-bottom: 4px !important;
 }

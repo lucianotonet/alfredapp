@@ -5,8 +5,7 @@
         <!-- Breadcrumbs -->
         <ol class="breadcrumb breadcrumb-arrow hidden-print">
             <li><a href="<?php echo url('/'); ?>"><i class="fa fa-home"></i></a></li>
-            <li><a href="<?php echo url('relatorios'); ?>">Relatórios</a></li>         
-            <li><a href="<?php echo url('relatorios#despesas'); ?>">Despesas</a></li>  
+            <li><a href="<?php echo url('relatorios#despesas'); ?>">Relatórios</a></li>  
             <li><a href="<?php echo url('relatorios/'.$relatorio->id); ?>">Relatório n° <?php echo $relatorio->id; ?></a></li>    
             <li class="active"><span>Editar</span></li>  
         </ol>

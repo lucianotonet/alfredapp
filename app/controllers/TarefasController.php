@@ -98,23 +98,23 @@ class TarefasController extends \BaseController {
 	public function store()
 	{
 	   $validator = Validator::make($data = Input::all(), Tarefa::$rules, Tarefa::$messages);
-         if ($validator->fails()){
+        if ($validator->fails()){
             return Redirect::back()->withErrors($validator)->withInput();
-         }
+        }
 
-         $data['start'] = date( 'Y-m-d H:i:s', strtotime( $data['start'] ) );
+        $data['start'] = date( 'Y-m-d H:i:s', strtotime( $data['start'] ) );
 
-         if( $tarefa = Tarefa::create($data) ){
+        if( $tarefa = Tarefa::create($data) ){
 	         
 	         // ADICIONAR NOTIFICAÇÃO
 	         if( !empty( $data['notification'] ) ){
 
 	            $notificationDate = Carbon::createFromFormat('Y-m-d H:i:s', $data['start'])->subDays( $data['notification'] );	            
 
-		         // echo "<pre>";
-		         // print_r($tarefa);
-		         // echo "</pre>";
-		         // exit;
+		         echo "<pre>";
+		         print_r( $data );
+		         echo "</pre>";
+		         exit;
 
 	            // CREATE NOTIFICACAO...
 	            Notification::create([
@@ -131,10 +131,10 @@ class TarefasController extends \BaseController {
      	    $alert[] = [ 'class' 	=> 'alert-success',
      	    			 'message'  => '<strong><i class="fa fa-check"></i></strong> Nova tarefa criada!' ];
             Session::flash('alerts', $alert);	
-		
-			return Redirect::to( URL::previous() );  
+					
+			return Redirect::to('tarefas/'.$tarefa->id);
 
-         }
+        }
 
          return Redirect::back()->withErrors($validator)->withInput(Input::all());
 

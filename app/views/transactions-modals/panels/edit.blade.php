@@ -1,0 +1,125 @@
+<div id="transaction_edit" class="panel panel-primary">
+		
+	<div class="panel-heading">
+		<h3 class="panel-title title">Alterar lançamento</h3>			
+	</div>
+
+	{{ Form::model($transaction, [ 'method' => 'PATCH', 'route' =>[ 'financeiro.update', $transaction->id ] ] ) }}
+		
+		<div class="panel-body form-horizontal">
+
+
+			<div class="form-group">
+				<label class="control-label col-sm-3 col-xs-1" for="">
+					<h3 class="title">R$</h3>
+				</label>					
+				<div class="col-xs-11 col-sm-9 col-md-9 col-lg-9 form-inline">	
+
+					<input type="text" name="amount" id="inputAmount" class="form-control input-lg text-right transaction_amount price" value="{{$transaction->amount}}" step="0,01" min="0,00" required="required" title="">	
+
+					<div class="transaction_done btn-group" data-toggle="buttons">
+						<label class="btn btn-lg btn-default <?php if( $transaction->done == 1 ){ echo "active"; }else{ echo ""; } ?>">				
+							<span class="">
+								<i class="icon-check"></i> Pago
+							</span>
+			                <input type="checkbox" name="done" autocomplete="off" <?php if( $transaction->done == 1 ){ echo "checked"; } ?> >
+							<span class="">
+								<i class="icon-caution"></i> Não pago
+							</span>
+						</label>
+					</div>
+
+				</div>
+			</div>
+
+					
+			<div class="form-group">	
+				<label class="control-label col-sm-3" for="">Tipo</label>					
+				<div class="col-sm-9 col-md-9 col-lg-9 form-inline">
+					<div class="btn-group btn-group-sm btn-group-justified transaction_type" data-toggle="buttons">
+						<label class="btn btn-default btn-sm despesa <?php if( $transaction->type == 'despesa' ){ echo "active"; } ?>">
+							<input type="radio" name="type" id="" autocomplete="off" value="despesa"  <?php if( $transaction->type == 'despesa' ){ echo "checked"; } ?>><i class="fa fa-chevron-down"></i> Despesa
+						</label>
+						<label class="btn btn-default btn-sm receita <?php if( $transaction->type == 'receita' ){ echo "active"; } ?>">
+							<input type="radio" name="type" id="" autocomplete="off" value="receita"   <?php if( $transaction->type == 'receita' ){ echo "checked"; } ?>><i class="fa fa-chevron-up"></i> Receita
+						</label>
+					</div>
+				</div>
+			</div>							
+
+			<div class="form-group">
+				{{ Form::label('description', 'Descrição', array("class"=>"col-sm-3 control-label")) }}
+				<div class="col-sm-9">				
+					<textarea name="description" id="" cols="30" rows="2" class="form-control">{{$transaction->description}}</textarea>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="panel-body bg-info form-horizontal">
+
+			<div class="form-group">
+				<label for="recurring_type" class="col-sm-3 control-label"><i class="fa fa-calendar"></i> Data</label>
+				<div class="col-sm-9 col-md-9 col-lg-9 form-inline">
+					
+					<input type="date" name="date" id="inputDat" class="form-control" value="{{$transaction->date}}" required="required" title="">
+								
+				</div>						
+			</div>
+
+
+			<!-- <div class="form-group">
+				<label for="recurring_type" class="col-sm-3 control-label"><i class="fa fa-refresh"></i> Repetir</label>
+				<div class="col-sm-9 col-md-9 col-lg-9 form-inline">
+					
+					<select name="recurring_type" class="form-control recurring_type" required="required">
+						<option value="never" selected>Nunca</option>
+						<option value="daily">Diariamente</option>
+						<option value="weekly">Semanalmente</option>
+						<option value="biweekly">Quinzenalmente</option>
+						<option value="monthly">Mensalmente</option>
+						<option value="bimonthly">Bimestralmente</option>
+						<option value="trimonthly">Trimestralmente</option>
+						<option value="sixmonthly">Semestralmente</option>
+						<option value="yearly">Anualmente</option>
+					</select>	
+				
+					<select name="recurring_times" class="hidden form-control recurring_times">
+						<option value="0">Sem parar</option>						
+						<option value="1" selected>1x</option>
+						@for ($i = 2; $i <= 500; $i++)
+							<option value="{{$i}}">{{$i}}x</option>
+						@endfor
+					</select>	
+								
+				</div>						
+			</div> -->
+
+		</div>	
+
+		<div class="panel-footer navbar-inverse">	
+						
+			<div class="btn-group btn-group-justified" role="group" aria-label="...">
+				<div class="btn-group" role="group">					
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancela</button>
+				</div>				
+				<div class="btn-group" role="group">					
+					<button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Salvar</button>
+				</div>
+			</div>
+			
+		</div>	
+
+	{{ Form::close() }}
+</div>
+
+<script>
+	jQuery(document).ready(function($) {
+		$("input.price").priceFormat({        
+            prefix: '',
+            centsSeparator: ',',
+            thousandsSeparator: '.',
+            allowNegative: false
+        });
+	});		
+</script>

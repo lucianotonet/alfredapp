@@ -7,75 +7,12 @@
 	<!-- Breadcrumbs -->
 	<ol class="breadcrumb breadcrumb-arrow hidden-print">
 		<li><a href="{{url('/')}}"><i class="fa fa-home"></i></a></li>
-		<li><a href="{{url('relatorios')}}">Relatórios</a></li>			
-		<li><a href="{{url('relatorios#conversas')}}">Conversas</a></li>	
-		<li class="active"><span>Novo</span></li>	
+		<li><a href="{{url('relatorios#conversas')}}">Relatórios</a></li>			
+		<li class="active"><span>Novo relatório</span></li>	
 	</ol>	
 
 
-	<?php /* NOTIFICAÇÃO > GERA RELATÓRIO AUTOMATICAMENTE */ ?>
-	@if ( $status['nao_enviadas'] > 0)
-				
-		<div class="alert alert-info">
-			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-			<h3 class="title">{{ $status['nao_enviadas'] }} conversas não reportadas</h3>
-
-			{{Form::open(array('url' => url('relatorios')))}}
-
-				{{ Form::hidden('type', 'conversas') }}
-				{{ Form::hidden('auto', 'true') }}
-
-				<p>&nbsp;</p>
-
-				<a class="btn btn-primary" data-toggle="modal" href='#modal-id'>Ver conversas</a>
-				<button type="submit" class="btn btn-success">Gerar relatório</button>
-
-			{{ Form::close() }}
-
-				<div class="modal fade" id="modal-id">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header primary bg-primary">
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-								<h4 class="modal-title title">Conversas não reportadas</h4>
-							</div>
-								
-							<div class="modal-body">
-
-								@foreach ($clientes as $cliente)
-
-									<br>
-									
-									<div class="panel">
-									
-										@include('clientes.panels.item', $cliente)
 	
-										@foreach ($cliente->conversas as $conversa)										
-											@include('conversas.panels.item', $conversa)												
-										@endforeach
-
-									</div>
-									
-								@endforeach
-									
-							</div>	
-
-							<div class="modal-footer bg-info">
-								<button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-		</div>
-	{{--@else
-		<div class="alert alert-success">
-			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-			<h3 class="title"><i class="fa fa-check"></i> Nenhuma conversa para enviar</h3>
-
-		</div>--}}
-	@endif
-	<?php /* FIM NOTIFICAÇÃO */ ?>
 
 
 
@@ -118,6 +55,69 @@
 
 		</div>
 
+		<?php /* NOTIFICAÇÃO > GERA RELATÓRIO AUTOMATICAMENTE */ ?>
+			@if ( $status['nao_enviadas'] > 0)
+						
+				<div class="alert alert-warning">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					<p>Você tem {{ $status['nao_enviadas'] }} novas conversas. Gostaria de gerar um <strong>relatório automático</strong> com elas?</p>
+					<br>	
+
+					{{Form::open(array('url' => url('relatorios')))}}
+
+						{{ Form::hidden('type', 'conversas') }}
+						{{ Form::hidden('auto', 'true') }}						
+						
+						<button type="submit" class="btn btn-sm btn-success"><i class="fa fa-check"></i> Gerar relatório</button>
+						<a class="btn btn-sm btn-default" data-toggle="modal" href='#modal-id'>Ver todas conversas</a>						
+
+					{{ Form::close() }}
+
+						<div class="modal fade" id="modal-id">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header primary bg-primary">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+										<h4 class="modal-title title">Conversas não reportadas</h4>
+									</div>
+										
+									<div class="modal-body">
+
+										@foreach ($clientes as $cliente)
+
+											<br>
+											
+											<div class="panel">
+											
+												@include('clientes.panels.item', $cliente)
+			
+												@foreach ($cliente->conversas as $conversa)										
+													@include('conversas.panels.item', $conversa)												
+												@endforeach
+
+											</div>
+											
+										@endforeach
+											
+									</div>	
+
+									<div class="modal-footer bg-info">
+										<button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+				</div>
+			{{--@else
+				<div class="alert alert-success">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					<h3 class="title"><i class="fa fa-check"></i> Nenhuma conversa para enviar</h3>
+
+				</div>--}}
+			@endif
+			<?php /* FIM NOTIFICAÇÃO */ ?>
+
 
 		<form action="{{url('relatorios')}}" method="POST" role="form">
 
@@ -128,10 +128,11 @@
 					<button type="submit" class="btn btn-primary">Gerar relatório</button>
 				</div>
 			
-				{{$message}}				
-			</div>
-					
-			<div class="panel-body bg-info">			
+				{{$message}}	
+				
+				<p>Selecione as conversas que deseja adicionar ao relatório e clique em <strong>gerar relatório</strong>.</p>
+
+				<a href="#" class="btn btn-primary btn-sm select_all">Selecionar todas</a>	<br>	
 					
 				@foreach ( $search_results as $cliente )
 					
@@ -145,11 +146,8 @@
 									
 								<li class="list-group-item form-inline">
 									<div class="form-group">
-										<div class="btn-group btn-group-xs checkbox media-left" data-toggle="buttons">
-											<label class="btn btn-default btn-xs">			
-												<i class="fa fa-check fa-2x"></i>
-												{{ Form::checkbox('conversas_ids[]', $conversa->id, Input::old('conversas_ids'), array(""=>"") ) }}
-											</label>
+										<div class="media-left">
+											{{ Form::checkbox('conversas_ids[]', $conversa->id, Input::old('conversas_ids'), array("class"=>"checkbox") ) }}											
 										</div>	
 									</div>
 									<div class="form-group">	

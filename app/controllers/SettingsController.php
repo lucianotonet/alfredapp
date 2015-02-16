@@ -10,11 +10,18 @@ class SettingsController extends \BaseController {
 	public function index()
 	{
 
-		//$settings = new CreateSettingsTable;
-		//$settings->down();
-		//$settings->up();
+		// $settings = new CreateSettingsTable;
+		// $settings->down();
+		// $settings->up();
 
-		$settings = Setting::all();
+		$settings  	   = Config::get('settings');
+		$user_settings = Confide::user()->settings;
+
+		
+
+
+		// echo "<pre>"; print_r( Config::get('settings') ); echo "</pre>"; exit;
+		// echo "<pre>"; print_r( $requested_page ); echo "</pre>"; exit;
 
 		return View::make('settings.index', compact('settings'));
 	}
@@ -38,14 +45,69 @@ class SettingsController extends \BaseController {
 	{
 		$validator = Validator::make($data = Input::all(), Setting::$rules);
 
-		if ($validator->fails())
-		{
-			return Redirect::back()->withErrors($validator)->withInput();
+		// if ($validator->fails())
+		// {
+		// 	return Redirect::back()->withErrors($validator)->withInput();
+		// }
+
+
+		foreach ( $data['settings'] as $config => $value) {
+			
+			if( Config::get( 'settings.'. $config ) ){
+				$setting = Setting::where( 'setting_name', $config )->
+									where( 'setting_type', 'settings' )->
+									where( 'user_id', Confide::user()->id )->
+									orderBy('id','DESC')->first();
+				if( !$setting ){					
+					$setting 		  		= new Setting;
+					$setting->setting_type 	= 'settings';
+					$setting->setting_name 	= $config;
+				}
+				if( !empty( $value ) and $setting->setting_value != $value ){
+					$setting->setting_value = $value;					
+					$setting->user_id 	= Confide::user()->id;
+					$setting->save();
+				}
+			}
 		}
 
-		Setting::create($data);
+		foreach ( $data['mail'] as $config => $value) {
+			
+			if( Config::get( 'mail.'. $config ) ){
+				$setting = Setting::where( 'setting_name', $config )->
+									where( 'setting_type', 'mail' )->
+									where( 'user_id', Confide::user()->id )->
+									orderBy('id','DESC')->first();
+				if( !$setting ){					
+					$setting 		  		= new Setting;
+					$setting->setting_type 	= 'mail';
+					$setting->setting_name 	= $config;
+				}
+				
+				if( is_array($value) ){ $value = json_encode($value); }
+				// echo "<pre>"; print_r( $value ); echo "</pre>"; exit;				
 
-		return Redirect::route('settings.index');
+				if( !empty( $value ) and $setting->setting_value != $value ){
+					$setting->setting_value = $value;					
+					$setting->user_id 	= Confide::user()->id;
+					$setting->save();
+				}
+			}
+		}
+
+		
+		
+		$alert[] = [  'class' 	=> 'alert-success',
+		              'message' => '<strong><i class="fa fa-check"></i></strong> Configurações salvas!' ];
+	
+	    Session::flash('alerts', $alert);
+
+		if ( Request::header('referer') ) {
+			return Redirect::back();				    	
+		}else{			
+			return Redirect::route('settings.index');
+		}
+
 	}
 
 	/**
@@ -107,6 +169,26 @@ class SettingsController extends \BaseController {
 		Setting::destroy($id);
 
 		return Redirect::route('settings.index');
+	}
+
+
+	public function reset()
+	{
+		$settings = Setting::where( 'user_id', Confide::user()->id )->get();
+		foreach ($settings as $setting) {
+			Setting::destroy( $setting->id );
+		}
+
+		$alert[] = [  'class' 	=> 'alert-success',
+		              'message' => '<strong><i class="fa fa-check"></i></strong> Configurações restauradas com sucesso!' ];
+	    Session::flash('alerts', $alert);
+
+		if ( Request::header('referer') ) {
+			return Redirect::back();				    	
+		}else{			
+			return Redirect::route('settings.index');
+		}
+
 	}
 
 }

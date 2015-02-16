@@ -81,21 +81,26 @@ class ConversasController extends \BaseController {
          $conversa = Conversa::create($data);  
 
          if($conversa){
+            $alert[] = [   'class' => 'alert-success', 'message'   => '<strong><i class="fa fa-check"></i></strong>Conversa salva com sucesso!' ];            
             
             // AGENDAR PRÓXIMA CONVERSA
-            if( isset( $data['tarefa'] ) ){
+            if( isset( $data['tarefa_title'] ) ){
                $cliente = Cliente::find($data['cliente_id']);
+
+               if( !empty($data['tarefa_title']) ){ $tarefa_title = $data['tarefa_title']; }
+               else{ $tarefa_title = "Conversa agendada com ".$cliente->nome; }
+
                $tarefa  = Tarefa::create([
-                           'start'      => date('Y-m-d H:m:i', strtotime($data['tarefa'])),
+                           'start'      => date('Y-m-d H:m:i', strtotime($data['tarefa_date'])),
                            'cliente_id' => $data['cliente_id'],
                            'conversa_id'=> $conversa->id,
-                           'title'      => "Conversa agendada com ".$cliente->nome
+                           'title'      => $tarefa_title,
+                           'tipo'		=> $data['tarefa_tipo']
                         ]);
                if($tarefa){                  
-                  $alert[] = [   'class' => 'alert-success', 'message'   => '<strong><i class="icon-alarm"></i></strong> Próxima conversa programada para '.date( 'd \d\e F', strtotime($tarefa->start) ) ];    
+                  $alert[] = [   'class' => 'alert-success', 'message'   => '<strong><i class="icon-alarm"></i></strong> Próxima conversa agendada para '.date( 'd \d\e F', strtotime($tarefa->start) ) ];    
                }
             }
-            $alert[] = [   'class' => 'alert-success', 'message'   => '<strong><i class="fa fa-check"></i></strong> Salvo!' ];            
          }else{            
             $alert[] = [   'class' => 'alert-warning', 'message'   => '<strong><i class="fa fa-times"></i></strong> Erro! Não foi possível salvar a conversa.' ];
          }

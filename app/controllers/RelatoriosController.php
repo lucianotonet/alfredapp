@@ -555,6 +555,9 @@ class RelatoriosController extends \BaseController {
 				// ADICIONA OS IDS DAS CONVERSAS NO RELATÓRIO
 				$relatorio->ids  = $data['ids'];
 
+				// ALTERA O STATUS
+				$relatorio->status = 0;				
+
 				// MARCA DESPESAS COM O ID DESTE RELATÓRIO (LAST REPORT)
 				$despesas_ids   = explode( ',', $relatorio->ids );				
 				$despesas 		= Despesa::whereIn( 'id', $despesas_ids )->update( array( 'relatorio_id' => $relatorio->id ) );
@@ -630,18 +633,35 @@ class RelatoriosController extends \BaseController {
 	{     
 		$relatorio           = Relatorio::find($id);	
 
+		if( !$relatorio ){
+			// Alert
+			$alert[] = array(                     
+						'class' 	=> 'alert-danger',
+                        'message'   => '<strong><i class="fa fa-warning"></i></strong> o relatório não existe!',                        
+			        );				
+			Session::flash('alerts', $alert);
+
+			if( URL::previous() ) 	return Redirect::to( URL::previous() );
+			else 					return Redirect::to( 'relatorios' );
+		}
+
 		switch ( $relatorio->type ) {
 			case 'despesas':
 
 				// Total de despesas
 				$total = 0;
-				foreach ($relatorio->despesas as $despesa) {
+				foreach ( $relatorio->get_despesas() as $despesa) {
 					$total += $despesa->valor;
 					// Fomata R$ despesas
 					$despesa->valor  = number_format( $despesa->valor, 2, ',', '.' ); 
 				};
 				// Fomata R$ Total
 				$relatorio->total = number_format( $total, 2, ',', '.' );
+
+				//$view = 'relatorios.'.$relatorio->type.'.pdf';
+				$pdf_view = 'relatorios.despesas.print';
+				$pdf_file = 'pdf/relatorios/relatorio-'.$relatorio->id.'_'.$relatorio->type.'.pdf';
+
 				break;
 			
 			case 'conversas':
@@ -659,12 +679,13 @@ class RelatoriosController extends \BaseController {
 
 		$pdf = App::make('dompdf');
 
-		if( !is_file( asset('pdf/relatorios/relatorio-'.$relatorio->id.'_'.$relatorio->type.'.pdf') ) ){		
-			$pdf = $pdf->loadView(  'relatorios.'.$relatorio->type.'.pdf', compact('relatorio'))->setPaper('a4')->setOrientation('portrait')->setWarnings(false)->save( 'pdf/relatorios/relatorio-'.$relatorio->id.'_'.$relatorio->type.'.pdf' );            					
+		if( !is_file( asset( $pdf_file ) ) ){		
+			$pdf = $pdf->loadView(  $pdf_view , compact('relatorio'))->setPaper('a4')->setOrientation('portrait')->setWarnings(false)->save( $pdf_file );            					
+			echo "PDF gerado com successo!";
 		}
 		
 
-		return $pdf->stream('pdf/relatorios/relatorio-'.$relatorio->id.'_'.$relatorio->type.'.pdf'); 
+		return $pdf->stream( $pdf_file ); 
 
 	}
 
@@ -680,7 +701,7 @@ class RelatoriosController extends \BaseController {
 	{     
 		$relatorio           = Relatorio::find($id);			
 
-		switch ( $relatorio->type ) {
+		switch ( @$relatorio->type ) {
 			case 'despesas':
 
 				$despesas_ids = explode(',', $relatorio->ids);
@@ -724,7 +745,7 @@ class RelatoriosController extends \BaseController {
 
 		}
 
-	
+		return View::make(  'relatorios.'.$relatorio->type.'.print', compact('relatorio'));            							     							
 		return View::make(  'relatorios.'.$relatorio->type.'.print', compact('relatorio'));            							     							
 
 	}
@@ -740,14 +761,14 @@ class RelatoriosController extends \BaseController {
 	public function gerarPdf($relatorio)
 	{     
 
-		// if( is_file( asset('pdf/relatorios/relatorio-'.$relatorio->id.'_'.$relatorio->type.'.pdf') ) ){
-		// 	$pdf = App::make('dompdf');
-		// }else{
-		// 	//$pdf = App::make('dompdf');
-		// 	$pdf = PDF::loadView( 'relatorios.'.$relatorio->type.'.pdf', compact('relatorio'))->setPaper('a4')->setOrientation('portrait')->setWarnings(false)->save( 'pdf/relatorios/relatorio-'.$relatorio->id.'_'.$relatorio->type.'.pdf' );
-		// }		
+		if( is_file( asset('pdf/relatorios/relatorio-'.$relatorio->id.'_'.$relatorio->type.'.pdf') ) ){
+			$pdf = App::make('dompdf');
+		}else{
+			//$pdf = App::make('dompdf');
+			$pdf = PDF::loadView( 'relatorios.'.$relatorio->type.'.pdf', compact('relatorio'))->setPaper('a4')->setOrientation('portrait')->setWarnings(false)->save( 'pdf/relatorios/relatorio-'.$relatorio->id.'_'.$relatorio->type.'.pdf' );
+		}		
 		
-		// return $pdf;  		
+		return $pdf;  		
 	}
 
 	/**
