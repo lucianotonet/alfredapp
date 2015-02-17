@@ -2,8 +2,7 @@
 	"name": "tonetlds/alfredapp",
 	"description": "Alfred App.",
 	"keywords": ["crm", "laravel"],
-	"license": "MIT",
-	"version": "1.0.1",
+	"license": "MIT",	
 	"type": "project",
 	"require": {
 		"laravel/framework": "4.2.*",	
