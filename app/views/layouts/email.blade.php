@@ -223,7 +223,7 @@
 							<table>
 								<tr>
 									<td align="center">
-										<p><a href="#">Alfred&copy;</a></p>
+										<p><a href="https://github.com/tonetlds/alfredapp" target="_new">Alfred&copy;</a></p>
 									</td>
 								</tr>
 							</table>
@@ -235,5 +235,5 @@
 			</table>
 			<!-- /footer -->
 
-		</body>
-		</html>
+	</body>
+</html>

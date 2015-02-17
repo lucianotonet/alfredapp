@@ -17,8 +17,8 @@ class ProdutosTableSeeder extends Seeder {
             'cod'       => rand(2,2),
             'unidade'   => $faker->text(5),
 
-            'detalhes'  => $faker->text(),
-            'foto'      => $faker->text(),
+            'detalhes'  => $faker->text(),            
+            'foto'      => '',  
 			]);
 		}
 	}

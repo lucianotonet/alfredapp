@@ -271,6 +271,11 @@ Route::get('notifications/unread', array('as' => 'naolidas', 'uses' => 'Notifica
 Route::get('notifications/clean', array('as' => 'limpar', 'uses' => 'NotificationsController@clean'));
 Route::resource('notifications', 'NotificationsController');
 
+  
+  // $contacts = new CreateContactsTable;
+  // $contacts->down();
+  // $contacts->up();
+
   // $tarefas     = new CreateTarefasTable;
   // $notifications = new CreateNotificationsTable;
   

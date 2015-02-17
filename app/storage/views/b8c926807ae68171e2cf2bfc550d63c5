@@ -423,7 +423,9 @@
 
     <?php echo $__env->yieldContent('scripts'); ?>
     
-    <?php echo HTML::script('js/app.js'); ?>   
+    <?php echo HTML::script('js/app.js'); ?>  
+
+     
 
 </body>
 </html>

@@ -410,7 +410,9 @@
 
     @yield('scripts')
     
-    {{ HTML::script('js/app.js') }}   
+    {{ HTML::script('js/app.js') }}  
+
+     
 
 </body>
 </html>
