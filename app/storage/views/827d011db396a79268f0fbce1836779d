@@ -32,16 +32,11 @@ form .form-control:focus {
 	z-index: 2;
 }
 form input[type="text"],
-form input[type="email"] {
-	margin-bottom: -1px;
-	border-bottom-right-radius: 0;
-	border-bottom-left-radius: 0;
-}
+form input[type="email"],
 form input[type="password"] {
-	margin-bottom: 10px;
-	border-top-left-radius: 0;
-	border-top-right-radius: 0;
+	margin-bottom: -1px;
 }
+
 form .form-actions {
 	text-align: center;	
 }
