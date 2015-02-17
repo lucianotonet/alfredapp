@@ -10,8 +10,7 @@
 		"guzzlehttp/guzzle": "~4.0",
 		"maatwebsite/excel": "~1.2.1",
 		"barryvdh/laravel-dompdf": "0.4.*",
-		"mandrill/mandrill": "1.0.*",
-		"makzumi/calendar": "dev-master"
+		"mandrill/mandrill": "1.0.*"		
 	},
 	"autoload": {
 		"classmap": [

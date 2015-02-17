@@ -124,8 +124,7 @@ return array(
       	'Way\Generators\GeneratorsServiceProvider',      	
 		'Zizaco\Confide\ServiceProvider',
 		'Maatwebsite\Excel\ExcelServiceProvider',
-		'Barryvdh\DomPDF\ServiceProvider',
-		'Makzumi\Calendar\CalendarServiceProvider'
+		'Barryvdh\DomPDF\ServiceProvider'		
 	),
 
 	/*

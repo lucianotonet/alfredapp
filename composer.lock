@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e33a4cea449097fa552606afde41145a",
+    "hash": "869e1c7ff7606d6c0833eb5b1ca49c0b",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -669,46 +669,6 @@
                 "laravel"
             ],
             "time": "2014-12-16 21:01:32"
-        },
-        {
-            "name": "makzumi/calendar",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/makzumi/laravel-calendar.git",
-                "reference": "bcd70f10d852ca4d69d644ad27a68f5100d5b8dc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/makzumi/laravel-calendar/zipball/bcd70f10d852ca4d69d644ad27a68f5100d5b8dc",
-                "reference": "bcd70f10d852ca4d69d644ad27a68f5100d5b8dc",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "~4",
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [],
-                "psr-0": {
-                    "Makzumi\\Calendar\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "authors": [
-                {
-                    "name": "Ammar Almakzumi",
-                    "email": "info@makzumi.com"
-                }
-            ],
-            "description": "Laravel 4 Flexible Calendar",
-            "keywords": [
-                "calendar",
-                "events",
-                "laravel"
-            ],
-            "time": "2015-01-24 07:50:42"
         },
         {
             "name": "mandrill/mandrill",
@@ -2304,8 +2264,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "zizaco/confide": 20,
-        "makzumi/calendar": 20
+        "zizaco/confide": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
