@@ -3,6 +3,7 @@
 	"description": "Alfred App.",
 	"keywords": ["crm", "laravel"],
 	"license": "MIT",
+	"type": "project",
 	"require": {
 		"laravel/framework": "4.2.*",	
 		"zizaco/confide": "~4.0@dev",
