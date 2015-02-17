@@ -14,7 +14,7 @@ return array(
 	'app_title' 		=> 'Alfred App',
 	'app_slug' 			=> 'alfred app',
 	// 'app_logo' 			=> 'http://steelweb.com.br/embreve/images/logo.png',
-	'app_logo' 			=> asset('img/logo/logo.png'),
+	'app_logo' 			=> asset('img/logo/logo_inv.png'),
 	'app_pdf_folder'	=> 'pdf',
 
 
