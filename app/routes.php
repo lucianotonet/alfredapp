@@ -296,9 +296,6 @@ Route::resource('notifications', 'NotificationsController');
 // exit;
 
 
-
-
-
 /*
 |--------------------------------------------------------------------------
 | NOTES
