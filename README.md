@@ -1,7 +1,4 @@
 ## Alfred APP
 
 ### Installation
-By composer:
-```
-composer create-project tonetlds/alfredapp your-project
-```
+With composer, run `composer create-project tonetlds/alfredapp your-project`
