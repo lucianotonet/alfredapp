@@ -13,6 +13,45 @@
 
 App::before(function($request)
 {
+
+	if( !Schema::hasTable('balance') ){
+
+	};
+	if( !Schema::hasTable('categories') ){
+
+	};
+	if( !Schema::hasTable('clientes') ){
+
+	};
+	if( !Schema::hasTable('contacts') ){
+
+	};
+	if( !Schema::hasTable('conversas') ){
+
+	};
+	if( !Schema::hasTable('despesas') ){
+
+	};
+	if( !Schema::hasTable('emails') ){
+
+	};
+	if( !Schema::hasTable('entries') ){
+
+	};
+	if( !Schema::hasTable('eventos') ){
+
+	};
+	if( !Schema::hasTable('fornecedores') ){
+
+	};
+	if( !Schema::hasTable('migrations') ){
+
+	};
+	if( !Schema::hasTable('despesas') ){
+
+	};
+
+
 	if( Confide::user() ){
 		$configs = User::find( Confide::user()->id )->settings;
 		foreach ($configs as $config) {
@@ -25,6 +64,20 @@ App::before(function($request)
 			}
 		}				
 	}
+
+
+	  $notifications = Notification::where('status',0)->get();
+	  $notifications = $notifications->filter(function($notification){
+	      $date = Carbon::createFromFormat('Y-m-d H:i:s', $notification->date);
+	      if( $date->isToday() || $date->isPast() ){
+	          return $notification;
+	      }
+	  });
+	  if($notifications ){
+	     Session::put('notifications', $notifications);
+	  };
+
+	  
 });
 
 

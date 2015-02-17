@@ -3,6 +3,9 @@
 @section('content')
 
     <style>
+        p.text-center img.img-responsive{
+          margin: 0 auto;
+        }
         
         .form-signin {
           max-width: 330px;
@@ -47,9 +50,10 @@
     <div class="container">
 
       <form class="form-signin" role="form" method="POST" action="{{{ URL::to('/users/login') }}}" accept-charset="UTF-8">
-
-        <img src="<?php echo asset('img/logo_dark.png'); ?>" alt="" class="img-responsive">
-        <br>
+        
+        <p class="text-center">
+          <img src="<?php echo asset('img/logo/logo.png'); ?>" alt="" class="img-responsive">
+        </p>        
         <p class="text-center">Por favor, identifique-se</p>
 
         @if (Session::get('error'))     

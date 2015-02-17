@@ -1,0 +1,17 @@
+<div class="list-group-item customer-item bordered">    
+
+    <a href="<?php echo url( 'clientes', $cliente->id ); ?>">
+        <span class="pull-left cliente-avatar" style="background-color:#3bafda">
+            <img src="<?php echo asset('img/avatar-small.png'); ?>" alt="" class="img-responsive">
+        </span>
+        <div class="search-data">
+            <strong class="list-group-item-heading"><?php echo $cliente->nome; ?></strong><br>
+            <strong><?php echo $cliente->empresa; ?></strong><br>
+            <i class="fa fa-map-marker"></i> <?php echo $cliente->cidade; ?> - <?php echo $cliente->uf; ?> |
+            <i class="fa fa-phone"></i> <?php echo $cliente->telefone; ?>|
+            <i class="fa fa-mobile"></i> <?php echo $cliente->celular; ?>
+
+        </div>
+    </a>
+
+</div>

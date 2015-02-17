@@ -1,1 +1,4 @@
-services.manifest
+/views
+/sessions
+services
+.manifest

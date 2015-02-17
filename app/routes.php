@@ -280,16 +280,23 @@ Route::resource('notifications', 'NotificationsController');
   // $tarefas->up();
   // $notifications->up();
 
-  $notifications = Notification::where('status',0)->get();
-  $notifications = $notifications->filter(function($notification){
-      $date = Carbon::createFromFormat('Y-m-d H:i:s', $notification->date);
-      if( $date->isToday() || $date->isPast() ){
-          return $notification;
-      }
-  });
-  if($notifications ){
-     Session::put('notifications', $notifications);
-  };
+  // $users     = new ConfideSetupUsersTable;
+  // $users->down();
+  // $users->up();
+
+  // $settings     = new CreateSettingsTable;
+  // $settings->down();
+  // $settings->up();
+
+  // $settings     = new CreateSettingsTable;
+  // $settings->down();
+  // $settings->up();
+
+// echo "ROUTES";
+// exit;
+
+
+
 
 
 /*

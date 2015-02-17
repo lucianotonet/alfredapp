@@ -1,0 +1,22 @@
+{
+    "shop": {
+        "enabled": true,
+        "name": "shop",
+        "order": 0,
+        "group": "app\/modules"
+    },
+    "content": {
+        "enabled": true,
+        "provider": [
+            "App\\Modules\\Content\\ContentServiceProvider",
+            "App\\Modules\\Content\\AnotherServiceProvider"
+        ],
+        "include": [
+            "breadcrumbs.php"
+        ],
+        "seeder": "App\\Modules\\Content\\Seeds\\DatabaseSeeder",
+        "name": "content",
+        "order": 0,
+        "group": "app\/modules"
+    }
+}
