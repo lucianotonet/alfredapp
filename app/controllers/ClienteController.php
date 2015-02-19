@@ -4,6 +4,20 @@ use Faker\Factory as Faker;
 
 class ClienteController extends \BaseController {
 
+	protected $form_fields =[
+		'nome',
+		'empresa',
+		'endereco',
+		'bairro',
+		'cidade',
+		'cep',
+		'uf',
+		'telefone',
+		'celular',
+		'email',
+		'ie',
+		'cnpj'
+	];
 	/**
 	 * Display a listing of the resource.
 	 *
