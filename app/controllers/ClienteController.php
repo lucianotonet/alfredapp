@@ -4,7 +4,7 @@ use Faker\Factory as Faker;
 
 class ClienteController extends \BaseController {
 
-	protected $form_fields =[
+	protected $table_fields =[
 		'nome',
 		'empresa',
 		'endereco',
@@ -208,24 +208,7 @@ class ClienteController extends \BaseController {
 
 		} else {
 			// store
-			$cliente = new Cliente;
-
-				 $cliente->nome       = Input::get('nome');
-				 $cliente->empresa    = Input::get('empresa');
-				 $cliente->endereco   = Input::get('endereco');
-				 $cliente->bairro     = Input::get('bairro');
-				 $cliente->cidade     = Input::get('cidade');
-				 $cliente->cep        = Input::get('cep');
-				 $cliente->uf         = Input::get('uf');
-
-				 $cliente->telefone   = Input::get('telefone');
-				 $cliente->celular    = Input::get('celular');
-				 $cliente->email      = Input::get('email');
-				 $cliente->ie         = Input::get('ie');
-				 $cliente->cnpj       = Input::get('cnpj');
-
-			$cliente->save();
-
+			Cliente::create($this->post_to_array($this->table_fields));
 				 //Session::flush();
 				 $alert[] = [   'class' => 'alert-success', 'message'   => 'Novo cliente adicionado!' ];
 				 Session::flash('alerts', $alert);
@@ -367,24 +350,7 @@ class ClienteController extends \BaseController {
 				->withInput(Input::except('password'));
 		} else {
 			// store
-			$cliente = Cliente::find($id);
-			
-				 $cliente->nome       = Input::get('nome');
-				 $cliente->empresa    = Input::get('empresa');
-				 $cliente->endereco   = Input::get('endereco');
-				 $cliente->bairro     = Input::get('bairro');
-				 $cliente->cidade     = Input::get('cidade');
-				 $cliente->cep        = Input::get('cep');
-				 $cliente->uf         = Input::get('uf');
-
-				 $cliente->telefone   = Input::get('telefone');
-				 $cliente->celular    = Input::get('celular');
-				 $cliente->email      = Input::get('email');
-				 $cliente->ie         = Input::get('ie');
-				 $cliente->cnpj       = Input::get('cnpj');
-
-			$cliente->save();
-
+			Cliente::where('id', $id)->update($this->post_to_array($this->table_fields));
 				 //Show success message         
 					$alert[] = [   'class' => 'alert-success', 'message'   => 'Cliente atualizado com sucesso!' ];
 				 Session::flash('alerts', $alert);
