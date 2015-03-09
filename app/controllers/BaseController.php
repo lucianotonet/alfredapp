@@ -15,4 +15,12 @@ class BaseController extends Controller {
 		}
 	}
 
+	protected function post_to_array($array){
+		$data = array();
+		foreach ($array as $value) {
+			$data[$value] = Input::get($value);
+		}
+		return $data;
+	}
+
 }
