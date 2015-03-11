@@ -28,19 +28,7 @@
 					<div class="btn-group btn-group-sm pull-right">
 						<!-- <a href="{{url('tarefas/create')}}" class="btn btn-success"><i class="fa fa-plus"></i> Adicionar</a> -->
 						<a class="btn btn-default btn-sm" data-toggle="modal" href='#tarefas_create'><i class="fa fa-plus"></i> Adicionar</a>
-<<<<<<< HEAD
-						
-=======
-						<div class="modal fade" id="tarefas_create">
-							<div class="modal-dialog">
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-								@include('tarefas.panels.create')
 
-							</div>
-						</div>
-
-					
->>>>>>> 629f3336b520499722b2d65a83ad3b56608ac9d8
 						<a href="{{url('tarefas')}}" class="btn btn-sm btn-default"><i class="fa fa-list"></i> Ver todas</a>
 					</div>
 					<h3 class="panel-title title">Próximas tarefas</h3>
@@ -120,8 +108,6 @@
 				
 		</div> 	
 	</div>
-<<<<<<< HEAD
-
 
 	<div class="modal fade" id="tarefas_create">
 		<div class="modal-dialog">
@@ -130,8 +116,6 @@
 
 		</div>
 	</div>
-=======
->>>>>>> 629f3336b520499722b2d65a83ad3b56608ac9d8
 		
 @stop
 

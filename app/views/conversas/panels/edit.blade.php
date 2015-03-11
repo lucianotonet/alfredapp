@@ -45,11 +45,7 @@
                                <h4 class="title text-left">Data</h4>
                             </div>
                             <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 border-left">                      
-<<<<<<< HEAD
-                                <input type="date" class="datepicker form-control input-lg h4 title" name="data" value="{{ $conversa->data }}" max="{{ $conversa->creadet_at }}">
-=======
                                 <input type="date" class="form-control input-lg h4 title" name="data" value="{{ $conversa->data }}" max="{{ $conversa->creadet_at }}">
->>>>>>> 629f3336b520499722b2d65a83ad3b56608ac9d8
                             </div>
                         </div>
                         
@@ -79,11 +75,7 @@
                                <h4 class="title text-left">Previsão de compra</h4>
                             </div>
                             <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 border-left">   
-<<<<<<< HEAD
                                 <input type="date" name="previsao_compra" class="datepicker form-control input-lg" value="{{$conversa->previsao_compra}}"/> 
-=======
-                                <input type="date" name="previsao_compra" class="form-control input-lg h4 title" value="{{$conversa->previsao_compra}}"/> 
->>>>>>> 629f3336b520499722b2d65a83ad3b56608ac9d8
                                 <br>       
                             </div>
                         </div>
@@ -94,11 +86,8 @@
                                <h4 class="title text-left">Previsão de instalação</h4>
                             </div>
                             <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 border-left">    
-<<<<<<< HEAD
                                 <input type="date" name="previsao_instalacao" class="datepicker form-control input-lg" value="{{$conversa->previsao_instalacao}}"/>        
-=======
-                                <input type="date" name="previsao_instalacao" class="form-control input-lg h4 title" value="{{$conversa->previsao_instalacao}}"/>        
->>>>>>> 629f3336b520499722b2d65a83ad3b56608ac9d8
+
                                 <br>
                             </div>
                         </div>

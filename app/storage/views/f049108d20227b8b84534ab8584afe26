@@ -1,1 +1,0 @@
-<?php echo HTML::ul($emails); ?>
