@@ -35,13 +35,13 @@
                     <div class="form-group">
                         <label for="start" class="col-sm-3 control-label">Prazo</label>
                         <div class="col-sm-9">
-                            <input type="date" class="form-control" id="start" name="tarefa_date" value="{{date('Y-m-d')}}">
+                            <input type="date" class="datepicker form-control" id="start" name="tarefa_date" value="{{date('Y-m-d')}}">
                         </div>
                     </div>                    
                 </div>
                 <!-- <div id="add_tarefa" class="collapse colapsed in bg-info modal-body">
                     <div class="form-control-static form-control-inline">
-                        <input type="date" class="form-control" id="date" name="tarefa" value="" >
+                        <input type="date" class="datepicker form-control" id="date" name="tarefa" value="" >
                     </div>
                 </div> -->
                 <div class="modal-footer">

@@ -1,5 +1,5 @@
 <?php
-
+use Carbon\Carbon as Carbon;
 /*
 |--------------------------------------------------------------------------
 | Application & Route Filters
@@ -66,16 +66,16 @@ App::before(function($request)
 	}
 
 
-	  $notifications = Notification::where('status',0)->get();
-	  $notifications = $notifications->filter(function($notification){
-	      $date = Carbon::createFromFormat('Y-m-d H:i:s', $notification->date);
-	      if( $date->isToday() || $date->isPast() ){
-	          return $notification;
-	      }
-	  });
-	  if($notifications ){
-	     Session::put('notifications', $notifications);
-	  };
+	$notifications = Notification::where('status',0)->get();
+	$notifications = $notifications->filter(function($notification){
+		$date = Carbon::createFromFormat('Y-m-d H:i:s', $notification->date);
+		if( $date->isToday() || $date->isPast() ){
+			return $notification;
+		}
+	});
+	if($notifications ){
+		Session::put('notifications', $notifications);
+	};
 
 	  
 });

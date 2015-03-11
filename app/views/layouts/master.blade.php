@@ -43,6 +43,9 @@
 
     {{ HTML::style('css/jquery.dynatable.css') }}
 
+    {{ HTML::style('css/bootstrap-datepicker3.min.css') }}
+
+
     <!-- Custom styles -->
     {{ HTML::style('css/style.css') }}
 
@@ -128,41 +131,8 @@
         </div>
 <?php } ?>
 
-<?php 
-// // Alert
-// $alert = array(                     
-//     'alert-success' => array(
-//                             'message'   => '<strong><i class="fa fa-check"></i></strong> Relatório gerado!',
-//                             'links'     =>  array(
-//                                                 'btn-success' => array(                                                                  
-//                                                                        'text'   => 'Ver relatório',
-//                                                                        'link'   => 'http://ver'
-//                                                                     ),
-//                                                 'btn-danger' => array(                                                                  
-//                                                                        'text'   => 'teste',
-//                                                                        'link'   => 'http://exclur'
-//                                                                     )
-//                                             )
-//                         )
-// );
-// Session::flash('alerts', $alert);   
-
-// $alerts[] = [ 'class' => 'alert-success', 'message'   => '<strong><i class="fa fa-check"></i></strong> E-mail enviado para XXXX!' ];
-// $alerts[] = [ 'class' => 'alert-danger', 'message'   => '<strong><i class="fa fa-check"></i></strong> E-mail não enviado para XXXX!' ];
-// $alerts[] = [   'class' => 'alert-danger',
-//                 'message'   => '<strong><i class="fa fa-check"></i></strong> E-mail não enviado para XXXX!',
-//                 'links'     =>  [ 'btn-success' =>  [   'text'   => 'Ver relatório', 'link'   => 'http://ver' ] ],
-//                                 [ 'btn-danger'  =>  [   'text'   => 'teste',         'link'   => 'http://exclur' ] ]
-//             ];
-// Session::flash('alerts', $alerts);  
-
-?>
 
     @if (Session::has('alerts'))
-
-        <!-- <pre>
-        <?php print_r(Session::get('alerts')) ?>
-        </pre> -->
 
         <div class="container">
         @foreach (Session::get('alerts') as $alert)
@@ -196,8 +166,7 @@
 
     
 <?php
-    // $notifications = Notification::where('status', 1);
-    // print_r($notifications);
+    
     if(Confide::user()){ //SE ESTIVER LOGADO... ?>
 
     @if  ( Session::has('notifications') )
@@ -205,10 +174,7 @@
         
         <div class="modal fade" id="notifications_modal">
             <div class="modal-dialog">
-                <!-- <div class="modal-header bg-primary">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="title"><i class="icon-bell-o"></i> Notificações</h4>
-                </div> -->
+               
                 <div class="modal-content">                    
                     
                     <div class="alert-group" style="max-height:480px; overflow:auto;">
@@ -241,8 +207,6 @@
             {{ HTML::ul($errors->all()) }}
         </div>
     @endif
-
-
 
 
         <!-- MAIN CONTENT -->
@@ -397,6 +361,9 @@
     // echo HTML::script('js/fullcalendar/fullcalendar.js');
     // echo HTML::script('js/fullcalendar/gcal.js');
 
+    echo HTML::script('js/bootstrap-datepicker.min.js');
+    echo HTML::script('js/locales/bootstrap-datepicker.pt-BR.min.js');
+
 
     echo HTML::script('js/jquery-notifyjs/notify.min.js');
     echo HTML::script('js/jquery-notifyjs/styles/metro/notify-metro.js');
@@ -409,10 +376,16 @@
     ?>
 
     @yield('scripts')
-    
-    {{ HTML::script('js/app.js') }}  
 
-     
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-33871454-5', 'auto');
+        ga('send', 'pageview');
+    </script>
 
 </body>
 </html>

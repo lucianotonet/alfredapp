@@ -53,6 +53,10 @@
     <?php echo HTML::style('css/jquery.dynatable.css'); ?>
 
 
+    <?php echo HTML::style('css/bootstrap-datepicker3.min.css'); ?>
+
+
+
     <!-- Custom styles -->
     <?php echo HTML::style('css/style.css'); ?>
 
@@ -256,7 +260,24 @@
     <?php endif; ?>
 
 
-
+ <div class="well">
+        <div style="width:330px;float:left;">
+            <div id="webcam">
+            </div>
+            <div style="margin:5px;">                
+                <select id="cameraNames" size="1" style="width:245px;font-size:10px;height:25px;">
+                </select>
+            </div>
+        </div>
+        <div style="width:135px;float:left;">
+            <p><button class="btn btn-small" id="btn1" >Snapshot to form</button></p>
+            <p><button class="btn btn-small" id="btn2" >Snapshot to image</button></p>
+        </div>
+        <div style="width:200px;float:left;">
+            <p><textarea id="formfield" style="width:190px;height:70px;"></textarea></p>
+            <p><img id="image" style="width:200px;height:153px;"/></p>
+        </div>
+    </div>
 
         <!-- MAIN CONTENT -->
         <?php echo $__env->yieldContent('content'); ?>
@@ -410,11 +431,18 @@
     // echo HTML::script('js/fullcalendar/fullcalendar.js');
     // echo HTML::script('js/fullcalendar/gcal.js');
 
+    echo HTML::script('js/bootstrap-datepicker.min.js');
+    echo HTML::script('js/locales/bootstrap-datepicker.pt-BR.min.js');
+
 
     echo HTML::script('js/jquery-notifyjs/notify.min.js');
     echo HTML::script('js/jquery-notifyjs/styles/metro/notify-metro.js');
 
     echo HTML::script('js/notifications.js');
+
+    // Script CAM
+    echo HTML::script('http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js');
+    echo HTML::script('js/ScriptCam-master/scriptcam.js');
 
     echo HTML::script('js/scripts.js');
 
@@ -422,10 +450,16 @@
     ?>
 
     <?php echo $__env->yieldContent('scripts'); ?>
-    
-    <?php echo HTML::script('js/app.js'); ?>  
 
-     
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-33871454-5', 'auto');
+        ga('send', 'pageview');
+    </script>
 
 </body>
 </html>

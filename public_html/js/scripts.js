@@ -644,11 +644,21 @@
         e.preventDefault();
         $('input.checkbox').attr('checked', 'checked');        
     });
-    
 
-        // $('.fa-led').addClass('success');
-        // $('.fa-led').removeClass('danger');    
-    //console.log('Document ready!');
+
+    /*
+        DATEPICKER
+    */
+    $('input[type="date"]').datepicker({
+        format: "yyyy-mm-dd",
+        language: "pt-BR",
+        orientation: "top left",
+        autoclose: true,
+        todayHighlight: true
+    });
+
+
+    console.log('Document ready!');
 
 })(jQuery);
 
@@ -656,7 +666,7 @@
 
 $(window).load(function (){
     $('.loading').addClass('fadeOut');    
-    //console.log('Window load!');
+    console.log('Window load!');
 });
 
 

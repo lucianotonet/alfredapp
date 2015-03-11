@@ -84,7 +84,7 @@ class ConversasController extends \BaseController {
             $alert[] = [   'class' => 'alert-success', 'message'   => '<strong><i class="fa fa-check"></i></strong>Conversa salva com sucesso!' ];            
             
             // AGENDAR PRÓXIMA CONVERSA
-            if( isset( $data['tarefa_title'] ) ){
+            if( isset( $data['tarefa_title'] ) and !empty($data['tarefa_title']) ){
                $cliente = Cliente::find($data['cliente_id']);
 
                if( !empty($data['tarefa_title']) ){ $tarefa_title = $data['tarefa_title']; }

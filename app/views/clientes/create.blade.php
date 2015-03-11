@@ -1,6 +1,5 @@
 @extends('layouts.master')
 
-
 @section('content')
 
     <div class="container">
@@ -11,6 +10,11 @@
 
 @stop       
 
-@section('dock')
-    
+@section('scripts')
+
+	<script> 
+	    $(document).ready(function() {			
+		});
+	</script> 
+
 @stop
