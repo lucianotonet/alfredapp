@@ -3,13 +3,23 @@
     <!-- <span class="loading white pull-left"></span> -->        
         <h3 class="title">ADICIONAR CLIENTE</h3>        
     </div>
+<<<<<<< HEAD
 
+<<<<<<< HEAD
+=======
+ 
+=======
+>>>>>>> 629f3336b520499722b2d65a83ad3b56608ac9d8
+>>>>>>> 1f02b56a2c906a3f38c8bc0d9b0a7c6fa5b38cce
     <div class="panel-body">
                         
 
             {{ Form::open(array('url' => 'clientes', 'id' => 'cliente_create')) }}
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 629f3336b520499722b2d65a83ad3b56608ac9d8
                 <div class="row">
                     <div class="col col-md-12">
                         <div class="form-group form-group-lg">
