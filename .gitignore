@@ -15,3 +15,4 @@ Thumbs.db
 
 /app/config/database.php
 /bootstrap/start.php
+public_html/pdf
