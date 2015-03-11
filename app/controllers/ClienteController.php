@@ -26,66 +26,7 @@ class ClienteController extends \BaseController {
 	public function index()
 	{           
 
-		//$conversas = new CreateConversasTable;
-		//$conversas->down();
-		//$conversas->up();
 
-			// Excel::load('contacts.csv', function($reader) {
-
-			//     // Getting all results
-			//    $results = $reader->get();
-			//    print_r($results);
-			//    exit;
-
-			// });
-
-			// //Session::flush();
-			// $alert = array(
-			//             'alert-warning' => 'teste de warning',
-			//             'alert-success' => 'teste de mensagem de sucesso'
-			//          );
-			// Session::flash('alerts', $alert);
-
-
-
-			// function random_lipsum($amount = 1, $what = 'paras', $start = 0) {
-			//    return simplexml_load_file("http://www.lipsum.com/feed/xml?amount=$amount&what=$what&start=$start")->lipsum;
-			// };
-		 
-			// $cliente = new Cliente;
-			// $cliente->name       = random_lipsum('2', 'words', 0);
-			// $cliente->email      = random_lipsum('2', 'words', 1);
-			// $cliente->address    = random_lipsum('2', 'paras', 1);
-			// $cliente->save();
-
-
-			//CreateClientesTable
-			//$clientesBKP = Cliente::all();
-
-
-			// $clientes = new CreateClientesTable;
-			// $clientes->down();
-			// //sleep(3);
-			// $clientes->up();
-
-			// $faker = Faker::create('pt_BR');
-			// $faker->addProvider(new \Faker\Provider\pt_BR\Person($faker));
-			// foreach(range(1, 250) as $index)
-			// {
-			//    // FAKE CLIENTS
-			//    Cliente::create([            
-			//                   'nome'              => $faker->firstName() . " " . $faker->lastName(),
-			//                   'empresa'           => $faker->company(),            
-			//                   'endereco'          => $faker->streetAddress(),
-			//                   'cidade'            => $faker->city(),
-			//                   'uf'                => $faker->stateAbbr(),
-			//                   'telefone'          => $faker->phoneNumber(),            
-			//                   'celular'           => $faker->phoneNumber(),            
-			//                   'email'             => $faker->email()
-			//              ]);
-			// };
-			// echo 'feito';
-			// exit;
 
 			if( Request::ajax() ){
 				 $query = Input::get('query');         
@@ -143,21 +84,7 @@ class ClienteController extends \BaseController {
 				 }
 
 				 
-				 // $clientes = Cliente::find()
-
-				 //$teste = Pedido::with('cliente')->groupBy('cliente_id')->take(10)->get();
-
-
-
-				 // echo "<pre>";
-				 // print_r($items);
-				 // echo "</pre>";
-				 // exit;
-
-
-				 // $clientes->topten = Cliente::has('pedidos','>',2)->orderBy('name')->take(10)->get(); 
-
-				 // load the view and pass the clientes
+				
 				 return View::make('clientes.index')
 						->with('clientes', $clientes);
 			}
@@ -182,7 +109,7 @@ class ClienteController extends \BaseController {
 		return View::make('clientes.create');
 
 	}
-
+	
 
 	/**
 	 * Store a newly created resource in storage.

@@ -14,5 +14,6 @@ composer.lock
 Thumbs.db
 
 /app/config/database.php
+/app/storage/views/
 /bootstrap/start.php
 public_html/pdf/

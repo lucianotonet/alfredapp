@@ -644,7 +644,6 @@
         e.preventDefault();
         $('input.checkbox').attr('checked', 'checked');        
     });
-<<<<<<< HEAD
 
 
     /*
@@ -660,13 +659,6 @@
 
 
     console.log('Document ready!');
-=======
-    
-
-        // $('.fa-led').addClass('success');
-        // $('.fa-led').removeClass('danger');    
-    //console.log('Document ready!');
->>>>>>> 629f3336b520499722b2d65a83ad3b56608ac9d8
 
 })(jQuery);
 
@@ -674,11 +666,9 @@
 
 $(window).load(function (){
     $('.loading').addClass('fadeOut');    
-<<<<<<< HEAD
+
     console.log('Window load!');
-=======
-    //console.log('Window load!');
->>>>>>> 629f3336b520499722b2d65a83ad3b56608ac9d8
+
 });
 
 

@@ -143,41 +143,8 @@
         </div>
 <?php } ?>
 
-<?php 
-// // Alert
-// $alert = array(                     
-//     'alert-success' => array(
-//                             'message'   => '<strong><i class="fa fa-check"></i></strong> Relatório gerado!',
-//                             'links'     =>  array(
-//                                                 'btn-success' => array(                                                                  
-//                                                                        'text'   => 'Ver relatório',
-//                                                                        'link'   => 'http://ver'
-//                                                                     ),
-//                                                 'btn-danger' => array(                                                                  
-//                                                                        'text'   => 'teste',
-//                                                                        'link'   => 'http://exclur'
-//                                                                     )
-//                                             )
-//                         )
-// );
-// Session::flash('alerts', $alert);   
-
-// $alerts[] = [ 'class' => 'alert-success', 'message'   => '<strong><i class="fa fa-check"></i></strong> E-mail enviado para XXXX!' ];
-// $alerts[] = [ 'class' => 'alert-danger', 'message'   => '<strong><i class="fa fa-check"></i></strong> E-mail não enviado para XXXX!' ];
-// $alerts[] = [   'class' => 'alert-danger',
-//                 'message'   => '<strong><i class="fa fa-check"></i></strong> E-mail não enviado para XXXX!',
-//                 'links'     =>  [ 'btn-success' =>  [   'text'   => 'Ver relatório', 'link'   => 'http://ver' ] ],
-//                                 [ 'btn-danger'  =>  [   'text'   => 'teste',         'link'   => 'http://exclur' ] ]
-//             ];
-// Session::flash('alerts', $alerts);  
-
-?>
 
     <?php if(Session::has('alerts')): ?>
-
-        <!-- <pre>
-        <?php print_r(Session::get('alerts')) ?>
-        </pre> -->
 
         <div class="container">
         <?php foreach(Session::get('alerts') as $alert): ?>
@@ -212,8 +179,7 @@
 
     
 <?php
-    // $notifications = Notification::where('status', 1);
-    // print_r($notifications);
+    
     if(Confide::user()){ //SE ESTIVER LOGADO... ?>
 
     <?php if( Session::has('notifications') ): ?>
@@ -221,10 +187,7 @@
         
         <div class="modal fade" id="notifications_modal">
             <div class="modal-dialog">
-                <!-- <div class="modal-header bg-primary">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="title"><i class="icon-bell-o"></i> Notificações</h4>
-                </div> -->
+               
                 <div class="modal-content">                    
                     
                     <div class="alert-group" style="max-height:480px; overflow:auto;">
@@ -259,25 +222,6 @@
         </div>
     <?php endif; ?>
 
-
- <div class="well">
-        <div style="width:330px;float:left;">
-            <div id="webcam">
-            </div>
-            <div style="margin:5px;">                
-                <select id="cameraNames" size="1" style="width:245px;font-size:10px;height:25px;">
-                </select>
-            </div>
-        </div>
-        <div style="width:135px;float:left;">
-            <p><button class="btn btn-small" id="btn1" >Snapshot to form</button></p>
-            <p><button class="btn btn-small" id="btn2" >Snapshot to image</button></p>
-        </div>
-        <div style="width:200px;float:left;">
-            <p><textarea id="formfield" style="width:190px;height:70px;"></textarea></p>
-            <p><img id="image" style="width:200px;height:153px;"/></p>
-        </div>
-    </div>
 
         <!-- MAIN CONTENT -->
         <?php echo $__env->yieldContent('content'); ?>
@@ -439,10 +383,6 @@
     echo HTML::script('js/jquery-notifyjs/styles/metro/notify-metro.js');
 
     echo HTML::script('js/notifications.js');
-
-    // Script CAM
-    echo HTML::script('http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js');
-    echo HTML::script('js/ScriptCam-master/scriptcam.js');
 
     echo HTML::script('js/scripts.js');
 
