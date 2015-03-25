@@ -26,18 +26,16 @@ class EmailsController extends \BaseController {
 	 */
 	public function create()
 	{
-		$owner_type = ( isset( $_GET['owner_type'] ) ) ? $_GET['owner_type'] : NULL;
-		$owner_id	= ( isset( $_GET['owner_id'] ) )   ? $_GET['owner_id']   : NULL;
-
-		$email['owner_type']  = $owner_type;
-		$email['owner_id']    = $owner_id;
+		$email['owner_type']	= ( isset( $_GET['owner_type'] ) ) ? $_GET['owner_type'] : NULL;
+		$email['owner_id']		= ( isset( $_GET['owner_id'] ) )   ? $_GET['owner_id']   : NULL;
+		$email['mail_to'] 		= ( isset( $_GET['mail_to'] ) )    ? $_GET['mail_to']    : NULL;
 
 		/*
 				SWITCH	RESOURCE
 		*/
-		switch ($owner_type) {
+		switch ( $email['owner_type'] ) {
 			case 'pedido':
-				$resource = Pedido::find( $owner_id );
+				$resource = Pedido::find( $email['owner_id'] );
 				if( $resource ){
 					$email['subject']  	  = "Pedido nº".$resource->id . " - ".@$resource->cliente->nome." (".@$resource->cliente->empresa.")";	  						
 					$email['message']  	  = "Segue pedido nº". $resource->id ." de '".@$resource->cliente->nome."' da empresa '".@$resource->cliente->empresa."'";  
@@ -46,14 +44,14 @@ class EmailsController extends \BaseController {
 					if (Request::ajax()) {
 						$alert = '<div class="alert alert-danger">
 									<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-									<strong><i class="fa fa-warning"></i></strong> O pedido n°'.$owner_id.' não existe!
+									<strong><i class="fa fa-warning"></i></strong> O pedido n°'.$email['owner_id'].' não existe!
 								 </div>';
 						return $alert;
 					}else{
 						// Alert
 						$alert[] = array(                     
 		 							'class'		=>	'alert-danger',
-		                            'message'   => '<strong><i class="fa fa-warning"></i></strong> O pedido n°'.$owner_id.' não existe!'
+		                            'message'   => '<strong><i class="fa fa-warning"></i></strong> O pedido n°'.$email['owner_id'].' não existe!'
 		                        );
 						Session::flash('alerts', $alert);	
 						return Redirect::to( URL::previous() );   
@@ -62,7 +60,7 @@ class EmailsController extends \BaseController {
 				break;
 			
 			case 'relatorio':
-				$resource = Relatorio::find( $owner_id );    
+				$resource = Relatorio::find( $email['owner_id'] );    
 				if( $resource ){
 					switch ($resource->type) {
 						case 'despesas':									
@@ -86,14 +84,14 @@ class EmailsController extends \BaseController {
 					if (Request::ajax()) {
 						$alert = '<div class="alert alert-danger">
 									<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-									<strong><i class="fa fa-warning"></i></strong> O relatório n°'.$owner_id.' não existe!
+									<strong><i class="fa fa-warning"></i></strong> O relatório n°'.$email['owner_id'].' não existe!
 								 </div>';
 						return $alert;
 					}else{
 						// Alert
 						$alert[] = array(                     
 		 							'class'		=>	'alert-danger',
-		                            'message'   => '<strong><i class="fa fa-warning"></i></strong> O relatório n°'.$owner_id.' não existe!'
+		                            'message'   => '<strong><i class="fa fa-warning"></i></strong> O relatório n°'.$email['owner_id'].' não existe!'
 		                        );
 						Session::flash('alerts', $alert);	
 						return Redirect::to( URL::previous() );   
@@ -102,7 +100,7 @@ class EmailsController extends \BaseController {
 				break;
 			
 			case 'cliente':
-				$resource 		   = Cliente::find( $owner_id );  
+				$resource 		   = Cliente::find( $email['owner_id'] );  
 				if( $resource ){
 					$email['subject']  = "Dados de contato";	  						
 					$email['message']  = "Segue dados do cliente ". @$resource->nome ." (".@$resource->empresa.").";  
@@ -185,7 +183,8 @@ class EmailsController extends \BaseController {
 				break;
 			
 			default:
-				# code...
+				$view 		= 'layouts.email';
+				$resource 	= NULL;
 				break;
 		}
 

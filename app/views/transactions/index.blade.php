@@ -20,7 +20,7 @@
 			<div class="list-group-item navbar-inverse">
 				<ul class="nav nav-pills nav-justified">
 					<li role="presentation">
-						<a href="{{url('financeiro/dashboard')}}">
+						<a href="{{url('financeiro/')}}">
 							<h3 class="title">Resumo</h3>
 						</a>
 					</li>			

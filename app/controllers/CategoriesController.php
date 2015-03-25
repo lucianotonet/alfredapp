@@ -9,17 +9,27 @@ class CategoriesController extends \BaseController {
 	 */
 	public function index()
 	{
+		if( Request::ajax() ) { 
 
-		// $categories = new CreateCategoriesTable;
-		// $categories->down();
-		// $categories->up();
-		// echo "ok";
-		// exit;
-
-
-		$categories = Category::all();
-		$category 	= new Category;
-		return View::make('categories.index', compact('categories', 'category'));
+			$data = Input::all();
+			
+			$categories 		= Category::where('owner_type', @$data['owner_type'] )->where('name', 'like', '%'.@$data['query'].'%')->get();	
+			$suggestions 		= array();	
+			foreach ($categories as $category) {
+				$suggestions[] = array(
+				                       	"value"  => $category->name,
+				                       	"data"	 => array(
+				                       	               'owner_type' => $category->owner_type
+				                       	            )		 							
+				                    );				
+			}			
+ 			$categories = array( 'suggestions' => $suggestions );			
+		 	return Response::json($categories);
+		} else { 
+			$categories = Category::all();
+			$category 	= new Category;
+			return View::make('categories.index', compact('categories', 'category')); 
+		}
 	}
 
 	/**

@@ -16,27 +16,27 @@
             
             <div class="row">
 
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-12">
 
-                    <div class="form-group form-group-lg">
+                    <div class="form-group form-group">
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-briefcase"></span>
                             </div>          
 
-                            {{ Form::text('empresa', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'Empresa' ) ) }}            
+                            {{ Form::text('empresa', NULL, array('class' => 'form-control input', 'placeholder' => 'Empresa' ) ) }}            
 
                         </div>
                     </div>
 
 
-                    <div class="form-group form-group-lg">
+                    <div class="form-group form-group">
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-briefcase"></span>
                             </div>          
 
-                            {{ Form::text('nome', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'Nome' ) ) }}            
+                            {{ Form::text('nome', NULL, array('class' => 'form-control input', 'placeholder' => 'Nome' ) ) }}            
 
                         </div>
                     </div>
@@ -45,58 +45,58 @@
                     
                 <div class="col col-md-6">    
 
-                    <div class="form-group form-group-lg">
+                    <div class="form-group form-group">
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-earphone"></span>
                             </div>          
 
-                            {{ Form::text('telefone', NULL, array('class' => 'form-control input-lg mask phone', 'placeholder' => 'Telefone' ) ) }}            
+                            {{ Form::text('telefone', NULL, array('class' => 'form-control input mask phone', 'placeholder' => 'Telefone' ) ) }}            
 
                         </div>
                     </div>
 
 
-                    <div class="form-group form-group-lg">
+                    <div class="form-group form-group">
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-phone"></span>
                             </div>          
 
-                            {{ Form::text('celular', NULL, array('class' => 'form-control input-lg mask phone', 'placeholder' => 'Celular' ) ) }}            
+                            {{ Form::text('celular', NULL, array('class' => 'form-control input mask phone', 'placeholder' => 'Celular' ) ) }}            
 
                         </div>
                     </div>
 
-                    <div class="form-group form-group-lg">
+                    <div class="form-group form-group">
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-envelope"></span>
                             </div>
 
-                            {{ Form::text('email', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'E-mail' ) ) }}       
+                            {{ Form::text('email', NULL, array('class' => 'form-control input', 'placeholder' => 'E-mail' ) ) }}       
 
                         </div>
                     </div>
 
-                    <div class="form-group form-group-lg">
+                    <div class="form-group form-group">
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-envelope"></span>
                             </div>
 
-                            {{ Form::text('ie', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'IE' ) ) }}       
+                            {{ Form::text('ie', NULL, array('class' => 'form-control input mask ie', 'placeholder' => 'IE' ) ) }}       
 
                         </div>
                     </div>
 
-                    <div class="form-group form-group-lg">
+                    <div class="form-group form-group">
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-envelope"></span>
                             </div>
 
-                            {{ Form::text('cnpj', NULL, array('class' => 'form-control input-lg mask cnpj', 'placeholder' => 'CNPJ' ) ) }}       
+                            {{ Form::text('cnpj', NULL, array('class' => 'form-control input mask cnpj', 'placeholder' => 'CNPJ' ) ) }}       
 
                         </div>
                     </div>
@@ -105,41 +105,41 @@
 
                 <div class="col col-md-6">    
 
-                    <div class="form-group form-group-lg">
+                    <div class="form-group form-group">
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-earphone"></span>
                             </div>          
 
-                            {{ Form::text('endereco', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'Endereço' ) ) }}            
+                            {{ Form::text('endereco', NULL, array('class' => 'form-control input', 'placeholder' => 'Endereço' ) ) }}            
 
                         </div>
                     </div>
 
 
-                    <div class="form-group form-group-lg">
+                    <div class="form-group form-group">
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-phone"></span>
                             </div>          
 
-                            {{ Form::text('bairro', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'Bairro' ) ) }}            
+                            {{ Form::text('bairro', NULL, array('class' => 'form-control input', 'placeholder' => 'Bairro' ) ) }}            
 
                         </div>
                     </div>
 
-                    <div class="form-group form-group-lg">
+                    <div class="form-group form-group">
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-envelope"></span>
                             </div>
 
-                            {{ Form::text('cidade', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'Cidade' ) ) }}       
+                            {{ Form::text('cidade', NULL, array('class' => 'form-control input', 'placeholder' => 'Cidade' ) ) }}       
 
                         </div>
                     </div>
 
-                    <div class="form-group form-group-lg">                    
+                    <div class="form-group form-group">                    
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-map-marker"></span>
@@ -177,18 +177,18 @@
                                     )
                             ?>                
 
-                            {{ Form::select('uf', $estados, $cliente->estado, array('class'=>'form-control input-lg') ) }}
+                            {{ Form::select('uf', $estados, $cliente->estado, array('class'=>'form-control input') ) }}
                             
                         </div>                    
                     </div>
 
-                    <div class="form-group form-group-lg">
+                    <div class="form-group form-group">
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-map-marker"></span>
                             </div>
 
-                            {{ Form::text('cep', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'CEP' ) ) }}       
+                            {{ Form::text('cep', NULL, array('class' => 'form-control input mask cep', 'placeholder' => 'CEP' ) ) }}       
 
                         </div>
                     </div>
@@ -203,19 +203,19 @@
         <div class="panel-footer">
 
             <div class="btn-toolbar" role="toolbar">
-                <div class="btn-group btn-group-lg pull-left">
-                    <a href="{{ url('/clientes') }}" class="btn btn-primary btn-brick">
+                <div class="btn-group btn-group pull-left">
+                    <a href="{{ url('/clientes') }}" class="btn btn-primary">
                         <i class="fa fa-chevron-left"></i> Voltar
                     </a>                
                 </div>
-                <div class="btn-group btn-group-lg pull-right">               
-                    <a class="btn btn-danger btn-brick" onclick="return teste()">
+                <div class="btn-group btn-group pull-right">               
+                    <a class="btn btn-danger" onclick="return teste()">
                         <i class="fa fa-times"></i> Excluir
                     </a>
-                    <button type="reset" class="btn btn-info btn-brick">
+                    <button type="reset" class="btn btn-info">
                         <i class="fa fa-undo"></i> Corrigir
                     </button>
-                    <button type="submit" class="btn btn-success btn-brick">
+                    <button type="submit" class="btn btn-success">
                         <i class="fa fa-check"></i> Salvar
                     </button>
                 </div>

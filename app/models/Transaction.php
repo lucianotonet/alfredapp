@@ -10,7 +10,7 @@ class Transaction extends Eloquent {
 	                            'recurring_type', 
 	                            'recurring_times', 
 	                            'recurring_cycle', 	                            
-	                            'owner_type',
+	                            'recurring_transaction_id', 	
 	                            'amount',
 	                            'date',
 
@@ -22,22 +22,33 @@ class Transaction extends Eloquent {
 	protected $visible = array(
 	                           'recurring_type', 
 	                           'recurring_times', 
-	                           'recurring_cycle', 	                           
-	                           'owner_id', 
-	                           'owner_type',
+	                           'recurring_cycle', 	                           	                          
+	                           'recurring_transaction_id',
 	                           'amount',
 	                           'date'	                           
 	                        );
 
-	public function getCategories()
+	public function getCategory()
 	{
-		return $this->hasOne('Category', 'category_id');
+		return $this->belongsTo('category');
+	}
+
+	public function getMasterTransaction()
+	{
+		return $this->belongsTo('Transaction', 'recurring_transaction_id');
 	}
 
 	public function getRecurringTransactions()
 	{
-		return $this->hasMany('Transaction', 'transaction_id');
+		return $this->hasMany('Transaction', 'recurring_transaction_id', 'recurring_transaction_id');
+		// if( $this->id == $this->recurring_transaction_id ){
+		// 	return $this->hasMany('Transaction', 'recurring_transaction_id');		
+		// }else{
+		// 	return $this->getMasterTransaction->hasMany('Transaction', 'recurring_transaction_id');
+		// }
+
 	}
+
 
 	public function isOverdue()
 	{

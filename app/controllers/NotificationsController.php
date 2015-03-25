@@ -259,8 +259,8 @@ class NotificationsController extends \BaseController {
     * @param  int  $id
     * @return Response
     */
-   public function clean()
-   {
+    public function clean()
+    {
 		// $schema = new CreateNotificationsTable;
 		// $schema->up();
 		$notifications = Notification::where('status', 1)->get();
@@ -275,7 +275,7 @@ class NotificationsController extends \BaseController {
 	
 		return Redirect::to( URL::previous() );        
 
-   }
+    }
 
 
 }

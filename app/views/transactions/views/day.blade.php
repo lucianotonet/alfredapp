@@ -37,7 +37,7 @@
 	<div class="panel-body text-center bg-info">	
 		<div class="form-group"></div>
 		<div class="form-group">
-			Nenhum lançamento para {{$title}}					
+			Nenhum lançamento em {{$title}}					
 		</div>
 	</div>									
 

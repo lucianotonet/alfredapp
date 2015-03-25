@@ -383,8 +383,16 @@
      *  MASK INPUTS
      */
     $(".mask.date").mask("99/99/9999");
-    $(".mask.phone").mask("(99) 9999-9999");
-    $(".mask.ie").mask("");
+    $(".mask.phone").mask("(99) Z9999-9999", {
+                                                clearIfNotMatch: false, 
+                                                placeholder: "(**) ____-____", 
+                                                translation:  {'Z': {
+                                                    pattern: /[0-9]/, 
+                                                    optional: true}
+                                                } 
+                                            } );
+    $(".mask.cnpj").mask("99.999.999/9999-99");
+    $(".mask.cep").mask("99999-999");
  
 
     /**
@@ -439,7 +447,14 @@
     //LIMPA MODALS
     $('body').on('hidden.bs.modal', '.modal', function () {
         $(this).removeData('bs.modal');
+        $(this).find('.modal-content').html( $('.loading-splash').html() );
+    });
 
+    $('body').on('show.bs.modal', '.modal', function () {
+        $('.loading').addClass('fadeIn');            
+    });
+    $('body').on('loaded.bs.modal', '.modal', function () {
+        $('.loading').addClass('fadeOut');            
     });
 
     // Time ago
@@ -652,7 +667,7 @@
     $('input[type="date"]').datepicker({
         format: "yyyy-mm-dd",
         language: "pt-BR",
-        orientation: "top left",
+        orientation: "top right",
         autoclose: true,
         todayHighlight: true
     });
@@ -666,9 +681,7 @@
 
 $(window).load(function (){
     $('.loading').addClass('fadeOut');    
-
     console.log('Window load!');
-
 });
 
 
@@ -816,6 +829,6 @@ $(function () {
 
         $(document).on('click', '.btn-add', addFormGroup);
         $(document).on('click', '.btn-remove', removeFormGroup);
-        $(document).on('click', '.dropdown-menu a', selectFormGroup);
+        // $(document).on('click', '.dropdown-menu a', selectFormGroup);
 
     });    

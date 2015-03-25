@@ -83,10 +83,12 @@ p.text-center img.img-responsive{
 		</label> 
 
 		<br>
+
+		@if ( Config::get('settings.app_allow_register') )
 		<p class="text-center">
 			<a href="{{ url('users/create') }}" class="btn btn-link">Novo cadastro</a>
 		</p>      
-
+		@endif
 
 	</form>
 

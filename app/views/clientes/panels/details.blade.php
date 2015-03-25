@@ -116,7 +116,13 @@
                                         </tr>
                                         <tr>
                                             <td class="text-right"><strong>E-mail</strong></td>
-                                            <td>{{$cliente->email}}</td>
+                                            <td>
+                                                <?php if( isset($cliente->email) ){ ?>
+                                                    <a href="{{ url( '/emails/create/?mail_to='.$cliente->email ) }}" class="btn btn-link send" data-toggle="modal" data-target="#email">
+                                                        {{$cliente->email}}
+                                                    </a>
+                                                <?php } ?>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>

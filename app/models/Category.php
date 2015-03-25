@@ -14,7 +14,7 @@ class Category extends Eloquent {
 
 	public function getTransactions()
 	{
-		return $this->hasMany('Transaction', 'category_id');
+		return $this->hasMany('Transaction');
 	}
 
 }

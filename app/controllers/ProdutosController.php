@@ -17,7 +17,8 @@ class ProdutosController extends \BaseController {
    		// echo "OK";
    		// exit;
 
-		$produtos 	= Produto::all();  
+		$produtos 	= Produto::orderby('cod', 'ASC')->get();  
+
 		$categories = Category::where('owner_type','Produto')->get();
 
 		foreach ($produtos as $produto) {

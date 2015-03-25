@@ -24,11 +24,11 @@ $app = new Illuminate\Foundation\Application;
 |
 */
 
-$env = $app->detectEnvironment(array(
+$env = $app->detectEnvironment(function ()
+{
+    return require __DIR__.'/environment.php';
+});
 
-	'local' => array('Note.local'),
-
-));
 
 /*
 |--------------------------------------------------------------------------

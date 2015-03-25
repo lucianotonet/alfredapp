@@ -50,6 +50,29 @@ App::before(function($request)
 	if( !Schema::hasTable('despesas') ){
 
 	};
+	// if( !Schema::hasTable('users') ){
+	// 	echo "A tabela USERS não existe";
+	// 	$users_table = new ConfideSetupUsersTable;
+	// 	$users_table->up();
+	// 	if( !Schema::hasTable('users') ){
+	// 		echo "<br/> Tentei criar mas não deu...";
+	// 		exit;
+	// 	}else{
+	// 		echo "<br/> Creir a tabela pra você!";
+	// 	}
+	// };
+	// if( !Schema::hasTable('notifications') ){
+	// 	echo "A tabela notifications não existe";
+	// 	$notifications_table = new CreateNotificationsTable;
+	// 	$notifications_table->up();
+	// 	if( !Schema::hasTable('notifications') ){
+	// 		echo "<br/> Tentei criar mas não deu...";
+	// 		exit;
+	// 	}else{
+	// 		echo "<br/> Criei a tabela pra você!";
+	// 	}
+	// };
+
 
 
 	if( Confide::user() ){

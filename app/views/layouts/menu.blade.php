@@ -39,7 +39,7 @@
             </a>
         </li>        
         <li class="active">
-            <a href="<?php echo url('/financeiro/dashboard'); ?>">
+            <a href="<?php echo url('/financeiro/'); ?>">
                 <i class="fa fa-money"></i> Financeiro 
             </a>
         </li>        

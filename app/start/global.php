@@ -1,5 +1,15 @@
 <?php
 
+$languages = ['pt','en'];
+$locale = Request::segment(1);
+
+if( in_array($locale, $languages) ){
+    App::setLocale($locale);
+} 
+else {
+    $locale = null;
+}
+
 /*
 |--------------------------------------------------------------------------
 | Register The Laravel Class Loader

@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://lucianotonet.com/alfredapp',
+	'url' => 'http://localhost',
 
 	/*
 	|--------------------------------------------------------------------------

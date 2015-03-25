@@ -14,13 +14,13 @@
                         <div class="form-group form-group-lg">
                             <div class="input-group">
                                 <div class="input-group-addon">@</div>                      
-                                <input type="text" class="form-control input-lg" id="" placeholder="Empresa" name="empresa" required>
+                                <input type="text" class="form-control " id="" placeholder="Empresa" name="empresa" required>
                             </div>
                         </div>
                         <div class="form-group form-group-lg">
                             <div class="input-group">
                                 <div class="input-group-addon">@</div>
-                                <input type="text" class="form-control input-lg" id="" placeholder="Nome" name="nome">
+                                <input type="text" class="form-control " id="" placeholder="Nome" name="nome">
                             </div>
                         </div>
                     </div>
@@ -30,32 +30,32 @@
                         <div class="form-group form-group-lg">
                             <div class="input-group">
                                 <div class="input-group-addon">@</div>
-                                <input type="text" class="form-control input-lg" id="" placeholder="Telefone" name="telefone">
+                                <input type="text" class="form-control mask phone" id="" placeholder="Telefone" name="telefone">
                             </div>
                         </div>
                         <div class="form-group form-group-lg">
                             <div class="input-group">
                                 <div class="input-group-addon">@</div>
-                                <input type="text" class="form-control input-lg" id="" placeholder="Celular" name="celular">
+                                <input type="text" class="form-control mask phone" id="" placeholder="Celular" name="celular">
                             </div>
                         </div>
                         <div class="form-group form-group-lg">
                             <div class="input-group">
                                 <div class="input-group-addon">@</div>
-                                <input type="text" class="form-control input-lg" id="" placeholder="E-mail" name="email">
+                                <input type="text" class="form-control " id="" placeholder="E-mail" name="email">
                             </div>
                         </div>
                         <!-- Extra -->
                         <div class="form-group form-group-lg">
                             <div class="input-group">
                                 <div class="input-group-addon">@</div>
-                                <input type="text" class="form-control input-lg" id="" placeholder="IE (Inscrição Estadual)" name="ie">
+                                <input type="text" class="form-control " id="" placeholder="IE (Inscrição Estadual)" name="ie">
                             </div>
                         </div>
                         <div class="form-group form-group-lg">
                             <div class="input-group">
                                 <div class="input-group-addon">@</div>
-                                <input type="text" class="form-control input-lg" id="" placeholder="CNPJ" name="cnpj">
+                                <input type="text" class="form-control mask cnpj" id="" placeholder="CNPJ" name="cnpj">
                             </div>
                         </div>  
                     </div>
@@ -64,25 +64,25 @@
                         <div class="form-group form-group-lg">
                             <div class="input-group">
                                 <div class="input-group-addon">@</div>
-                                <input type="text" class="form-control input-lg" id="" placeholder="Endereço" name="endereco">
+                                <input type="text" class="form-control " id="" placeholder="Endereço" name="endereco">
                             </div>
                         </div>
                         <div class="form-group form-group-lg">
                             <div class="input-group">
                                 <div class="input-group-addon">@</div>
-                                <input type="text" class="form-control input-lg" id="" placeholder="Bairro" name="bairro">
+                                <input type="text" class="form-control " id="" placeholder="Bairro" name="bairro">
                             </div>
                         </div>
                         <div class="form-group form-group-lg">
                             <div class="input-group">
                                 <div class="input-group-addon">@</div>
-                                <input type="text" class="form-control input-lg" id="" placeholder="Cidade" name="cidade" required>
+                                <input type="text" class="form-control " id="" placeholder="Cidade" name="cidade" required>
                             </div>                    
                         </div>
                         <div class="form-group form-group-lg">                    
                             <div class="input-group">
                                 <div class="input-group-addon">@</div>
-                                <select name="uf" id="" class="form-control input-lg">                            
+                                <select name="uf" id="" class="form-control ">                            
                                     <option value="AC">AC</option>
                                     <option value="AL">AL</option>
                                     <option value="AM">AM</option>
@@ -116,7 +116,7 @@
                         <div class="form-group form-group-lg">
                             <div class="input-group">
                                 <div class="input-group-addon">@</div>
-                                <input type="text" class="form-control input-lg" id="" placeholder="CEP" name="cep">
+                                <input type="text" class="form-control mask cep" id="" placeholder="CEP" name="cep">
                             </div>
                         </div> 
                     </div>            
@@ -128,16 +128,16 @@
         <div class="panel-footer">
 
             <div class="btn-toolbar" role="toolbar">
-                <div class="btn-group btn-group-lg pull-left">
-                    <a href="{{ url('/clientes') }}" class="btn btn-primary btn-brick">
+                <div class="btn-group pull-left">
+                    <a href="{{ url('/clientes') }}" class="btn btn-primary">
                         <i class="fa fa-chevron-left"></i> Voltar
                     </a>                
                 </div>
-                <div class="btn-group btn-group-lg pull-right">               
-                    <button type="reset" class="btn btn-info btn-brick">
+                <div class="btn-group pull-right">               
+                    <button type="reset" class="btn btn-info">
                         <i class="fa fa-undo"></i> Limpar
                     </button>
-                    <button type="submit" class="btn btn-success btn-brick">
+                    <button type="submit" class="btn btn-success">
                         <i class="fa fa-check"></i> Salvar
                     </button>
                 </div>

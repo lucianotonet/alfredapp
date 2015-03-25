@@ -22,7 +22,7 @@
                             <div class="contacts">                                
                                 <div class="form-group multiple-form-group input-group">                                        
                                     
-                                    <input type="text" name="to[]" class="form-control autocomplete" data-json="{{url('emails/getcontacts')}}" value="" required>
+                                    <input type="text" name="to[]" class="form-control autocomplete" data-json="{{url('emails/getcontacts')}}" value="{{ @$email['mail_to'] }}" required>
                                     
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-success btn-add">+</button>

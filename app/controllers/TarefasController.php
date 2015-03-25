@@ -14,21 +14,6 @@ class TarefasController extends \BaseController {
 	{
 		
 
-		// $tarefas 	   = new CreateTarefasTable;
-		// $notificationsnotificationsnotificationsnotificationsnotifications = new CreateNotificationsTable;
-		
-		// $tarefas->down();
-		// //$notifications->down();
-		// //sleep(3);
-		// $tarefas->up();
-		// $notifications->up();
-
-		// foreach ($tarefasBKP as $tarefa) {
-		// 	Tarefa::create($tarefa->toArray());
-		// }
-
-		//exit;
-
       $tarefas = Tarefa::orderBy('start', 'DESC')->with('cliente', 'notifications')->get();
 
            
@@ -107,14 +92,14 @@ class TarefasController extends \BaseController {
         if( $tarefa = Tarefa::create($data) ){
 	         
 	         // ADICIONAR NOTIFICAÇÃO
-	         if( !empty( $data['notification'] ) ){
+	         if( !empty( $data['notification'] ) AND $data['notification'] > 0 ){
 
 	            $notificationDate = Carbon::createFromFormat('Y-m-d H:i:s', $data['start'])->subDays( $data['notification'] );	            
 
-		         echo "<pre>";
-		         print_r( $data );
-		         echo "</pre>";
-		         exit;
+		         // echo "<pre>";
+		         // print_r( $data );
+		         // echo "</pre>";
+		         // exit;
 
 	            // CREATE NOTIFICACAO...
 	            Notification::create([

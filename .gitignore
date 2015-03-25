@@ -6,14 +6,17 @@ composer.phar
 
 composer.lock
 
+*.log
 .env.*.php
 
 .env.php
 .DS_Store
 
+.gitignore
 Thumbs.db
 
 /app/config/database.php
+app/config/demo/
 /app/storage/views/
 /bootstrap/start.php
-public_html/pdf/
+public_html/pdf/*

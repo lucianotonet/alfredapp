@@ -70,7 +70,7 @@
     <div class="site-overlay"></div>
 
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container">
+            <div class="container text-center">
                 <div class="pull-left">
                     
                     <div class="dropdown">
@@ -104,7 +104,7 @@
                                 
                     </a>
 
-                    <a  href="{{url('financeiro/dashboard')}}" class="btn btn-link transactions_info">
+                    <a  href="{{url('financeiro')}}" class="btn btn-link transactions_info">
 
                         <i class="icon-dollar fa-2x"></i>
                         <?php $transactions_info = count( Transaction::where('done',0)->where('date','<=', date('Y-m-d') )->where( 'user_id', Auth::id() )->get() ); ?>
@@ -118,6 +118,7 @@
                 
                 </div>
 
+                
 
                 <a id="logo" class="pull-right hidden-xs"  href="<?php echo url('/') ?>" >
 
@@ -126,10 +127,17 @@
                     <!-- <img src="{{asset('img/logo.png')}}" alt="" class="img-responsive"> -->
 
                 </a>
+                
 
             </div>
         </div>
 <?php } ?>
+
+    
+    <span class="loading animated fadeIn">
+        <img src="{{asset('img/loading.gif')}}" class="img-responsive" >
+    </span>
+
 
 
     @if (Session::has('alerts'))
@@ -175,7 +183,7 @@
         <div class="modal fade" id="notifications_modal">
             <div class="modal-dialog">
                
-                <div class="modal-content">                    
+                <div class="modal-content modal-sm">                    
                     
                     <div class="alert-group" style="max-height:480px; overflow:auto;">
                         @foreach ( Session::get('notifications') as $notification )
@@ -193,10 +201,6 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
-
-        <div class="container">
-        </div>
-        <br>
     @endif
 
 <?php } ?>
@@ -215,9 +219,25 @@
 
 
 
-    <span class="loading btn-primary animated visible fadeIn" >
+    {{-- <span class="loading btn-primary animated visible fadeIn" >
         <img src="{{asset('img/loading.gif')}}" class="img-responsive">
-    </span>
+    </span> --}}
+
+<div class="loading-splash hidden">
+    <p class="loading-splash-content text-center">
+        &nbsp;
+        <img src="{{asset('/img/preloader.gif')}}" alt="" class="preloader flat animated">
+        <br>
+        Carregando...
+    </p>
+</div>
+
+<style>
+    .loading-splash-content {
+      padding: 30px;
+      font-size: 16px;
+    }
+</style>
 
 
     <!-- EMAIL Modal -->
@@ -255,12 +275,12 @@
             </button>
           </div>
           <div class="modal-body">
-             <p class="text-center loading-splash text-center">
+            {{-- <p class="text-center loading-splash text-center">
                 <img src="{{asset('/img/preloader.gif')}}" alt="" class="preloader flat animated">
                 <br>
                 Um momento, por favor...
                 &nbsp;
-            </p>
+            </p> --}}
           </div>
           <div class="modal-body">
             <p class="text-center">
@@ -269,6 +289,31 @@
           </div>
         </div>
       </div>
+    </div>
+
+
+    <!-- Transactions modals -->
+    <div class="modal fade" id="transactions_modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="false">&times;</span><span class="sr-only">Close</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center">
+                        <img src="{{asset('/img/preloader.gif')}}" alt="" class="preloader flat animated">
+                        <br>
+                        Um momento, por favor...
+                        &nbsp;
+                    </p>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -320,7 +365,7 @@
     //echo HTML::script('js/jquery.searchable-1.0.0.min.js');
     echo HTML::script('js/jquery.autocomplete.min.js');
     echo HTML::script('js/jquery.price_format.min.js');
-    echo HTML::script('js/jquery.maskedinput.js');
+    echo HTML::script('js/jquery.mask.min.js');
     //echo HTML::script('js/tinymce/tinymce.min.js');
     
     echo HTML::style('js/bootstrap3-wysihtml5.css');
