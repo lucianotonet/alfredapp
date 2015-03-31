@@ -1113,10 +1113,7 @@ class TransactionsController extends \BaseController {
 		$transaction  	= Transaction::find($id);
 		$transactions   = $transaction->getRecurringTransactions;
 		$data 			= Input::all();
-
-		if( $transaction->getRecurringTransactions->count() > 1 ){
-
-		}
+		
 		// return View::make('transactions.create');
 		if ( Request::ajax() ){
 			return View::make('transactions.novo.delete', compact('transaction', 'transactions'));
@@ -1138,7 +1135,11 @@ class TransactionsController extends \BaseController {
 
 		$transaction  	= Transaction::find( $id );
 		
-		$transactions   = $transaction->getRecurringTransactions;
+		$transactions   = $transaction->getRecurringTransactions->filter(function( $t ){
+			if ( $t->user_id == Auth::id() ){
+				return $t;
+			}
+		});
 
 		if ( $transaction->user_id == Auth::id() ) {
 			/**
@@ -1180,7 +1181,7 @@ class TransactionsController extends \BaseController {
 					// exit;
 
 					foreach ($transactions as $t) {
-						Transaction::destroy( $t->id );			
+						$t->destroy( $t->id );			
 					}
 					break;
 

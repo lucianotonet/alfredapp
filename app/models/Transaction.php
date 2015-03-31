@@ -40,13 +40,12 @@ class Transaction extends Eloquent {
 
 	public function getRecurringTransactions()
 	{
-		return $this->hasMany('Transaction', 'recurring_transaction_id', 'recurring_transaction_id');
-		// if( $this->id == $this->recurring_transaction_id ){
-		// 	return $this->hasMany('Transaction', 'recurring_transaction_id');		
-		// }else{
-		// 	return $this->getMasterTransaction->hasMany('Transaction', 'recurring_transaction_id');
-		// }
-
+		if( $this->recurring_transaction_id >= 1 ){
+			return $this->hasMany('Transaction', 'recurring_transaction_id', 'recurring_transaction_id');			
+		}else{
+			return $this->hasMany('Transaction', 'recurring_transaction_id', 'id');			
+		}
+			
 	}
 
 
