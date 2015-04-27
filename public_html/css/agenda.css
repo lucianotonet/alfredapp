@@ -1,0 +1,15 @@
+/* AGENDA */
+table.agenda tbody tr td,
+table.agenda tbody tr td.ctime {
+  width: 14.2857%;
+}
+tr.cal_labels {
+  text-align: center;
+}
+tr.cal_labels td{
+}
+address {
+  padding-left: 20px;
+  font-style: normal;
+  line-height: 1.42857143;
+}

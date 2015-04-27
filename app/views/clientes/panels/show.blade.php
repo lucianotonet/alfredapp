@@ -311,7 +311,7 @@
                      <tbody>
 
 
-                            @include('tarefas.item')
+                            @include('tarefas.item', array( 'tarefas' => $tarefas->getCollection() ))
 
 
                     </tbody>

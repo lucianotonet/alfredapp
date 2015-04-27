@@ -26,5 +26,11 @@ return array(
 	'mail_address' 		=> '',
 	'mail_signature' 	=> 'Enviado por "Alfred App"',
 
-
+	/*
+	|--------------------------------------------------------------------------
+	| Configurações de Notificações
+	|--------------------------------------------------------------------------
+	*/	
+	'notifications' 	=> '', // email to send notifications
+	
 );

@@ -12,9 +12,9 @@ class CreateSettingsTable extends Migration {
 			$table->increments('id');
 
 			$table->integer('user_id')->unsigned()->nullable();
-			$table->text('setting_type');
-			$table->text('setting_name');
-			$table->text('setting_value');
+			$table->text('setting_type')->nullable();
+			$table->text('setting_name')->nullable();
+			$table->text('setting_value')->nullable();
 			
 			$table->timestamps();
 		

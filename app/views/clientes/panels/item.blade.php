@@ -1,16 +1,14 @@
-<div class="list-group-item customer-item bordered">    
-
-    <a href="{{ url( 'clientes', $cliente->id ) }}">
-        <span class="pull-left cliente-avatar" style="background-color:#3bafda">
-            <img src="{{asset('img/avatar-small.png')}}" alt="" class="img-responsive">
-        </span>
-        <div class="search-data">
-            <strong class="list-group-item-heading">{{$cliente->nome}}</strong><br>
-            <strong>{{$cliente->empresa}}</strong><br>
-            <i class="fa fa-map-marker"></i> {{$cliente->cidade}} - {{$cliente->uf}} |
-            <i class="fa fa-phone"></i> {{$cliente->telefone}}|
-            <i class="fa fa-mobile"></i> {{$cliente->celular}}
-        </div>
-    </a>
-
+<div class="clearfix">	
+	<i class="icon-user text-muted fa-2x pull-left panel-body" style="border-right: 1px solid #ddd; margin-right: 10px "></i>
+	<div class="pull-left">
+		<strong>{{$cliente->empresa}}</strong> 
+	    <small><i class="fa fa-map-marker"></i> {{$cliente->cidade}} - {{$cliente->uf}}</small><br>
+	    {{$cliente->nome}} {{ !empty($cliente->email) ? '&lt;'.$cliente->email.'&gt;' : '' }}
+	    <br>
+	    <small>
+		    
+		    {{ !empty($cliente->telefone) ? '<i class="fa fa-phone-square"></i> '.$cliente->telefone.' ' : '' }}
+		    {{ !empty($cliente->celular) ? '<i class="fa fa-phone-square"></i> '.$cliente->celular.' ' : '' }}	    
+		</small>
+	</div>	
 </div>

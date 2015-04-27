@@ -598,7 +598,7 @@ vertical-align: top;
 
                     <hr />
 
-                    <table>
+                    {{-- <table>
                         <tr>
                             <td>
                                &nbsp;
@@ -640,7 +640,7 @@ vertical-align: top;
 
                     </table>
 
-                    <hr />                    
+                    <hr />   --}}                  
 
                     <table>
                         <tr>

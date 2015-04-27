@@ -7,7 +7,7 @@ class SettingsController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index( $module = 'general' )
 	{
 
 		// $settings = new CreateSettingsTable;
@@ -17,13 +17,25 @@ class SettingsController extends \BaseController {
 		$settings  	   = Config::get('settings');
 		$user_settings = Confide::user()->settings;
 
-		
+		// Check if view exists
+		if( !View::exists('settings.'.$module) ){
+			
+			$alert[] = [  	'class' 	=> 'alert-warning',
+		              		'message' 	=> '<strong><i class="fa fa-warning"></i></strong> Módulo de configurações não encontrado!' ];		
+		    Session::flash('alerts', $alert);
+
+			if ( Request::header('referer') ) {
+				return Redirect::back();				    	
+			}else{			
+				$module = 'general';
+			}
+		}
 
 
 		// echo "<pre>"; print_r( Config::get('settings') ); echo "</pre>"; exit;
 		// echo "<pre>"; print_r( $requested_page ); echo "</pre>"; exit;
 
-		return View::make('settings.index', compact('settings'));
+		return View::make('settings.index', compact('settings', 'module'));
 	}
 
 	/**
@@ -45,25 +57,30 @@ class SettingsController extends \BaseController {
 	{
 		$validator = Validator::make($data = Input::all(), Setting::$rules);
 
-		// if ($validator->fails())
-		// {
-		// 	return Redirect::back()->withErrors($validator)->withInput();
-		// }
-
+		// echo "<pre>"; print_r( $data ); echo "</pre>"; exit;
 
 		foreach ( $data['settings'] as $config => $value) {
 			
-			if( Config::get( 'settings.'. $config ) ){
-				$setting = Setting::where( 'setting_name', $config )->
-									where( 'setting_type', 'settings' )->
-									where( 'user_id', Confide::user()->id )->
-									orderBy('id','DESC')->first();
-				if( !$setting ){					
-					$setting 		  		= new Setting;
-					$setting->setting_type 	= 'settings';
-					$setting->setting_name 	= $config;
+			$settings = Setting::where( 'setting_name', $config )->
+								where( 'setting_type', 'settings' )->
+								where( 'user_id', Confide::user()->id )->
+								orderBy('id','DESC')->get();
+			
+			if( Config::has( 'settings.'. $config )){
+
+				if( empty($value) ){
+					foreach ($settings as $setting) {
+						$setting->delete();
+					}					
+				}else{				
+					$setting = $settings->first();
+					$setting = (!$setting) ? new Setting : $setting;
 				}
-				if( !empty( $value ) and $setting->setting_value != $value ){
+
+				$setting->setting_type 	= 'settings';
+				$setting->setting_name 	= $config;
+			
+				if( !empty($value) and $setting->setting_value != $value ){
 					$setting->setting_value = $value;					
 					$setting->user_id 	= Confide::user()->id;
 					$setting->save();
@@ -71,28 +88,35 @@ class SettingsController extends \BaseController {
 			}
 		}
 
-		foreach ( $data['mail'] as $config => $value) {
-			
-			if( Config::get( 'mail.'. $config ) ){
-				$setting = Setting::where( 'setting_name', $config )->
-									where( 'setting_type', 'mail' )->
-									where( 'user_id', Confide::user()->id )->
-									orderBy('id','DESC')->first();
-				if( !$setting ){					
-					$setting 		  		= new Setting;
-					$setting->setting_type 	= 'mail';
-					$setting->setting_name 	= $config;
-				}
-				
-				if( is_array($value) ){ $value = json_encode($value); }
-				// echo "<pre>"; print_r( $value ); echo "</pre>"; exit;				
+		if( isset( $data['mail'] ) ){
 
-				if( !empty( $value ) and $setting->setting_value != $value ){
-					$setting->setting_value = $value;					
-					$setting->user_id 	= Confide::user()->id;
-					$setting->save();
+			$data['mail']['pretend'] 	 = ( @$data['mail']['pretend'] 	  == 'on' ) ? true : false;			
+			
+			foreach ( $data['mail'] as $config => $value) {
+				
+				if( Config::has( 'mail.'. $config ) ){
+					$setting = Setting::where( 'setting_name', $config )->
+										where( 'setting_type', 'mail' )->
+										where( 'user_id', Confide::user()->id )->
+										orderBy('id','DESC')->first();
+					if( !$setting ){					
+						$setting 		  		= new Setting;
+						$setting->setting_type 	= 'mail';
+						$setting->setting_name 	= $config;
+					}
+					
+					if( is_array($value) ){ $value = json_encode($value); }
+					// echo "<pre>"; print_r( $value ); echo "</pre>"; exit;				
+
+					if( $value != $setting->setting_value ){
+						$setting->setting_value = (String)$value;					
+						$setting->user_id 	= Confide::user()->id;
+						$setting->save();
+					}
 				}
-			}
+				// echo "<pre>"; print_r( $setting ); echo "</pre>";
+			}						
+			// echo "<pre>"; print_r( $data ); echo "</pre>";exit;
 		}
 
 		

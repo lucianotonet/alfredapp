@@ -20,8 +20,6 @@
 				<h3 class="title"><?php echo Saudacoes::ola() ?></h3>
 			</div>
 
-
-
 			<!-- Tarefas -->
 			<div class="panel panel-primary">
 				<div class="panel-heading">

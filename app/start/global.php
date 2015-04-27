@@ -1,14 +1,14 @@
 <?php
 
-$languages = ['pt','en'];
-$locale = Request::segment(1);
+// $languages = ['pt','en'];
+// $locale = Request::segment(1);
 
-if( in_array($locale, $languages) ){
-    App::setLocale($locale);
-} 
-else {
-    $locale = null;
-}
+// if( in_array($locale, $languages) ){
+//     App::setLocale($locale);
+// } 
+// else {
+//     $locale = null;
+// }
 
 /*
 |--------------------------------------------------------------------------

@@ -358,8 +358,8 @@ class TransactionsController extends \BaseController {
 		$data = Input::all();
 		
 		// return View::make('transactions.create');
-		if ( Request::ajax() ) return View::make('transactions.novo.'.$data['type'].'.create');
-		else 				 return View::make('transactions.create', compact('type'));
+		if ( Request::ajax() ) 	return View::make('transactions.novo.'.$data['type'].'.create');
+		else 				 	return View::make('transactions.create', compact('type'));
 	}
 
 	/**
@@ -825,78 +825,23 @@ class TransactionsController extends \BaseController {
 		if( !isset( $data['amount'] ) ){
 			$data['amount'] = $transaction->amount;
 		}else{
-			$data['amount'] = str_replace('.', '', $data['amount'] );
-			$data['amount'] = str_replace(',', '.', $data['amount'] );		
-			$data['amount'] = str_replace('-', '', $data['amount'] );	// TIRA O "-"				
+			$data['amount'] = number_format($data['amount'], '2','.', '');
+			// $data['amount'] = str_replace('.', '', $data['amount'] );
+			// $data['amount'] = str_replace(',', '.', $data['amount'] );		
+			// $data['amount'] = str_replace('-', '', $data['amount'] );	// TIRA O "-"				
 		}
+
 		if( $data['type'] == 'despesa' ){
-			$data['amount'] = (0 - $data['amount']); // Deixa o número negativo
+			if( @$data['amount'] > 0 ){
+				$data['amount'] = (0 - $data['amount']); // Deixa o número negativo
+			}
 		}
-
-		// echo "<pre>";
-		// print_r($data);
-		// exit;
-
-
-		// GET ALL RELATED TRANSACTION
-		// if( isset( $data['recurring_times'] ) ){
-		// 	// AUMENTOU AS RECORÊNCIAS
-		// 	if( $data['recurring_times'] > $transaction->getRecurringTransactions->count() ){
-
-		// 		// CRIA OS ADICIONAIS
-		// 		$qtd = $data['recurring_times'] - $transaction->getRecurringTransactions->count();
-		// 		for ($i=0; $i < $qtd; $i++) { 
-		// 			$new_transaction = new Transaction;					
-
-		// 			$new_transaction->type						= $transaction->type;
-		// 			$new_transaction->amout						= $transaction->amount;
-		// 			$new_transaction->recurring_transaction_id 	= $transaction->recurring_transaction_id;
-		// 			$new_transaction->recurring_type 			= $data['recurring_type'];
-		// 			// $new_transaction->recurring_times 			= $data['recurring_times'];
-		// 			$new_transaction->save();
-
-		// 		}				
-		// 	}
-
-		// 	// DIMINUIU AS RECORÊNCIAS
-		// 	if( $data['recurring_times'] < $transaction->getRecurringTransactions->count() ){
-		// 		$qtd = $transaction->getRecurringTransactions->count() - $data['recurring_times'];
-		// 		$del_transactions = Transaction::orderBy('id', 'DESC')
-		// 										->where('recurring_transaction_id', $transaction->recurring_transaction_id )
-		// 										->limit( $qtd )
-		// 										->get();
-		// 		foreach( $del_transactions as $del_transaction ){
-		// 			// DELETA EXCEDENTES
-		// 			Transaction::destroy( $del_transaction->id );
-		// 		}
-
-		// 	}
-
-		// 	// CORRIGE CAMPOS DE RECORRÊNCIA
-		// 	$i = 1;
-		// 	foreach ($transaction->getRecurringTransactions as $t) {
-		// 		$t->recurring_times = $transaction->getRecurringTransactions->count();
-		// 		$t->recurring_cycle = $i++;
-		// 		$t->save();
-		// 	}
-
-
-
-
-				
-		// 	$x = 1;
-		// 	$transactions = $transaction->getRecurringTransactions->each(function( $this )use($transaction, $x){
-		// 		$this->update(array(
-		// 			'recurring_transaction_times' 	=> $transaction->getRecurringTransactions->count(),
-		// 			'recurring_cycle'				=> ++$x
-		// 		));
-		// 	});
-
-		// }
+		
 
 		/**
 		 * 	APLLY CHANGES TO...
 		 */
+		
 		
 		// CATEGORIA
 		$category = Category::where('name', '=', @$data['category'] )->first();
@@ -908,25 +853,9 @@ class TransactionsController extends \BaseController {
 				]);
 		}		
 
-		switch (@$data['apply_changes_to']) {
-			case 'this':
-				
-				// $transaction->description 	= $data['description'];
-				// $transaction->amount 		= $data['amount'];
-				// $transaction->date 			= $data['date'];
-				// $transaction->type 			= $data['type'];
-				// $transaction->done 			= $data['done'];
-				// $transaction->category_id 	= $category->id;								
+		$data['apply_changes_to'] = isset( $data['apply_changes_to'] ) ? $data['apply_changes_to'] : 'this';
 
-				// $transaction->save();		
-				
-				$transactions = $transactions->filter(function( $t )use( $transaction ){
-					if( $t->id == $transaction->id ){
-						return $t;
-					}
-				});
-
-				break;	
+		switch ( $data['apply_changes_to'] ) {			
 			
 			case 'next':
 				/**
@@ -950,6 +879,29 @@ class TransactionsController extends \BaseController {
 				break;
 			
 			case 'all':				
+				break;
+
+			default:	
+
+				// THIS
+				
+				$transactions = $transactions->filter(function( $t )use( $transaction ){
+					if( $t->id == $transaction->id ){
+						return $t;
+					}
+				});
+
+				// IF NO RECURRING
+
+				$transaction->description 	= $data['description'];
+				$transaction->amount 		= $data['amount'];
+				$transaction->date 			= $data['date'];
+				$transaction->type 			= $data['type'];
+				$transaction->done 			= $data['done'];
+				$transaction->category_id 	= $category->id;								
+
+				$transaction->save();	
+
 				break;
 			
 		}
@@ -984,118 +936,12 @@ class TransactionsController extends \BaseController {
 
 			$t->date 			= (new Carbon( $t->date ) )->addDays( $diff_in_days )->format('Y-m-d');
 
-				switch ( $transaction->recurring_type ) {			
-					case 'daily':
-
-						
-						break;
-					case 'weekly':
-						// compara a data do transaction com t em SEMANAS
-											
-						break;
-					case 'biweekly':
-						// compara a data do transaction com t em 2 SEMANAS
-						
-						
-						break;
-					case 'monthly':
-						// compara a data do transaction com t em MENSAL
-						
-						break;
-					
-					case 'bimonthly':
-						
-						break;
-					
-					case 'trimonthly':
-						
-						break;
-					
-					case 'sixmonthly':
-						
-						break;
-
-					case 'yearly':
-						
-						break;
-
-				}	
-
-
 			$t->recurring_times = $transactions->count();
 			$t->category_id 	= $category->id;								
 
 			$t->save();	
 		}
 
-		// echo "<pre>diff_in_days:";
-		// print_r( $diff_in_days );
-		// echo "</pre>";
-		
-
-		// echo "<pre>Alterados:";
-		// print_r($transactions->toArray());
-		// echo "</pre>";
-		// exit;
-
-
-		// GET RELATIONS
-		// $transactions = Transaction::where('recurring_transaction_id', $transaction->recurring_transaction_id)
-		// 							->get();
-
-		// AJUSTA AS DATAS		
-		// switch ( $data['recurring_type'] ) {			
-		// 	case 'daily':
-		// 		$labels['recurring_type'] = 'diariamente';
-
-		// 		//echo "<pre>";
-		// 		for ($i=0; $i < $transactions->count(); $i++) { 
-		// 			// $transactions[ $i ]->date = $dt->addDays( $i )->format('Y-m-d');
-		// 			// $transactions[ $i ]->save();
-		// 			// print_r( $transactions[ $i ] );
-		// 		}
-				
-				
-		// 		break;
-		// 	case 'weekly':
-		// 		$labels['recurring_type'] = 'semanalmente';
-		// 		break;
-		// 	case 'biweekly':
-		// 		$labels['recurring_type'] = 'quinzenalmente';
-		// 		break;
-		// 	case 'monthly':
-		// 		$labels['recurring_type'] = 'mensalmente';
-		// 		break;
-			
-		// 	case 'bimonthly':
-		// 		$labels['recurring_type'] = 'bimestral';
-		// 		break;
-			
-		// 	case 'trimonthly':
-		// 		$labels['recurring_type'] = 'trimestral';
-		// 		break;
-			
-		// 	case 'sixmonthly':
-		// 		$labels['recurring_type'] = 'semestral';
-		// 		break;
-
-		// 	case 'yearly':
-		// 		$labels['recurring_type'] = 'anualmente';
-		// 		break;
-
-		// }		
-
-
-		// TESTES
-		
-
-		// echo "<pre>";
-		// print_r( $transaction->getRecurringTransactions );
-		// exit;
-		// return Response::json($data);
-		// exit;
-
-		// $transaction->update($data);
 
 		$alert[] = [   'class' => 'alert-success', 'message'   => '<strong><i class="fa fa-check"></i></strong> Lançamento atualizado!' ];
 		Session::flash('alerts', $alert);			
@@ -1241,12 +1087,16 @@ class TransactionsController extends \BaseController {
 				
 				if ( $date->isToday() ){
 					$title = "hoje";
+					$labels['end'] = 'fim do dia';
 				}else if ( $date->isTomorrow() ){
 					$title = "amanhã";
+					$labels['end'] = 'depois de amanhã';
 				}else if ( $date->isYesterday() ){
 					$title = "ontem";
+					$labels['end'] = 'hoje';
 				}else{
 					$title = strftime("%d de %B", strtotime( $date ));
+					$labels['end'] = strftime("%A, %d de %B", strtotime( $date->addDay() ));
 				}
 				break;
 
@@ -1264,7 +1114,7 @@ class TransactionsController extends \BaseController {
 												 ->get();				
 	
 				$title = strftime("%a %d/%m", strtotime( $date->startOfWeek() )) . " à " . strftime("%a %d/%m", strtotime( $date->endOfWeek() ));
-
+				$labels['end'] = strftime("%A, %d de %B", strtotime( $date->endOfWeek()->addDay() ));
 				break;
 			
 			case 'range':
@@ -1275,9 +1125,12 @@ class TransactionsController extends \BaseController {
 											 ->where( 'date', '<=', $data['date_to'] )
 											 ->where( 'user_id', Auth::id() )
 											 ->orderBy( 'date' )
-											 ->get();		
+											 ->get();	
+
+				$date 	= Carbon::createFromFormat( 'Y-m-d', @$data['date_to'] );	
 
 				$title = strftime("%d de %B", strtotime( $data['date_from'] )) . " à " . strftime("%d de %B", strtotime( @$data['date_to'] ));
+				$labels['end'] = strftime("%A, %d de %B", strtotime( $date ));
 				break;
 
 			case 'overdue':
@@ -1300,7 +1153,7 @@ class TransactionsController extends \BaseController {
 				}				
 
 				$title = "pendentes";
-
+				$labels['end'] = strftime("%d de %B", strtotime( $date ));
 				
 				break;
 			
@@ -1321,6 +1174,7 @@ class TransactionsController extends \BaseController {
 
 
 				$title = strftime("%B de %Y", strtotime( $date ));				
+				$labels['end'] = "fim de ".strftime("%B", strtotime( $date ));	
 				break;			
 		}
 		
@@ -1372,7 +1226,7 @@ class TransactionsController extends \BaseController {
 		$navigation = array();
 		
 		$view = 'transactions.novo.relatorios';
-		return View::make( $view, compact('transactions', 'transactions_days', 'view', 'title', 'data', 'balance'));		
+		return View::make( $view, compact('transactions', 'transactions_days', 'view', 'title', 'data', 'balance', 'labels'));		
 			
 	}
 

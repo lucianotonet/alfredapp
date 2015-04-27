@@ -3,8 +3,9 @@
 @section('content')
 
 <style>
-p.text-center img.img-responsive{
-	margin: 0 auto;
+p.text-center img.img-responsive {
+  margin: 0 auto;
+  max-width: 170px;
 }
 
 .form-signin {

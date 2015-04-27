@@ -13,66 +13,66 @@
     </ol>
 
 
-<div class="panel panel-primary">
+    <div class="panel panel-primary">
 
-    <div class="panel-heading">
-        <!-- <span class="loading white pull-left"></span> -->
-        
-        <h3 class="title">NOVO PEDIDO</h3>
-             
-    </div>
-            
-{{ Form::open(array('url' => 'pedidos', 'id' => 'pedido_create')) }}
+        <div class="panel-heading">
+            <!-- <span class="loading white pull-left"></span> -->
 
-<!-- List group -->
-<ul class="list-group">
-    <li class="list-group-item">
-        <div class="row ">
-            
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h3 class="title">NOVO PEDIDO</h3>
+
+        </div>
+
+        {{ Form::open(array('url' => 'pedidos', 'id' => 'pedido_create')) }}
+
+        <!-- List group -->
+        <ul class="list-group">
+            <li class="list-group-item">
                 <div class="row ">
-                    <div class="col-xs-3 col-sm-4 col-md-4 col-lg-2">                 
-                       <h4 class="title text-right">Vendedor</h4>
-                    </div>
-                    <div class="col-xs-9 col-sm-8 col-md-8 col-lg-10 border-left">        
-                        
-                        <select name="vendedor_id" id="" class="form-control" required>
-                
-                            @foreach ($vendedores as $vendedor)
+
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="row ">
+                            <div class="col-xs-3 col-sm-4 col-md-4 col-lg-2">                 
+                             <h4 class="title text-right">Vendedor</h4>
+                         </div>
+                         <div class="col-xs-9 col-sm-8 col-md-8 col-lg-10 border-left">        
+
+                            <select name="vendedor_id" id="" class="form-control" required>
+
+                                @foreach ($vendedores as $vendedor)
                                 <option value="{{$vendedor->id}}">{{$vendedor->nome}}</option>
-                            @endforeach
-                
-                        </select>
-                        
+                                @endforeach
+
+                            </select>
+
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </li>
+        </li>
 
-    
-    <li class="list-group-item">
-        <div class="row ">            
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 
-                <div class="row ">
-                    <div class="col-xs-3 col-sm-4 col-md-4 col-lg-4">                
-                       <h4 class="title text-right">Cliente</h4>
-                    </div>
-                    <div class="col-xs-9 col-sm-8 col-md-8 col-lg-8 border-left">
-                        
+        <li class="list-group-item">
+            <div class="row ">            
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+                    <div class="row ">
+                        <div class="col-xs-3 col-sm-4 col-md-4 col-lg-4">                
+                         <h4 class="title text-right">Cliente</h4>
+                     </div>
+                     <div class="col-xs-9 col-sm-8 col-md-8 col-lg-8 border-left">
+
                         <input type="text" name="cliente_name" value="{{ @$cliente->nome }}" class="form-control autocomplete" data-json="{{url('getcontacts')}}" required>
-                                                    
 
-                           <div class="costumer_display">
-                                @if ( $cliente )
-                                    @include('clientes.panels.item')
-                                @else
-                                    <p class="alert alert-warning"><i class="fa fa-warning"></i> Informe o cliente</p>
-                                @endif                                    
-                           </div>
-                                    
-    
+
+                        <div class="costumer_display">
+                            @if ( $cliente )
+                            @include('clientes.panels.item')
+                            @else
+                            <p class="alert alert-warning"><i class="fa fa-warning"></i> Informe o cliente</p>
+                            @endif                                    
+                        </div>
+
+
                         <input type="hidden" id="cliente_id" name="cliente_id" value="{{ @$cliente->id }}" required>
 
                     </div>
@@ -84,48 +84,48 @@
 
                 <div class="row ">
                     <div class="col-xs-3 col-sm-4 col-md-4 col-lg-4">                 
-                       <h4 class="title text-right">Fornecedor</h4>
-                    </div>
-                    <div class="col-xs-9 col-sm-8 col-md-8 col-lg-8 border-left">        
-                        
-                        <select name="fornecedor_id" id="fornecedor_id" class="form-control" required>
-                
-                            @foreach ($fornecedores as $fornecedor)
-                                <option value="{{ $fornecedor->id }}">{{$fornecedor->empresa}}</option>
-                            @endforeach
-                
-                        </select>     
-                        
-                        <input type="hidden" name="url" id="fornecedores_url" value="{{ url('fornecedores') }}">
+                     <h4 class="title text-right">Fornecedor</h4>
+                 </div>
+                 <div class="col-xs-9 col-sm-8 col-md-8 col-lg-8 border-left">        
 
-                        <img src="{{asset('img/preloader.gif')}}" alt="" class="preloader flat animated">
+                    <select name="fornecedor_id" id="fornecedor_id" class="form-control" required>
 
-                        <div id="fornecedor_display">
+                        @foreach ($fornecedores as $fornecedor)
+                        <option value="{{ $fornecedor->id }}">{{$fornecedor->empresa}}</option>
+                        @endforeach
 
-                        </div>    
+                    </select>     
 
-                    </div>
-                    
+                    <input type="hidden" name="url" id="fornecedores_url" value="{{ url('fornecedores') }}">
+
+                    <img src="{{asset('img/preloader.gif')}}" alt="" class="preloader flat animated">
+
+                    <div id="fornecedor_display">
+
+                    </div>    
+
                 </div>
-                
+
             </div>
-            
+
         </div>
 
-    </li>
-    <li class="list-group-item">
-        
-        <div class="row ">
-            <div class="col-xs-3 col-sm-4 col-md-4 col-lg-2">                
-                <h4 class="title text-right">Entrega</h4>
-            </div>
-            
-            <div class="col-xs-9 col-sm-8 col-md-8 col-lg-5 border-left"> 
-                <strong>DATA</strong>                   
-                <input type="date" class="form-control input-lg h4 title" name="entrega_data" required>
-                <br>
-                <strong>FRETE</strong>
-                <br>
+    </div>
+
+</li>
+<li class="list-group-item">
+
+    <div class="row ">
+        <div class="col-xs-3 col-sm-4 col-md-4 col-lg-2">                
+            <h4 class="title text-right">Entrega</h4>
+        </div>
+
+        <div class="col-xs-9 col-sm-8 col-md-8 col-lg-5 border-left"> 
+            <strong>DATA</strong>                   
+            <input type="date" class="form-control input-lg h4 title" name="entrega_data" required>
+            <br>
+            <strong>FRETE</strong>
+            <br>
                     <!-- <div class="row">
                             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             </div>                    
@@ -134,161 +134,161 @@
                         </div>            -->
                         <input type="radio" class="primary" name="frete" value="CIF" checked="true" selected> CIF  
                         <input type="radio" class="primary" name="frete" value="FOB"> FOB               
-                 
-            </div>
-            <div class="col-xs-9 col-sm-8 col-md-8 col-lg-5">    
-                <strong>Endereço</strong>
-                <textarea name="entrega_endereco" id="" rows="4" class="form-control" required></textarea>    
-            </div>                              
-            <div class="clearfix"></div>
-        </div>                    
-        
-    </li>
-    <li class="list-group-item">
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-right">                 
-                           
+
+                    </div>
+                    <div class="col-xs-9 col-sm-8 col-md-8 col-lg-5">    
+                        <strong>Endereço</strong>
+                        <textarea name="entrega_endereco" id="" rows="4" class="form-control" required></textarea>    
+                    </div>                              
+                    <div class="clearfix"></div>
+                </div>                    
+
+            </li>
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-right">                 
+
+                        </div>
+                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">                    
+                        </div>  
+                    </div>
                 </div>
-                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">                    
-                </div>  
-            </div>
+            </li>
+
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <!-- PRODUTOS -->
+                        <h3 class="title">Produtos</h3><br>
+                        <table class="table table-striped table-hover pedido_produtos">
+                            <thead class="bg-info">
+                                <tr>
+                                    <th width="90">Qtd.</th>
+                                    <th width="60">Unidade</th>
+                                    <th>Produto</th>
+                                    <th>Acabamento</th>
+                                    <th width="130">Preço</th>
+                                    <th width="130">Subtotal</th>
+                                    <th width="40"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <?php //foreach( range(1,10) as $key ) { ?>
+
+                                <tr class="multiple-form-group form-group pedido_produtos_item" data-max="10">                   
+
+                                    <td>
+                                        <input type="number" name="itens[qtd][]" class="form-control produto_qtd" value="1.00" min="0.01" step="any" required>                                       
+                                    </td>
+
+                                    <td>
+                                        <select name="itens[unidade][]" class="form-control">
+                                            <option value="m2">m2</option>
+                                            <option value="m3">m3</option>
+                                        </select>                    
+                                    </td>
+
+                                    <td>
+
+
+                                        <select name="itens[produto_id][]" class="form-control produtos" required >
+                                            <option>Selecione um produto</option>
+                                            @foreach ($produtos as $produto)                            
+                                            <option value="{{$produto->id}}" data-catid="{{$produto->category_id}}" data-price="{{$produto->preco}}" >#{{$produto->cod}} - {{$produto->nome}}</option>
+                                            @endforeach
+                                        </select>   
+
+                                    </td>
+
+                                    <td>
+
+                                        <select name="itens[produto_category_id][]" class="form-control categories" >                      
+                                            <option value="">-</option>          
+                                            @foreach ($categories as $category)                            
+                                            <option value="{{$category->id}}">{{$category->name}}</option>
+                                            @endforeach
+                                        </select>                    
+
+
+                                    </td>
+
+                                    <td>
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div> 
+                                            <input type="text" name="itens[preco][]" class="produto_preco form-control price" value="" required>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div> 
+                                            <input type="text" name="itens[subtotal][]" class="form-control produto_subtotal price disabled" value="">
+                                        </div>
+                                    </td>
+
+                                    <td>                    
+
+                                        <button type="button" class="btn btn-success btn-plus pull-right">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+
+                                    </td>
+
+                                </tr>
+
+                                <?php  //} ?>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+
+                        <h4 class="title">Pagamento</h4>
+                        <input type="text" name="pgto" class="form-control">  
+
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right">
+
+                        Total <h3 class="title price produtos_total">R$ 0,00</h3>
+
+                        <button type="button" class="btn btn-primary pull-right" id="atualiza_pedido" >
+                            <i class="fa fa-refresh"></i>
+                            Atualizar
+                        </button>
+                        &nbsp;
+                        <input type="hidden" class="produtos_total" name="total" required>
+
+                    </div>
+                </div>
+            </li>
+
+
+            <li class="list-group-item">
+                <p>
+                    <strong>Observações:</strong>
+                    <br>
+                    <textarea name="obs" class="form-control wysiwyg" id="pedido_obs">@include('pedidos.panels.observacoes')</textarea>        
+                </p>  
+            </li>
+
+        </ul>
+
+        @include('pedidos.panels.observacoes')
+
+        <div class="panel-body bg-info">
+            <p>
+                <strong>Notas administrativas:</strong> <small>Não aparece no pedido</small><br>
+                <textarea name="obs_adm" class="form-control"></textarea>        
+            </p>  
         </div>
-    </li>
-
-<li class="list-group-item">
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <!-- PRODUTOS -->
-            <h3 class="title">Produtos</h3><br>
-            <table class="table table-striped table-hover pedido_produtos">
-                <thead class="bg-info">
-                    <tr>
-                        <th width="90">Qtd.</th>
-                        <th width="60">Unidade</th>
-                        <th>Produto</th>
-                        <th>Acabamento</th>
-                        <th width="130">Preço</th>
-                        <th width="130">Subtotal</th>
-                        <th width="40"></th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                <?php //foreach( range(1,10) as $key ) { ?>
-
-                    <tr class="multiple-form-group form-group pedido_produtos_item" data-max="10">                   
-
-                        <td>
-                            <input type="number" name="itens[qtd][]" class="form-control produto_qtd" value="1.00" min="0.01" step="any" required>                                       
-                        </td>
-
-                        <td>
-                            <select name="itens[unidade][]" class="form-control">
-                                <option value="m2">m2</option>
-                                <option value="m3">m3</option>
-                            </select>                    
-                        </td>
-
-                        <td>
-                            
-
-                            <select name="itens[produto_id][]" class="form-control produtos" required >
-                                <option>Selecione um produto</option>
-                                @foreach ($produtos as $produto)                            
-                                    <option value="{{$produto->id}}" data-catid="{{$produto->category_id}}" data-price="{{$produto->preco}}" >#{{$produto->cod}} - {{$produto->nome}}</option>
-                                @endforeach
-                            </select>   
-
-                        </td>
-
-                        <td>
-
-                            <select name="itens[produto_category_id][]" class="form-control categories" >                      
-                                <option value="">-</option>          
-                                @foreach ($categories as $category)                            
-                                    <option value="{{$category->id}}">{{$category->name}}</option>
-                                @endforeach
-                            </select>                    
 
 
-                        </td>
-
-                        <td>
-                            <div class="input-group">
-                                <div class="input-group-addon">R$</div> 
-                                <input type="text" name="itens[preco][]" class="produto_preco form-control price" value="" required>
-                            </div>
-                        </td>
-
-                        <td>
-                            <div class="input-group">
-                                <div class="input-group-addon">R$</div> 
-                                <input type="text" name="itens[subtotal][]" class="form-control produto_subtotal price disabled" value="">
-                            </div>
-                        </td>
-
-                        <td>                    
-                        
-                            <button type="button" class="btn btn-success btn-plus pull-right">
-                                <i class="fa fa-plus"></i>
-                            </button>
-                        
-                        </td>
-
-                    </tr>
-                
-                <?php  //} ?>
-
-                </tbody>
-            </table>
-
-        </div>
-
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-
-            <h4 class="title">Pagamento</h4>
-            <input type="text" name="pgto" class="form-control">  
-
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right">
-            
-            Total <h3 class="title price produtos_total">R$ 0,00</h3>
-        
-            <button type="button" class="btn btn-primary pull-right" id="atualiza_pedido" >
-                <i class="fa fa-refresh"></i>
-                Atualizar
-            </button>
-            &nbsp;
-            <input type="hidden" class="produtos_total" name="total" required>
-
-        </div>
-    </div>
-</li>
-
-
-    <li class="list-group-item">
-        <p>
-            <strong>Observações:</strong>
-            <br>
-            <textarea name="obs" class="form-control" id="pedido_obs"></textarea>        
-        </p>  
-    </li>
-
-</ul>
-
-@include('pedidos.panels.observacoes')
-
-    <div class="panel-body bg-info">
-        <p>
-            <strong>Notas administrativas:</strong> <small>Não aparece no pedido</small><br>
-            <textarea name="obs_adm" class="form-control"></textarea>        
-        </p>  
-    </div>
-      
-
-    <div class="panel-footer">
-        <div class="btn-group pull-left">
+        <div class="panel-footer">
+            <div class="btn-group pull-left">
             <!-- <button type="submit" class="btn btn-primary">
                 <i class="fa fa-envelope"></i> Enviar
             </button> -->
@@ -307,7 +307,7 @@
         <div class="clearfix"></div>
     </div>
 
-{{ Form::close() }}
+    {{ Form::close() }}
 </div>
 
 </div>
@@ -316,15 +316,15 @@
 
 
 @section('scripts')
-    
-    <script>
+
+<script>
         /**
          * ---------------------------------
          *      ATUALIZA PEDIDO
          *      Calcula os valores do pedido 
          *  --------------------------------         
          */
-        var atualizaPedido = function(e){
+         var atualizaPedido = function(e){
 
             //console.log('Atualizando total');
 
@@ -366,7 +366,7 @@
             };
 
         // CADA
-            $('table.pedido_produtos tr.pedido_produtos_item').each( function( index ) {
+        $('table.pedido_produtos tr.pedido_produtos_item').each( function( index ) {
 
                 //console.log('Atualizando item '+index);
                 $('h3.produtos_total').css('color','darkred');
@@ -389,7 +389,7 @@
                     url:    '{{url("produtos")}}/' + itemId,
                     method: 'GET',
                     success: function(data){
-                        
+
                         // Preco unitario
                         //itemPrecoUn.addClass('this');
                         if(itemPrecoUn.val() == ''){
@@ -409,7 +409,7 @@
 
                         //console.log( "Subtotal: " + subtotal );                  
 
-                            subtotal = itemQtd.val() * parseFloat( subtotal );
+                        subtotal = itemQtd.val() * parseFloat( subtotal );
 
                         
                         //console.log( "Subtotal X "+itemQtd.val()+": "+subtotal );                  
@@ -433,71 +433,71 @@
                 //console.log( index + ": " + itemSelect.val() );
             });
 
-        }        
-    </script>
+}        
+</script>
 
-    <style>
-        #pedido_obs{overflow:scroll; max-height:300px}
-    </style>
+<style>
+#pedido_obs{overflow:scroll; max-height:300px}
+</style>
 
-    <script>
-    $(document).ready(function ($) {
+<script>
+$(document).ready(function ($) {
 
-        $( ".autocomplete" ).autocomplete({
-            serviceUrl: '<?php echo url("getcostumers") ?>',
-            groupBy: 'type', 
-            onSelect: function (suggestion) {
-                $(this).val( suggestion.value );
+    $( ".autocomplete" ).autocomplete({
+        serviceUrl: '<?php echo url("getcostumers") ?>',
+        groupBy: 'type', 
+        onSelect: function (suggestion) {
+            $(this).val( suggestion.value );
 
-                var cliente = jQuery.parseJSON( suggestion.data.obj );
+            var cliente = jQuery.parseJSON( suggestion.data.obj );
 
-                $.ajax({
-                    url: '<?php echo url("clientes/'+cliente.id+'/mini") ?>',
-                    type: 'GET',
-                    dataType: 'html',                    
-                })
-                .done(function( data ) {
+            $.ajax({
+                url: '<?php echo url("clientes/'+cliente.id+'/mini") ?>',
+                type: 'GET',
+                dataType: 'html',                    
+            })
+            .done(function( data ) {
                     //console.log( data );
                     $('.costumer_display').html( data );
                     $('input#cliente_id').val( cliente.id );
 
                 })
-                .fail(function() {
-                    console.log("error");
-                })
-                .always(function() {
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
                     //console.log("complete");
                 });
-                
 
-                console.log( suggestion.data );
-            }
-        });
+
+            console.log( suggestion.data );
+        }
+    });
 
 
 
         /**
             CHANGE DATA
-        **/
-        var changeData = function (event) {
-            var category_id = $(this).find('option:selected').data('catid');
-            var price       = $(this).find('option:selected').data('price');
+            **/
+            var changeData = function (event) {
+                var category_id = $(this).find('option:selected').data('catid');
+                var price       = $(this).find('option:selected').data('price');
 
-            $(this).parent('td').next('td').find('select.categories').val( category_id );
-            $(this).parent('td').parent('tr').find('td input.produto_preco').val( price );
-            $('input.produto_preco').priceFormat({        
-                prefix: '',
-                centsSeparator: ',',
-                thousandsSeparator: '.'
-            });   
+                $(this).parent('td').next('td').find('select.categories').val( category_id );
+                $(this).parent('td').parent('tr').find('td input.produto_preco').val( price );
+                $('input.produto_preco').priceFormat({        
+                    prefix: '',
+                    centsSeparator: ',',
+                    thousandsSeparator: '.'
+                });   
 
             // atualizaPedido();
         };
 
         /**
             CHANGE PRODUTOS
-        **/
-       $('select.produtos').change( changeData );
+            **/
+            $('select.produtos').change( changeData );
 
         //$('#pedido_obs').wysiwyg();
 
@@ -510,7 +510,7 @@
          *     CLONE ITEMS
          * -----------------------
          */
-        var addFormGroup = function (event) {
+         var addFormGroup = function (event) {
             event.preventDefault();
 
             var $formGroup = $(this).closest('.form-group');
@@ -518,18 +518,18 @@
             var $formGroupClone = $formGroup.clone();
 
             $(this)
-                .toggleClass('btn-default btn-plus btn-danger btn-remove')
-                .html('<i class="fa fa-times"></i>');
+            .toggleClass('btn-default btn-plus btn-danger btn-remove')
+            .html('<i class="fa fa-times"></i>');
 
             $formGroupClone.find('input.produto_preco').val('');
             
             $formGroupClone.find('select.produtos').change( changeData );
 
             $('input.produto_preco').priceFormat({        
-                                            prefix: '',
-                                            centsSeparator: ',',
-                                            thousandsSeparator: '.'
-                                        });     
+                prefix: '',
+                centsSeparator: ',',
+                thousandsSeparator: '.'
+            });     
             $formGroupClone.insertAfter($formGroup);
 
             var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
@@ -566,5 +566,5 @@
         //--------------------------------------------------------------------------------------
         
     });
-    </script>
+</script>
 @stop

@@ -33,12 +33,6 @@
     });
 
 
-
-    $('.panel-collapse').on('hidden', function () {
-        console.log('Colapsado!');
-    });
-
-
     // $('table.sortable').dataTable( {
     //     "paging":   false,
     //     "ordering": true,
@@ -408,7 +402,7 @@
             "image": true, //Button to insert an image. Default true,
             "color": true, //Button to change color of font  
             "blockquote": false, //Blockquote  
-            "size": 'sm', //default: none, other options are xs, sm, lg
+            "size": 'xs', //default: none, other options are xs, sm, lg
             "fa": true
         }        
     });
@@ -442,6 +436,30 @@
     //     ],
     //     toolbar: "undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist "
     // });
+    // 
+    
+
+    var reloadModal = function () {
+        // /*
+        //     MODAL RELOAD    
+        //  */ 
+        // $.each( $("#modal [data-target=#modal]"), function(index, val) {
+        //     $(this).removeAttr('data-toggle');
+        // });
+        
+        // $("#modal [data-target=#modal]").click(function(ev) {
+        //     // alert();
+        //     ev.preventDefault();
+        //     $("#modal .modal-content").html( $('.loading-splash').html() );
+
+        //     var target = $(this).attr("href");
+        //     $("#modal .modal-content").load(target, function() { 
+        //         $("#modal").modal("show"); 
+        //     })
+
+        // });
+
+    };
 
 
     //LIMPA MODALS
@@ -450,12 +468,15 @@
         $(this).find('.modal-content').html( $('.loading-splash').html() );
     });
 
-    $('body').on('show.bs.modal', '.modal', function () {
-        $('.loading').addClass('fadeIn');            
+    $('body').on('show.bs.modal', '.modal', function (event) {
+        $('.loading').addClass('fadeIn');                          
     });
+
     $('body').on('loaded.bs.modal', '.modal', function () {
-        $('.loading').addClass('fadeOut');            
+        $('.loading').addClass('fadeOut');         
+        reloadModal();
     });
+
 
     // Time ago
     jQuery.timeago.settings.strings = {
@@ -469,7 +490,7 @@
        hour: "há uma hora",
        hours: "à %d horas atrás",
        day: "ontem",
-       days: "daqui à %d dias",
+       days: "em %d dias",
        month: "mês passado",
        months: "há %d meses",
        year: "ano passado",
@@ -533,29 +554,29 @@
 
 
     // NOTIFICATIONS
-    setInterval(function() {    
-        jQuery.ajax({
-            url: jQuery('.notification-info').attr('data-url'),
-            type: 'GET',
-            dataType: 'json',            
-            complete: function(xhr, textStatus) {
-                //called when complete
-            },
-            success: function( notifications ) {
-                if( notifications.length ){
-                    $('.notification-info .badge').text( notifications.length ).fadeIn('fast').css('display','inherit');                
-                }else{
-                    $('.notification-info .badge').text( notifications.length ).fadeOut('slow');                
-                }
-            },
-            error: function(xhr, textStatus, errorThrown) {
-                //called when there is an error
-            }
-        }).done(function( html ) {
+    // setInterval(function() {    
+    //     jQuery.ajax({
+    //         url: jQuery('.notification-info').attr('href'),
+    //         type: 'GET',
+    //         dataType: 'json',            
+    //         complete: function(xhr, textStatus) {
+    //             //called when complete
+    //         },
+    //         success: function( notifications ) {
+    //             if( notifications.length ){
+    //                 $('.notification-info .badge').text( notifications.length ).fadeIn('fast').css('display','inherit');                
+    //             }else{
+    //                 $('.notification-info .badge').text( notifications.length ).fadeOut('slow');                
+    //             }
+    //         },
+    //         error: function(xhr, textStatus, errorThrown) {
+    //             //called when there is an error
+    //         }
+    //     }).done(function( html ) {
 
-        });
+    //     });
         
-    }, 5000);
+    // }, 5000);
 
 
 
@@ -664,13 +685,13 @@
     /*
         DATEPICKER
     */
-    $('input[type="date"]').datepicker({
+    $('input[type="date"], input.datepicker').datepicker({
         format: "yyyy-mm-dd",
         language: "pt-BR",
         orientation: "top right",
         autoclose: true,
         todayHighlight: true
-    });
+    });    
 
 
     console.log('Document ready!');

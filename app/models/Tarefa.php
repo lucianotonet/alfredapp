@@ -42,7 +42,7 @@ class Tarefa extends \Eloquent {
 
 
    public function notifications(){
-      return $this->hasMany('Notification');
+      return $this->hasMany('Notification', 'owner_id');
    }
 
    // ESTÁ ATRASADA?

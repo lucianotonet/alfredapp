@@ -278,13 +278,11 @@
         <p>
             <strong>Observações:</strong>
             <br>
-            <textarea name="obs" class="form-control">{{$pedido->obs}}</textarea>        
+            <textarea name="obs" class="form-control wysiwyg">{{$pedido->obs}}</textarea>        
         </p>  
     </li>
 
 </ul>
-
-@include('pedidos.panels.observacoes')
 
     <div class="panel-body bg-info">
         <p>

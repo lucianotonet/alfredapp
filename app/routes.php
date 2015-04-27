@@ -10,11 +10,11 @@ use Carbon\Carbon as Carbon;
 | and give it the Closure to execute when that URI is requested.
 |
 */
-App::setLocale("pt");
-setlocale(LC_ALL, "pt_BR", "pt_BR.iso-8859-1", "pt_BR.utf-8", "portuguese");
+App::setLocale("pt_BR.utf-8");
+setlocale(LC_ALL, "pt_BR.utf-8", "pt_BR", "pt_BR.iso-8859-1", "portuguese");
 
 Route::get('/locale', function(){
-    return 'Hi, your locale is '. App::getLocale();  
+	return 'Hi, your locale is '. App::getLocale();  
 });
 
 
@@ -31,6 +31,13 @@ Route::get('timeline', function()
 	return View::make('timeline');
 });
 
+
+/*
+|--------------------------------------------------------------------------
+| NOTIFICATOR
+|--------------------------------------------------------------------------
+*/
+Route::get('notifications', 'NotificatorController');
 
 
 /*
@@ -78,6 +85,7 @@ Route::when('clientes*', 'auth');
 |--------------------------------------------------------------------------
 */
 Route::get('tarefas/{tarefa_id}/check', array('uses' => 'TarefasController@check'));
+Route::get('tarefas/print', array('as'=>'tarefas.print','uses' => 'TarefasController@index'));
 Route::delete('tarefas/{tarefa_id}/excluir', array('uses' => 'TarefasController@excluir'));
 Route::resource('tarefas', 'TarefasController');
 Route::when('tarefas*', 'auth');
@@ -111,7 +119,7 @@ Route::when('conversas*', 'auth');
 */
 Route::group(array('prefix' => 'relatorios'), function()
 {
-    // NOVO RELATÓRIO BASEADO NO RESOURCE INFORMADO
+	// NOVO RELATÓRIO BASEADO NO RESOURCE INFORMADO
 	Route::get('create/{resource_name}', array('uses' => 'RelatoriosController@create') );
 
 });
@@ -137,6 +145,8 @@ Route::get('/', function()
 
    // Todas tarefas
    //$tarefas = Tarefa::with('cliente')->all();
+  
+  	return Redirect::to('agenda');
 
 	$tarefas = Tarefa::orderBy('done', 'ASC')->orderBy('id', 'ASC')->get();
 	$hoje    = Carbon::now();
@@ -146,7 +156,7 @@ Route::get('/', function()
 		if( Carbon::createFromFormat("Y-m-d H:i:s", $tarefa->start)->isToday() ) return $tarefa;
 	});
 
-    // PROXIMAS
+	// PROXIMAS
 	$ontem        = Carbon::create(date('Y'), date('m'), date('d'))->subDay();
 	$daquiummes  = Carbon::create(date('Y'), date('m'), date('d'))->addMonths(1);
 	$tarefas->proximas = Tarefa::where('start','>', $ontem)->where('start','<=', $daquiummes)->orderBy('start', 'ASC')->where('done', 0)->with('cliente', 'conversas')->get();
@@ -189,7 +199,7 @@ Route::get('/', function()
    //$tarefas->hoje  = Tarefa::where('start', '=', Carbon::now() )->get();
 
 
-	return View::make('dashboard', compact('tarefas','clientes'));
+	return View::make('dashboard', compact('tarefas','clientes', 'calendar'));
 });
 Route::when('/', 'auth');
 
@@ -207,6 +217,15 @@ Route::get('/demo', function()
 	return View::make('demo', compact('clientes', 'tarefas'));
 });
 
+
+/*
+|--------------------------------------------------------------------------
+| AGENDA
+|--------------------------------------------------------------------------
+*/
+Route::get('agenda/print', array('as'=>"agenda.print", 'uses' => 'AgendaController@index') );
+Route::resource('agenda', 'AgendaEventsController');
+Route::get('agenda/', array('uses' => 'AgendaController@index') );
 
 
 /*
@@ -248,6 +267,7 @@ Route::when('produtos*', 'auth');
 |--------------------------------------------------------------------------
 */
 Route::resource('categories', 'CategoriesController');
+Route::resource('categorias', 'CategoriesController');
 
 
 
@@ -396,6 +416,23 @@ Route::get('emails/track/{id}', array('as' => 'email.track', 'uses' => 'EmailsCo
 Route::resource('eventos', 'EventosController');
 Route::when('eventos*', 'auth');
 
+/*
+|--------------------------------------------------------------------------
+| PRINT PAGE
+|--------------------------------------------------------------------------
+*/
+Route::get('print', function(){
+	$alert[] = [   'class'   => 'alert-warning',
+				 'message'   => 'Informe o objeto a ser impresso!' ];  
+
+	Session::flash('alerts', $alert);
+	return Redirect::to( URL::previous() );
+});
+Route::get('print/{resource}', function( $resource ){
+	return $resource;
+});
+Route::when('print*', 'auth');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -412,8 +449,10 @@ Route::when('movimentos*', 'auth');
 | CONFIGURAÇÕES
 |--------------------------------------------------------------------------
 */
-Route::get('settings/reset', array('uses' => 'SettingsController@reset'));
-Route::resource('settings', 'SettingsController');
+Route::get('settings/reset', 					 array('uses' => 'SettingsController@reset'));
+Route::get('settings/{module}', 				 array('uses' => 'SettingsController@index'));
+Route::resource('settings','SettingsController', array('names' => array('store' => 'settings.store')));
+
 Route::when('settings*', 'auth');
 
 
@@ -453,7 +492,7 @@ Route::get('/template', function()
 
 // Confide routes
 if ( Config::get('settings.app_allow_register') ){
- 	Route::get('users/create', 'UsersController@create');
+	Route::get('users/create', 'UsersController@create');
 	Route::post('users', 'UsersController@store');
 }
 Route::get('login', 'UsersController@login');
@@ -483,69 +522,69 @@ Route::get('invoice', function(){
 
 function magicColor($text,$min_brightness=100,$spec=2)
 {
-    // Check inputs
+	// Check inputs
 	if(!is_int($min_brightness)) throw new Exception("$min_brightness is not an integer");
 	if(!is_int($spec)) throw new Exception("$spec is not an integer");
 	if($spec < 2 or $spec > 10) throw new Exception("$spec is out of range");
 	if($min_brightness < 0 or $min_brightness > 255) throw new Exception("$min_brightness is out of range");
 
 
-    $hash = md5($text);  //Gen hash of text
-    $colors = array();
-    for($i=0;$i<3;$i++)
-        $colors[$i] = max(array(round(((hexdec(substr($hash,$spec*$i,$spec)))/hexdec(str_pad('',$spec,'F')))*255),$min_brightness)); //convert hash into 3 decimal values between 0 and 255
+	$hash = md5($text);  //Gen hash of text
+	$colors = array();
+	for($i=0;$i<3;$i++)
+		$colors[$i] = max(array(round(((hexdec(substr($hash,$spec*$i,$spec)))/hexdec(str_pad('',$spec,'F')))*255),$min_brightness)); //convert hash into 3 decimal values between 0 and 255
 
-    if($min_brightness > 0)  //only check brightness requirements if min_brightness is about 100
-        while( array_sum($colors)/3 < $min_brightness )  //loop until brightness is above or equal to min_brightness
-        for($i=0;$i<3;$i++)
-                $colors[$i] += 10;  //increase each color by 10
+	if($min_brightness > 0)  //only check brightness requirements if min_brightness is about 100
+		while( array_sum($colors)/3 < $min_brightness )  //loop until brightness is above or equal to min_brightness
+		for($i=0;$i<3;$i++)
+				$colors[$i] += 10;  //increase each color by 10
 
-            $output = '';
+			$output = '';
 
-            for($i=0;$i<3;$i++)
-        $output .= str_pad(dechex($colors[$i]),2,0,STR_PAD_LEFT);  //convert each color to hex and append to output
-    
-    return '#'.$output;
+			for($i=0;$i<3;$i++)
+		$output .= str_pad(dechex($colors[$i]),2,0,STR_PAD_LEFT);  //convert each color to hex and append to output
+	
+	return '#'.$output;
 }
 
 
 
 
    /**
-    * 
-    */
+	* 
+	*/
    class Saudacoes
    {
 
-   	function __construct()
-   	{
-   	}      
+	function __construct()
+	{
+	}      
 
-   	public static function ola(){           
+	public static function ola(){           
 
-   		date_default_timezone_set("America/Sao_Paulo");                  
-   		$nome = Confide::user() ? Confide::user()->username : '';
-   		$hr = date(" H ");           
+		date_default_timezone_set("America/Sao_Paulo");                  
+		$nome = Confide::user() ? Confide::user()->username : '';
+		$hr = date(" H ");           
 
-   		if($hr >= 12 && $hr < 20) {  
-   			$turno = "Boa tarde";  
-   		}else if ($hr >= 20 && $hr <  24){  
-   			$turno = "Boa noite";  
-   		}else if ($hr >= 0 && $hr <  6){  
-   			$turno = "Dormir é para os fracos \o/";  
-   		}else if ($hr >= 6 && $hr <12 ){  
-   			$turno = "Bom dia";  
-   		}else{  
-   			$turno = "Que horas são?";  
-   		}           
+		if($hr >= 12 && $hr < 20) {  
+			$turno = "Boa tarde";  
+		}else if ($hr >= 20 && $hr <  24){  
+			$turno = "Boa noite";  
+		}else if ($hr >= 0 && $hr <  6){  
+			$turno = "Dormir é para os fracos \o/";  
+		}else if ($hr >= 6 && $hr <12 ){  
+			$turno = "Bom dia";  
+		}else{  
+			$turno = "Que horas são?";  
+		}           
 
-   		return  $turno;  
-   	}  
+		return  $turno;  
+	}  
 
    }   
 
 
-      /**
+	  /**
    *     FAZMERIR
    *     Não faz quase nada...
    *       Mas converte formato monetário para numérico =)
@@ -561,31 +600,31 @@ function magicColor($text,$min_brightness=100,$spec=2)
    *          returns "1234567890"
    * 
    **/
-      class FazMeRir {
+	  class FazMeRir {
 
-      	function __construct($valor)
-      	{
-      		$valor = $valor;
-      	}
+		function __construct($valor)
+		{
+			$valor = $valor;
+		}
 
-      	public static function feio($valor){
-      		$valor = str_replace( '.', '', $valor);
-      		$valor = str_replace( ',', '.', $valor );
-      		$valor = number_format( $valor, 2, '.', '');      
-      		return $valor;
-      	}
+		public static function feio($valor){
+			$valor = str_replace( '.', '', $valor);
+			$valor = str_replace( ',', '.', $valor );
+			$valor = number_format( $valor, 2, '.', '');      
+			return $valor;
+		}
 
-      	public static function bonito($valor){
-      		$valor = number_format( (float)$valor, 2, ',', '.');
-      		return $valor;
-      	}
+		public static function bonito($valor){
+			$valor = number_format( (float)$valor, 2, ',', '.');
+			return $valor;
+		}
 
-      	public static function igual($valor){
-      		$valor = $valor;
-      		return $valor;
-      	}
+		public static function igual($valor){
+			$valor = $valor;
+			return $valor;
+		}
 
-      }
+	  }
 
 
 
@@ -603,16 +642,16 @@ class AboutDate
 
 	public static function timeAgo($value='')
 	{
-		setlocale(LC_TIME, 'pt_BR.utf-8');
+		// setlocale(LC_TIME, 'pt_BR.utf-8');
 		$value  = strtotime($value);
-      // $year   = date('Y', $value);
-      // $month  = date('m', $value);
-      // $day    = date('d', $value);
-      // $hour   = date('H', $value);
-      // $minute = date('i', $value);
-      // $second = date('s', $value);
-      // $dt = Carbon::create($year, $month, $day, $hour, $minute, $second);
-      // return $dt->formatLocalized('%A, %d de %B');
+	  // $year   = date('Y', $value);
+	  // $month  = date('m', $value);
+	  // $day    = date('d', $value);
+	  // $hour   = date('H', $value);
+	  // $minute = date('i', $value);
+	  // $second = date('s', $value);
+	  // $dt = Carbon::create($year, $month, $day, $hour, $minute, $second);
+	  // return $dt->formatLocalized('%A, %d de %B');
 		return Carbon::createFromTimeStamp( $value )->diffForHumans();
 	}
 
@@ -620,8 +659,8 @@ class AboutDate
 
 	public static function diaDaSemana($data='')
 	{
-		setlocale(LC_TIME, 'pt_BR.utf-8');
-      //$dt = Carbon::create($data);
+		// setlocale(LC_TIME, 'pt_BR.utf-8');
+	  //$dt = Carbon::create($data);
 		$dt = Carbon::createFromFormat("Y-m-d", $data);
 
 		if ($dt->dayOfWeek === Carbon::SUNDAY) {
@@ -690,7 +729,7 @@ class AboutDate
 		$lastmonth = mktime (0, 0, 0, date("m")-1, date("d")  , date("Y")  );
 		$nextyear  = mktime (0, 0, 0, date("m")  , date("d")  , date("Y")+1);
 
-      //$pastweend = 
+	  //$pastweend = 
 
 		$lastWeekStart = mktime(0 , 0 , 0 , date('n'), date('j')-6, date('Y')) - ((date('N'))*3600*24); 
 		$lastWeekEnd   = mktime(23, 59, 59, date('n'), date('j')  , date('Y')) - ((date('N'))*3600*24); 
@@ -715,17 +754,3 @@ class AboutDate
 		echo '<br>';
 	}
 }
-
-/**
- *    404 RDIRECT
- *    
- *    Se 404 retorna para a pagina anterior ou para a home
- */
-App::missing(function($exception)
-{
-   //  $alert[] = [   'class' => 'alert-danger', 'message'   => '<strong><i class="fa fa-warning"></i></strong> Erro 404! Não foi possível encontrar o item solicitado.' ];
-   //  Session::flash('alerts', $alert);
-   // // $url = URL::previous() ? : '/';
-   // return Redirect::to( URL::previous() );  
-
-});

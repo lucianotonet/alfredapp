@@ -61,26 +61,26 @@ jQuery(document).ready(function($) {
     });
 
 
-    // MODAL
-    $('#modal').on('show.bs.modal', function (event) {
+    // // MODAL
+    // $('#modal').on('show.bs.modal', function (event) {
     
-        var link = $(event.relatedTarget);
-        // $(this).find(".modal-content").load( link.attr("href") );
+    //     var link = $(event.relatedTarget);
+    //     // $(this).find(".modal-content").load( link.attr("href") );
 
-        $(this).find(".modal-content").load( link.attr("href") );
-        //  function(){
-        //         /* Stuff to do after the page is loaded */
-        //         //alert();
-        //         $(this).find(".modal-content input.price").priceFormat({        
-        //                                                     prefix: '',
-        //                                                     centsSeparator: ',',
-        //                                                     thousandsSeparator: '.',
-        //                                                     allowNegative: false
-        //                                                 });
-        // }
+    //     $(this).find(".modal-content").load( link.attr("href") );
+    //     //  function(){
+    //     //         /* Stuff to do after the page is loaded */
+    //     //         //alert();
+    //     //         $(this).find(".modal-content input.price").priceFormat({        
+    //     //                                                     prefix: '',
+    //     //                                                     centsSeparator: ',',
+    //     //                                                     thousandsSeparator: '.',
+    //     //                                                     allowNegative: false
+    //     //                                                 });
+    //     // }
 
 
         
-    })   
+    // })   
 
 });    

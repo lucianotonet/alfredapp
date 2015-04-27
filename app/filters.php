@@ -77,9 +77,10 @@ App::before(function($request)
 
 	if( Confide::user() ){
 		$configs = User::find( Confide::user()->id )->settings;
+
 		foreach ($configs as $config) {
 
-			if( !empty($config->setting_value) and Config::get( $config->setting_type.'.'.$config->setting_name ) ){
+			if( Config::has( $config->setting_type.'.'.$config->setting_name ) ){
 				if( json_decode($config->setting_value) ){
 					$config->setting_value = json_decode($config->setting_value, 'T_ARRAY');
 				};

@@ -91,7 +91,7 @@ class ConversasController extends \BaseController {
                else{ $tarefa_title = "Conversa agendada com ".$cliente->nome; }
 
                $tarefa  = Tarefa::create([
-                           'start'      => date('Y-m-d H:m:i', strtotime($data['tarefa_date'])),
+                           'start'      => date('Y-m-d H:i:s', strtotime($data['tarefa_date'])),
                            'cliente_id' => $data['cliente_id'],
                            'conversa_id'=> $conversa->id,
                            'title'      => $tarefa_title,

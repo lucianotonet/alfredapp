@@ -1,36 +1,30 @@
 <?php
-use Carbon\Carbon as Carbon;
+
 class Notification extends \Eloquent {
 
-   public $fechar = "";
+	// Add your validation rules here
+	public static $rules = [
+		'title' => 'required'
+	];
 
-   public static $rules = [];
-	protected $fillable = ['class','status','title','message','type','date','tarefa_id'];
+	// Don't forget to fill this array
+	protected $fillable = ['title', 'type', 'date', 'owner_type', 'owner_id', 'user_id', 'status'];
 
-   /**
-    *    FECHAR NOTIFICAÇÕES
-    *
-    * @param  int  $id
-    * @return Response
-    */
-   public function close()
-   {        
-      $this->status = '1';
-      $this->save();
-      return $this;      
-   }
+	public function categories()
+	{
+		return $this->hasMany('Category')
+		            ->where('owner_type', 'notification')
+		 			->where('owner_id',  $this->id );
+	}
 
-   public function tarefa(){
-      return $this->belongsTo('Tarefa');
-   }
+	public function cliente()
+	{
+		return $this->belongsTo('Cliente');
+	}
 
-    public function daysbefore($days='')
-    {
-        if( $this->tarefa ){
-            $dataNotification = Carbon::create( date('Y',strtotime($this->tarefa->start)), date('m',strtotime($this->tarefa->start)), date('d',strtotime($this->tarefa->start)) );                        
-            $dataTarefa       = Carbon::create( date('Y',strtotime($this->date) ), date('m',strtotime($this->date) ), date('d',strtotime($this->date) ) );             
-            return $dataNotification->diffInDays( $dataTarefa );           
-        }
-        return false;        
-    }  
+	public function tarefa()
+	{
+		return $this->belongsTo('Tarefa', 'owner_id')->where('owner_type', 'tarefa');
+	}
+
 }

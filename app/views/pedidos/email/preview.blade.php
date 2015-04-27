@@ -180,6 +180,18 @@ table.body-wrap {
     background-color: #f5f5f5
 }
 
+.multicolumns {
+    -webkit-column-count: 2; /* Chrome, Safari, Opera */
+    -moz-column-count: 2; /* Firefox */
+    column-count: 2;
+    -webkit-column-gap: 20px; /* Chrome, Safari, Opera */
+    -moz-column-gap: 20px; /* Firefox */
+    column-gap: 20px;
+  
+    padding: 5px 0px;
+}
+
+
 
 /* ------------------------------------- 
         FOOTER 
@@ -556,37 +568,10 @@ vertical-align: top;
                         <tr>
                             <td colspan="2">
                                 <h4><span>OBSERVAÇÕES</span></h4>                                
-                                <p>{{$pedido->obs}}</p>
+                                <div class="multicolumns">{{$pedido->obs}}</div>
                             </td>
                         </tr>
-                        <tr style="color: #888;">
-                            <td width="50%">
-                                <small>
-                                    <strong>Observações complementares:</strong>
-                                    <ul>
-                                        <li>Material de origem natural. estando sujeito à sofrer variações em sua totalidade ou veios.</li>
-                                        <li>O material deve ser conferido do ato do descarregamento.</li>
-                                        <li>Cessando nossa responsabilidade de uma vez entregue, não aceitamos reclamações posteriores.</li>
-                                        <li>Havendo variações no quantitaitvo fornecido prevalece o preço unitário</li>
-                                        <li>Para efeitos de medidas, peças com largura menor que 15cm considera-se 15cm</li>
-                                        <li>Para cancelamento de pedidos multa de 20% do valor total do pedido.</li>
-                                    </ul>
-                                </small>
-                            </td>
-                            <td width="50%">
-                                <small>
-                                    <strong>Será fornecido pelo cliente:</strong>
-                                    <ul>
-                                        <li>Descarga do meterial</li>
-                                        <li>Preparação da cancha</li>
-                                        <li>Serventes para os pedreiros</li>
-                                        <li>Estadia para os pedreiros</li>
-                                        <li>Material para a fixação (cimento, areia, buchas, parafusos, etc.)</li>
-                                        <li>Pontos de água, luz e bitoneira.</li>
-                                    </ul>
-                                </small>
-                            </td>
-                        </tr>    
+                        
                     </tbody>
 
                 </table>

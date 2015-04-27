@@ -11,44 +11,192 @@ class NotificationsController extends \BaseController {
 	 */
 	public function index()
 	{
+
+		$data 			= Input::all();
+		$pagination 	= Input::has('pagination') ? Input::get('pagination') : 10;	
+
+		// FILTRA RESULTADOS
+		$notifications = Notification::where( function ( $query ){
+			switch ( Input::get('view') ) {				
+				case 'next':
+					// AGENDADAS
+					$query->where( 'date', '>', date('Y-m-d H:i:s') );		 			  
+					break;
+				case 'all':
+					// $query->where( 'user_id', Confide::user()->id );
+					break;
+				default: 
+					// NÃO LIDAS
+					$query->where( 'date', '<', date('Y-m-d H:i:s') )
+			 			  ->where( 'status', 0);				 			  
+					break;						
+			}
+
+			if( Input::has('type') ){
+				$query->where( 'type', Input::get('type') );
+			}
+			if( Input::has('owner_type') ){
+				$query->where( 'owner_type', Input::get('owner_type') );
+			}
+			if( Input::has('owner_id') ){
+				$query->where( 'owner_id', Input::get('owner_id') );
+			}
+			if( Input::has('order') ){
+				$query->orderBy( 'date', Input::get('order') );
+			}
+
+		} )
+		->where( 'user_id', Confide::user()->id )
+		->orderBy( 'date', Input::get('order', 'DESC') )
+		->paginate( $pagination );
+		
+		
+		switch ( Input::get('view', 'unread') ) {
+			case 'next':		 										  
+				$labels['nothing'] 	= 'Nenhuma notificação agendada';
+				break;
+			
+			case 'all':
+				$labels['nothing'] 	= 'Nenhuma notificação ainda';
+				break;
+				
+			default: // case 'unread'
+				$labels['nothing'] 	= 'Nenhuma notificação não lida';
+				break;
+		}		
+		$labels['count_next'] 	= Notification::where( 'user_id', Confide::user()->id )
+					 						  ->where( 'date', '>', date('Y-m-d H:i:s') )
+					 						  ->count();
+		$labels['count_all'] 	= Notification::where( 'user_id', Confide::user()->id )
+		                                      ->count();
+		$labels['count_unread'] = Notification::where( 'user_id', Confide::user()->id )
+					 						  ->where( 'date', '<', date('Y-m-d H:i:s') )
+		 									  ->where( 'status', false)
+	 										  ->count();
+
+		//$notifications->getCollection()->paginate( $pagination );//->paginate( $pagination ;
+
+
 		if ( Request::ajax() ) {
-			$notifications = Notification::where('status', 0)->where('date','<=',date('Y-m-d H:i:s'))->orderBy('date', 'DESC')->get();
-			return Response::json($notifications, '200');
-		}
-      // $schema = new CreateNotificationsTable;
-      // $schema->up();
-      //
+			return View::make('notifications.panels.index', compact('notifications','labels'));
+		}else{
+			return View::make('notifications.index', compact('notifications','labels'));
+		}	
 
-      // Notificação TESTE
-      // Notification::create([
-      //    'class'    => 'info',
-      //    'title'    => 'E-email recebido!',
-      //    'message'  => 'XXX abriu seu e-mail <span class="timeago" title="'.date('Y-m-d H:i:s').'">agora mesmo</span>',
-      //    'status'   => 0,
-      // ]);
-
-
-
-      // $notifications = new CreateNotificationsTable;
-      // $notifications->down();
-      // sleep(3);
-      // $notifications->up();
-
-      // foreach ($clientesBKP as $cliente) {
-      //    Notification::create($cliente->toArray());
-      // }
-
-      //exit;
-	  $amanha  = Carbon::create(date('Y'), date('m'), date('d'))->addDay();
-
-      $notifications 		   = Notification::all();
-      $notifications->naolidas = Notification::where('status', 0)->where('date','<=',date('Y-m-d H:i:s'))->orderBy('date', 'DESC')->get();
-      $notifications->proximas = Notification::where('status', 0)->where('date','>',date('Y-m-d H:i:s'))->get();
-      $notifications->lidas    = Notification::where('status', 1)->orderBy('updated_at', 'DESC')->get();
-
-
-		return View::make('notifications.index', compact('notifications'));
 	}
+
+
+
+	public function getNavigationLinks(Array $data){		
+
+        $prev_link 					= $data;
+        $prev_link['prev'] 			= isset( $prev_link['prev'] ) ? ( $prev_link['prev'] + 1 ) : 0;
+        $navigation_links['prev']	= "?" . http_build_query( $prev_link, '', '&amp;');
+
+        $next_link 					= $data;            
+        $next_link['next'] 			= isset( $next_link['next'] ) ? ( $next_link['next'] + 1 ) : 0;
+        $navigation_links['next'] 	= "?" . http_build_query( $next_link, '', '&amp;');
+
+		$filter_type_all 					 = $data;
+		$filter_type_all['type'] 	  		 = 'all';
+		$navigation_links['filter_type_all'] = "?" . http_build_query( $filter_type_all, '', '&amp;');
+
+		$filter_type_tarefa 					 = $data;
+		$filter_type_tarefa['type'] 	  		 = 'email';
+		$navigation_links['filter_type_email']  = "?" . http_build_query( $filter_type_tarefa, '', '&amp;');
+
+		$filter_type_agendaevent 					  = $data;
+		$filter_type_agendaevent['type'] 	  		  = 'notification';
+		$navigation_links['filter_type_notification']  = "?" . http_build_query( $filter_type_agendaevent, '', '&amp;');
+
+
+
+		$view_today_link		= $data;
+		$view_thisweek_link		= $data;
+		$view_thismonth_link	= $data;
+		
+		$view_today_link['view']				= 'day';
+		unset( $view_today_link['next'], $view_today_link['prev'], $view_today_link['date'] );		
+		$navigation_links['view_today_link']    = "?" . http_build_query( $view_today_link, '', '&amp;');
+
+		$view_thisweek_link['view']				= 'week';
+		unset( $view_thisweek_link['next'], $view_thisweek_link['prev'], $view_thisweek_link['date'] );		
+		$navigation_links['view_thisweek_link'] = "?" . http_build_query( $view_thisweek_link, '', '&amp;');
+
+		$view_thismonth_link['view']			= 'month';
+		unset( $view_thismonth_link['next'], $view_thismonth_link['prev'], $view_thismonth_link['date'] );		
+		$navigation_links['view_thismonth_link'] = "?" . http_build_query( $view_thismonth_link, '', '&amp;');
+
+
+
+		// echo "<pre>";
+		return $navigation_links;
+	}
+
+
+
+
+	public function getLabels(Array $data){
+
+		/*
+			LABELS
+		*/			
+		$labels 			= array();
+		$labels['title'] 	= "HOJE";
+		switch ( $data['view'] ) {
+
+			case 'day':				
+				$date = Carbon::createFromFormat( 'Y-m-d', $data['date'] )
+												->addDays( $data['next'] )
+												->subDays( $data['prev'] );				
+				if ( $date->isToday() ){
+					$labels['title'] = "hoje";
+				}else if ( $date->isYesterday() ){
+					$labels['title'] = "ontem";
+				}else if ( $date->isTomorrow() ){
+					$labels['title'] = "amanhã";
+				}else{
+					$labels['title'] = strftime("%d de %B", strtotime( $date ));
+				}
+
+				break;
+
+			case 'week':								
+				$date 		  		= Carbon::createFromFormat( 'Y-m-d', $data['date'] )
+												->addWeeks( $data['next'] )
+												->subWeeks( $data['prev'] );														
+				$labels['title'] = strftime("%a %d/%m", strtotime( $date->startOfWeek() )) . " à " . strftime("%a %d/%m", strtotime( $date->endOfWeek() ));
+
+				break;
+						
+			case 'month':		
+				$date   = Carbon::createFromFormat( 'Y-m-d', $data['date'] )
+										->addMonths( $data['next'] )
+										->subMonths( $data['prev'] );
+				$labels['title'] = strftime("%B de %Y", strtotime( $date ));				
+				break;			
+		}
+
+		
+		switch ( @$data['type'] ) {
+			case 'email':				
+				$labels['filter'] = "e-mail";
+				break;
+			
+			case 'notification':		
+				$labels['filter'] = "notificação";
+				break;
+			
+			default:
+				$labels['filter'] = "todas";
+				break;
+		}
+	
+		return $labels;
+
+	}
+
+
 
 	/**
 	 * Show the form for creating a new notification
@@ -57,7 +205,11 @@ class NotificationsController extends \BaseController {
 	 */
 	public function create()
 	{
-		return View::make('notifications.create');
+		if ( Request::ajax() ) {
+			return View::make('notifications.panels.create');
+		}else{
+			return View::make('notifications.create');
+		}
 	}
 
 	/**
@@ -130,9 +282,45 @@ class NotificationsController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		$notification = Notification::findOrFail($id);
+		$notification = Notification::find($id);
 
-		return View::make('notifications.show', compact('notification'));
+		if( count( $notification ) < 1 ){
+			$alert[] = [  'class' 	=> 'alert-danger',
+			              'message' => '<strong><i class="fa fa-warning"></i></strong> Notificação não encontrado!' ];
+		    Session::flash('alerts', $alert);
+		    
+			return Redirect::to( URL::previous() );  			    			    
+		}
+
+		if( !$notification->status ){
+			$alert[] = [  'class' 	=> 'alert-success',
+			              'message' => '<strong><i class="fa fa-thumbs-up"></i></strong> Notificação marcada como <strong>lida</strong>!' ];
+		    Session::flash('alerts', $alert);			
+			$notification->status = true;
+		}
+		$notification->save();
+
+
+		if( !empty( $notification->owner_type ) and !empty( $notification->owner_id ) ){
+			switch ( $notification->owner_type ) {
+				case 'tarefa':
+					return Redirect::to( 'tarefas/' . $notification->owner_id );  
+					break;
+				
+				case 'agendaevent':
+					return Redirect::to( 'agenda/' . $notification->owner_id );  
+					break;
+
+				case 'cliente':
+					return Redirect::to( 'clientes/' . $notification->owner_id );  
+					break;
+			}
+		}
+		if( Request::ajax() ){
+			return View::make('notifications.panels.show', compact('notification'));
+		}else{
+			return View::make('notifications.show', compact('notification'));
+		}
 	}
 
 	/**
@@ -275,6 +463,127 @@ class NotificationsController extends \BaseController {
 	
 		return Redirect::to( URL::previous() );        
 
+    }
+
+
+    /**
+     * [filterResults description]
+     * @return [type] [description]
+     */		
+    public function filterResults(){
+
+    	$data 		  = Input::all();
+		$data['view'] = isset( $data['view'] ) ? $data['view'] : 'day';
+		$data['date'] = isset( $data['date'] ) ? $data['date'] : date('Y-m-d');	
+		$data['next'] = isset( $data['next'] ) ? $data['next'] : 0;
+		$data['prev'] = isset( $data['prev'] ) ? $data['prev'] : 0;
+		$data['type'] = isset( $data['type'] ) ? $data['type'] : 'all';
+
+
+    	/*
+			FILTROS DE EXIBIÇÃO
+		*/	
+		switch ( $data['view'] ) {
+
+			// DAY
+			default:				
+				$date = Carbon::createFromFormat( 'Y-m-d', $data['date_from'] )
+												->addDays( $data['next'] )
+												->subDays( $data['prev'] );
+
+				$notifications = Notification::where( 'date', $date->format('Y-m-d') )->where( 'user_id', Auth::id() )->orderBy( 'date' )->get();
+				break;
+
+			case 'week':				
+				$date 		  		= Carbon::createFromFormat( 'Y-m-d', $data['date_from'] )
+												->addWeeks( $data['next'] )
+												->subWeeks( $data['prev'] );										
+										
+				$notifications 		= Notification::where( 'date', '>=', $date->startOfWeek()->format('Y-m-d') )
+												 ->where( 'date', '<=', $date->endOfWeek()->format('Y-m-d') )
+												 ->where( 'user_id', Auth::id() )
+												 ->orderBy( 'date' )
+												 ->get();				
+				break;
+			
+			case 'range':								
+				$notifications = Notification::where( 'date', '>=', $data['date_from'] )
+											 ->where( 'date', '<=', $data['date_to'] )
+											 ->where( 'user_id', Auth::id() )
+											 ->orderBy( 'date' )
+											 ->get();		
+
+				break;			
+						
+			case 'month':
+
+				$view = "notifications.views.month";
+
+				$date   = Carbon::createFromFormat( 'Y-m-d', $data['date_from'] )
+										->addMonths( $data['next'] )
+										->subMonths( $data['prev'] );
+								
+				$notifications = Notification::where( 'date', '>=', $date->startOfMonth()->format('Y-m-d') )
+											 ->where( 'date', '<=', $date->endOfMonth()->format('Y-m-d') )
+											 ->where( 'user_id', Auth::id() )
+											 ->orderBy( 'date', 'DESC' )
+											 ->get();
+
+
+				$title = strftime("%B de %Y", strtotime( $date ));				
+				break;			
+		}
+		
+
+
+		// FILTERS
+		if( isset( $data['filter_order'] ) and $data['filter_order'] == 'desc'){
+			$notifications->sortByDesc('date'); // sort using collection method
+			$labels['filter_order'] = '<i class="fa fa-chevron-down"></i>';
+		}else{
+			$notifications->sortBy('date'); // sort using collection method
+			$labels['filter_order'] = '<i class="fa fa-chevron-up"></i>';
+		}
+
+		
+		if( $data['filter_done'] ){
+			$notifications = $notifications->filter( function ( $transaction ) use ($data) {
+				if( $transaction->done == $data['filter_done'] ){
+					return $transaction;
+				};
+			});
+
+			// LABELS
+			switch ($data['filter_done']) {
+				case 1:					
+					$labels[ 'filter_done' 	] = 'efetivadas';
+					break;
+				
+				case 0:
+					$labels[ 'filter_done' 	] = 'não efetivadas';
+					break;				
+			}
+		}
+
+
+		if( $data['filter_type'] ){
+			$notifications = $notifications->filter( function ( $transaction ) use ($data) {
+				if( $transaction->type == $data['filter_type'] ){
+					return $transaction;
+				};
+			} );
+
+			// LABELS
+			switch ($data['filter_type']) {
+				case 'receita':					
+					$labels[ 'filter_type' 	] = 'receitas';
+					break;
+				
+				case 'despesa':
+					$labels[ 'filter_type' 	] = 'despesas';
+					break;
+			}
+		}
     }
 
 

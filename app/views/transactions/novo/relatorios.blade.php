@@ -118,31 +118,52 @@
                             </table>                                    
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-3">
 
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th colspan="">Receitas</th>
-                                        <th colspan="">Despesas</th>
+                                        <th colspan="">Receitas</th>                                        
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td width="50%">
-                                            <span class="text-primary">R$ {{ number_format( $balance['receitas_ok'], '2', ',', '.' ) }}</span><br>
-                                            <sub class="text-muted">Previsto para o fim do período</sub><br>
+                                            <sub class="text-muted">Total de entrada</sub><br>
+                                            <span class="text-primary"><strong>R$ {{ number_format( $balance['receitas_ok'], '2', ',', '.' ) }}</strong></span><br>
+                                            <sub class="text-muted">Previsão para {{ $labels['end'] }}</sub><br>
                                             <span class="text-muted">R$ {{ number_format( $balance['receitas'], '2', ',', '.' ) }}</span>
-                                        </td>
-                                        <td width="50%">                                            
-                                            <span class="text-danger">R$ {{ number_format( $balance['despesas_ok'], '2', ',', '.' ) }}</span><br>
-                                            <sub class="text-muted">Previsto para o fim do período</sub><br>
-                                            <span class="text-muted">R$ {{ number_format( $balance['despesas'], '2', ',', '.' ) }}</span>
-                                        </td>
+                                        </td>                                        
                                     </tr>
                                 </tbody>
-                            </table>
-                                
+                            </table>                            
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="">Despesas</th>                                     
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td width="50%">                                            
+                                            <sub class="text-muted">Total de saída</sub><br>
+                                            <span class="text-danger"><strong>R$ {{ number_format( $balance['despesas_ok'], '2', ',', '.' ) }}</strong></span><br>
+                                            <sub class="text-muted">Previsão para {{ $labels['end'] }}</sub><br>
+                                            <span class="text-muted">R$ {{ number_format( $balance['despesas'], '2', ',', '.' ) }}</span>
+                                        </td>                                       
+                                    </tr>
+                                </tbody>
+                            </table>                            
+
+                        </div>
+
+                        <div class="col-md-6">
+
                             <table class="table table-hover">
                                 <thead></thead>
                                 <tbody>

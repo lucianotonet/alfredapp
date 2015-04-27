@@ -386,13 +386,12 @@ class EmailsController extends \BaseController {
 									$email->status    = 'success'; // Aberto pelo destinatário                  
 									$email->last_open = $_GET['email'];
 
-									// Notificação
-									// Notification::create([   
-									// 	 'class'    => 'success',
-									// 	 'title'    => 'E-email recebido!',
-									// 	 'message'  => $email->to . ' abriu seu e-mail <span class="timeago" title="'.date('Y-m-d H:i:s').'">agora mesmo</span>',
-									// 	 'status'   => 0,
-									// ]);
+									// Notificação de leitura de email
+									Notification::create([   
+										'icon'     => 'fa-check',
+										'title'    => $email->to . ' recebeu seu e-mail!<br/><small><span class="timeago" title="'.date('Y-m-d H:i:s').'"></span></small>',
+										'status'   => false,
+									]);
 
 							 }
 							 $email->save();      

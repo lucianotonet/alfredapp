@@ -5,6 +5,18 @@
     </div>
 
     {{ Form::open(array('url' => 'tarefas', 'id' => 'tarefa_create', 'method' => 'post')) }}
+
+    <div class="panel-body">
+        <div class="btn-group btn-group-justified">
+            <a href="{{ url( 'agenda/create' ) }}" class="btn btn-default text-uppercase" data-target="#modal">
+                <i class="icon-edit"></i> Evento
+            </a>                                
+            <a href="{{ url( 'tarefas/create/' ) }}" class="btn btn-primary text-uppercase" data-target="#modal">
+                <i class="fa fa-check-square-o"></i>                        
+                Tarefa
+            </a>        
+        </div>
+    </div>
     
         <div class="panel-body form-horizontal ">
             @if ( !empty( $cliente ) )                
@@ -44,33 +56,7 @@
                     <input type="date" class="form-control" id="start" name="start" value="{{date('Y-m-d')}}">
                 </div>
             </div>
-        </div>
-
-        <div class="panel-body form-horizontal bg-info">
-            <div class="form-group">
-                
-                <label for="status" class="col-sm-3 control-label"><i class="icon-bell pull-left"></i> Notificação</label>
-                <div class="col-sm-9 form-inline">
-
-                    <div class="">
-                        <input type="number" class="form-control input-group-item" id="notification" name="notification">                
-                        <label for="notification"> dias antes</label>                      
-                    </div>
-                </div>
-            
-            </div>
-            <div class="form-group">
-    
-                <label for="notification-text" class="col-sm-3 control-label">Texto</label>     
-                <div class="col-sm-9">
-                    <textarea class="form-control" id="notification-text" name="notification-text"></textarea>
-                </div>
-                    
-            </div>
-            
-            <div class="clearfix"></div>
         </div>        
-
 
         <div class="panel-footer">
             <div class="btn-toolbar" role="toolbar">
@@ -87,3 +73,79 @@
     {{ Form::close() }}
 
 </div>
+
+<script>
+    $(function() {
+
+        /*
+            MODAL RELOAD    
+         */ 
+        $.each( $("#modal [data-target=#modal]"), function(index, val) {
+            $(this).removeAttr('data-toggle');
+        });
+        
+        $("#modal [data-target=#modal]").click(function(ev) {
+            // alert();
+            ev.preventDefault();
+            $("#modal .modal-content").html( $('.loading-splash').html() );
+
+            var target = $(this).attr("href");
+            $("#modal .modal-content").load(target, function() { 
+                $("#modal").modal("show"); 
+            })
+            
+        });
+
+        /*
+            DATEPICKER
+        */
+        $('input[type="text"].datepicker').datepicker({
+            format: "dd/mm/yyyy",
+            language: "pt-BR",
+            orientation: "top right",
+            autoclose: true,
+            todayHighlight: true
+        });    
+
+        /*
+            ICONPICKER
+         */
+        $('[role=iconpicker]').iconpicker({
+            arrowClass: 'btn-primary',
+            arrowPrevIconClass: 'fa fa-chevron-left',
+            arrowNextIconClass: 'fa fa-chevron-right',
+            cols: 5,
+            icon: 'fa-star',
+            iconset: 'fontawesome',   
+            labelHeader: 'pág {0}',
+            labelFooter: '{0} - {1} of {2} icons',
+            placement: 'bottom',
+            rows: 5,
+            search: false,
+            searchText: 'Search',
+            selectedClass: 'btn-success',
+            unselectedClass: ''
+        }).on('change', function(e) { 
+            $("input[name=icon]").val(e.icon);
+            console.log(e.icon);
+        });
+
+        
+
+        // AUTOCOMPLETE
+        $('input.autocomplete').autocomplete({            
+            serviceUrl: "/categories",            
+            params: {'owner_type':'tarefa'},
+            onSelect: function (suggestion) {
+                $(this).val( suggestion.value );
+            },
+            onSearchStart: function (query) {
+                $(this).next('.form-control-feedback').removeClass('hidden');
+            },
+            onSearchComplete: function (query, suggestions) {
+                $(this).next('.form-control-feedback').addClass('hidden')
+            }
+        });
+
+    }); 
+</script>

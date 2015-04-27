@@ -12,44 +12,76 @@ class TarefasController extends \BaseController {
 	 */
 	public function index()
 	{
+		$data 		  		= Input::get();
+		$data['view'] 		= Input::has('view') 	? Input::get('view') 	: 'today'; 	// today, late, next, done
+		$data['perpage'] 	= Input::has('perpage') ? Input::get('perpage') : 10; 		
+		$dt = new Carbon;
+
+		$tarefas = Tarefa::where(function( $query )use( $data, $dt ){
+			switch ($data['view']) {				
+				case 'late':
+					$query->where('start','<', $dt->format('Y-m-d') )
+					      ->where('done', false);
+					break;
+				
+				case 'next':
+					$query->where('start','>', $dt->format('Y-m-d') )					      
+					      ->where('done', false);
+					break;
+
+				case 'done':
+					$query->where('done', true);
+					break;
+							
+				default:
+				// TODAY
+					$query->where('start','>=', $dt->startOfDay()->format('Y-m-d') )
+					      ->where('start','<=', $dt->endOfDay()->format('Y-m-d') );
+					break;
+			}
+
+		})
+		->orderBy( Input::get('order_by', 'start'), Input::get('order', 'DESC') )
+	    ->with('cliente', 'conversas')
+		->paginate( Input::get('perpage', 10) );
+
+		// $tarefas = Tarefa::orderBy('start', 'DESC')->with('cliente')->get();
+
 		
+		$hoje    = date('Y-m-d');
+		$ontem   = Carbon::create(date('Y'), date('m'), date('d'))->subDay();
+		$amanha  = Carbon::create(date('Y'), date('m'), date('d'))->addDay();
+		$proximo = Carbon::create(date('Y'), date('m'), date('d'))->addDay();//Igual amanhã?
+		if( $proximo->isWeekend() ){
+			$proximo = new Carbon('next monday');        	
+		}	
+		
+		$tarefas->pendentes = Tarefa::where('start','<',$hoje )->where('done', 0)->orderBy('start', 'ASC')->with('cliente', 'conversas')->get();
+		$tarefas->hoje      = Tarefa::where('start','<',$amanha->startOfDay())->where('start','>',$ontem)->where('done', 0)->with('cliente', 'conversas')->get();
 
-      $tarefas = Tarefa::orderBy('start', 'DESC')->with('cliente', 'notifications')->get();
+		$tarefas->nextDay   = Tarefa::where('done', 0)
+		->where('start','>=',$amanha) 									
+		->where('start','<',$proximo->addDay()) 	
+		->orderBy('start', 'DESC')
+		->with('cliente', 'conversas')
+		->get();
 
-           
-        $hoje    = date('Y-m-d');
-        $ontem   = Carbon::create(date('Y'), date('m'), date('d'))->subDay();
-        $amanha  = Carbon::create(date('Y'), date('m'), date('d'))->addDay();
-        $proximo = Carbon::create(date('Y'), date('m'), date('d'))->addDay();//Igual amanhã?
-        if( $proximo->isWeekend() ){
-        	$proximo = new Carbon('next monday');        	
-        }	
- 
-      	$tarefas->pendentes = Tarefa::where('start','<',$hoje )->where('done', 0)->orderBy('start', 'ASC')->with('cliente', 'conversas')->get();
- 		$tarefas->hoje      = Tarefa::where('start','<',$amanha->startOfDay())->where('start','>',$ontem)->where('done', 0)->with('cliente', 'conversas')->get();
+		$tarefas->proximas   = Tarefa::where('start','>=',$amanha)->orderBy('start', 'ASC')->where('done', 0)->with('cliente', 'conversas')->get();
+		$tarefas->concluidas = Tarefa::where('done', 1)->orderBy('updated_at', 'DESC')->with('cliente', 'conversas')->get();
 
- 		$tarefas->nextDay   = Tarefa::where('done', 0)
- 									->where('start','>=',$amanha) 									
- 									->where('start','<',$proximo->addDay()) 	
- 									->orderBy('start', 'DESC')
- 									->with('cliente', 'conversas')
- 									->get();
 
- 		$tarefas->proximas   = Tarefa::where('start','>=',$amanha)->orderBy('start', 'ASC')->where('done', 0)->with('cliente', 'conversas')->get();
- 		$tarefas->concluidas = Tarefa::where('done', 1)->orderBy('updated_at', 'DESC')->with('cliente', 'conversas')->get();
+		$tarefas->days       = $tarefas->groupBy(function( $tarefa ){
+			return date( 'Y-m-d', strtotime( $tarefa->start ) );
+		});
 
-      // $tarefas->nextDay   = $tarefas->each( function($tarefa){
-      // 		if(  Carbon::is $tarefa->start  )
-      // })
 
-      if( Request::ajax() ){
-         return $tarefas;
-      }
-      
-      //return $tarefas;
-	  
-	  return View::make('tarefas.index', compact('tarefas'));
-	
+		if( Request::ajax() ){  return $tarefas; }
+
+		if ( Route::is('tarefas.print') ){
+			return View::make('tarefas.print', compact('tarefas'));
+		}else{
+			return View::make('tarefas.index', compact('tarefas'));
+		}
 	}
 
 	/**
@@ -59,20 +91,20 @@ class TarefasController extends \BaseController {
 	 */
 	public function create()
 	{
-      if( isset($_GET['conversa_id']) ){
-         $conversa = Conversa::find($_GET['conversa_id']);
-      }else{
-         $conversa = "";
-      }
+		if( isset($_GET['conversa_id']) ){
+			$conversa = Conversa::find($_GET['conversa_id']);
+		}else{
+			$conversa = "";
+		}
 
-      if( isset($_GET['cliente_id']) ){
-         $cliente = Cliente::find($_GET['cliente_id']);
-      }else{
-         $cliente = "";
-      }
+		if( isset($_GET['cliente_id']) ){
+			$cliente = Cliente::find($_GET['cliente_id']);
+		}else{
+			$cliente = "";
+		}
 
-
-		return View::make('tarefas.create', compact('conversa','cliente') );
+		if ( Request::ajax() ) 	return View::make('tarefas.panels.create', compact('conversa','cliente'));
+		else 				 	return View::make('tarefas.create', compact('conversa','cliente') );
 	}
 
 	/**
@@ -82,46 +114,46 @@ class TarefasController extends \BaseController {
 	 */
 	public function store()
 	{
-	   $validator = Validator::make($data = Input::all(), Tarefa::$rules, Tarefa::$messages);
-        if ($validator->fails()){
-            return Redirect::back()->withErrors($validator)->withInput();
-        }
+		$validator = Validator::make($data = Input::all(), Tarefa::$rules, Tarefa::$messages);
+		if ($validator->fails()){
+			return Redirect::back()->withErrors($validator)->withInput();
+		}
 
-        $data['start'] = date( 'Y-m-d H:i:s', strtotime( $data['start'] ) );
+		$data['start'] = date( 'Y-m-d H:i:s', strtotime( $data['start'] ) );
 
-        if( $tarefa = Tarefa::create($data) ){
-	         
-	         // ADICIONAR NOTIFICAÇÃO
-	         if( !empty( $data['notification'] ) AND $data['notification'] > 0 ){
+		if( $tarefa = Tarefa::create($data) ){
+			
+			 // ADICIONAR NOTIFICAÇÃO
+			if( !empty( $data['notification'] ) AND $data['notification'] > 0 ){
 
-	            $notificationDate = Carbon::createFromFormat('Y-m-d H:i:s', $data['start'])->subDays( $data['notification'] );	            
+				$notificationDate = Carbon::createFromFormat('Y-m-d H:i:s', $data['start'])->subDays( $data['notification'] );	            
 
-		         // echo "<pre>";
-		         // print_r( $data );
-		         // echo "</pre>";
-		         // exit;
+				 // echo "<pre>";
+				 // print_r( $data ); 
+				 // echo "</pre>";
+				 // exit;
 
-	            // CREATE NOTIFICACAO...
-	            Notification::create([
-	                                   'date'      => $notificationDate->format('Y-m-d H:i:s'),
-	                                   'class'	   => 'info',                                   
-	                                   'title'	   => 'Lembrete de tarefa!',
-	                                   'message'   => $data['notification-text'],
-	                                   'tarefa_id' => $tarefa->id
-	            					]);
+				// CREATE NOTIFICACAO...
+				Notification::create([
+						'date'      	=> $notificationDate->format('Y-m-d'),
+						'icon'	   		=> 'fa-info-circle',                                   
+						'title'	   		=> $data['notification-text'],
+						'owner_id' 		=> $tarefa->id,
+						'owner_type' 	=> 'tarefa',
+					]);
 
-	         }
+			}
 
 
-     	    $alert[] = [ 'class' 	=> 'alert-success',
-     	    			 'message'  => '<strong><i class="fa fa-check"></i></strong> Nova tarefa criada!' ];
-            Session::flash('alerts', $alert);	
-					
-			return Redirect::to('tarefas/'.$tarefa->id);
+			$alert[] = [ 'class' 	=> 'alert-success',
+						 'message'  => '<strong><i class="fa fa-check"></i></strong> Nova tarefa criada!' ];
+			Session::flash('alerts', $alert);	
+			
+			return Redirect::back();
 
-        }
+		}
 
-         return Redirect::back()->withErrors($validator)->withInput(Input::all());
+		return Redirect::back()->withErrors($validator)->withInput(Input::all());
 
   //     if( !Input::get('id') ){
 
@@ -177,6 +209,8 @@ class TarefasController extends \BaseController {
 		// echo "</pre>";
 		// exit;
 
+		if( Request::ajax() )
+			return View::make('tarefas.panels.show', compact('tarefa') );
 		return View::make('tarefas.show', compact('tarefa') );
 	}
 
@@ -226,21 +260,21 @@ class TarefasController extends \BaseController {
 	{
 
 		$tarefa = Tarefa::with('notifications')->find($id);
-        
+		
 		$validator = Validator::make($data = Input::all(), Tarefa::$rules);
 		if ($validator->fails())
 		{
 			return Redirect::back()->withErrors($validator)->withInput();
 		}
-			
+		
 		
 		if( @$data['done'] == 1 ){
 			$tarefa->done = 1;	
 			Conversa::create([
-			    'tarefa_id'  => $tarefa->id,
+				'tarefa_id'  => $tarefa->id,
 				'cliente_id' => @$tarefa->cliente_id,
 				'resumo'	 => '<strong><i class="fa fa-check"></i> Tarefa '.$tarefa->id.' concluída!</strong><br/>'
-			]);
+				]);
 		}else{
 			$tarefa->done = 0;	
 		};
@@ -255,21 +289,21 @@ class TarefasController extends \BaseController {
 		$tarefa->update($data);
 
 		$alert[] = [ 'class' 	=> 'alert-success',
-     	    		 'message'  => '<strong><i class="fa fa-check"></i></strong> Salvo!' ];
+		'message'  => '<strong><i class="fa fa-check"></i></strong> Salvo!' ];
 		Session::flash('alerts', $alert);	
-	
+		
 		return Redirect::to( URL::previous() );  
 	}
 
 
    /**
-    * CHECK TAREFA
-    *
-    * @param  int  $id
-    * @return Response
-    */
-   public function check($id)
-   {
+	* CHECK TAREFA
+	*
+	* @param  int  $id
+	* @return Response
+	*/
+	public function check($id)
+	{
 		if(!isset($id)){			
 			$alert[] = [ 'class' 	=> 'alert-warning', 'message'  => '<strong><i class="fa fa-warning"></i></strong> Você precisa informar o ID da tarefa.' ];
 
@@ -290,7 +324,7 @@ class TarefasController extends \BaseController {
 		Session::flash('alerts', $alert);	
 
 		return Redirect::to( URL::previous() );  
-   }
+	}
 
 
 	/**

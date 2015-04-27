@@ -27,7 +27,7 @@
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Resumo financeiro</th>
+                                        <th>Resumo de {{ (new Carbon() )->formatLocalized('%B') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -45,7 +45,7 @@
                                             <dl>
                                                 <dt>Total de receitas</dt>
                                                 <dd>
-                                                    <span class="text-success lead">R$ {{ number_format( $balance['total_receitas'], '2', ',', '.' ) }}</span>
+                                                    <span class="text-success lead"><strong>R$ {{ number_format( $balance['total_receitas'], '2', ',', '.' ) }}</strong></span>
                                                 </dd>
                                             </dl> 
                                         </td>
@@ -53,7 +53,7 @@
                                             <dl>
                                                 <dt>Total de depesas</dt>
                                                 <dd>
-                                                    <span class="text-danger lead">R$ {{ number_format( $balance['total_depesas'], '2', ',', '.' ) }}</span>
+                                                    <span class="text-danger lead"><strong>R$ {{ number_format( $balance['total_depesas'], '2', ',', '.' ) }}</strong></span>
                                                 </dd>
                                             </dl> 
                                         </td>

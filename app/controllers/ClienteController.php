@@ -153,74 +153,35 @@ class ClienteController extends \BaseController {
 	public function show($id)
 	{
 
+		// Cliente		
+		$cliente  = Cliente::with('pedidos','conversas')->find($id);
 
-			// Schema::table('conversas', function($table)
-			// {
-			//  $table->string('important');
-			// });
-			// exit;
-
-
-		// Cliente
-		//$cliente  = Cliente::with('pedidos.emails')->find($id);
-			$cliente  = Cliente::with('pedidos','conversas','tarefas')->find($id);
-			
-			// Pedidos do cliente
-			//$pedidos  = $cliente->pedidos();  
-
-			// return $cliente;
-			// exit;
+		if($cliente){
+			 $pedidos  = $cliente->pedidos();  
+		
+			$tarefas = Tarefa::where('cliente_id', $cliente->id)->paginate( Input::get('perpage', 10));
+			$tarefas->days = $tarefas->groupBy(function( $tarefa ){
+				return date( 'Y-m-d', strtotime( $tarefa->start ) );
+			});
 
 
-			
-			
+			$hoje    = date('Y-m-d');
+			$ontem   = Carbon::create(date('Y'), date('m'), date('d'))->subDay();
+			$amanha  = Carbon::create(date('Y'), date('m'), date('d'))->addDay();
+			$proximo = Carbon::create(date('Y'), date('m'), date('d'))->addDay();//Igual amanhã
+			if( $proximo->isWeekend() ){
+			 $proximo = new Carbon('next monday');           
+			}   
 
+			 $tarefas->pendentes = Tarefa::where('cliente_id', $cliente->id )->where('start','<',$hoje )->where('done', 0)->orderBy('start', 'DESC')->get();
+			 $tarefas->hoje      = Tarefa::where('cliente_id', $cliente->id )->where('start','<',$amanha->startOfDay())->where('start','>',$ontem)->where('done', 0)->get();
 
-			if($cliente){
-				 $pedidos  = $cliente->pedidos();  
-			
-
-				 // $roles = User::find(1)->roles->toArray();
-
-
-				 // foreach ($pedidos as $pedido)
-				 // {
-				 //    if( $pedido->status == 1 ){
-				 //       $pedido = array_add( $pedidos->aguardando, $pedido );            
-				 //    }else
-				 //    if( $pedido->status == 2 ){
-				 //       $pedido = array_add( $pedidos->enviados, $pedido );         
-				 //    }
-				 // }
-
-
-				 // foreach ($cliente->tarefas as $tarefa)
-				 // {
-				 //    if( $tarefa->done == 0 ){
-				 //       $tarefa = array_add( $cliente->tarefas->pendentes, $tarefa );            
-				 //    }
-				 // }
-				 
-
-				$tarefas = $cliente->tarefas;
-
-				$hoje    = date('Y-m-d');
-				$ontem   = Carbon::create(date('Y'), date('m'), date('d'))->subDay();
-				$amanha  = Carbon::create(date('Y'), date('m'), date('d'))->addDay();
-				$proximo = Carbon::create(date('Y'), date('m'), date('d'))->addDay();//Igual amanhã
-				if( $proximo->isWeekend() ){
-				 $proximo = new Carbon('next monday');           
-				}   
- 
-				 $tarefas->pendentes = Tarefa::where('cliente_id', $cliente->id )->where('start','<',$hoje )->where('done', 0)->orderBy('start', 'DESC')->get();
-				 $tarefas->hoje      = Tarefa::where('cliente_id', $cliente->id )->where('start','<',$amanha->startOfDay())->where('start','>',$ontem)->where('done', 0)->get();
-
-				 $tarefas->nextDay   = Tarefa::where('cliente_id', $cliente->id )
-																								->where('done', 0)
-																								->where('start','>=',$amanha)                            
-																								->where('start','<',$proximo->addDay())   
-																								->orderBy('start', 'DESC')                                                
-																								->get();
+			 $tarefas->nextDay   = Tarefa::where('cliente_id', $cliente->id )
+																							->where('done', 0)
+																							->where('start','>=',$amanha)                            
+																							->where('start','<',$proximo->addDay())   
+																							->orderBy('start', 'DESC')                                                
+																							->get();
 			$tarefas->proximas   = Tarefa::where( 'cliente_id', $cliente->id )->where( 'start', '>=', $amanha->startOfDay() )->where( 'done', 0)->orderBy( 'start', 'ASC')->get();
 			$tarefas->concluidas = Tarefa::where( 'cliente_id', $cliente->id )->where( 'done', 1)->orderBy( 'updated_at', 'DESC')->get();                                    
 
@@ -228,11 +189,11 @@ class ClienteController extends \BaseController {
 			// show the view and pass the cliente to it
 			return View::make('clientes.show', compact('cliente','tarefas'));                     			
 															//->with( 'pedidos', $cliente->pedidos() );
-			}else{         
-				 $alert[] = [   'class' => 'alert-warning', 'message'   => 'O cliente que você procura não existe!' ];
-				 Session::flash('alerts', $alert);
-				 return Redirect::to('clientes');
-			} 
+		}else{         
+			 $alert[] = [   'class' => 'alert-warning', 'message'   => 'O cliente que você procura não existe!' ];
+			 Session::flash('alerts', $alert);
+			 return Redirect::to('clientes');
+		} 	
 
 
 	}
