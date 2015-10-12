@@ -12,33 +12,27 @@ class CreateTarefasTable extends Migration {
 	 */
 	public function up()
 	{      
-		  // TAREFAS
+		// TAREFAS
       Schema::create('tarefas', function(Blueprint $table)
       {
          $table->increments('id');
 
-         $table->text('title');
-         $table->integer('tipo');
-         //$table->boolean('allDay');
-         $table->dateTime('start')->nullable();      
-         // $table->dateTime('end')->nullable();         
+         $table->text('title');         
+         $table->text('description')->nullable();
+         $table->text('icon')->nullable();
          
-         // $table->text('url', null);
-         // $table->text('className', null);   
-         // $table->boolean('editable');
-         // $table->boolean('startEditable');
-         // $table->boolean('durationEditable');
-         // $table->text('color', null);
-         // $table->text('backgroundColor', null);
-         // $table->text('borderColor', null);
-         // $table->text('textColor', null);
+         $table->date('date')->nullable();      
+         $table->time('time')->nullable();         
 
          $table->integer('cliente_id')->nullable();
          $table->integer('conversa_id')->nullable();         
          $table->integer('notification_id')->nullable();
          $table->integer('relatorio_id')->nullable();
+         $table->integer('category_id')->nullable();
 
-         $table->boolean('done');         
+         $table->integer('owner_id')->nullable();
+
+         $table->boolean('done', false);         
 
          $table->timestamps();
       });

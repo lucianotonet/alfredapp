@@ -28,7 +28,7 @@ return array(
 	|
 	*/
 
-	'host' => 'mail.lucianotonet.com',
+	'host' => '',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 	
-	'from' => array('address' => 'alfredapp@lucianotonet.com', 'name' => 'Alfred App'),
+	'from' => array('address' => '', 'name' => ''),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' => 'alfredapp@lucianotonet.com',
+	'username' => '',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return array(
 	|
 	*/
 
-	'password' => 'ZNQ4y1IDRFmpkHLo_r5nJg',
+	'password' => '',
 
 	/*
 	|--------------------------------------------------------------------------

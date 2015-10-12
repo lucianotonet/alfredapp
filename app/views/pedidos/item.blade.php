@@ -13,7 +13,9 @@
             {{ ($pedido->cliente['empresa']) ? $pedido->cliente['empresa'] : @$pedido->cliente['nome'] }}
         </a>
     </td>
-    <td>{{($pedido->fornecedor->empresa)?$pedido->fornecedor->empresa: @$pedido->fornecedor->nome}}</td>
+    <td>
+    
+    {{ ($pedido->fornecedor['empresa'])?$pedido->fornecedor['empresa']: @$pedido->fornecedor['nome'] }}</td>
     <td>R$ {{$pedido->total}}</td>
     
     <td align="right">

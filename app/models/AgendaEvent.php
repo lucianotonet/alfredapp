@@ -22,7 +22,7 @@ class AgendaEvent extends \Eloquent {
                            'done', //bool
                            'category_id',
                            'cliente_id',
-                           'user_id', 
+                           'owner_id', 
                         ];
 
     protected $visible = array(

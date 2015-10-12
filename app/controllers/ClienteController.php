@@ -44,7 +44,7 @@ class ClienteController extends \BaseController {
 
 			}else{
 
-
+				$customers = Cliente::paginate( Input::get('paginate', 10) );
 					 
 
 				 // get all the clientes
@@ -86,7 +86,8 @@ class ClienteController extends \BaseController {
 				 
 				
 				 return View::make('clientes.index')
-						->with('clientes', $clientes);
+						->with('clientes', $clientes)
+						->with('customers', $customers);
 			}
 
 			
@@ -154,7 +155,11 @@ class ClienteController extends \BaseController {
 	{
 
 		// Cliente		
-		$cliente  = Cliente::with('pedidos','conversas')->find($id);
+		$cliente  = Cliente::find($id);
+		$pedidos   = Pedido::where('cliente_id', $cliente->id)->orderBy('created_at', 'desc')->with(['fornecedor'])->get();
+		$conversas = Conversa::where('cliente_id', $cliente->id)->orderBy('created_at', 'desc')->get();
+		$cliente->pedidos   = $pedidos;
+		$cliente->conversas = $conversas;
 
 		if($cliente){
 			 $pedidos  = $cliente->pedidos();  
@@ -173,16 +178,16 @@ class ClienteController extends \BaseController {
 			 $proximo = new Carbon('next monday');           
 			}   
 
-			 $tarefas->pendentes = Tarefa::where('cliente_id', $cliente->id )->where('start','<',$hoje )->where('done', 0)->orderBy('start', 'DESC')->get();
-			 $tarefas->hoje      = Tarefa::where('cliente_id', $cliente->id )->where('start','<',$amanha->startOfDay())->where('start','>',$ontem)->where('done', 0)->get();
+			 $tarefas->pendentes = Tarefa::where('cliente_id', $cliente->id )->where('date','<',$hoje )->where('done', 0)->orderBy('date', 'DESC')->get();
+			 $tarefas->hoje      = Tarefa::where('cliente_id', $cliente->id )->where('date','<',$amanha->startOfDay())->where('date','>',$ontem)->where('done', 0)->get();
 
 			 $tarefas->nextDay   = Tarefa::where('cliente_id', $cliente->id )
 																							->where('done', 0)
-																							->where('start','>=',$amanha)                            
-																							->where('start','<',$proximo->addDay())   
-																							->orderBy('start', 'DESC')                                                
+																							->where('date','>=',$amanha)                            
+																							->where('date','<',$proximo->addDay())   
+																							->orderBy('date', 'DESC')                                                
 																							->get();
-			$tarefas->proximas   = Tarefa::where( 'cliente_id', $cliente->id )->where( 'start', '>=', $amanha->startOfDay() )->where( 'done', 0)->orderBy( 'start', 'ASC')->get();
+			$tarefas->proximas   = Tarefa::where( 'cliente_id', $cliente->id )->where( 'date', '>=', $amanha->startOfDay() )->where( 'done', 0)->orderBy( 'date', 'ASC')->get();
 			$tarefas->concluidas = Tarefa::where( 'cliente_id', $cliente->id )->where( 'done', 1)->orderBy( 'updated_at', 'DESC')->get();                                    
 
 				 

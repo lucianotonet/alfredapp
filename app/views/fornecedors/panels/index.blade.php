@@ -1,26 +1,13 @@
 <div class="panel panel-primary">
     <!-- Default panel contents -->
 
-    <div class="panel-heading">
-        <div class="btn-group pull-left">
-            <h3 class="title">fornecedores</h3> 
-        </div>
-        <div class="btn-group pull-right">
-            <a href="{{url('fornecedors/create')}}" class="btn btn-info">
-                <i class="fa fa-plus"></i> Adicionar fornecedor
-            </a>
-        </div>
+    <div class="panel-heading">        
+        <a href="{{url('fornecedors/create')}}" class="btn btn-info pull-right">
+            <i class="fa fa-plus"></i> Adicionar fornecedor
+        </a>        
+        <h3 class="title">fornecedores</h3>         
     </div>
-
-    <!-- <div class="input-group input-group-lg search">
-        <input class="form-control input-lg autocomplete" type="text" placeholder="Procurar..." autofocus>
-        <span class="input-group-btn">
-            <button class="btn btn-info btn-lg" type="button">
-                <i class="fa fa-search"></i>
-            </button>
-        </span>
-    </div> -->
-
+ 
     
 
     <div class="list-group list-fornecedors">

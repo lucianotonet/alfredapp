@@ -17,4 +17,9 @@ class Category extends Eloquent {
 		return $this->hasMany('Transaction');
 	}
 
+	public function tarefas()
+	{
+		return $this->hasMany('Tarefa');
+	}
+
 }

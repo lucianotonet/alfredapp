@@ -50,7 +50,7 @@ p.text-center img.img-responsive {
 
 <div class="container">
 
-	<form class="form-signin" role="form" method="POST" action="{{{ URL::to('/users/login') }}}" accept-charset="UTF-8">
+	<form class="form-signin" role="form" method="POST" action="{{{ URL::to('login') }}}" accept-charset="UTF-8">
 
 		<p class="text-center">
 			<img src="<?php echo asset('img/logo/logo.png'); ?>" alt="" class="img-responsive">
@@ -61,7 +61,7 @@ p.text-center img.img-responsive {
 		<div class="alert alert-danger">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 			{{ Session::get('error') }}<br>
-			<a href="{{{ URL::to('/users/forgot_password') }}}" class="alert-link">Esqueceu a senha?</a>
+			<a href="{{{ URL::to('users/forgot_password') }}}" class="alert-link" >Esqueçeu a senha?</a>
 		</div> 
 		@endif
 
@@ -87,7 +87,7 @@ p.text-center img.img-responsive {
 
 		@if ( Config::get('settings.app_allow_register') )
 		<p class="text-center">
-			<a href="{{ url('users/create') }}" class="btn btn-link">Novo cadastro</a>
+			<a href="{{ url('/signup') }}" class="btn btn-link">Novo cadastro</a>
 		</p>      
 		@endif
 

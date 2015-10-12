@@ -33,40 +33,6 @@
     });
 
 
-    // $('table.sortable').dataTable( {
-    //     "paging":   false,
-    //     "ordering": true,
-    //     "info":     false,
-    //     "lengthMenu": false,
-    //     "language": {
-    //         processing:     "Processando...",
-    //         search:         "Procurar: ",
-    //         lengthMenu:    "Afficher _MENU_ &eacute;l&eacute;ments",
-    //         info:           "Affichage de l'&eacute;lement _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
-    //         infoEmpty:      "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
-    //         infoFiltered:   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
-    //         infoPostFix:    "",
-    //         loadingRecords: "Carregando...",
-    //         zeroRecords:    "Nada encontrado",
-    //         emptyTable:     "Tabela vazia",
-    //         paginate: {
-    //             first:      "Primeiro",
-    //             previous:   "Anterior",
-    //             next:       "Próximo",
-    //             last:       "Último"
-    //         },
-    //         aria: {
-    //             sortAscending:  ": organizar coluna em ordem crescente",
-    //             sortDescending: ": organizar coluna em ordem decrescente"
-    //         }
-    //     }
-    // } );
-
-
-    // $("select[name='uf']").selecter({
-    //     label: "Estado",
-    //     cover: true
-    // });
     $(".select").selecter({                
         cover: false
     });
@@ -82,14 +48,6 @@
     });    
 
 
-    // $(':checkbox').on('ifClicked', function(event){
-
-    //     tarefa = this.id;
-    //     $('.'+tarefa).delay(500).slideUp('fast');
-    //     //this.form.submit();
-    //     //alert(event.type + ' callback');
-    // });
-
     $('a.opentask').on('click', function(e){
         e.preventDefault();
 
@@ -99,36 +57,6 @@
     })
 
 
-    // Procurar item (searchable.js)
-    // $( '.list-group' ).searchable({
-    //     searchField   : '.search input',
-    //     selector      : '.list-group-item',
-    //     childSelector : '.search-data',
-    //     striped       : true,
-    //     oddRow        : { 'background-color': '#f5f5f5' },
-    //     evenRow       : { 'background-color': '#fff' },
-    //     hide          : function( elem ) {
-    //         elem.fadeOut(50);
-    //     },
-    //     show          : function( elem ) {
-    //         elem.fadeIn(50);
-    //     },
-    //     searchType    : 'default',
-    //     onSearchActive : function( elem, term ) {
-    //         elem.show();
-    //     },
-    //     onSearchEmpty: function( elem ) {
-    //         elem.hide();
-    //     },
-    //     onSearchFocus: function() {
-    //         $( '#feedback' ).show().text( 'Type to search.' );
-    //     },
-    //     onSearchBlur: function() {
-    //         $( '#feedback' ).hide();
-    //     },
-    //     clearOnLoad: true
-
-    // });
 
     
     /**
@@ -195,17 +123,11 @@
      * @return (json)
      */    
     $('.alert.notification').on('close.bs.alert', function () {
-        // alert('fechado');
-
-        // e.preventDefault();
-        // stop();
+        
         var loading = $('.loading');
         loading.removeClass('animated, fadeOut').addClass('animated, fadeIn');
 
-        // var clientes_list = $('.list-clientes .list-group-item');        
-        // clientes_list.slideUp('fast', function(){
-        //     this.remove();
-        // });
+        
 
         var request = $.ajax({
           url: $(this).attr('data-url'),
@@ -225,30 +147,11 @@
                                             +'    <p>'+item.message+'</p>'
                                             +'</div>';
 
-                //  var clienteItem =   '<a href="clientes/'+item.id+'" class="list-group-item">'
-                //                     +'    <span class="pull-left cliente-avatar" style="background-color:#3bafda">'
-                //                     +'        <img src="img/avatar-small.png" alt="">'
-                //                     +'    </span>'
-                //                     +'    <div class="search-data">'
-                //                     +'        <strong class="list-group-item-heading">'+item.nome+'</strong><br>'
-                //                     +'        <strong>'+item.empresa+'</strong><br>'
-                //                     +'        <i class="fa fa-map-marker"></i> '+item.cidade+' - '+item.uf+' | '
-                //                     +'        <i class="fa fa-phone"></i> '+item.telefone+'|'
-                //                     +'        <i class="fa fa-mobile"></i> '+item.celular+' '
-                //                     +'    </div>'
-                //                     +'</a>';
+                
 
                 $( notificationItem ).prependTo( $('#notifications .alert-group') );
                 $('.timeago').timeago();
-               
-            //});
-            
-            // clientes_list.slideDown('slow');
-            // loading.removeClass('fa-refresh fa-spin').addClass('fa-search');
-
-            if(item.length > 0){
-                // alert();
-            }
+                           
         });
          
         request.fail(function( jqXHR, textStatus ) {
@@ -293,15 +196,7 @@
         thousandsSeparator: '.',
         allowNegative: false
     });
-    // $('.price').on('change', function () {
-    //     $(this).priceFormat({        
-    //         prefix: 'R$ ',
-    //         centsSeparator: ',',
-    //         thousandsSeparator: '.'
-    //     });
-    // });
-
-
+   
 
     /**
      * SELECIONAR FORNECEDOR (AJAX)
@@ -317,15 +212,6 @@
 
         
         console.log( $(this).val() );
-
-        //preloader.removeClass('fa-search').addClass('fa-refresh fa-spin');
-
-        // var clientes_list = $('.list-clientes .list-group-item');        
-        // clientes_list.slideUp('fast', function(){
-        //     this.remove();
-        // });
-        
-
 
         var request = $.ajax({
             url: $('#fornecedores_url').val() + '/' + $(this).val(),
@@ -346,13 +232,7 @@
                 }
 
                 preloader.removeClass('flipInX').addClass('flipOutX').hide();
-            
-            // clientes_list.slideDown('slow');
-            // preloader.removeClass('fa-refresh fa-spin').addClass('fa-search');
-
-            // if(msg.length > 0){
-            //     // alert();
-            // }
+         
         });
          
         request.fail(function( jqXHR, textStatus ) {
@@ -407,57 +287,94 @@
         }        
     });
 
-    // var myCustomTemplates = {
-    //   html : function(locale) {
-    //     return "<li>" +
-    //            "<div class='btn-group btn-group-sm'>" +
-    //            "    <a class='btn btn-primary btn-sm' data-wysihtml5-action='change_view' title='" + locale.html.edit + "'>HTML</a>" +
-    //            "</div>" +
-    //            "</li>";
-    //   }
-    // }
 
+    var modalscripts = function () {
 
-    // tinymce.init({
-    //     selector: "textarea",                
-    //     mode : "textareas",
-    //     language : "pt",
-    //     menubar: false,
-    //     toolbar_items_size: 'small',
-    //     statusbar : false,
-    //     preview_styles: true,
-    //     fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
-    //     theme_advanced_font_sizes: "14px,16px,18px,20px",
-    //     font_size_style_values : "14px,16px,18px,20px",
-    //     plugins: [
-    //         "advlist autolink lists link charmap print preview anchor",
-    //         "searchreplace visualblocks code fullscreen",
-    //         "insertdatetime media table paste"
-    //     ],
-    //     toolbar: "undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist "
-    // });
-    // 
-    
-
-    var reloadModal = function () {
-        // /*
-        //     MODAL RELOAD    
-        //  */ 
-        // $.each( $("#modal [data-target=#modal]"), function(index, val) {
-        //     $(this).removeAttr('data-toggle');
-        // });
+        var modal = $('.modal');        
         
-        // $("#modal [data-target=#modal]").click(function(ev) {
-        //     // alert();
-        //     ev.preventDefault();
-        //     $("#modal .modal-content").html( $('.loading-splash').html() );
+        // Price Format        
+        modal.find(".modal-content .price").priceFormat({        
+            prefix: '',
+            centsSeparator: ',',
+            thousandsSeparator: '.',
+            allowNegative: true
+        });
 
-        //     var target = $(this).attr("href");
-        //     $("#modal .modal-content").load(target, function() { 
-        //         $("#modal").modal("show"); 
-        //     })
+        // MASK INPUT
+        modal.find(".modal-content .mask.date").mask("99/99/9999");
+        modal.find(".modal-content .mask.phone").mask("(99) Z9999-9999", {
+                                                    clearIfNotMatch: false, 
+                                                    placeholder: "(**) ____-____", 
+                                                    translation:  {'Z': {
+                                                        pattern: /[0-9]/, 
+                                                        optional: true}
+                                                    } 
+                                                } );
+        modal.find(".modal-content .mask.cnpj").mask("99.999.999/9999-99");
+        modal.find(".modal-content .mask.cep").mask("99999-999");
+      
+        /**
+         * WYSIWYG
+         */
+        modal.find('.modal-content .wysiwyg').wysihtml5({
+            toolbar: {
+                "font-styles": true, //Font styling, e.g. h1, h2, etc. Default true
+                "emphasis": true, //Italics, bold, etc. Default true
+                "lists": true, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
+                "html": true, //Button which allows you to edit the generated HTML. Default false
+                "link": false, //Button to insert a link. Default true
+                "image": true, //Button to insert an image. Default true,
+                "color": true, //Button to change color of font  
+                "blockquote": false, //Blockquote  
+                "size": 'xs', //default: none, other options are xs, sm, lg
+                "fa": true
+            }        
+        });
 
-        // });
+
+        // AUTOCOMPLETE
+        modal.find('.modal-content input.autocomplete').autocomplete({            
+            serviceUrl: function(){
+                if( $(this).data('url') ){
+                    return $(this).data('url');
+                }else
+                if( $(this).data('json') ){
+                    return $(this).data('json');
+                }else{
+                    return '/categories';
+                }                
+            },                        
+            onSelect: function (suggestion) {
+                $(this).val( suggestion.value );
+            },
+            onSearchStart: function (query) {            
+                $(this).next('.form-control-feedback').removeClass('hidden');
+            },
+            onSearchComplete: function (query, suggestions) {
+                $(this).next('.form-control-feedback').addClass('hidden')
+            }
+        });
+
+
+        /*
+            MODAL RELOAD    
+        */ 
+        $.each( $(".modal [data-target=#modal]"), function(index, val) {
+            $(this).removeAttr('data-toggle');
+        });
+
+        $(".modal [data-target=#modal]").click(function(ev) {
+            
+            ev.preventDefault();
+            $("#modal .modal-content").html( $('.loading-splash').html() );
+
+            var target = $(this).attr("href");
+            $("#modal .modal-content").load(target, function() { 
+                $("#modal").modal("show"); 
+            });
+        
+        });
+
 
     };
 
@@ -474,8 +391,10 @@
 
     $('body').on('loaded.bs.modal', '.modal', function () {
         $('.loading').addClass('fadeOut');         
-        reloadModal();
+        modalscripts();
     });
+
+
 
 
     // Time ago
@@ -797,7 +716,7 @@ $(function () {
 
             $(this)
                 .toggleClass('btn-success btn-add btn-danger btn-remove')
-                .html('–');
+                .html('<i class="fa fa-times"></i>');
 
             $formGroupClone.find('input').val('');
 
@@ -821,15 +740,17 @@ $(function () {
         var removeFormGroup = function (event) {
             event.preventDefault();
 
-            var $formGroup = $(this).closest('.form-group');
-            var $multipleFormGroup = $formGroup.closest('.multiple-form-group');
+            if( confirm('Remover o item?') ){
+                var $formGroup = $(this).closest('.form-group');
+                var $multipleFormGroup = $formGroup.closest('.multiple-form-group');
 
-            var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
-            if ($multipleFormGroup.data('max') >= countFormGroup($multipleFormGroup)) {
-                $lastFormGroupLast.find('.btn-add').attr('disabled', false);
+                var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
+                if ($multipleFormGroup.data('max') >= countFormGroup($multipleFormGroup)) {
+                    $lastFormGroupLast.find('.btn-add').attr('disabled', false);
+                }
+
+                $formGroup.remove();
             }
-
-            $formGroup.remove();
         };
 
         var selectFormGroup = function (event) {

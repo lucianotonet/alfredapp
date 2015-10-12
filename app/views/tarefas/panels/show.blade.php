@@ -58,9 +58,9 @@
                 </div>
             </div>        
             <div class="form-group">
-                <label for="start" class="col-sm-3 control-label">Prazo</label>
+                <label for="date" class="col-sm-3 control-label">Prazo</label>
                 <div class="col-sm-9">
-                    <input readonly type="date" class="form-control" id="start" name="start" value="{{date('Y-m-d', strtotime($tarefa->start))}}">
+                    <input readonly type="date" class="form-control" id="date" name="date" value="{{date('Y-m-d', strtotime($tarefa->date))}}">
                 </div>
             </div>    
 

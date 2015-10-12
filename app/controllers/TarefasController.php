@@ -14,18 +14,18 @@ class TarefasController extends \BaseController {
 	{
 		$data 		  		= Input::get();
 		$data['view'] 		= Input::has('view') 	? Input::get('view') 	: 'today'; 	// today, late, next, done
-		$data['perpage'] 	= Input::has('perpage') ? Input::get('perpage') : 10; 		
+		$data['paginate'] 	= Input::has('paginate') ? Input::get('paginate') : 10; 		
 		$dt = new Carbon;
 
 		$tarefas = Tarefa::where(function( $query )use( $data, $dt ){
 			switch ($data['view']) {				
 				case 'late':
-					$query->where('start','<', $dt->format('Y-m-d') )
-					      ->where('done', false);
+					$query->where('date','<', $dt->format('Y-m-d') )
+					      ->where('done', false);					      
 					break;
 				
 				case 'next':
-					$query->where('start','>', $dt->format('Y-m-d') )					      
+					$query->where('date','>', $dt->format('Y-m-d') )					      
 					      ->where('done', false);
 					break;
 
@@ -35,17 +35,17 @@ class TarefasController extends \BaseController {
 							
 				default:
 				// TODAY
-					$query->where('start','>=', $dt->startOfDay()->format('Y-m-d') )
-					      ->where('start','<=', $dt->endOfDay()->format('Y-m-d') );
+					$query->where('date','>=', $dt->startOfDay()->format('Y-m-d') )
+					      ->where('date','<=', $dt->endOfDay()->format('Y-m-d') );
 					break;
 			}
 
 		})
-		->orderBy( Input::get('order_by', 'start'), Input::get('order', 'DESC') )
+		->orderBy( Input::get('order_by', 'date'), Input::get('order', 'DESC') )
 	    ->with('cliente', 'conversas')
-		->paginate( Input::get('perpage', 10) );
+		->paginate( Input::get('paginate', 10) );
 
-		// $tarefas = Tarefa::orderBy('start', 'DESC')->with('cliente')->get();
+		// $tarefas = Tarefa::orderBy('date', 'DESC')->with('cliente')->get();
 
 		
 		$hoje    = date('Y-m-d');
@@ -56,22 +56,22 @@ class TarefasController extends \BaseController {
 			$proximo = new Carbon('next monday');        	
 		}	
 		
-		$tarefas->pendentes = Tarefa::where('start','<',$hoje )->where('done', 0)->orderBy('start', 'ASC')->with('cliente', 'conversas')->get();
-		$tarefas->hoje      = Tarefa::where('start','<',$amanha->startOfDay())->where('start','>',$ontem)->where('done', 0)->with('cliente', 'conversas')->get();
+		$tarefas->pendentes = Tarefa::where('date','<',$hoje )->where('done', 0)->orderBy('date', 'ASC')->with('cliente', 'conversas')->get();
+		$tarefas->hoje      = Tarefa::where('date','<',$amanha->startOfDay())->where('date','>',$ontem)->where('done', 0)->with('cliente', 'conversas')->get();
 
 		$tarefas->nextDay   = Tarefa::where('done', 0)
-		->where('start','>=',$amanha) 									
-		->where('start','<',$proximo->addDay()) 	
-		->orderBy('start', 'DESC')
+		->where('date','>=',$amanha) 									
+		->where('date','<',$proximo->addDay()) 	
+		->orderBy('date', 'DESC')
 		->with('cliente', 'conversas')
 		->get();
 
-		$tarefas->proximas   = Tarefa::where('start','>=',$amanha)->orderBy('start', 'ASC')->where('done', 0)->with('cliente', 'conversas')->get();
+		$tarefas->proximas   = Tarefa::where('date','>=',$amanha)->orderBy('date', 'ASC')->where('done', 0)->with('cliente', 'conversas')->get();
 		$tarefas->concluidas = Tarefa::where('done', 1)->orderBy('updated_at', 'DESC')->with('cliente', 'conversas')->get();
 
 
 		$tarefas->days       = $tarefas->groupBy(function( $tarefa ){
-			return date( 'Y-m-d', strtotime( $tarefa->start ) );
+			return date( 'Y-m-d', strtotime( $tarefa->date ) );
 		});
 
 
@@ -91,6 +91,14 @@ class TarefasController extends \BaseController {
 	 */
 	public function create()
 	{
+		
+		// $tarefas = new CreateTarefasTable();
+		// $tarefas->down();
+		// $tarefas->up();
+		// echo "OK";
+		// exit;
+
+
 		if( isset($_GET['conversa_id']) ){
 			$conversa = Conversa::find($_GET['conversa_id']);
 		}else{
@@ -119,19 +127,19 @@ class TarefasController extends \BaseController {
 			return Redirect::back()->withErrors($validator)->withInput();
 		}
 
-		$data['start'] = date( 'Y-m-d H:i:s', strtotime( $data['start'] ) );
-
-		if( $tarefa = Tarefa::create($data) ){
+		// echo "<pre>";
+		// print_r( $data ); 
+		// echo "</pre>";
+		// exit;
+		
+		$tarefa = Tarefa::create($data);
+		 
+		if( $tarefa ){
 			
-			 // ADICIONAR NOTIFICAÇÃO
+			// ADICIONAR NOTIFICAÇÃO
 			if( !empty( $data['notification'] ) AND $data['notification'] > 0 ){
 
-				$notificationDate = Carbon::createFromFormat('Y-m-d H:i:s', $data['start'])->subDays( $data['notification'] );	            
-
-				 // echo "<pre>";
-				 // print_r( $data ); 
-				 // echo "</pre>";
-				 // exit;
+				$notificationDate = Carbon::createFromFormat('Y-m-d H:i:s', $data['date'])->subDays( $data['notification'] );	            
 
 				// CREATE NOTIFICACAO...
 				Notification::create([
@@ -231,7 +239,7 @@ class TarefasController extends \BaseController {
 
 		//$notification = new Notification;
 
-		// $notification = Carbon::createFromFormat('Y-m-d H:i:s', $data['start'])->subDays( $data['notification'] );
+		// $notification = Carbon::createFromFormat('Y-m-d H:i:s', $data['date'])->subDays( $data['notification'] );
 
 
 		// $notification = Carbon::createFromDate(2000, 1, 1, 'America/Toronto');
@@ -278,13 +286,6 @@ class TarefasController extends \BaseController {
 		}else{
 			$tarefa->done = 0;	
 		};
-
-
-		// echo "<pre>";
-		// print_r($data);
-		// echo "</pre>";
-		// exit;
-
 
 		$tarefa->update($data);
 
@@ -335,9 +336,21 @@ class TarefasController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		Tarefa::destroy($id);
+		$tarefa = Tarefa::find($id);		
+		if(!$tarefa){
+			return Redirect::back()->withInput();
+		}
 
-		return Response::json(array('success' => true));
+
+		if( $tarefa->destroy($id) ){
+			$alert[] = [  'class' 	=> 'alert-success',
+			'message'   => '<strong><i class="fa fa-check"></i></strong> Tarefa excluída!' ];
+		}else{
+			$alert[] = [  'class' 	=> 'alert-danger',
+			'message'   => '<strong><i class="fa fa-warning"></i></strong> Não foi possível excluir a tarefa!' ];
+		}
+		Session::flash('alerts', $alert);
+		return Redirect::back()->withInput();
 	}
 
 	/**

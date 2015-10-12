@@ -28,7 +28,7 @@ return array(
 	|
 	*/
 
-	'host' => 'mail.lucianotonet.com',
+	'host' => '',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -53,9 +53,8 @@ return array(
 	| used globally for all e-mails that are sent by your application.
 	|
 	*/
-
-	// 'from' => array('address' => 'olmar@basaltosegranitos.com.br', 'name' => 'Olmar Primieri'),
-	'from' => array('address' => 'alfredapp@lucianotonet.com', 'name' => 'Alfred App'),
+	
+	'from' => array('address' => '', 'name' => 'Alfred App'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -81,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' => 'alfredapp@lucianotonet.com',
+	'username' => '',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -94,7 +93,7 @@ return array(
 	|
 	*/
 
-	'password' => 'ZNQ4y1IDRFmpkHLo_r5nJg',
+	'password' => '',
 
 	/*
 	|--------------------------------------------------------------------------

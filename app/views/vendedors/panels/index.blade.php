@@ -2,32 +2,18 @@
     <!-- Default panel contents -->
 
     <div class="panel-heading">
-        <div class="btn-group pull-left">
-            <h3 class="title">vendedores</h3> 
-        </div>
-        <div class="btn-group pull-right">
-            <a href="{{url('vendedors/create')}}" class="btn btn-info">
-                <i class="fa fa-plus"></i> Adicionar vendedor
-            </a>
-        </div>
+        <a href="{{url('vendedors/create')}}" class="btn btn-info pull-right">
+            <i class="fa fa-plus"></i> Adicionar
+        </a>        
+        <h3 class="panel-title">Vendedores</h3>         
     </div>
 
-    <!-- <div class="input-group input-group-lg search">
-        <input class="form-control input-lg autocomplete" type="text" placeholder="Procurar..." autofocus>
-        <span class="input-group-btn">
-            <button class="btn btn-info btn-lg" type="button">
-                <i class="fa fa-search"></i>
-            </button>
-        </span>
-    </div> -->
-
-    
-
+  
     <div class="list-group list-vendedors">
 
     @foreach ($vendedores as $vendedor)
         {{-- expr --}}
-        <a href="vendedores/{{$vendedor->id}}" class="list-group-item">
+        <a href="vendedors/{{$vendedor->id}}" class="list-group-item">
             <span class="pull-left cliente-avatar" style="background-color:#3bafda"> 
                 <img src="img/avatar-small.png" alt=""> 
             </span> 
@@ -44,11 +30,3 @@
 
     </div>
 </div>
-
-@section('script')
-    <script>
-        $(document).ready(function(){
-            console.log('Ligado!');
-        });
-    </script>
-@stop

@@ -9,12 +9,12 @@ class AgendaEventsTableSeeder extends Seeder {
 	{
 		$faker = Faker::create();
 
-		foreach(range(1, 10) as $index)
-		{
-			AgendaEvent::create([
+		// foreach(range(1, 10) as $index)
+		// {
+		// 	AgendaEvent::create([
 
-			]);
-		}
+		// 	]);
+		// }
 	}
 
 }

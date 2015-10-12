@@ -202,19 +202,19 @@
 
             <div class="btn-toolbar" role="toolbar">
                 <div class="btn-group btn-group-lg pull-left">
-                    <a href="{{ url('/vendedores') }}" class="btn btn-primary btn-brick">
+                    <a href="{{ url('/vendedors') }}" class="btn btn-primary btn-brick">
                         <i class="fa fa-chevron-left"></i> Voltar
                     </a>                
                 </div>
 
-                {{ Form::open(array('url' => 'vendedores/' . $vendedor->id, 'class' => '')) }}
+                {{ Form::open(array('url' => 'vendedors/' . $vendedor->id, 'class' => '')) }}
                     <div class="btn-group btn-group-lg pull-right">               
                         
                         {{ Form::button('<i class="fa fa-times"></i> Excluir', array('class' => 'btn btn-danger btn-lg btn-brick', 'type'=>'sumbit', 'onclick'=>'javascript:return confirm("Deseja excluir este vendedor da lista?")')) }}
 
                         {{ Form::hidden('_method', 'DELETE') }}
 
-                        <a href="{{ url('/vendedores/'.$vendedor->id.'/edit') }}" class="btn btn-info btn-brick">
+                        <a href="{{ url('/vendedors/'.$vendedor->id.'/edit') }}" class="btn btn-info btn-brick">
                             <i class="fa fa-edit"></i> Editar
                         </a>
                     

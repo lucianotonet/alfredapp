@@ -9,11 +9,7 @@ class EmailsController extends \BaseController {
 	 */
 	public function index()
 	{
-		$emails = Email::all();
-
-		// $emails = new AddOwnerIdToEmailsTable;		
-		// $emails->up();
-
+		$emails = Email::orderBy('id', 'desc')->paginate( Input::get('paginate', 10) );
 
 		return View::make('emails.index', compact('emails'));
 	}

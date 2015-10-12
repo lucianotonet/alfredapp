@@ -12,7 +12,8 @@
 		"maatwebsite/excel": "~1.2.1",
 		"barryvdh/laravel-dompdf": "0.4.*",
 		"mandrill/mandrill": "1.0.*",
-		"makzumi/calendar": "dev-master"
+		"makzumi/calendar": "dev-master",
+		"doctrine/dbal": "2.4.*"
 	},
 	"autoload": {
 		"classmap": [

@@ -9,26 +9,46 @@ class CategoriesController extends \BaseController {
 	 */
 	public function index()
 	{
-		if( Request::ajax() ) { 
+		$data 		= Input::all();
+		$categories = Category::where( function( $query ){
+										if( Input::has('owner_type') ){
+						                	$query->where('owner_type', Input::get('owner_type') );	                
+										}
+										if( Input::has('query') ){
+        									$query->where('name', 'like', '%'. Input::get('query') .'%');	                
+        								}
+        							});				            
+		$types 		= Category::get(['owner_type']);
+		$types 		= $types->groupBy(function( $category ){
+			return $category->owner_type;
+		})->toArray();
 
-			$data = Input::all();
+		if( Request::ajax() ) { 
 			
-			$categories 		= Category::where('owner_type', @$data['owner_type'] )->where('name', 'like', '%'.@$data['query'].'%')->get();	
-			$suggestions 		= array();	
-			foreach ($categories as $category) {
-				$suggestions[] = array(
-				                       	"value"  => $category->name,
-				                       	"data"	 => array(
-				                       	               'owner_type' => $category->owner_type
-				                       	            )		 							
-				                    );				
+			// SUGGESTIONS FOR AUTOCOMPLETE
+			$categories = $categories->get();	
+
+			if( Input::has('query') ){
+				$suggestions = array();	
+
+				foreach ($categories as $category) {
+					$suggestions[] = array(
+					                       	"value"  => $category->name,
+					                       	"data"	 => array(
+					                       	               'owner_type' => $category->owner_type
+					                       	            )		 							
+					                    );				
+				}
+	 			$categories = array( 'suggestions' => $suggestions );			
+			 	return Response::json($categories);
 			}			
- 			$categories = array( 'suggestions' => $suggestions );			
-		 	return Response::json($categories);
+
+			// RETURN INDEX PANEL
+			return View::make('categories.panels.index', compact('categories', 'types')); 
+
 		} else { 
-			$categories = Category::all();
-			$category 	= new Category;
-			return View::make('categories.index', compact('categories', 'category')); 
+			$categories = $categories->paginate( Input::get('paginate', 10) );	
+			return View::make('categories.index', compact('categories', 'types')); 
 		}
 	}
 
@@ -39,8 +59,18 @@ class CategoriesController extends \BaseController {
 	 */
 	public function create()
 	{
-		$category = new Category;
-		return View::make('categories.create', compact('category'));
+		$types = array(
+					'tarefa' 		=> 'Tarefas',
+					'agedaevent' 	=> 'Evento',
+					'produto' 		=> 'Produtos',
+					'transaction' 	=> 'Lanç. financeiro',
+				);
+
+		if( Request::ajax() ) { 
+			return View::make('categories.panels.create', compact('types'));
+		}else{
+			return View::make('categories.create', compact('types'));
+		}
 	}
 
 	/**
@@ -101,8 +131,19 @@ class CategoriesController extends \BaseController {
 	public function edit($id)
 	{
 		$category = Category::find($id);
-
-		return View::make('categories.edit', compact('category'));
+		if( !$category ){
+			$alert[] = [ 'class' 	=> 'alert-danger',
+     	    			 'message'  => '<strong><i class="fa fa-warning"></i></strong> A categoria não existe' ];
+            Session::flash('alerts', $alert);	
+		
+			return Redirect::to( URL::previous() ); 
+		}else{
+			if( Request::ajax() ) { 
+				return View::make('categories.panels.edit', compact('category'));
+			}else{
+				return View::make('categories.edit', compact('category'));
+			}
+		}
 	}
 
 	/**

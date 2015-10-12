@@ -41,7 +41,7 @@
 					<span class="input-group-addon bg-primary ">
 						<div class="icon-calendar"></div>
 					</span>
-					<input type="text" name="date_start" id="date_start" class="form-control datepicker" value="{{date('d-m-Y')}}" required="required">
+					<input type="date" name="date_start" id="date_start" class="form-control datepicker" value="{{date('Y-m-d')}}" required="required">
 
 					<span class="input-group-addon bg-primary ">
 						<i class="icon-clock"></i>
@@ -53,8 +53,6 @@
 				<a clas="btn btn-primary bnt-lg pull-right" data-toggle="collapse" href="#agendaevent_moreinfo" aria-expanded="false" aria-controls="agendaevent_moreinfo">
 					<i class="icon-circle-plus"></i> Mais detalhes
 				</a>	
-
-
 
 			</div>			
 		</div>
@@ -68,7 +66,7 @@
 						<span class="input-group-addon bg-primary ">
 							<div class="icon-calendar"></div>
 						</span>
-						<input type="text" name="date_end" id="date_end" class="form-control datepicker" value="">
+						<input type="date" name="date_end" id="date_end" class="form-control datepicker" value="">
 						<span class="input-group-addon bg-primary ">
 							<i class="icon-clock"></i>
 						</span>
@@ -243,7 +241,7 @@ $(function() {
 	        DATEPICKER
 	        */	   
 	        $('.datepicker').datepicker({
-	        	format: "dd-mm-yyyy",
+	        	format: "yyyy-mm-dd",
 	        	language: "pt-BR",
 	        	orientation: "top right",
 	        	autoclose: true,

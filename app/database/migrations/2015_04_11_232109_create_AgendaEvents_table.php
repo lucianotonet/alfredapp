@@ -28,7 +28,8 @@ class CreateAgendaEventsTable extends Migration {
 
 			$table->integer('category_id')->nullable();
 			$table->integer('cliente_id')->nullable();
-			$table->integer('user_id')->nullable();
+			
+			$table->integer('owner_id')->nullable();
 
 			$table->timestamps();
 		});

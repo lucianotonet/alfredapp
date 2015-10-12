@@ -30,7 +30,7 @@ class AgendaController extends BaseController {
 		if( $data['type'] == 'tarefa' || $data['type'] == NULL ){
 			$tarefas = $this->getTarefas( $data );	
 			$tarefas = $tarefas->groupBy(function( $tarefa ){				
-				return date( 'Y-m-d', strtotime($tarefa->start));
+				return date( 'Y-m-d', strtotime($tarefa->date));
 			})->toArray();		
 		}
 
@@ -41,7 +41,7 @@ class AgendaController extends BaseController {
 			})->toArray();	
 		}	
 
-		// $agendaevents['date_start'] = array_merge($tarefas['start']);
+		// $agendaevents['date_start'] = array_merge($tarefas['date']);
 		$events = array_merge_recursive($tarefas, $agendaevents);
 
 
@@ -147,7 +147,7 @@ class AgendaController extends BaseController {
 				$date 		  		= Carbon::createFromFormat( 'Y-m-d', $data['date'] )
 												->addWeeks( $data['next'] )
 												->subWeeks( $data['prev'] );														
-				$labels['title'] = strftime("%a %d/%m", strtotime( $date->startOfWeek() )) . " à " . strftime("%a %d/%m", strtotime( $date->endOfWeek() ));
+				$labels['title'] = strftime("%a %d/%m", strtotime( $date->dateOfWeek() )) . " à " . strftime("%a %d/%m", strtotime( $date->endOfWeek() ));
 
 				break;
 						
@@ -193,7 +193,7 @@ class AgendaController extends BaseController {
 												->addDays( $data['next'] )
 												->subDays( $data['prev'] );				
 				
-				$events = AgendaEvent::where( 'date_start', $date->format('Y-m-d') )->where( 'user_id', Auth::id() )->orderBy( 'date_start', 'ASC' )->get();
+				$events = AgendaEvent::where( 'date_start', $date->format('Y-m-d') )->where( 'owner_id', Auth::id() )->orderBy( 'date_start', 'ASC' )->get();
 
 				break;
 
@@ -201,9 +201,9 @@ class AgendaController extends BaseController {
 				$date 		  		= Carbon::createFromFormat( 'Y-m-d', $data['date'] )
 												->addWeeks( $data['next'] )
 												->subWeeks( $data['prev'] );														
-				$events = AgendaEvent::where( 'date_start', '>=', $date->startOfWeek()->format('Y-m-d') )
+				$events = AgendaEvent::where( 'date_start', '>=', $date->dateOfWeek()->format('Y-m-d') )
 												 ->where( 'date_start', '<=', $date->endOfWeek()->format('Y-m-d') )
-												 ->where( 'user_id', Auth::id() )
+												 ->where( 'owner_id', Auth::id() )
 												 ->orderBy( 'date_start', 'ASC' )
 												 ->get();		
 
@@ -215,7 +215,7 @@ class AgendaController extends BaseController {
 										->subMonths( $data['prev'] );
 				$events = AgendaEvent::where( 'date_start', '>=', $date->startOfMonth()->format('Y-m-d') )
 											 ->where( 'date_start', '<=', $date->endOfMonth()->format('Y-m-d') )
-											 ->where( 'user_id', Auth::id() )
+											 ->where( 'owner_id', Auth::id() )
 											 ->orderBy( 'date_start', 'ASC' )
 											 ->get();							
 				break;			
@@ -240,7 +240,7 @@ class AgendaController extends BaseController {
 												->addDays( $data['next'] )
 												->subDays( $data['prev'] );				
 				
-				$events = Tarefa::where( 'start', $date->format('Y-m-d') )->orderBy( 'start', 'ASC' )->get();
+				$events = Tarefa::where( 'date', $date->format('Y-m-d') )->orderBy( 'date', 'ASC' )->get();
 
 				break;
 
@@ -248,9 +248,9 @@ class AgendaController extends BaseController {
 				$date 		  		= Carbon::createFromFormat( 'Y-m-d', $data['date'] )
 												->addWeeks( $data['next'] )
 												->subWeeks( $data['prev'] );														
-				$events = Tarefa::where( 'start', '>=', $date->startOfWeek()->format('Y-m-d') )
-												 ->where( 'start', '<=', $date->endOfWeek()->format('Y-m-d') )												 
-												 ->orderBy( 'start', 'ASC' )
+				$events = Tarefa::where( 'date', '>=', $date->dateOfWeek()->format('Y-m-d') )
+												 ->where( 'date', '<=', $date->endOfWeek()->format('Y-m-d') )												 
+												 ->orderBy( 'date', 'ASC' )
 												 ->get();		
 
 				break;
@@ -259,9 +259,9 @@ class AgendaController extends BaseController {
 				$date   = Carbon::createFromFormat( 'Y-m-d', $data['date'] )
 										->addMonths( $data['next'] )
 										->subMonths( $data['prev'] );
-				$events = Tarefa::where( 'start', '>=', $date->startOfMonth()->format('Y-m-d') )
-											 ->where( 'start', '<=', $date->endOfMonth()->format('Y-m-d') )											 
-											 ->orderBy( 'start', 'ASC' )
+				$events = Tarefa::where( 'date', '>=', $date->startOfMonth()->format('Y-m-d') )
+											 ->where( 'date', '<=', $date->endOfMonth()->format('Y-m-d') )											 
+											 ->orderBy( 'date', 'ASC' )
 											 ->get();							
 				break;			
 		}

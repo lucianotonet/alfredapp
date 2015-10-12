@@ -55,11 +55,11 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'alfred_db',
-			'username'  => 'root',
+			'database'  => '',
+			'username'  => '',
 			'password'  => '',
 			'charset'   => 'utf8',
-			'collation' => 'utf8_general_ci',
+    		'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
 		),
 

@@ -437,7 +437,7 @@
 </script>
 
 <style>
-#pedido_obs{overflow:scroll; max-height:300px}
+#pedido_obs{overflow:scroll; max-height:300px;}
 </style>
 
 <script>

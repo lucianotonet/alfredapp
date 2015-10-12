@@ -10,6 +10,12 @@
 class UsersController extends Controller
 {
 
+    public function index()
+    {
+        $users = User::all();
+        return View::make('users.index')->with('users', $users); 
+    }
+
     /**
      * Displays the form for account creation
      *
@@ -18,7 +24,16 @@ class UsersController extends Controller
     public function create()
     {
         //return View::make(Config::get('confide::signup_form'));
-        return View::make('users.signup'); 
+
+        if( Confide::user() ){         
+            if( Request::ajax() ){
+                return View::make('users.panels.create');         
+            }else{
+                return View::make('users.create');        
+            }
+        }else{
+            return View::make('users.signup');
+        }
     }
 
     /**
@@ -28,6 +43,35 @@ class UsersController extends Controller
      */
     public function store()
     {
+
+        if( Confide::user() ){
+
+            $data = Input::all();
+
+            $user                        = new User;
+            $user->username              = $data['username'];
+            $user->email                 = $data['email'];
+            $user->password              = Hash::make( $data['password'] );
+            $user->password_confirmation = $user->password;
+            $user->confirmation_code     = md5(uniqid(mt_rand(), true));
+            $user->confirmed             = 1;
+
+            if( !$user->save() ) {
+                $alert[] = [ 'class'    => 'alert-danger',
+                             'message'  => '<strong><i class="fa fa-warning"></i></strong> Não foi possível adicionar o novo usuário!' ];
+                Session::flash('alerts', $alert);                   
+            } else {
+                $alert[] = [ 'class'    => 'alert-success',
+                             'message'  => '<strong><i class="fa fa-check"></i></strong> Usuário adicionado com sucesso!' ];
+                Session::flash('alerts', $alert);   
+            }
+                
+            return Redirect::back();
+
+        }
+
+
+
         $repo = App::make('UserRepository');
         $user = $repo->signup(Input::all());
 
@@ -56,6 +100,37 @@ class UsersController extends Controller
         }
     }
 
+
+
+    public function update($id)
+    {
+        $user = User::find($id);
+        $data = Input::all();
+                    
+        $user->username          = $data['username'];
+        $user->email             = $data['email'];        
+        $user->confirmation_code = md5(uniqid(mt_rand(), true));
+        $user->remember_token    = NULL;            
+
+        if( !empty( $data['password'] ) ){
+            $user->password              = $data['password'];                 
+            $user->password_confirmation = $data['password'];
+        }
+       
+        if( !$user->save() ){
+            $alert[] = [  'class'   => 'alert-danger',
+                        'message'   => '<strong><i class="fa fa-warning"></i></strong> Não foi possível alterar os dados do usuário.' ];
+        }else{
+            $alert[] = [  'class'   => 'alert-success',
+                        'message'   => '<strong><i class="fa fa-check"></i></strong> Usuário alterado com sucesso!' ];
+        }
+        Session::flash('alerts', $alert);
+        return Redirect::back()->withInput(Input::except('password'));
+
+    }
+
+
+
     /**
      * Displays the login form
      *
@@ -67,7 +142,7 @@ class UsersController extends Controller
             return Redirect::to('/');
         } else {
             //return View::make(Config::get('confide::login_form'));
-            return View::make('users.login'); 
+            return View::make( 'users.login' );
         }
     }
 
@@ -78,7 +153,6 @@ class UsersController extends Controller
      */
     public function doLogin()
     {
-
         $repo = App::make('UserRepository');
         $input = Input::all();
 
@@ -126,7 +200,8 @@ class UsersController extends Controller
      */
     public function forgotPassword()
     {
-        return View::make(Config::get('confide::forgot_password_form'));
+        //return View::make(Config::get('confide::forgot_password_form'));
+        return View::make('users.forgot_password');
     }
 
     /**
@@ -157,7 +232,9 @@ class UsersController extends Controller
      */
     public function resetPassword($token)
     {
-        return View::make(Config::get('confide::reset_password_form'))
+        //return View::make(Config::get('confide::reset_password_form'))
+        //       ->with('token', $token);
+        return View::make( 'users.reset_password' )
                 ->with('token', $token);
     }
 
@@ -182,7 +259,7 @@ class UsersController extends Controller
                 ->with('notice', $notice_msg);
         } else {
             $error_msg = Lang::get('confide::confide.alerts.wrong_password_reset');
-            return Redirect::action('UsersController@reset_password', array('token'=>$input['token']))
+            return Redirect::action('UsersController@resetPassword', array('token'=>$input['token']))
                 ->withInput()
                 ->with('error', $error_msg);
         }
@@ -199,4 +276,65 @@ class UsersController extends Controller
 
         return Redirect::to('/');
     }
+
+
+    public function destroy($id)
+    {
+        $user = User::find($id);               
+        if(!$user){
+            return Redirect::back()->withInput(Input::all());
+        }
+
+
+        if( $user->destroy($id) ){
+            $alert[] = [  'class'   => 'alert-danger',
+            'message'   => '<strong><i class="fa fa-warning"></i></strong> Não foi possível excluir o usuário!' ];
+        }else{
+            $alert[] = [  'class'   => 'alert-success',
+            'message'   => '<strong><i class="fa fa-check"></i></strong> Usuário excluído!' ];
+        }
+        Session::flash('alerts', $alert);
+        return Redirect::back()->withInput();
+    }
+
+
+
+    public function edit($id)
+    {
+        $user = User::where('id', $id)->first();
+        if( $user ){            
+            if( Request::ajax() ){
+                return View::make('users.panels.edit', compact('user'));
+            }else{
+                return View::make('users.edit', compact('user'));
+            }            
+        }else{
+            
+            $alert[] = [  'class'   => 'alert-danger',
+            'message'   => '<strong><i class="fa fa-warning"></i></strong> Não foi possível encontrar o usuário!' ];
+            Session::flash('alerts', $alert);
+            
+            if( Request::ajax() ){
+                return View::make('users.panels.index');
+            }else{
+                return View::make('users.index');
+            }            
+        }
+
+    }
+
+
+
+    public function checkusername()
+    {               
+        $user = User::where('username', Input::get('username'))->get();
+        return $user->count();
+    }
+
+    public function checkmail()
+    {
+        $user = User::where('email', Input::get('email'))->get();
+        return $user->count();
+    }
+
 }

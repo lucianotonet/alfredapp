@@ -43,9 +43,9 @@ class AgendaEventsController extends BaseController {
 		$data['date_end']		= Input::has('date_end')	? date('Y-m-d', strtotime( $data['date_end'] ))		: NULL;                           
 		$data['time_start']		= Input::has('time_start')	? date('H:i:s', strtotime( $data['time_start'] ))	: NULL;
 		$data['time_end']		= Input::has('time_end')	? date('H:i:s', strtotime( $data['time_end'] ))		: NULL;  
-		$data['user_id']  		= Auth::id();
+		$data['owner_id']  		= Auth::id();
 
-		dd( $data );
+		//dd( $data );
 
 		// CREATE AGENDA EVENT
 		$agendaevent = AgendaEvent::create( $data );
@@ -71,8 +71,11 @@ class AgendaEventsController extends BaseController {
 	 */
 	public function show($id)
 	{
-		if ( Request::ajax() ) 	return View::make('agendaevents.panels.show');
-		else 				 	return View::make('agendaevents.show');
+		$event = AgendaEvent::find($id);
+		if( $event ){
+			if ( Request::ajax() ) 	return View::make('agendaevents.panels.edit', compact('event'));
+			else 				 	return View::make('agendaevents.edit', compact('event'));
+		}
 	}
 
 	/**
@@ -97,7 +100,34 @@ class AgendaEventsController extends BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$event = AgendaEvent::find($id);
+		
+		$validator = Validator::make($data = Input::all(), AgendaEvent::$rules, AgendaEvent::$messages);
+		if ($validator->fails()){
+			return Redirect::back()->withErrors($validator)->withInput();
+		}
+
+		$data['date_start']		= Input::has('date_start')	? date('Y-m-d', strtotime( $data['date_start'] ))	: NULL;
+		$data['date_end']		= Input::has('date_end')	? date('Y-m-d', strtotime( $data['date_end'] ))		: NULL;                           
+		$data['time_start']		= Input::has('time_start')	? date('H:i:s', strtotime( $data['time_start'] ))	: NULL;
+		$data['time_end']		= Input::has('time_end')	? date('H:i:s', strtotime( $data['time_end'] ))		: NULL;  
+		$data['owner_id']  		= Auth::id();
+
+		//dd( $data );
+
+		// CREATE AGENDA EVENT
+		$event->update( $data );
+
+		if( $event ) {
+			$alert[] = [   'class'   => 'alert-success',
+                		 'message'   => 'Evento atualizado com sucesso!' ];   
+		}else{
+			$alert[] = [   'class'   => 'alert-danger',
+                		 'message'   => 'Não foi possível atualizar o evento.' ];   
+		}
+		
+        Session::flash('alerts', $alert);
+		return Redirect::back()->withInput();;
 	}
 
 	/**
@@ -109,7 +139,21 @@ class AgendaEventsController extends BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		$event = AgendaEvent::find($id);		
+		if(!$event){
+			return Redirect::back()->withInput();
+		}
+
+
+		if( $event->destroy($id) ){
+			$alert[] = [  'class' 	=> 'alert-success',
+			'message'   => '<strong><i class="fa fa-check"></i></strong> Evento excluído!' ];
+		}else{
+			$alert[] = [  'class' 	=> 'alert-danger',
+			'message'   => '<strong><i class="fa fa-warning"></i></strong> Não foi possível excluir o evento!' ];
+		}
+		Session::flash('alerts', $alert);
+		return Redirect::back()->withInput();
 	}
 
 }

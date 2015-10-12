@@ -92,9 +92,9 @@
                 </div>
             </div>        
             <div class="form-group">
-                <label for="start" class="col-sm-3 control-label">Prazo</label>
+                <label for="date" class="col-sm-3 control-label">Prazo</label>
                 <div class="col-sm-9 form-inline">
-                    <input type="date" class="form-control input-group-item" id="start" name="start" value="{{date('Y-m-d', strtotime($tarefa->start))}}">
+                    <input type="date" class="form-control input-group-item" id="date" name="date" value="{{date('Y-m-d', strtotime($tarefa->date))}}">
                     <span class="prazo form-control-static input-group-item"></span>
                 </div>
             </div>
@@ -178,7 +178,7 @@
     <script>
     jQuery(document).ready(function() {
 
-        $('#start').on('change',function(){
+        $('#date').on('change',function(){
             var date = new Date();
             var x = $(this).val() + " " + date.getHours() + ':' + date.getMinutes() + ':' + (date.getSeconds() + 2) ;            
             $('.prazo').text( moment( x ).fromNow() );            

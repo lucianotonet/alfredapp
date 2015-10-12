@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="br">
+<html lang="{{ App::getLocale() }}">
 <head>
 	<meta charset="utf-8">
 	<title>{{Config::get('settings.app_title')}}</title>
@@ -83,23 +83,12 @@
 					<!-- Menu Button -->
 					<div class="menu-btn btn">
 						<i class="fa fa-bars"></i>
-					</div>
-
-					<a href="{{url('notifications')}}" class="btn btn-link notification-info" data-toggle="modal" data-target="#modal">
-						<i class="icon-bell-o fa-2x"></i>
-						
-						<?php $notifications_info = count( Notification::where('status',0)->where('date','<', date('Y-m-d H:i:s') )->get() ); ?>
-						@if ($notifications_info)
-						<span class="badge badge-danger">{{ $notifications_info }}</span>
-						@else
-						<span class="badge badge-danger hide">{{ $notifications_info }}</span>
-						@endif
-					</a>
+					</div>					
 
 					<a href="{{url('tarefas')}}" class="btn btn-link tarefas-info">                        
 						<i class="fa fa-check-square-o fa-2x"></i>
 						
-						<?php $tarefas_info = count( Tarefa::where('done',0)->where('start','<=', date('Y-m-d') )->get() ); ?>
+						<?php $tarefas_info = count( Tarefa::where('done',0)->where('date','<=', date('Y-m-d') )->get() ); ?>
 						@if ($tarefas_info)
 						<span class="badge badge-danger">{{ $tarefas_info }}</span>
 						@endif
@@ -141,38 +130,7 @@
 
 
 
-	@if (Session::has('alerts'))
-
-	<div class="container">
-		@foreach (Session::get('alerts') as $alert)
-
-
-		<div class="alert <?php echo @$alert['class'] ?> fade in" role="alert">
-			<button type="button" class="close" data-dismiss="alert">
-				<span aria-hidden="true">×</span>
-				<span class="sr-only">Close</span>
-			</button>
-
-			<p>{{@$alert['message']}}</p>          
-
-
-			<?php 
-			if( isset($alert['links']) ){
-				echo "<p>";
-				foreach ( $alert['links'] as $item => $value ){ ?>
-				<a href="{{$value['link']}}" class="btn {{$item}}">
-					{{$value['text']}}
-				</a>                    
-				<?php }
-				echo "</p>";
-			}
-			?>
-
-		</div>
-		@endforeach
-		<br>
-	</div>
-	@endif
+	@include('shared.alerts')
 
 
 	<?php

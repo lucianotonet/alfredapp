@@ -141,6 +141,16 @@ class RelatoriosController extends \BaseController {
 				
 				// CLIENTES (que tem conversas)
 				$clientes 		= Cliente::has('conversas', '>', 0)->with('conversas')->get();	
+				if( !Conversa::count() ){
+					// Alert
+					$alert[] = array(                     
+	 							'class'		=>	'alert-warning',
+	                            'message'   => '<strong><i class="fa fa-warning"></i></strong> Ainda não há nenhuma conversa cadastrada no sistema =(',	                           
+	                        );
+					Session::flash('alerts', $alert);	
+					return Redirect::to( URL::previous() );   
+				}
+
 				$fieldClientes 	= array( 'all' => 'Todos' );
 				foreach ($clientes as $cliente) {
 					$fieldClientes[ $cliente->id ] = $cliente->nome;			

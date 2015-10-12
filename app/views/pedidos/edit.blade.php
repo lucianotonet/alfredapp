@@ -84,16 +84,13 @@
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-4">                 
                        <h4 class="title text-right">Fornecedor</h4>
                     </div>
-                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-8 border-left">        
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-8 border-left">
                         
                         <select name="fornecedor_id" id="fornecedor_id" class="form-control">
-                            @if ( !isset($pedido->fornecedor->id) )
-                                
-                                <option class="">Selecione um fornecedor</option>
-                                
-                            @endif
+                            <option class="">Selecione um fornecedor</option>
+                            
                             @foreach ( $fornecedores as $fornecedor )
-                                <option value="{{ $fornecedor->id }}" <?php if( $pedido->fornecedor->id == $fornecedor->id ) echo "selected" ?>>{{ $fornecedor->empresa}}</option>
+                                <option value="{{ $fornecedor->id }}" <?php if( $pedido->fornecedor_id == $fornecedor->id ) echo "selected" ?>>{{ $fornecedor->empresa}}</option>
                             @endforeach
                 
                         </select>     
@@ -181,7 +178,7 @@
                     <tr class="multiple-form-group form-group pedido_produtos_item" data-max="10">                   
 
                         <td>
-                            <input type="number" name="itens[qtd][]" class="form-control produto_qtd" value="{{ @$item['qtd'] }}" min="0.00" step="any" required>                                       
+                            <input type="number" name="itens[qtd][]" class="form-control produto_qtd" value="{{ $item['qtd'] }}" min="0.00" step="any" required>                                       
                         </td>
 
                         <td>
@@ -502,66 +499,13 @@
         **/
        $('select.produtos').change( changeData );
 
-
-
-
         //$('form#pedido_create').on('change', atualizaPedido);
         $('#atualiza_pedido').on('click', atualizaPedido);
 
-        /**
-         * -----------------------
-         *     CLONE ITEMS
-         * -----------------------
-         */
-        var addFormGroup = function (event) {
-            event.preventDefault();
-
-            var $formGroup = $(this).closest('.form-group');
-            var $multipleFormGroup = $formGroup.closest('.multiple-form-group');
-            var $formGroupClone = $formGroup.clone();
-
-            $(this)
-                .toggleClass('btn-default btn-add btn-danger btn-remove')
-                .html('<i class="fa fa-times"></i>');
-
-            $formGroupClone.find('.produto_preco').val('');
-            $('.produto_preco').priceFormat({        
-                                            prefix: '',
-                                            centsSeparator: ',',
-                                            thousandsSeparator: '.'
-                                        });     
-            $formGroupClone.insertAfter($formGroup);
-
-            var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
-            if ($multipleFormGroup.data('max') <= countFormGroup($multipleFormGroup)) {
-                $lastFormGroupLast.find('.btn-add').attr('disabled', true);
-            };
-
-            //atualizaPedido();
-        };
-
-        var removeFormGroup = function (event) {
-            event.preventDefault();
-
-            var $formGroup = $(this).closest('.form-group');
-            var $multipleFormGroup = $formGroup.closest('.multiple-form-group');
-
-            var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
-            if ($multipleFormGroup.data('max') >= countFormGroup($multipleFormGroup)) {
-                $lastFormGroupLast.find('.btn-add').attr('disabled', false);
-            }
-
-            $formGroup.remove();
-
-            //atualizaPedido();
-        };
 
         var countFormGroup = function ($form) {
             return $form.find('.form-group').length;
         };
-
-        $(document).on('click', '.btn-add', addFormGroup);
-        $(document).on('click', '.btn-remove', removeFormGroup);
 
         //--------------------------------------------------------------------------------------
         

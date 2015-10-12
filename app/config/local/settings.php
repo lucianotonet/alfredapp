@@ -15,7 +15,7 @@ return array(
 	'app_slug' 				=> 'alfred app',	
 	'app_logo' 				=> asset('img/logo/logo_inv.png'),
 	'app_pdf_folder'		=> 'pdf',
-	'app_allow_register' 	=> false,
+	'app_allow_register' 	=> true,
 
 
 	/*

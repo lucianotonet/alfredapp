@@ -101,7 +101,7 @@ class VendedorsController extends \BaseController {
                 
          $alert[] = [ 'class' => 'alert-success', 'message'   => '<strong><i class="fa fa-check"></i></strong> Novo vendedor adicionado!' ];
          Session::flash('alerts', $alert);
-         return Redirect::to('vendedores');
+         return Redirect::to('vendedors');
       }
    }
 
@@ -124,7 +124,7 @@ class VendedorsController extends \BaseController {
       }else{                  
          $alert[] = [ 'class' => 'alert-warning', 'message'   => '<strong><i class="fa fa-warning"></i></strong> O vendedor que você procura não existe!' ];
          Session::flash('alerts', $alert);
-         return Redirect::to('vendedores');
+         return Redirect::to('vendedors');
       }
 
    }
@@ -164,7 +164,7 @@ class VendedorsController extends \BaseController {
 
       // process the login
       if ($validator->fails()) {
-         return Redirect::to('vendedores/' . $id . '/edit')
+         return Redirect::to('vendedors/' . $id . '/edit')
             ->withErrors($validator)
             ->withInput(Input::except('password'));
       } else {
@@ -191,7 +191,7 @@ class VendedorsController extends \BaseController {
          Session::flash('alerts', $alert);
 
          // redirect
-         return Redirect::to('vendedores');
+         return Redirect::to('vendedors');
       }
    }
    
@@ -234,7 +234,7 @@ class VendedorsController extends \BaseController {
          Session::flash('alerts', $alert);
       
       // redirect
-      return Redirect::to('vendedores');
+      return Redirect::to('vendedors');
    }
 
 

@@ -15,7 +15,7 @@
     <div class="panel-body tabbable tabs-left">        
         <div class="row">
             <div class="col-xs-4 col-sm-2 text-center pull-left">
-                <img src="http://placekitten.com/g/250/250" alt="" class="img-thumbnail img-responsive">
+                <img src="{{ asset('img/avatar150x150.png') }}" alt="" class="img-thumbnail img-responsive">
             </div>        
             <div class="panel-heading">
                 
@@ -157,10 +157,13 @@
                     <div class="tab-pane fade row" id="dropdown1-1">
                         <div class="page-header">
                             <div class="dropdown pull-right">
-                                <a href="{{url('tarefas/create?cliente_id='.$cliente->id)}}" class="btn btn-success" >
-                                    <i class="fa fa-plus"></i> Nova tarefa</a>
+                                <a href="{{ url('tarefas/create?cliente_id='.$cliente->id) }}" class="btn btn-success" data-toggle="modal" data-target="#modal">
+                                    <i class="fa fa-plus"></i> Adicionar tarefa
                                 </a>
-                                <a href="{{url('tarefas')}}" class="btn btn-primary" >
+                                {{-- <a href="{{url('tarefas/create?cliente_id='.$cliente->id)}}" class="btn btn-success" >
+                                    <i class="fa fa-plus"></i> Nova tarefa</a>
+                                </a> --}}
+                                <a href="{{ url('tarefas') }}" class="btn btn-primary" >
                                     <i class="fa fa-list"></i> Ver todas</a>
                                 </a>
                             </div>

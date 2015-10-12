@@ -47,7 +47,17 @@
             <a href="<?php echo url('/relatorios'); ?>">
                  <i class="fa fa-file-pdf-o"></i> Relatórios
             </a>
+        </li> 
+        <li class="">
+            <a href="<?php echo url('/emails'); ?>">
+                 <i class="fa fa-envelope"></i> E-mails
+            </a>
         </li>    
+        <li class="">
+            <a href="<?php echo url('/users'); ?>">
+                 <i class="fa fa-user"></i> Usuários
+            </a>
+        </li> 
         <li class="">
             <a href="<?php echo url('/settings'); ?>">
                  <i class="fa fa-cog"></i> Confgurações

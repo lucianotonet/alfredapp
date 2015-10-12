@@ -26,8 +26,8 @@ ClassLoader::addDirectories(array(
 	app_path().'/commands',
 	app_path().'/controllers',
 	app_path().'/models',
-	app_path().'/database/seeds',
-   app_path().'/functions',
+	app_path().'/database/seeds',    
+    app_path().'/lib',
 
 ));
 
@@ -90,6 +90,7 @@ App::down(function()
 */
 
 require app_path().'/filters.php';
+require app_path().'/authorization.php';
 
 
 Event::listen('illuminate.query', function($sql)

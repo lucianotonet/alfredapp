@@ -23,9 +23,8 @@ class Fornecedor extends \Eloquent {
                            'cnpj',
                         );
 
-   public static function pedidos()
-   {
-      return $this->hasMany('Pedido');
-   }
+    public function pedidos(){
+        return $this->hasMany('Pedido', 'fornecedor_id');
+    }
 
 }

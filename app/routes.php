@@ -10,8 +10,8 @@ use Carbon\Carbon as Carbon;
 | and give it the Closure to execute when that URI is requested.
 |
 */
-App::setLocale("pt_BR.utf-8");
-setlocale(LC_ALL, "pt_BR.utf-8", "pt_BR", "pt_BR.iso-8859-1", "portuguese");
+App::setLocale("pt_BR");
+setlocale(LC_ALL, "pt_BR", "pt_BR.utf-8", "pt_BR.iso-8859-1", "portuguese");
 
 Route::get('/locale', function(){
 	return 'Hi, your locale is '. App::getLocale();  
@@ -38,30 +38,6 @@ Route::get('timeline', function()
 |--------------------------------------------------------------------------
 */
 Route::get('notifications', 'NotificatorController');
-
-
-/*
-|--------------------------------------------------------------------------
-| API
-|--------------------------------------------------------------------------
-*/
-// Route::group(array('prefix' => 'api'), function()
-// {
-//     //Route::resource('despesas', 'DespesasController');
-//     Route::resource('clientes', 'ClienteController');
-
-//     // Second Route
-//     Route::get('/teste', function() {
-//         return 'Rota api/teste OK';
-//     });
-
-//     // Third Route
-//     Route::get('/todos', function() {
-//         return 'Lords and Ladies';
-//     });
-
-// });
-
 
 
 /*
@@ -107,8 +83,6 @@ Route::when('despesas*', 'auth');
 */
 Route::resource('conversas', 'ConversasController');
 Route::get('conversas/create/{cliente_id}', array('as' => 'createconversa', 'uses' => 'ConversasController@create'));
-// Route::get('conversas/send/{conversa_id}', array('as' => 'conversas.sendto', 'uses' => 'ConversasController@sendTo'));
-//Route::post('conversas/send', array('as' => 'conversas.sendnow', 'uses' => 'ConversasController@sendNow'));
 Route::when('conversas*', 'auth');
 
 
@@ -126,7 +100,6 @@ Route::group(array('prefix' => 'relatorios'), function()
 Route::get('relatorios/{relatorio_id}/download', array('as' => 'relatorios.download', 'uses' => 'RelatoriosController@downloadpdf'));
 Route::get('relatorios/{relatorio_id}/pdf', array('as' => 'relatorios.pdf', 'uses' => 'RelatoriosController@streampdf'));
 Route::get('relatorios/{relatorio_id}/print', array('as' => 'relatorios.pdf', 'uses' => 'RelatoriosController@printThis'));
-//Route::get('relatorios', array('as' => 'relatorios.index', 'uses' => 'RelatoriosController@index'));
 Route::resource('relatorios', 'RelatoriosController');
 
 Route::when('relatorios/create*', 'auth');
@@ -142,64 +115,7 @@ Route::when('relatorios*', 'auth', array('post', 'delete'));
 */
 Route::get('/', function()
 {
-
-   // Todas tarefas
-   //$tarefas = Tarefa::with('cliente')->all();
-  
-  	return Redirect::to('agenda');
-
-	$tarefas = Tarefa::orderBy('done', 'ASC')->orderBy('id', 'ASC')->get();
-	$hoje    = Carbon::now();
-
-   // TAREFAS DO DIA   
-	$tarefas = $tarefas->filter(function($tarefa){
-		if( Carbon::createFromFormat("Y-m-d H:i:s", $tarefa->start)->isToday() ) return $tarefa;
-	});
-
-	// PROXIMAS
-	$ontem        = Carbon::create(date('Y'), date('m'), date('d'))->subDay();
-	$daquiummes  = Carbon::create(date('Y'), date('m'), date('d'))->addMonths(1);
-	$tarefas->proximas = Tarefa::where('start','>', $ontem)->where('start','<=', $daquiummes)->orderBy('start', 'ASC')->where('done', 0)->with('cliente', 'conversas')->get();
-
-
-   // CLIENTES MAIS IMPORTANTES
-	$clientes = new Cliente;
-	$topten = DB::table('pedidos')
-	->select('cliente_id', DB::raw('count(*) as total'))
-	->groupBy('cliente_id')
-	->orderBy('total', 'DESC')
-	->take(10)
-	->get();
-	if( count($topten) ){
-		$itemIds = array();
-		foreach ($topten as $cliente) {
-			$itemIds[] = $cliente->cliente_id;
-		}
-		$ids = implode(',', $itemIds);
-
-		$clientes->topten = Cliente::whereIn('id', $itemIds)
-		->orderByRaw(DB::raw("FIELD(id, $ids)"))
-		->take( 5 )
-		->get();
-	}else{
-		$clientes->topten = array();
-	}
-
-
-   // echo "<pre>";
-   // print_r( $clientes );
-   // echo "<pre><br>";   
-   // //print_r( count($atrasadas) );
-
-
-   // exit;
-
-
-	$tarefas->ontem = Tarefa::where('start', '=', strtotime("-1 day"))->get();
-   //$tarefas->hoje  = Tarefa::where('start', '=', Carbon::now() )->get();
-
-
-	return View::make('dashboard', compact('tarefas','clientes', 'calendar'));
+   	return Redirect::to('agenda');	
 });
 Route::when('/', 'auth');
 
@@ -225,7 +141,9 @@ Route::get('/demo', function()
 */
 Route::get('agenda/print', array('as'=>"agenda.print", 'uses' => 'AgendaController@index') );
 Route::resource('agenda', 'AgendaEventsController');
+Route::get('agenda/{id}/delete', array('uses' => 'AgendaEventsController@destroy') );
 Route::get('agenda/', array('uses' => 'AgendaController@index') );
+Route::when('agenda*', 'auth');
 
 
 /*
@@ -256,6 +174,9 @@ Route::when('financeiro*', 'auth');
 | PRODUTOS
 |--------------------------------------------------------------------------
 */
+Route::get('produtos/acabamentos', array( 'as' => 'produtos.acabamentos', 'uses' => 'ProdutosController@acabamentos') );
+Route::get('produtos/categories', array( 'as' => 'produtos', 'uses' => 'ProdutosController@categories') );
+Route::get('produtos/{id}/delete', array( 'uses' => 'ProdutosController@destroy') );
 Route::resource('produtos', 'ProdutosController');
 Route::when('produtos*', 'auth');
 
@@ -277,6 +198,7 @@ Route::resource('categorias', 'CategoriesController');
 |--------------------------------------------------------------------------
 */
 Route::resource('fornecedors', 'FornecedorsController');
+Route::resource('fornecedores', 'FornecedorsController');
 Route::when('fornecedors*', 'auth');
 
 
@@ -295,42 +217,10 @@ Route::when('vendedors*', 'auth');
 |--------------------------------------------------------------------------
 */
 
-// $schema = new CreateNotificationsTable;
-// $schema->up();   
-
 Route::get('notifications/{id}/close', array('as' => 'close', 'uses' => 'NotificationsController@fechar'));
 Route::get('notifications/unread', array('as' => 'naolidas', 'uses' => 'NotificationsController@unread'));
 Route::get('notifications/clean', array('as' => 'limpar', 'uses' => 'NotificationsController@clean'));
-Route::resource('notifications', 'NotificationsController');
-
-
-  // $contacts = new CreateContactsTable;
-  // $contacts->down();
-  // $contacts->up();
-
-  // $tarefas     = new CreateTarefasTable;
-  // $notifications = new CreateNotificationsTable;
-
-  // $tarefas->down();
-  // $notifications->down();
-  // //sleep(3);
-  // $tarefas->up();
-  // $notifications->up();
-
-  // $users     = new ConfideSetupUsersTable;
-  // $users->down();
-  // $users->up();
-
-  // $settings     = new CreateSettingsTable;
-  // $settings->down();
-  // $settings->up();
-
-  // $settings     = new CreateSettingsTable;
-  // $settings->down();
-  // $settings->up();
-
-// echo "ROUTES";
-// exit;
+Route::resource('notifications', 'NotificationsController');	
 
 
 /*
@@ -457,30 +347,6 @@ Route::when('settings*', 'auth');
 
 
 
-// // SEARCH
-// Route::get('search', function()
-// {
-//     return View::make('search');
-// });
-// Route::post('/search', function()
-// {
-//     $q = Input::get('keyword');
-//     $searchTerms = explode(' ', $q);
-
-//     $query = DB::table('clientes');
-
-//     foreach($searchTerms as $term)
-//     {
-//         $query->where('name', 'LIKE', '%'. $term .'%');
-//     }
-//     $clientes = $query->get();
-
-//     return View::make('search')->with( 'clientes', $clientes);
-
-// });
-
-
-
 // TEMPLATE
 Route::get('/template', function()
 {
@@ -488,21 +354,43 @@ Route::get('/template', function()
 });
 
 
-
-
 // Confide routes
-if ( Config::get('settings.app_allow_register') ){
-	Route::get('users/create', 'UsersController@create');
-	Route::post('users', 'UsersController@store');
-}
-Route::get('login', 'UsersController@login');
-Route::post('users/login', 'UsersController@doLogin');
-Route::get('users/confirm/{code}', 'UsersController@confirm');
 Route::get('users/forgot_password', 'UsersController@forgotPassword');
 Route::post('users/forgot_password', 'UsersController@doForgotPassword');
 Route::get('users/reset_password/{token}', 'UsersController@resetPassword');
 Route::post('users/reset_password', 'UsersController@doResetPassword');
+
+Route::group(array('before' => 'auth'), function(){
+	Route::get('users/checkmail', array('uses' => 'UsersController@checkmail') );
+	Route::get('users/checkusername', array('uses' => 'UsersController@checkusername') );
+	
+	Route::get('users/create', array('uses' => 'UsersController@create') );	
+	Route::get('users/{id}/delete', array('uses' => 'UsersController@destroy') );
+	Route::get('users/{id}', array('uses' => 'UsersController@edit') );		
+	Route::get('users/{id}/edit', array('uses' => 'UsersController@edit') );
+	Route::get('users', array('uses' => 'UsersController@index') );	
+	Route::resource( 'users', 'UsersController');
+});
+Route::post('users', array('as'=>'users.store', 'uses' => 'UsersController@store') );
+Route::post('users/{id}', array('as'=>'users.update', 'uses' => 'UsersController@update') );
+Route::get('login', 'UsersController@login');
+Route::post('login', 'UsersController@doLogin');
+Route::get('users/confirm/{code}', 'UsersController@confirm');
+Route::get('users/logout', 'UsersController@logout');
 Route::get('logout', 'UsersController@logout');
+		
+
+
+if ( Config::get('settings.app_allow_register') ){
+	Route::get('signup', 'UsersController@create');
+	// Route::get('users/create', 'UsersController@create');
+}
+	
+
+View::share('canI', function($action, $entity) {
+    return CanI::can($action, $entity);
+});
+
 
 Route::get('invoice', function(){
 	return View::make('clientes.invoice');
@@ -584,7 +472,7 @@ function magicColor($text,$min_brightness=100,$spec=2)
    }   
 
 
-	  /**
+   /**
    *     FAZMERIR
    *     Não faz quase nada...
    *       Mas converte formato monetário para numérico =)

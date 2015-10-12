@@ -20,8 +20,6 @@ return array(
 	),
 
 	'mandrill' => array(
-		//'secret' => 'VWm_74e-BFJ6QnTwhGlfDw', contato@lucianotonet.com
-      	//'secret' => '53XFr9wwdDHZL9C8Hh_nKg',
       	'secret'   => 'ZNQ4y1IDRFmpkHLo_r5nJg'
 	),
 

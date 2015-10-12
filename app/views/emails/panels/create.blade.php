@@ -5,7 +5,7 @@
                 <button type="button" class="close pull-right" data-dismiss="modal">
                     <span aria-hidden="false">&times;</span><span class="sr-only">Close</span>
                 </button>
-                <h3 class="panel-title title"><i class="fa fa-envelope"></i> Enviar</h3>
+                <h3 class="panel-title title"><i class="fa fa-envelope"></i> Enviar e-mail</h3>
             </div>
 
         {{Form::open(array('url' => 'emails', 'method' => 'post', 'id' => 'sendmail' ))}}
@@ -88,7 +88,7 @@
             <div class="panel-footer hidden-print">                
                 <div class="btn-group btn-group-sm pull-right text-right">
                     <button type="submit" class="btn btn-sm btn-success pull-right">
-                        <span class="glyphicon glyphicon-send"></span> Enviar
+                        <span class="fa fa-envelope"></span> Enviar
                     </button>
                 </div>   
                 <div class="clearfix">
@@ -114,6 +114,24 @@
             onSelect: function (suggestion) {
                 $(this).val( suggestion.value );
             }
+        });
+
+        /**
+         * WYSIWYG
+         */
+        $('#sendmail textarea').wysihtml5({
+            toolbar: {
+                "font-styles": true, //Font styling, e.g. h1, h2, etc. Default true
+                "emphasis": true, //Italics, bold, etc. Default true
+                "lists": true, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
+                "html": true, //Button which allows you to edit the generated HTML. Default false
+                "link": false, //Button to insert a link. Default true
+                "image": false, //Button to insert an image. Default true,
+                "color": false, //Button to change color of font  
+                "blockquote": false, //Blockquote  
+                "size": 'xs', //default: none, other options are xs, sm, lg
+                "fa": true
+            }        
         });
     });
     </script>

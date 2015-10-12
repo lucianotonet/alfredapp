@@ -195,6 +195,7 @@ return array(
 		'Confide'         => 'Zizaco\Confide\Facade',
 		'Excel'           => 'Maatwebsite\Excel\Facades\Excel',
 		'PDF'             => 'Barryvdh\DomPDF\Facade',
+		'CanI'            => 'CanI\Facade',
 	),
 
 );
