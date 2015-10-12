@@ -16,7 +16,9 @@ composer.lock
 Thumbs.db
 
 /app/config/database.php
+/app/config/local/
 app/config/demo/
 /app/storage/views/
+/app/storage/cache/
 /bootstrap/start.php
 public_html/pdf/*
