@@ -1,6 +1,12 @@
 /bootstrap/compiled.php
-
+/app/config/local/
+/app/config/demo/
+/app/storage/views/
+/app/storage/cache/
+/bootstrap/start.php
+/public_html/pdf/
 /vendor
+
 
 composer.phar
 
@@ -12,13 +18,4 @@ composer.lock
 .env.php
 .DS_Store
 
-.gitignore
 Thumbs.db
-
-/app/config/database.php
-/app/config/local/
-app/config/demo/
-/app/storage/views/
-/app/storage/cache/
-/bootstrap/start.php
-public_html/pdf/*
