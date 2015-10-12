@@ -29,12 +29,12 @@
             </a>
         </li>
         <li class="">
-            <a href="<?php echo url('/fornecedors'); ?>">
+            <a href="<?php echo url('/fornecedores'); ?>">
                <i class="fa fa-briefcase"></i> Fornecedores  
             </a>
         </li>
         <li class="">
-            <a href="<?php echo url('/vendedors'); ?>">
+            <a href="<?php echo url('/vendedores'); ?>">
                  <i class="fa fa-group"></i> Vendedores
             </a>
         </li>        

@@ -6,7 +6,7 @@
             <h3 class="title">fornecedores</h3> 
         </div>
         <div class="btn-group pull-right">
-            <a href="{{url('fornecedors/create')}}" class="btn btn-info">
+            <a href="{{url('fornecedores/create')}}" class="btn btn-info">
                 <i class="fa fa-plus"></i> Adicionar fornecedor
             </a>
         </div>

@@ -10,7 +10,6 @@ class FornecedorsController extends \BaseController {
 	public function index()
 	{
 		$fornecedores = Fornecedor::all();      
-
 		return View::make('fornecedors.index', compact('fornecedores'));
 	}
 

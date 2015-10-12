@@ -276,8 +276,10 @@ Route::resource('categorias', 'CategoriesController');
 | FORNECEDORS
 |--------------------------------------------------------------------------
 */
-Route::resource('fornecedors', 'FornecedorsController');
-Route::when('fornecedors*', 'auth');
+Route::resource('fornecedores', 'FornecedorsController');
+Route::when('fornecedores*', 'auth');
+Route::post('fornecedores', 'FornecedorsController@index');
+Route::post('fornecedores/store', 'FornecedorsController@store');
 
 
 /*
@@ -285,8 +287,8 @@ Route::when('fornecedors*', 'auth');
 | VENDEDORES
 |--------------------------------------------------------------------------
 */
-Route::resource('vendedors', 'VendedorsController');
-Route::when('vendedors*', 'auth');
+Route::resource('vendedores', 'VendedorsController');
+Route::when('vendedores*', 'auth');
 
 
 /*

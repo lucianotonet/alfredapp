@@ -10,7 +10,7 @@
 
     </div>
 
-    {{ Form::model($fornecedor, [ 'method' => 'PATCH', 'route' =>[ 'fornecedors.update', $fornecedor->id ] ] ) }}   
+    {{ Form::model($fornecedor, [ 'method' => 'PATCH', 'route' =>[ 'fornecedores.update', $fornecedor->id ] ] ) }}   
     
         <div class="panel-body">
             
