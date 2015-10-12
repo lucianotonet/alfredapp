@@ -336,8 +336,10 @@ class TarefasController extends \BaseController {
 	public function destroy($id)
 	{
 		Tarefa::destroy($id);
-
-		return Response::json(array('success' => true));
+		$alert[] = [ 'class' 	=> 'alert-success', 'message'  => '<strong><i class="fa fa-check"></i></strong> Tarefa excluída com successo' ];						
+		Session::flash('alerts', $alert);
+		return Redirect::route('tarefas.index');
+		//return Response::json(array('success' => true));
 	}
 
 	/**
