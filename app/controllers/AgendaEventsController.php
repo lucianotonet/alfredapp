@@ -45,8 +45,6 @@ class AgendaEventsController extends BaseController {
 		$data['time_end']		= Input::has('time_end')	? date('H:i:s', strtotime( $data['time_end'] ))		: NULL;  
 		$data['user_id']  		= Auth::id();
 
-		dd( $data );
-
 		// CREATE AGENDA EVENT
 		$agendaevent = AgendaEvent::create( $data );
 
