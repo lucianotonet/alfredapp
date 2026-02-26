@@ -34,9 +34,9 @@ class Note extends \Eloquent {
          //    'resource_obj'   => json_encode($note),
          // ]);
 
-         $alert = array(                     
+         $alert = [                     
                      'alert-success' => 'Nota criada!'
-                  );       
+                  ];       
          Session::flash('alerts', $alert);
 
       });
@@ -76,9 +76,9 @@ class Note extends \Eloquent {
          //    'resource_id'    => $note->id,
          //    'resource_obj'   => json_encode($note),
          // ]);
-         $alert = array(                     
+         $alert = [                     
                      'alert-success' => 'Nota salva!'
-                  );       
+                  ];       
          Session::flash('alerts', $alert);
       });
 
@@ -98,9 +98,9 @@ class Note extends \Eloquent {
          //    'resource_id'    => $note->id,
          //    'resource_obj'   => json_encode($note),
          // ]);
-         $alert = array(                     
+         $alert = [                     
                      'alert-warning' => 'Nota excluída!'
-                  );       
+                  ];       
          Session::flash('alerts', $alert);
       });
 

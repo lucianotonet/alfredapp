@@ -224,11 +224,11 @@ class PedidosController extends \BaseController {
 		 // Decode JSON
 		 $pedido->itens = json_decode($pedido->itens, true);
 
-		 $itens = array();
+		 $itens = [];
 
 		 for ( $i = 0; $i < count( $pedido->itens['qtd'] ); $i++ ) { // Loop no primeiro item pra pegar a quantidade de linhas
 					  
-			$itens[$i] = array(
+			$itens[$i] = [
 								 'qtd'            => $pedido->itens['qtd'][$i],
 								 'unidade'        => $pedido->itens['unidade'][$i],
 
@@ -236,7 +236,7 @@ class PedidosController extends \BaseController {
 
 								 'preco'          => number_format($pedido->itens['preco'][$i],'2',',','.'),
 								 'subtotal'       => number_format($pedido->itens['subtotal'][$i],'2',',','.'),
-			);                    
+			];                    
 		 };      
 		 $pedido->itens = $itens;      
 
@@ -316,11 +316,11 @@ class PedidosController extends \BaseController {
 		 // Decode JSON
 		 $pedido->itens = json_decode($pedido->itens, true);
 
-		 $itens = array();
+		 $itens = [];
 
 		 for ( $i = 0; $i < count( $pedido->itens['qtd'] ); $i++ ) { // Loop no primeiro item pra pegar a quantidade de linhas
 					  
-			$itens[$i] = array(
+			$itens[$i] = [
 								 'qtd'            => $pedido->itens['qtd'][$i],
 								 'unidade'        => $pedido->itens['unidade'][$i],
 
@@ -329,7 +329,7 @@ class PedidosController extends \BaseController {
 
 								 'preco'          => number_format($pedido->itens['preco'][$i],'2',',','.'),
 								 'subtotal'       => number_format($pedido->itens['subtotal'][$i],'2',',','.'),
-			);                    
+			];                    
 		 };      
 		 $pedido->itens = $itens;      
 
@@ -389,11 +389,11 @@ class PedidosController extends \BaseController {
 			$pedido->itens = json_decode($pedido->itens, true);
 
 			$itens = $pedido->itens;
-			$pedido_itens = array();
+			$pedido_itens = [];
 
 			for ( $i = 0; $i < count( end($itens) ); $i++ ) { // Loop no primeiro item pra pegar a quantidade de linhas
 						 
-			    $pedido_itens[$i] = array(
+			    $pedido_itens[$i] = [
 									'qtd'            => $itens['qtd'][$i],
 									'unidade'        => $itens['unidade'][$i],
 
@@ -402,7 +402,7 @@ class PedidosController extends \BaseController {
 
 									'preco'          => $itens['preco'][$i],
 									'subtotal'       => $itens['subtotal'][$i],
-			   );                    
+			   ];                    
 			};
 			$pedido->itens = $pedido_itens;
 			return View::make('pedidos.edit', compact('pedido', 'produtos', 'fornecedores', 'vendedores', 'categories'));         
@@ -589,11 +589,11 @@ class PedidosController extends \BaseController {
 	  // Decode JSON
 	  $pedido->itens = json_decode($pedido->itens, true);
 
-	  $itens = array();
+	  $itens = [];
 
 	  for ( $i = 0; $i < count( $pedido->itens['qtd'] ); $i++ ) { // Loop no primeiro item pra pegar a quantidade de linhas
 				   
-		 $itens[$i] = array(
+		 $itens[$i] = [
 							  'qtd'            => $pedido->itens['qtd'][$i],
 							  'unidade'        => $pedido->itens['unidade'][$i],
 
@@ -601,7 +601,7 @@ class PedidosController extends \BaseController {
 
 							  'preco'          => number_format($pedido->itens['preco'][$i],'2',',','.'),
 							  'subtotal'       => number_format($pedido->itens['subtotal'][$i],'2',',','.'),
-		 );                    
+		 ];                    
 	  };      
 	  $pedido->itens = $itens;     
 	  $pedido->total = number_format($pedido->total,'2',',','.');
@@ -742,12 +742,12 @@ class PedidosController extends \BaseController {
 	  // Decode JSON
 	  $pedido->itens = json_decode($pedido->itens, true);
 
-	  $itens = array();
+	  $itens = [];
 
 	 
 	  for ( $i = 0; $i < count( $pedido->itens['qtd'] ); $i++ ) { // Loop no primeiro item pra pegar a quantidade de linhas
 				   
-		 $itens[$i] = array(
+		 $itens[$i] = [
 							  'qtd'            => $pedido->itens['qtd'][$i],
 							  'unidade'        => $pedido->itens['unidade'][$i],
 
@@ -756,7 +756,7 @@ class PedidosController extends \BaseController {
 
 							  'preco'          => number_format($pedido->itens['preco'][$i],'2',',','.'),
 							  'subtotal'       => number_format($pedido->itens['subtotal'][$i],'2',',','.'),
-		 );                    
+		 ];                    
 	  };      
 	  $pedido->itens = $itens;      
 
@@ -797,11 +797,11 @@ class PedidosController extends \BaseController {
 	  // Decode JSON
 	  $pedido->itens = json_decode($pedido->itens, true);
 
-	  $itens = array();
+	  $itens = [];
 
 	  for ( $i = 0; $i < count( $pedido->itens['qtd'] ); $i++ ) { // Loop no primeiro item pra pegar a quantidade de linhas
 				   
-		 $itens[$i] = array(
+		 $itens[$i] = [
 							  'qtd'            => $pedido->itens['qtd'][$i],
 							  'unidade'        => $pedido->itens['unidade'][$i],
 
@@ -809,7 +809,7 @@ class PedidosController extends \BaseController {
 
 							  'preco'          => number_format($pedido->itens['preco'][$i],'2',',','.'),
 							  'subtotal'       => number_format($pedido->itens['subtotal'][$i],'2',',','.'),
-		 );                    
+		 ];                    
 	  };      
 	  $pedido->itens = $itens;      
 
@@ -842,11 +842,11 @@ class PedidosController extends \BaseController {
 	  // Decode JSON
 	  $pedido->itens = json_decode($pedido->itens, true);
 
-	  $itens = array();
+	  $itens = [];
 
 	  for ( $i = 0; $i < count( $pedido->itens['qtd'] ); $i++ ) { // Loop no primeiro item pra pegar a quantidade de linhas
 				   
-		 $itens[$i] = array(
+		 $itens[$i] = [
 							  'qtd'            => $pedido->itens['qtd'][$i],
 							  'unidade'        => $pedido->itens['unidade'][$i],
 
@@ -854,7 +854,7 @@ class PedidosController extends \BaseController {
 
 							  'preco'          => number_format($pedido->itens['preco'][$i],'2',',','.'),
 							  'subtotal'       => number_format($pedido->itens['subtotal'][$i],'2',',','.'),
-		 );                    
+		 ];                    
 	  };      
 	  $pedido->itens = $itens;      
 
@@ -886,11 +886,11 @@ class PedidosController extends \BaseController {
 	  // Decode JSON
 	  $pedido->itens = json_decode($pedido->itens, true);
 
-	  $itens = array();
+	  $itens = [];
 
 	  for ( $i = 0; $i < count( $pedido->itens['qtd'] ); $i++ ) { // Loop no primeiro item pra pegar a quantidade de linhas
 				   
-		 $itens[$i] = array(
+		 $itens[$i] = [
 							  'qtd'            => $pedido->itens['qtd'][$i],
 							  'unidade'        => $pedido->itens['unidade'][$i],
 
@@ -898,7 +898,7 @@ class PedidosController extends \BaseController {
 
 							  'preco'          => number_format($pedido->itens['preco'][$i],'2',',','.'),
 							  'subtotal'       => number_format($pedido->itens['subtotal'][$i],'2',',','.'),
-		 );                    
+		 ];                    
 	  };      
 	  $pedido->itens = $itens;      
 	  $pedido->total = number_format($pedido->total,'2',',','.');      

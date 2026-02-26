@@ -12,7 +12,7 @@ class Conversa extends \Eloquent {
    }
 
    // Don't forget to fill this array
-   protected $fillable = array(
+   protected $fillable = [
                            'data',                           
                            'cliente_id',
                            'previsao_compra',
@@ -20,7 +20,7 @@ class Conversa extends \Eloquent {
                            'tarefa_id',
                            'relatorio_id',
                            'resumo'
-                        );
+                        ];
 
    public function cliente(){
       return $this->belongsTo('Cliente');
