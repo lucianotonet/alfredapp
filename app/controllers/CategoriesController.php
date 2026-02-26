@@ -29,17 +29,17 @@ class CategoriesController extends \BaseController {
 			$categories = $categories->get();	
 
 			if( Input::has('query') ){
-				$suggestions = array();	
+				$suggestions = [];	
 
 				foreach ($categories as $category) {
-					$suggestions[] = array(
+					$suggestions[] = [
 					                       	"value"  => $category->name,
-					                       	"data"	 => array(
+					                       	"data"	 => [
 					                       	               'owner_type' => $category->owner_type
-					                       	            )		 							
-					                    );				
+					                       	            ]		 							
+					                    ];				
 				}
-	 			$categories = array( 'suggestions' => $suggestions );			
+	 			$categories = [ 'suggestions' => $suggestions ];			
 			 	return Response::json($categories);
 			}			
 
@@ -59,12 +59,12 @@ class CategoriesController extends \BaseController {
 	 */
 	public function create()
 	{
-		$types = array(
+		$types = [
 					'tarefa' 		=> 'Tarefas',
 					'agedaevent' 	=> 'Evento',
 					'produto' 		=> 'Produtos',
 					'transaction' 	=> 'Lanç. financeiro',
-				);
+				];
 
 		if( Request::ajax() ) { 
 			return View::make('categories.panels.create', compact('types'));

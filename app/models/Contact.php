@@ -8,7 +8,7 @@ class Contact extends \Eloquent {
 	];
 
 	// Don't forget to fill this array
-	protected $fillable = array(
+	protected $fillable = [
                            'first_name',
                            'middle_name',
                            'last_name',
@@ -97,7 +97,7 @@ class Contact extends \Eloquent {
                            'priority',
                            'private',
                            'categories'
-                        );
+                        ];
 
 
    public static function boot()

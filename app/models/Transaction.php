@@ -6,7 +6,7 @@ class Transaction extends Eloquent {
 	// Add your validation rules here
 	public static $rules = [];
 	public $timestamps = true;
-	protected $fillable = array(
+	protected $fillable = [
 	                            'recurring_type', 
 	                            'recurring_times', 
 	                            'recurring_cycle', 	                            
@@ -18,15 +18,15 @@ class Transaction extends Eloquent {
 	                            'description',
 	                            'user_id', 
 	                            'done'                  
-	                        );
-	protected $visible = array(
+	                        ];
+	protected $visible = [
 	                           'recurring_type', 
 	                           'recurring_times', 
 	                           'recurring_cycle', 	                           	                          
 	                           'recurring_transaction_id',
 	                           'amount',
 	                           'date'	                           
-	                        );
+	                        ];
 
 	public function getCategory()
 	{

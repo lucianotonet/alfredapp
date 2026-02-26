@@ -45,10 +45,10 @@ class EmailsController extends \BaseController {
 						return $alert;
 					}else{
 						// Alert
-						$alert[] = array(                     
+						$alert[] = [                     
 		 							'class'		=>	'alert-danger',
 		                            'message'   => '<strong><i class="fa fa-warning"></i></strong> O pedido n°'.$email['owner_id'].' não existe!'
-		                        );
+		                        ];
 						Session::flash('alerts', $alert);	
 						return Redirect::to( URL::previous() );   
 					}				
@@ -85,10 +85,10 @@ class EmailsController extends \BaseController {
 						return $alert;
 					}else{
 						// Alert
-						$alert[] = array(                     
+						$alert[] = [                     
 		 							'class'		=>	'alert-danger',
 		                            'message'   => '<strong><i class="fa fa-warning"></i></strong> O relatório n°'.$email['owner_id'].' não existe!'
-		                        );
+		                        ];
 						Session::flash('alerts', $alert);	
 						return Redirect::to( URL::previous() );   
 					}				
@@ -109,10 +109,10 @@ class EmailsController extends \BaseController {
 						return $alert;
 					}else{
 						// Alert
-						$alert[] = array(                     
+						$alert[] = [                     
 		 							'class'		=>	'alert-danger',
 		                            'message'   => '<strong><i class="fa fa-warning"></i></strong> O cliente n°'.$owner_id.' não existe!'
-		                        );
+		                        ];
 						Session::flash('alerts', $alert);	
 						return Redirect::to( URL::previous() );   
 					}				
@@ -203,7 +203,7 @@ class EmailsController extends \BaseController {
 				// return View::make( $view, array('email'=>$content, 'resource'=>$resource) );
 				// exit;
 
-				Mail::queue( $view, array('email'=>$content, 'resource'=>$resource ), function($message) use ($content, $to)
+				Mail::queue( $view, ['email'=>$content, 'resource'=>$resource ], function($message) use ($content, $to)
 				{
 				  	$message->to( $to )
 				            ->subject( @$content['subject'] );
@@ -448,32 +448,32 @@ class EmailsController extends \BaseController {
 
 
 			foreach ($clientes as $cliente) {
-				$suggestions[] = array(
+				$suggestions[] = [
 				                       	"value"  => $cliente->email,
-				                       	"data"	 => array(
+				                       	"data"	 => [
 				                       	               'type' => 'Clientes ('.count($clientes).')'
-				                       	            )		 							
-				                    );				
+				                       	            ]		 							
+				                    ];				
 			}
 			foreach ($fornecedores as $fornecedor) {
-				$suggestions[] = array(
+				$suggestions[] = [
 				                       	"value"  => $fornecedor->email,
-				                       	"data"	 => array(
+				                       	"data"	 => [
 				                       	               'type' => 'Fornecedores ('.count($fornecedores).')'
-				                       	            )		 							
-				                    );				
+				                       	            ]		 							
+				                    ];				
 			}
 			foreach ($vendedores as $vendedor) {
-				$suggestions[] = array(
+				$suggestions[] = [
 				                       	"value"  => $vendedor->email,
-				                       	"data"	 => array(
+				                       	"data"	 => [
 				                       	               'type' => 'Vendedores ('.count($vendedores).')'
-				                       	            )		 							
-				                    );				
+				                       	            ]		 							
+				                    ];				
 			}
 
 
- 			$contacts = array( 'suggestions' => $suggestions );	
+ 			$contacts = [ 'suggestions' => $suggestions ];	
 		
 		 	//$contacts = Cliente::all();
 		 	return Response::json($contacts);

@@ -4,7 +4,7 @@ class Balance extends Eloquent {
 
 	protected $table = 'balance';
 	public $timestamps = true;
-	protected $fillable = array('amount','user_id');
+	protected $fillable = ['amount','user_id'];
 
 	public function user()
 	{

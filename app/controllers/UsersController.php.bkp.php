@@ -10,7 +10,7 @@ class UsersController extends Controller
      * Instantiate a new UserController instance.
      */
     public function __construct(){        
-        $this->beforeFilter('csrf', array('on' => 'post'));
+        $this->beforeFilter('csrf', ['on' => 'post']);
     }
 
     /**
@@ -253,11 +253,11 @@ class UsersController extends Controller
     public function doResetPassword()
     {
         $repo = App::make('UserRepository');
-        $input = array(
+        $input = [
             'token'                 =>Input::get('token'),
             'password'              =>Input::get('password'),
             'password_confirmation' =>Input::get('password_confirmation'),
-        );
+        ];
 
         // By passing an array with the token, password and confirmation
         if ($repo->resetPassword($input)) {
@@ -266,7 +266,7 @@ class UsersController extends Controller
                 ->with('notice', $notice_msg);
         } else {
             $error_msg = Lang::get('confide::confide.alerts.wrong_password_reset');
-            return Redirect::action('UsersController@reset_password', array('token'=>$input['token']))
+            return Redirect::action('UsersController@reset_password', ['token'=>$input['token']])
                 ->withInput()
                 ->with('error', $error_msg);
         }

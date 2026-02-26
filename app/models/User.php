@@ -6,7 +6,7 @@ class User extends Eloquent implements ConfideUserInterface {
 	use ConfideUser; 
 
 
-	protected $fillable = array(
+	protected $fillable = [
 							'organization_id',
 	                       	'username',
 	                       	'password',
@@ -14,7 +14,7 @@ class User extends Eloquent implements ConfideUserInterface {
 	                       	'confirmation_code',
 	                       	'remember_token',
 	                       	'confirmed',	                       
-	                    );
+	                    ];
 
 
 	public function tarefas(){

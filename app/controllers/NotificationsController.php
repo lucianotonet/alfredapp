@@ -141,7 +141,7 @@ class NotificationsController extends \BaseController {
 		/*
 			LABELS
 		*/			
-		$labels 			= array();
+		$labels 			= [];
 		$labels['title'] 	= "HOJE";
 		switch ( $data['view'] ) {
 
@@ -418,7 +418,7 @@ class NotificationsController extends \BaseController {
    public static function fechar($id)
    {
       if(!isset($id)){
-         return Response::json(array('error' => 'ID não informado'));
+         return Response::json(['error' => 'ID não informado']);
       }
 
       if( $notification = Notification::find($id) ){
@@ -436,7 +436,7 @@ class NotificationsController extends \BaseController {
       }
 
 
-      return Response::json(array('success' => true));
+      return Response::json(['success' => true]);
    }
 
 

@@ -24,7 +24,7 @@
       }
 
       // Don't forget to fill this array
-      protected $fillable = array(
+      protected $fillable = [
                            'nome',
                            'empresa',
                            'endereco',
@@ -37,5 +37,5 @@
                            'email',
                            'ie',
                            'cnpj'
-                        );
+                        ];
    }

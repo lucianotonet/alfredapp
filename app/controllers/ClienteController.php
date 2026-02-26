@@ -69,7 +69,7 @@ class ClienteController extends \BaseController {
 								 ->get();
 
 				 if( count($topten) ){
-						$itemIds = array();
+						$itemIds = [];
 						foreach ($topten as $cliente) {
 							 $itemIds[] = $cliente->cliente_id;
 						}
@@ -80,7 +80,7 @@ class ClienteController extends \BaseController {
 						 ->take( 10 )
 						 ->get();
 				 }else{
-						$clientes->topten = array();
+						$clientes->topten = [];
 				 }
 
 				 
@@ -121,10 +121,10 @@ class ClienteController extends \BaseController {
 	{
 		// Validator
 		// leia mais sobre Validator em http://laravel.com/docs/validation      
-			$rules = array(
+			$rules = [
 				 // 'nome'       => 'required',
 				 // 'empresa'    => 'required'       
-			);
+			];
 			$validator = Validator::make(Input::all(), $rules);
 			
 			if ($validator->fails()) {
@@ -231,9 +231,9 @@ class ClienteController extends \BaseController {
 	{
 		// validate
 		// read more on validation at http://laravel.com/docs/validation
-		$rules = array(
+		$rules = [
 			
-		);
+		];
 		$validator = Validator::make(Input::all(), $rules);
 
 		// process the login
@@ -314,14 +314,14 @@ class ClienteController extends \BaseController {
 			$resource               = Cliente::find($id);  
 			$email['resourcename']  = 'cliente';
 			$email['fornecedores']  = Fornecedor::all();
-			$email['to']            = array(
+			$email['to']            = [
 																		 "nome"     => "Luciano T.",
 																		 "email"    => "tonetlds@gmail.com",
-																	);
-			$email['cc']   = array(
+																	];
+			$email['cc']   = [
 												 "nome"     => "",
 												 "email"    => "contato@lucianotonet.com",
-											);
+											];
 			$email['content'] = "Teste";
 			$email['message'] = "Olá, segue os dados do cliente.";
 
@@ -363,33 +363,33 @@ class ClienteController extends \BaseController {
 
 
          foreach ($clientes as $cliente) {
-            $suggestions[] = array(
+            $suggestions[] = [
                                     "value"  => $cliente->nome." [".$cliente->empresa."]",
-                                    "data"    => array(
+                                    "data"    => [
                                                    'type' => 'Clientes ('.count( $clientes ).')',
                                                    'obj'  => json_encode( $cliente )
-                                                )                          
-                                );           
+                                                ]                          
+                                ];           
          }
          foreach ($fornecedores as $fornecedor) {
-            $suggestions[] = array(
+            $suggestions[] = [
                                     "value"  => $fornecedor->nome." [".$fornecedor->empresa."]",
-                                    "data"    => array(
+                                    "data"    => [
                                                    'type' => 'Fornecedores ('.count($fornecedores).')'
-                                                )                          
-                                );           
+                                                ]                          
+                                ];           
          }
          foreach ($vendedores as $vendedor) {
-            $suggestions[] = array(
+            $suggestions[] = [
                                     "value"  => $vendedor->nome." [".$vendedor->empresa."]",
-                                    "data"    => array(
+                                    "data"    => [
                                                    'type' => 'Vendedores ('.count($vendedores).')'
-                                                )                          
-                                );           
+                                                ]                          
+                                ];           
          }
 
 
-         $costumers = array( 'suggestions' => $suggestions );   
+         $costumers = [ 'suggestions' => $suggestions ];   
       
          //$costumers = Cliente::all();
          return Response::json($costumers);
