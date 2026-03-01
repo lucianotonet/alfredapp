@@ -18,11 +18,11 @@
     },
     "autoload": {
         "classmap": [
-            "app/commands",
+            "app/Console/Commands",
             "app/controllers",
             "app/models",
-            "app/database/migrations",
-            "app/database/seeds",
+            "database/migrations",
+            "database/seeds",
             "app/tests/TestCase.php"
         ]
     },
@@ -43,5 +43,5 @@
         "preferred-install": "dist"
     },
     "minimum-stability": "stable",
-    "require-dev": {}
+    "require-dev": []
 }
