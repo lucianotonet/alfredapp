@@ -13,6 +13,7 @@
         "fzaninotto/faker": "v1.3.0",
         "guzzlehttp/guzzle": "~4.0",
         "laravel/framework": "5.8.*",
+        "laravelcollective/html": "^5.8",
         "maatwebsite/excel": "~1.2.1",
         "mandrill/mandrill": "1.0.*",
         "zizaco/confide": "~4.0@dev"
