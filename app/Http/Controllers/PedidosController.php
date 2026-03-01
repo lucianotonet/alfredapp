@@ -881,7 +881,7 @@ class PedidosController extends \BaseController
             ];
         }
         $pedido->itens = $itens;
-        $pedido->total = number_format($pedido->total,'2',',','.');
+        $pedido->total = number_format($pedido->total, '2', ',', '.');
 
         return View::make('pedidos.print', compact('pedido'));
     }
