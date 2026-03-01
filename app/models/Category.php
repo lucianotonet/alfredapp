@@ -1,25 +1,27 @@
 <?php
 
-class Category extends Eloquent {
+class Category extends Eloquent
+{
+    protected $table = 'categories';
 
-	protected $table = 'categories';
-	public $timestamps = true;
-	protected $fillable = array('name', 'owner_id', 'owner_type');
-	protected $visible = array('name', 'owner_id', 'owner_type');
+    public $timestamps = true;
 
-	// Add your validation rules here
-	public static $rules = [
-      'name' => 'required'
-	];
+    protected $fillable = ['name', 'owner_id', 'owner_type'];
 
-	public function getTransactions()
-	{
-		return $this->hasMany('Transaction');
-	}
+    protected $visible = ['name', 'owner_id', 'owner_type'];
 
-	public function tarefas()
-	{
-		return $this->hasMany('Tarefa');
-	}
+    // Add your validation rules here
+    public static $rules = [
+        'name' => 'required',
+    ];
 
+    public function getTransactions()
+    {
+        return $this->hasMany('Transaction');
+    }
+
+    public function tarefas()
+    {
+        return $this->hasMany('Tarefa');
+    }
 }
