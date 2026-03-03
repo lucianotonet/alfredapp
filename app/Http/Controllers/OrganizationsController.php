@@ -11,7 +11,7 @@ class OrganizationsController extends \BaseController
     {
         $organizations = Organization::all();
 
-        return View::make('organizations.index', compact('organizations'));
+        return ('organizations.index', compact('organizations'));
     }
 
     /**
@@ -21,7 +21,7 @@ class OrganizationsController extends \BaseController
      */
     public function create()
     {
-        return View::make('organizations.create');
+        return ('organizations.create');
     }
 
     /**
@@ -34,12 +34,12 @@ class OrganizationsController extends \BaseController
         $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Organization::$rules);
 
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
+            return Illuminate\Support\Facades\Redirect::Redirect::back(()->withErrors($validator)->withInput();
         }
 
         Organization::create($data);
 
-        return Redirect::route('organizations.index');
+        return Illuminate\Support\Facades\Redirect::Redirect::route(('organizations.index');
     }
 
     /**
@@ -52,7 +52,7 @@ class OrganizationsController extends \BaseController
     {
         $organization = Organization::findOrFail($id);
 
-        return View::make('organizations.show', compact('organization'));
+        return ('organizations.show', compact('organization'));
     }
 
     /**
@@ -65,7 +65,7 @@ class OrganizationsController extends \BaseController
     {
         $organization = Organization::find($id);
 
-        return View::make('organizations.edit', compact('organization'));
+        return ('organizations.edit', compact('organization'));
     }
 
     /**
@@ -81,12 +81,12 @@ class OrganizationsController extends \BaseController
         $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Organization::$rules);
 
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
+            return Illuminate\Support\Facades\Redirect::Redirect::back(()->withErrors($validator)->withInput();
         }
 
         $organization->update($data);
 
-        return Redirect::route('organizations.index');
+        return Illuminate\Support\Facades\Redirect::Redirect::route(('organizations.index');
     }
 
     /**
@@ -99,6 +99,6 @@ class OrganizationsController extends \BaseController
     {
         Organization::destroy($id);
 
-        return Redirect::route('organizations.index');
+        return Illuminate\Support\Facades\Redirect::Redirect::route(('organizations.index');
     }
 }

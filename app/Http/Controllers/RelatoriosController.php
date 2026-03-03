@@ -35,7 +35,7 @@ class RelatoriosController extends \BaseController
             }
         }
 
-        return View::make('relatorios.index', compact('relatorios'));
+        return ('relatorios.index', compact('relatorios'));
     }
 
     /**
@@ -123,7 +123,7 @@ class RelatoriosController extends \BaseController
                 // Fomata R$ Total
                 $despesas->total = number_format($despesas->total, 2, ',', '.');
 
-                return View::make('relatorios.despesas.create', ['despesas' => $despesas]);
+                return ('relatorios.despesas.create', ['despesas' => $despesas]);
                 break;
 
                 /*
@@ -142,9 +142,9 @@ class RelatoriosController extends \BaseController
                         'class' => 'alert-warning',
                         'message' => '<strong><i class="fa fa-warning"></i></strong> Ainda não há nenhuma conversa cadastrada no sistema =(',
                     ];
-                    Session::flash('alerts', $alert);
+                    Illuminate\Support\Facades\Session::Session::flash(('alerts', $alert);
 
-                    return Redirect::to(URL::previous());
+                    return Illuminate\Support\Facades\Redirect::Redirect::to((URL::previous());
                 }
 
                 $fieldClientes = ['all' => 'Todos'];
@@ -270,12 +270,12 @@ class RelatoriosController extends \BaseController
                     $message = 'Você tem '.$status['nao_enviadas'].' conversas não enviadas.';
                 }
 
-                return View::make('relatorios.conversas.create', ['status' => $status, 'filters' => $filters, 'search_results' => $search_results, 'message' => $message, 'conversas' => $conversas, 'relatorio' => new Relatorio, 'clientes' => $clientes]);
+                return ('relatorios.conversas.create', ['status' => $status, 'filters' => $filters, 'search_results' => $search_results, 'message' => $message, 'conversas' => $conversas, 'relatorio' => new Relatorio, 'clientes' => $clientes]);
                 break;
 
             default:
                 //  se não informado um RESOURCE_NAME, a view CREATE padrão é chamada
-                return View::make('relatorios.create');
+                return ('relatorios.create');
                 break;
 
         }
@@ -328,7 +328,7 @@ class RelatoriosController extends \BaseController
                     //                                         )
                     //                )
                 ];
-                Session::flash('alerts', $alert);
+                Illuminate\Support\Facades\Session::Session::flash(('alerts', $alert);
 
                 break;
 
@@ -372,7 +372,7 @@ class RelatoriosController extends \BaseController
                         ],
                     ],
                 ];
-                Session::flash('alerts', $alert);
+                Illuminate\Support\Facades\Session::Session::flash(('alerts', $alert);
                 break;
 
             default:
@@ -383,7 +383,7 @@ class RelatoriosController extends \BaseController
         // Salva o relatório de novo
         $relatorio->save();
 
-        return Redirect::to(url('relatorios/'.$relatorio->id));
+        return Illuminate\Support\Facades\Redirect::Redirect::to((url('relatorios/'.$relatorio->id));
 
     }
 
@@ -396,7 +396,7 @@ class RelatoriosController extends \BaseController
     public function show($id)
     {
 
-        // $pdf_folder = Config::get('settings.user_id');
+        // $pdf_folder = ('settings.user_id');
         // print_r($pdf_folder);
         // exit;
 
@@ -408,9 +408,9 @@ class RelatoriosController extends \BaseController
                 'class' => 'alert-warning',
                 'message' => '<strong><i class="fa fa-warning"></i></strong> Relatório não encontrado',
             ];
-            Session::flash('alerts', $alert);
+            Illuminate\Support\Facades\Session::Session::flash(('alerts', $alert);
 
-            return Redirect::to(URL::previous());
+            return Illuminate\Support\Facades\Redirect::Redirect::to((URL::previous());
 
         }
 
@@ -439,9 +439,9 @@ class RelatoriosController extends \BaseController
                 // $pdf = PDF::loadView( 'relatorios.'.$relatorio->type.'.pdf', compact('relatorio'))->setPaper('a4')->setOrientation('portrait')->setWarnings(false)->save( 'pdf/relatorios/relatorio-'.$relatorio->id.'_'.$relatorio->type.'.pdf' );
 
                 // TESTE PARA PDF
-                // return View::make('relatorios.despesas.pdf', compact('relatorio'));
-                // return View::make('relatorios.despesas.print', compact('relatorio'));
-                return View::make('relatorios.despesas.show', compact('relatorio'));
+                // return ('relatorios.despesas.pdf', compact('relatorio'));
+                // return ('relatorios.despesas.print', compact('relatorio'));
+                return ('relatorios.despesas.show', compact('relatorio'));
                 break;
 
             case 'conversas':
@@ -468,16 +468,16 @@ class RelatoriosController extends \BaseController
                 // echo "</pre>";
                 // exit;
 
-                return View::make('relatorios.conversas.show', compact('relatorio'));
+                return ('relatorios.conversas.show', compact('relatorio'));
                 break;
 
             default:
-                return View::make('relatorios.show', compact('relatorio'));
+                return ('relatorios.show', compact('relatorio'));
                 break;
 
         }
 
-        return View::make('relatorios.show', compact('relatorio'));
+        return ('relatorios.show', compact('relatorio'));
 
     }
 
@@ -522,7 +522,7 @@ class RelatoriosController extends \BaseController
             }
         }
 
-        return View::make('relatorios.edit', compact('relatorio', 'total'));
+        return ('relatorios.edit', compact('relatorio', 'total'));
     }
 
     /**
@@ -538,7 +538,7 @@ class RelatoriosController extends \BaseController
         $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Relatorio::$rules);
 
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
+            return Illuminate\Support\Facades\Redirect::Redirect::back(()->withErrors($validator)->withInput();
         }
 
         switch ($data['type']) {
@@ -567,7 +567,7 @@ class RelatoriosController extends \BaseController
                         ],
                     ],
                 ];
-                Session::flash('alerts', $alert);
+                Illuminate\Support\Facades\Session::Session::flash(('alerts', $alert);
 
                 break;
 
@@ -583,7 +583,7 @@ class RelatoriosController extends \BaseController
 
         $relatorio->update($data);
 
-        return Redirect::route('relatorios.index');
+        return Illuminate\Support\Facades\Redirect::Redirect::route(('relatorios.index');
     }
 
     /**
@@ -596,7 +596,7 @@ class RelatoriosController extends \BaseController
     {
         Relatorio::destroy($id);
 
-        return Redirect::route('relatorios.index');
+        return Illuminate\Support\Facades\Redirect::Redirect::route(('relatorios.index');
     }
 
     /**
@@ -631,12 +631,12 @@ class RelatoriosController extends \BaseController
                 'class' => 'alert-danger',
                 'message' => '<strong><i class="fa fa-warning"></i></strong> o relatório não existe!',
             ];
-            Session::flash('alerts', $alert);
+            Illuminate\Support\Facades\Session::Session::flash(('alerts', $alert);
 
             if (URL::previous()) {
-                return Redirect::to(URL::previous());
+                return Illuminate\Support\Facades\Redirect::Redirect::to((URL::previous());
             } else {
-                return Redirect::to('relatorios');
+                return Illuminate\Support\Facades\Redirect::Redirect::to(('relatorios');
             }
         }
 
@@ -672,7 +672,7 @@ class RelatoriosController extends \BaseController
 
         // $pdf = $this->gerarPdf( $relatorio->id );
 
-        $pdf = App::make('dompdf');
+        $pdf = ('dompdf');
 
         if (! is_file(asset($pdf_file))) {
             $pdf = $pdf->loadView($pdf_view, compact('relatorio'))->setPaper('a4')->setOrientation('portrait')->setWarnings(false)->save($pdf_file);
@@ -737,9 +737,9 @@ class RelatoriosController extends \BaseController
 
         }
 
-        return View::make('relatorios.'.$relatorio->type.'.print', compact('relatorio'));
+        return ('relatorios.'.$relatorio->type.'.print', compact('relatorio'));
 
-        return View::make('relatorios.'.$relatorio->type.'.print', compact('relatorio'));
+        return ('relatorios.'.$relatorio->type.'.print', compact('relatorio'));
 
     }
 
@@ -753,9 +753,9 @@ class RelatoriosController extends \BaseController
     {
 
         if (is_file(asset('pdf/relatorios/relatorio-'.$relatorio->id.'_'.$relatorio->type.'.pdf'))) {
-            $pdf = App::make('dompdf');
+            $pdf = ('dompdf');
         } else {
-            // $pdf = App::make('dompdf');
+            // $pdf = ('dompdf');
             $pdf = PDF::loadView('relatorios.'.$relatorio->type.'.pdf', compact('relatorio'))->setPaper('a4')->setOrientation('portrait')->setWarnings(false)->save('pdf/relatorios/relatorio-'.$relatorio->id.'_'.$relatorio->type.'.pdf');
         }
 

@@ -18,7 +18,7 @@ class BalanceController extends BaseController
 
         // SALDO DE HOJE
         // $hoje = Carbon::now();
-        // $balanceToday = DB::table('transactions')
+        // $balanceToday = Illuminate\Support\Facades\DB::DB::table(('transactions')
         //                             ->where( 'created_at', '>=', $hoje->startOfDay() ) // Desde a meia noite
         //                             ->where( 'created_at', '<=', date('Y-m-d H:i:s') ) // Até agora
         //                             ->where( 'user_id', Auth::id() )
@@ -30,7 +30,7 @@ class BalanceController extends BaseController
         // $lastBalance = Balance::orderBy('id', 'DESC')->where( 'user_id', Auth::id() )->first();
         // if( !$lastBalance ){
         //     // PRIMEIRO BALANCO
-        //     $firstBalance = DB::table('transactions')
+        //     $firstBalance = Illuminate\Support\Facades\DB::DB::table(('transactions')
         //                             ->where( 'created_at', '<', $hoje->startOfDay() ) // Até agora
         //                             ->where( 'user_id', Auth::id() )
         //                             ->where( 'done', 1 )
@@ -68,7 +68,7 @@ class BalanceController extends BaseController
         if (! $balance) {
             $balance = new Balance;
             // Calcula Valor inicial do novo saldo
-            $amount = DB::table('transactions')->where('created_at', '<', $hoje->startOfDay())->where('user_id', Auth::id())->where('done', 1)->sum('amount');
+            $amount = Illuminate\Support\Facades\DB::DB::table(('transactions')->where('created_at', '<', $hoje->startOfDay())->where('user_id', Auth::id())->where('done', 1)->sum('amount');
             $balance->amount = $amount;
             $balance->save();
         }
@@ -85,7 +85,7 @@ class BalanceController extends BaseController
         }
 
         // ATUALIZA O ÚLTIMO BALANCE
-        $amount = DB::table('transactions')
+        $amount = Illuminate\Support\Facades\DB::DB::table(('transactions')
             ->where('created_at', '>=', $hoje->startOfDay()) // Desde a meia noite
             ->where('created_at', '<=', date('Y-m-d H:i:s')) // Até agora
             ->where('user_id', Auth::id())
@@ -151,7 +151,7 @@ class BalanceController extends BaseController
         }
         $balance->save();
 
-        return View::make('transactions.panels.balance')->with('balance');
+        return ('transactions.panels.balance')->with('balance');
     }
 
     /**

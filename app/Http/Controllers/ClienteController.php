@@ -54,8 +54,8 @@ class ClienteController extends \BaseController
 
             // $pedidos = Pedido::sortBy('cliente_id')->
 
-            $topten = DB::table('pedidos')
-                ->select('cliente_id', DB::raw('count(*) as total'))
+            $topten = Illuminate\Support\Facades\DB::DB::table(('pedidos')
+                ->select('cliente_id', Illuminate\Support\Facades\DB::DB::raw(('count(*) as total'))
                 ->groupBy('cliente_id')
                 ->orderBy('total', 'DESC')
                 ->take(10)
@@ -69,14 +69,14 @@ class ClienteController extends \BaseController
                 $ids = implode(',', $itemIds);
 
                 $clientes->topten = Cliente::whereIn('id', $itemIds)
-                    ->orderByRaw(DB::raw("FIELD(id, $ids)"))
+                    ->orderByRaw(Illuminate\Support\Facades\DB::DB::raw(("FIELD(id, $ids)"))
                     ->take(10)
                     ->get();
             } else {
                 $clientes->topten = [];
             }
 
-            return View::make('clientes.index')
+            return ('clientes.index')
                 ->with('clientes', $clientes)
                 ->with('customers', $customers);
         }
@@ -91,7 +91,7 @@ class ClienteController extends \BaseController
     public function create()
     {
         // load the create form (app/views/clientes/create.blade.php)
-        return View::make('clientes.create');
+        return ('clientes.create');
 
     }
 
@@ -112,18 +112,18 @@ class ClienteController extends \BaseController
 
         if ($validator->fails()) {
 
-            return Redirect::to('clientes/create')
+            return Illuminate\Support\Facades\Redirect::Redirect::to(('clientes/create')
                 ->withErrors($validator)
                 ->withInput(\Illuminate\Support\Facades\Request::except('password'));
 
         } else {
             // store
             Cliente::create($this->post_to_array($this->table_fields));
-            // Session::flush();
+            // Illuminate\Support\Facades\Session::Session::flush(();
             $alert[] = ['class' => 'alert-success', 'message' => 'Novo cliente adicionado!'];
-            Session::flash('alerts', $alert);
+            Illuminate\Support\Facades\Session::Session::flash(('alerts', $alert);
 
-            return Redirect::to('clientes');
+            return Illuminate\Support\Facades\Redirect::Redirect::to(('clientes');
         }
     }
 
@@ -172,13 +172,13 @@ class ClienteController extends \BaseController
             $tarefas->concluidas = Tarefa::where('cliente_id', $cliente->id)->where('done', 1)->orderBy('updated_at', 'DESC')->get();
 
             // show the view and pass the cliente to it
-            return View::make('clientes.show', compact('cliente', 'tarefas'));
+            return ('clientes.show', compact('cliente', 'tarefas'));
             // ->with( 'pedidos', $cliente->pedidos() );
         } else {
             $alert[] = ['class' => 'alert-warning', 'message' => 'O cliente que você procura não existe!'];
-            Session::flash('alerts', $alert);
+            Illuminate\Support\Facades\Session::Session::flash(('alerts', $alert);
 
-            return Redirect::to('clientes');
+            return Illuminate\Support\Facades\Redirect::Redirect::to(('clientes');
         }
 
     }
@@ -195,7 +195,7 @@ class ClienteController extends \BaseController
         $cliente = Cliente::find($id);
 
         // show the edit form and pass the cliente
-        return View::make('clientes.edit')
+        return ('clientes.edit')
             ->with('cliente', $cliente);
     }
 
@@ -216,7 +216,7 @@ class ClienteController extends \BaseController
 
         // process the login
         if ($validator->fails()) {
-            return Redirect::to('clientes/'.$id.'/edit')
+            return Illuminate\Support\Facades\Redirect::Redirect::to(('clientes/'.$id.'/edit')
                 ->withErrors($validator)
                 ->withInput(\Illuminate\Support\Facades\Request::except('password'));
         } else {
@@ -224,10 +224,10 @@ class ClienteController extends \BaseController
             Cliente::where('id', $id)->update($this->post_to_array($this->table_fields));
             // Show success message
             $alert[] = ['class' => 'alert-success', 'message' => 'Cliente atualizado com sucesso!'];
-            Session::flash('alerts', $alert);
+            Illuminate\Support\Facades\Session::Session::flash(('alerts', $alert);
 
             // redirect
-            return Redirect::to('clientes');
+            return Illuminate\Support\Facades\Redirect::Redirect::to(('clientes');
         }
     }
 
@@ -240,14 +240,14 @@ class ClienteController extends \BaseController
     {
 
         // // redirect
-        // Session::flash('message', 'Um cliente randomico foi adicionado!');
-        // return Redirect::to('clientes');
+        // Illuminate\Support\Facades\Session::Session::flash(('message', 'Um cliente randomico foi adicionado!');
+        // return Illuminate\Support\Facades\Redirect::Redirect::to(('clientes');
 
         // get all the clientes
         $clientes = Cliente::all();
 
         // load the view and pass the clientes
-        return View::make('clientes.index')
+        return ('clientes.index')
             ->with('clientes', $clientes);
     }
 
@@ -265,10 +265,10 @@ class ClienteController extends \BaseController
 
         // Show success message
         $alert[] = ['class' => 'alert-success', 'message' => 'O item foi excluído com sucesso!'];
-        Session::flash('alerts', $alert);
+        Illuminate\Support\Facades\Session::Session::flash(('alerts', $alert);
 
         // redirect
-        return Redirect::to('clientes');
+        return Illuminate\Support\Facades\Redirect::Redirect::to(('clientes');
     }
 
     /**
@@ -300,7 +300,7 @@ class ClienteController extends \BaseController
         $email['content'] = 'Teste';
         $email['message'] = 'Olá, segue os dados do cliente.';
 
-        return View::make('emails.create', compact('email', 'resource'));
+        return ('emails.create', compact('email', 'resource'));
 
     }
 
@@ -368,7 +368,7 @@ class ClienteController extends \BaseController
     {
         $costumer = Cliente::find($id);
         if ($costumer) {
-            return View::make('clientes.panels.item', ['cliente' => $costumer]);
+            return ('clientes.panels.item', ['cliente' => $costumer]);
         } else {
             return Response::json(['error' => 'true']);
         }

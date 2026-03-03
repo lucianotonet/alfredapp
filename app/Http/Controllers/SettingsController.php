@@ -14,27 +14,27 @@ class SettingsController extends \BaseController
         // $settings->down();
         // $settings->up();
 
-        $settings = Config::get('settings');
+        $settings = ('settings');
         $user_settings = Confide::user()->settings;
 
         // Check if view exists
-        if (! View::exists('settings.'.$module)) {
+        if (! ('settings.'.$module)) {
 
             $alert[] = ['class' => 'alert-warning',
                 'message' => '<strong><i class="fa fa-warning"></i></strong> Módulo de configurações não encontrado!'];
-            Session::flash('alerts', $alert);
+            Illuminate\Support\Facades\Session::Session::flash(('alerts', $alert);
 
             if (Request::header('referer')) {
-                return Redirect::back();
+                return Illuminate\Support\Facades\Redirect::Redirect::back(();
             } else {
                 $module = 'general';
             }
         }
 
-        // echo "<pre>"; print_r( Config::get('settings') ); echo "</pre>"; exit;
+        // echo "<pre>"; print_r( ('settings') ); echo "</pre>"; exit;
         // echo "<pre>"; print_r( $requested_page ); echo "</pre>"; exit;
 
-        return View::make('settings.index', compact('settings', 'module'));
+        return ('settings.index', compact('settings', 'module'));
     }
 
     /**
@@ -44,7 +44,7 @@ class SettingsController extends \BaseController
      */
     public function create()
     {
-        return View::make('settings.create');
+        return ('settings.create');
     }
 
     /**
@@ -65,7 +65,7 @@ class SettingsController extends \BaseController
                                 where('user_id', Confide::user()->id)->
                                 orderBy('id', 'DESC')->get();
 
-            if (Config::has('settings.'.$config)) {
+            if (('settings.'.$config)) {
 
                 if (empty($value)) {
                     foreach ($settings as $setting) {
@@ -93,7 +93,7 @@ class SettingsController extends \BaseController
 
             foreach ($data['mail'] as $config => $value) {
 
-                if (Config::has('mail.'.$config)) {
+                if (('mail.'.$config)) {
                     $setting = Setting::where('setting_name', $config)->
                                         where('setting_type', 'mail')->
                                         where('user_id', Confide::user()->id)->
@@ -123,12 +123,12 @@ class SettingsController extends \BaseController
         $alert[] = ['class' => 'alert-success',
             'message' => '<strong><i class="fa fa-check"></i></strong> Configurações salvas!'];
 
-        Session::flash('alerts', $alert);
+        Illuminate\Support\Facades\Session::Session::flash(('alerts', $alert);
 
         if (Request::header('referer')) {
-            return Redirect::back();
+            return Illuminate\Support\Facades\Redirect::Redirect::back(();
         } else {
-            return Redirect::route('settings.index');
+            return Illuminate\Support\Facades\Redirect::Redirect::route(('settings.index');
         }
 
     }
@@ -143,7 +143,7 @@ class SettingsController extends \BaseController
     {
         $setting = Setting::findOrFail($id);
 
-        return View::make('settings.show', compact('setting'));
+        return ('settings.show', compact('setting'));
     }
 
     /**
@@ -156,7 +156,7 @@ class SettingsController extends \BaseController
     {
         $setting = Setting::find($id);
 
-        return View::make('settings.edit', compact('setting'));
+        return ('settings.edit', compact('setting'));
     }
 
     /**
@@ -172,12 +172,12 @@ class SettingsController extends \BaseController
         $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Setting::$rules);
 
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
+            return Illuminate\Support\Facades\Redirect::Redirect::back(()->withErrors($validator)->withInput();
         }
 
         $setting->update($data);
 
-        return Redirect::route('settings.index');
+        return Illuminate\Support\Facades\Redirect::Redirect::route(('settings.index');
     }
 
     /**
@@ -190,7 +190,7 @@ class SettingsController extends \BaseController
     {
         Setting::destroy($id);
 
-        return Redirect::route('settings.index');
+        return Illuminate\Support\Facades\Redirect::Redirect::route(('settings.index');
     }
 
     public function reset()
@@ -202,12 +202,12 @@ class SettingsController extends \BaseController
 
         $alert[] = ['class' => 'alert-success',
             'message' => '<strong><i class="fa fa-check"></i></strong> Configurações restauradas com sucesso!'];
-        Session::flash('alerts', $alert);
+        Illuminate\Support\Facades\Session::Session::flash(('alerts', $alert);
 
         if (Request::header('referer')) {
-            return Redirect::back();
+            return Illuminate\Support\Facades\Redirect::Redirect::back(();
         } else {
-            return Redirect::route('settings.index');
+            return Illuminate\Support\Facades\Redirect::Redirect::route(('settings.index');
         }
 
     }

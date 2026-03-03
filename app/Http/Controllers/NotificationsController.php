@@ -76,9 +76,9 @@ class NotificationsController extends \BaseController
         // $notifications->getCollection()->paginate( $pagination );//->paginate( $pagination ;
 
         if (Request::ajax()) {
-            return View::make('notifications.panels.index', compact('notifications', 'labels'));
+            return ('notifications.panels.index', compact('notifications', 'labels'));
         } else {
-            return View::make('notifications.index', compact('notifications', 'labels'));
+            return ('notifications.index', compact('notifications', 'labels'));
         }
 
     }
@@ -194,9 +194,9 @@ class NotificationsController extends \BaseController
     public function create()
     {
         if (Request::ajax()) {
-            return View::make('notifications.panels.create');
+            return ('notifications.panels.create');
         } else {
-            return View::make('notifications.create');
+            return ('notifications.create');
         }
     }
 
@@ -241,7 +241,7 @@ class NotificationsController extends \BaseController
         $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Notification::$rules);
 
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
+            return Illuminate\Support\Facades\Redirect::Redirect::back(()->withErrors($validator)->withInput();
         }
 
         // echo "<pre>";
@@ -255,9 +255,9 @@ class NotificationsController extends \BaseController
         // 	'alert-success' => '<strong><i class="fa fa-check"></i></strong> Notificação criada!'
         // );
         $alert[] = ['class' => 'alert-success', 'message' => '<strong><i class="fa fa-check"></i></strong> Notificação criada!'];
-        Session::flash('alerts', $alert);
+        Illuminate\Support\Facades\Session::Session::flash(('alerts', $alert);
 
-        return Redirect::to(URL::previous());
+        return Illuminate\Support\Facades\Redirect::Redirect::to((URL::previous());
     }
 
     /**
@@ -273,15 +273,15 @@ class NotificationsController extends \BaseController
         if (count($notification) < 1) {
             $alert[] = ['class' => 'alert-danger',
                 'message' => '<strong><i class="fa fa-warning"></i></strong> Notificação não encontrado!'];
-            Session::flash('alerts', $alert);
+            Illuminate\Support\Facades\Session::Session::flash(('alerts', $alert);
 
-            return Redirect::to(URL::previous());
+            return Illuminate\Support\Facades\Redirect::Redirect::to((URL::previous());
         }
 
         if (! $notification->status) {
             $alert[] = ['class' => 'alert-success',
                 'message' => '<strong><i class="fa fa-thumbs-up"></i></strong> Notificação marcada como <strong>lida</strong>!'];
-            Session::flash('alerts', $alert);
+            Illuminate\Support\Facades\Session::Session::flash(('alerts', $alert);
             $notification->status = true;
         }
         $notification->save();
@@ -289,22 +289,22 @@ class NotificationsController extends \BaseController
         if (! empty($notification->owner_type) and ! empty($notification->owner_id)) {
             switch ($notification->owner_type) {
                 case 'tarefa':
-                    return Redirect::to('tarefas/'.$notification->owner_id);
+                    return Illuminate\Support\Facades\Redirect::Redirect::to(('tarefas/'.$notification->owner_id);
                     break;
 
                 case 'agendaevent':
-                    return Redirect::to('agenda/'.$notification->owner_id);
+                    return Illuminate\Support\Facades\Redirect::Redirect::to(('agenda/'.$notification->owner_id);
                     break;
 
                 case 'cliente':
-                    return Redirect::to('clientes/'.$notification->owner_id);
+                    return Illuminate\Support\Facades\Redirect::Redirect::to(('clientes/'.$notification->owner_id);
                     break;
             }
         }
         if (Request::ajax()) {
-            return View::make('notifications.panels.show', compact('notification'));
+            return ('notifications.panels.show', compact('notification'));
         } else {
-            return View::make('notifications.show', compact('notification'));
+            return ('notifications.show', compact('notification'));
         }
     }
 
@@ -318,7 +318,7 @@ class NotificationsController extends \BaseController
     {
         $notification = Notification::find($id);
 
-        return View::make('notifications.edit', compact('notification'));
+        return ('notifications.edit', compact('notification'));
     }
 
     /**
@@ -334,7 +334,7 @@ class NotificationsController extends \BaseController
         $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Notification::$rules);
 
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
+            return Illuminate\Support\Facades\Redirect::Redirect::back(()->withErrors($validator)->withInput();
         }
 
         $notification->update($data);
@@ -343,9 +343,9 @@ class NotificationsController extends \BaseController
         // 	'alert-success' => '<strong><i class="fa fa-check"></i></strong> Notificação atualizada!'
         // );
         $alert[] = ['class' => 'alert-success', 'message' => '<strong><i class="fa fa-check"></i></strong> Notificação atualizada!'];
-        Session::flash('alerts', $alert);
+        Illuminate\Support\Facades\Session::Session::flash(('alerts', $alert);
 
-        return Redirect::to(URL::previous());
+        return Illuminate\Support\Facades\Redirect::Redirect::to((URL::previous());
     }
 
     /**
@@ -359,9 +359,9 @@ class NotificationsController extends \BaseController
         Notification::destroy($id);
 
         $alert[] = ['class' => 'alert-success', 'message' => '<strong><i class="fa fa-check"></i></strong> Notificação excluída!'];
-        Session::flash('alerts', $alert);
+        Illuminate\Support\Facades\Session::Session::flash(('alerts', $alert);
 
-        return Redirect::to(URL::previous());
+        return Illuminate\Support\Facades\Redirect::Redirect::to((URL::previous());
     }
 
     /**
@@ -406,9 +406,9 @@ class NotificationsController extends \BaseController
                 $notification->status = 0;
                 $notification->save();
                 $alert[] = ['class' => 'alert-success', 'message' => '<strong><i class="fa fa-check"></i></strong> Notificação marcada como não lida!'];
-                Session::flash('alerts', $alert);
+                Illuminate\Support\Facades\Session::Session::flash(('alerts', $alert);
 
-                return Redirect::to(URL::previous());
+                return Illuminate\Support\Facades\Redirect::Redirect::to((URL::previous());
             }
 
             $notification->close();
@@ -435,9 +435,9 @@ class NotificationsController extends \BaseController
         }
 
         $alert[] = ['class' => 'alert-success', 'message' => '<strong><i class="fa fa-check"></i></strong>'.$total.' notificações excluídas!'];
-        Session::flash('alerts', $alert);
+        Illuminate\Support\Facades\Session::Session::flash(('alerts', $alert);
 
-        return Redirect::to(URL::previous());
+        return Illuminate\Support\Facades\Redirect::Redirect::to((URL::previous());
 
     }
 

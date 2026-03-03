@@ -15,7 +15,7 @@ class VendedorsController extends \BaseController
 
             // return Response::json($query);
 
-            $vendedores = DB::table('vendedors')
+            $vendedores = Illuminate\Support\Facades\DB::DB::table(('vendedors')
                 ->select()
                 ->where('nome', 'like', '%'.$query.'%')
                 ->orWhere('empresa', 'like', '%'.$query.'%')
@@ -34,7 +34,7 @@ class VendedorsController extends \BaseController
             }
 
             // load the view and pass the vendedors
-            return View::make('vendedors.index')
+            return ('vendedors.index')
                 ->with('vendedores', $vendedores);
         }
 
@@ -48,7 +48,7 @@ class VendedorsController extends \BaseController
     public function create()
     {
         // load the create form (app/views/vendedores/create.blade.php)
-        return View::make('vendedors.create');
+        return ('vendedors.create');
     }
 
     /**
@@ -68,7 +68,7 @@ class VendedorsController extends \BaseController
 
         if ($validator->fails()) {
 
-            return Redirect::to('vendedors/create')
+            return Illuminate\Support\Facades\Redirect::Redirect::to(('vendedors/create')
                 ->withErrors($validator)
                 ->withInput(\Illuminate\Support\Facades\Request::except('password'));
 
@@ -92,9 +92,9 @@ class VendedorsController extends \BaseController
             $vendedor->save();
 
             $alert[] = ['class' => 'alert-success', 'message' => '<strong><i class="fa fa-check"></i></strong> Novo vendedor adicionado!'];
-            Session::flash('alerts', $alert);
+            Illuminate\Support\Facades\Session::Session::flash(('alerts', $alert);
 
-            return Redirect::to('vendedors');
+            return Illuminate\Support\Facades\Redirect::Redirect::to(('vendedors');
         }
     }
 
@@ -111,13 +111,13 @@ class VendedorsController extends \BaseController
 
         if ($vendedor) {
             // show the view and pass the vendedor to it
-            return View::make('vendedors.show')
+            return ('vendedors.show')
                 ->with('vendedor', $vendedor);
         } else {
             $alert[] = ['class' => 'alert-warning', 'message' => '<strong><i class="fa fa-warning"></i></strong> O vendedor que você procura não existe!'];
-            Session::flash('alerts', $alert);
+            Illuminate\Support\Facades\Session::Session::flash(('alerts', $alert);
 
-            return Redirect::to('vendedors');
+            return Illuminate\Support\Facades\Redirect::Redirect::to(('vendedors');
         }
 
     }
@@ -134,7 +134,7 @@ class VendedorsController extends \BaseController
         $vendedor = Vendedor::find($id);
 
         // show the edit form and pass the vendedor
-        return View::make('vendedors.edit')
+        return ('vendedors.edit')
             ->with('vendedor', $vendedor);
     }
 
@@ -155,7 +155,7 @@ class VendedorsController extends \BaseController
 
         // process the login
         if ($validator->fails()) {
-            return Redirect::to('vendedors/'.$id.'/edit')
+            return Illuminate\Support\Facades\Redirect::Redirect::to(('vendedors/'.$id.'/edit')
                 ->withErrors($validator)
                 ->withInput(\Illuminate\Support\Facades\Request::except('password'));
         } else {
@@ -179,10 +179,10 @@ class VendedorsController extends \BaseController
 
             // Show success message
             $alert[] = ['class' => 'alert-success', 'message' => '<strong><i class="fa fa-check"></i></strong> Vendendor atualizado com sucesso!'];
-            Session::flash('alerts', $alert);
+            Illuminate\Support\Facades\Session::Session::flash(('alerts', $alert);
 
             // redirect
-            return Redirect::to('vendedors');
+            return Illuminate\Support\Facades\Redirect::Redirect::to(('vendedors');
         }
     }
 
@@ -195,14 +195,14 @@ class VendedorsController extends \BaseController
     {
 
         // // redirect
-        // Session::flash('message', 'Um vendedor randomico foi adicionado!');
-        // return Redirect::to('vendedores');
+        // Illuminate\Support\Facades\Session::Session::flash(('message', 'Um vendedor randomico foi adicionado!');
+        // return Illuminate\Support\Facades\Redirect::Redirect::to(('vendedores');
 
         // get all the vendedores
         $vendedores = Vendedor::all();
 
         // load the view and pass the vendedores
-        return View::make('vendedors.index')
+        return ('vendedors.index')
             ->with('vendedores', $vendedores);
     }
 
@@ -220,9 +220,9 @@ class VendedorsController extends \BaseController
 
         // Show success message
         $alert[] = ['class' => 'alert-success', 'message' => '<strong><i class="fa fa-check"></i></strong> Item excluído com sucesso!'];
-        Session::flash('alerts', $alert);
+        Illuminate\Support\Facades\Session::Session::flash(('alerts', $alert);
 
         // redirect
-        return Redirect::to('vendedors');
+        return Illuminate\Support\Facades\Redirect::Redirect::to(('vendedors');
     }
 }

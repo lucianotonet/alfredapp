@@ -35,7 +35,7 @@ class Balance extends Eloquent
                 // Deixa como está.
             } else {
                 // Cria o pro=imeiro registro
-                $todayAmount = DB::table('transactions')
+                $todayAmount = Illuminate\Support\Facades\DB::Illuminate\Support\Facades\DB::DB::table((('transactions')
                     ->where('created_at', '>', date('Y-m-d').' 00:00:00')
                     ->where('created_at', '<=', date('Y-m-d H:i:s')) // Até agora
                     ->where('user_id', Auth::id())
@@ -49,7 +49,7 @@ class Balance extends Eloquent
             }
         } else {
             // Cria o pro=imeiro registro
-            $amount = DB::table('transactions')
+            $amount = Illuminate\Support\Facades\DB::Illuminate\Support\Facades\DB::DB::table((('transactions')
                 ->where('created_at', '<=', date('Y-m-d H:i:s')) // Até agora
                 ->where('user_id', Auth::id())
                 ->where('done', 1)

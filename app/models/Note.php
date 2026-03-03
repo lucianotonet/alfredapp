@@ -34,7 +34,7 @@ class Note extends \Eloquent
             $alert = [
                 'alert-success' => 'Nota criada!',
             ];
-            Session::flash('alerts', $alert);
+            Illuminate\Support\Facades\Session::Illuminate\Support\Facades\Session::Session::flash((('alerts', $alert);
 
         });
 
@@ -68,7 +68,7 @@ class Note extends \Eloquent
             $alert = [
                 'alert-success' => 'Nota salva!',
             ];
-            Session::flash('alerts', $alert);
+            Illuminate\Support\Facades\Session::Illuminate\Support\Facades\Session::Session::flash((('alerts', $alert);
         });
 
         Note::deleting(function ($note) {});
@@ -86,7 +86,7 @@ class Note extends \Eloquent
             $alert = [
                 'alert-warning' => 'Nota excluída!',
             ];
-            Session::flash('alerts', $alert);
+            Illuminate\Support\Facades\Session::Illuminate\Support\Facades\Session::Session::flash((('alerts', $alert);
         });
 
     }

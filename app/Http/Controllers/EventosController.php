@@ -15,7 +15,7 @@ class EventosController extends \BaseController
         if (Request::ajax()) {
             return $eventos;
         } else {
-            return View::make('eventos.index', compact('eventos'));
+            return ('eventos.index', compact('eventos'));
         }
 
     }
@@ -27,7 +27,7 @@ class EventosController extends \BaseController
      */
     public function create()
     {
-        return View::make('eventos.create');
+        return ('eventos.create');
     }
 
     /**
@@ -43,12 +43,12 @@ class EventosController extends \BaseController
         exit;
 
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
+            return Illuminate\Support\Facades\Redirect::Redirect::back(()->withErrors($validator)->withInput();
         }
 
         Evento::create($data);
 
-        return Redirect::route('eventos.index');
+        return Illuminate\Support\Facades\Redirect::Redirect::route(('eventos.index');
     }
 
     /**
@@ -61,7 +61,7 @@ class EventosController extends \BaseController
     {
         $evento = Evento::findOrFail($id);
 
-        return View::make('eventos.show', compact('evento'));
+        return ('eventos.show', compact('evento'));
     }
 
     /**
@@ -74,7 +74,7 @@ class EventosController extends \BaseController
     {
         $evento = Evento::find($id);
 
-        return View::make('eventos.edit', compact('evento'));
+        return ('eventos.edit', compact('evento'));
     }
 
     /**
@@ -90,12 +90,12 @@ class EventosController extends \BaseController
         $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Evento::$rules);
 
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
+            return Illuminate\Support\Facades\Redirect::Redirect::back(()->withErrors($validator)->withInput();
         }
 
         $evento->update($data);
 
-        return Redirect::route('eventos.index');
+        return Illuminate\Support\Facades\Redirect::Redirect::route(('eventos.index');
     }
 
     /**
@@ -108,6 +108,6 @@ class EventosController extends \BaseController
     {
         Evento::destroy($id);
 
-        return Redirect::route('eventos.index');
+        return Illuminate\Support\Facades\Redirect::Redirect::route(('eventos.index');
     }
 }

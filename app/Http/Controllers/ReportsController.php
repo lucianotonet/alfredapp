@@ -46,7 +46,7 @@ class ReportsController extends \BaseController
             }
         }
 
-        return View::make('reports.index', compact('reports'));
+        return ('reports.index', compact('reports'));
 
     }
 

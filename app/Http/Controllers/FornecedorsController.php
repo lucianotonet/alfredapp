@@ -11,7 +11,7 @@ class FornecedorsController extends \BaseController
     {
         $fornecedores = Fornecedor::all();
 
-        return View::make('fornecedors.index', compact('fornecedores'));
+        return ('fornecedors.index', compact('fornecedores'));
     }
 
     /**
@@ -21,7 +21,7 @@ class FornecedorsController extends \BaseController
      */
     public function create()
     {
-        return View::make('fornecedors.create');
+        return ('fornecedors.create');
     }
 
     /**
@@ -34,12 +34,12 @@ class FornecedorsController extends \BaseController
         $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Fornecedor::$rules);
 
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
+            return Illuminate\Support\Facades\Redirect::Redirect::back(()->withErrors($validator)->withInput();
         }
 
         Fornecedor::create($data);
 
-        return Redirect::route('fornecedors.index');
+        return Illuminate\Support\Facades\Redirect::Redirect::route(('fornecedors.index');
     }
 
     /**
@@ -57,7 +57,7 @@ class FornecedorsController extends \BaseController
         } else {
             $fornecedor = Fornecedor::find($id);
 
-            return View::make('fornecedors.show', compact('fornecedor'));
+            return ('fornecedors.show', compact('fornecedor'));
         }
     }
 
@@ -71,7 +71,7 @@ class FornecedorsController extends \BaseController
     {
         $fornecedor = Fornecedor::find($id);
 
-        return View::make('fornecedors.edit', compact('fornecedor'));
+        return ('fornecedors.edit', compact('fornecedor'));
     }
 
     /**
@@ -87,12 +87,12 @@ class FornecedorsController extends \BaseController
         $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Fornecedor::$rules);
 
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
+            return Illuminate\Support\Facades\Redirect::Redirect::back(()->withErrors($validator)->withInput();
         }
 
         $fornecedor->update($data);
 
-        return Redirect::route('fornecedors.index');
+        return Illuminate\Support\Facades\Redirect::Redirect::route(('fornecedors.index');
     }
 
     /**
@@ -105,6 +105,6 @@ class FornecedorsController extends \BaseController
     {
         Fornecedor::destroy($id);
 
-        return Redirect::route('fornecedors.index');
+        return Illuminate\Support\Facades\Redirect::Redirect::route(('fornecedors.index');
     }
 }

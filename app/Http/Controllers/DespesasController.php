@@ -33,7 +33,7 @@ class DespesasController extends \BaseController
 
         // if( Request::ajax() ){
         // }else{
-        //	return View::make('despesas.index', compact('despesas'));
+        //	return ('despesas.index', compact('despesas'));
         // }
 
     }
@@ -45,7 +45,7 @@ class DespesasController extends \BaseController
      */
     public function create()
     {
-        return View::make('despesas.create');
+        return ('despesas.create');
     }
 
     /**
@@ -58,7 +58,7 @@ class DespesasController extends \BaseController
         $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Despesa::$rules);
 
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
+            return Illuminate\Support\Facades\Redirect::Redirect::back(()->withErrors($validator)->withInput();
 
         } else {
 
@@ -81,9 +81,9 @@ class DespesasController extends \BaseController
             // Alert
             $alert[] = ['class' => 'alert-success',
                 'message' => '<strong><i class="fa fa-check"></i></strong> Despesa registrada com sucesso'];
-            Session::flash('alerts', $alert);
+            Illuminate\Support\Facades\Session::Session::flash(('alerts', $alert);
 
-            return Redirect::to(URL::previous());
+            return Illuminate\Support\Facades\Redirect::Redirect::to((URL::previous());
 
         }
     }
@@ -98,7 +98,7 @@ class DespesasController extends \BaseController
     {
         $despesa = Despesa::findOrFail($id);
 
-        return View::make('despesas.show', compact('despesa'));
+        return ('despesas.show', compact('despesa'));
     }
 
     /**
@@ -111,7 +111,7 @@ class DespesasController extends \BaseController
     {
         $despesa = Despesa::find($id);
 
-        return View::make('despesas.edit', compact('despesa'));
+        return ('despesas.edit', compact('despesa'));
     }
 
     /**
@@ -127,12 +127,12 @@ class DespesasController extends \BaseController
         $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Despesa::$rules);
 
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
+            return Illuminate\Support\Facades\Redirect::Redirect::back(()->withErrors($validator)->withInput();
         }
 
         $despesa->update($data);
 
-        return Redirect::route('despesas.index');
+        return Illuminate\Support\Facades\Redirect::Redirect::route(('despesas.index');
     }
 
     /**
@@ -152,8 +152,8 @@ class DespesasController extends \BaseController
             $alert[] = ['class' => 'alert-danger',
                 'message' => '<strong><i class="fa fa-check"></i></strong> Erro! Não foi possível excluir a despesa.'];
         }
-        Session::flash('alerts', $alert);
+        Illuminate\Support\Facades\Session::Session::flash(('alerts', $alert);
 
-        return Redirect::to(URL::previous());
+        return Illuminate\Support\Facades\Redirect::Redirect::to((URL::previous());
     }
 }
