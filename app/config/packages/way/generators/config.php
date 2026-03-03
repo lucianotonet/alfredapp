@@ -22,21 +22,20 @@ return [
 
     'view_template_path' => 'app/templates/view.txt',
 
-
     /*
     |--------------------------------------------------------------------------
     | Where the generated files will be saved...
     |--------------------------------------------------------------------------
     |
     */
-    'model_target_path'   => app_path('models'),
+    'model_target_path' => app_path('models'),
 
-    'controller_target_path'   => app_path('controllers'),
+    'controller_target_path' => app_path('controllers'),
 
-    'migration_target_path'   => app_path('database/migrations'),
+    'migration_target_path' => app_path('database/migrations'),
 
-    'seed_target_path'   => app_path('database/seeds'),
+    'seed_target_path' => app_path('database/seeds'),
 
-    'view_target_path'   => app_path('views')
+    'view_target_path' => app_path('views'),
 
 ];

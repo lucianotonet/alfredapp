@@ -1,4 +1,5 @@
 <?php
+
 /**
  * UsersController Class
  *
@@ -9,84 +10,90 @@ class UsersController extends Controller
     /**
      * Instantiate a new UserController instance.
      */
-    public function __construct(){        
-        $this->beforeFilter('csrf', array('on' => 'post'));
+    public function __construct()
+    {
+        $this->beforeFilter('csrf', ['on' => 'post']);
     }
 
     /**
      * Displays the form for account creation
      *
-     * @return  Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
     public function create()
     {
 
-        //return View::make(Config::get('confide::signup_form'));
-        if( Confide::user() ){         
-            if( Request::ajax() ){
-                return View::make('users.panels.create');         
-            }else{
-                return View::make('users.create');        
+        // return View::make(Config::get('confide::signup_form'));
+        if (Confide::user()) {
+            if (Request::ajax()) {
+                return View::make('users.panels.create');
+            } else {
+                return View::make('users.create');
             }
         }
 
     }
 
     public function signUp()
-    {        
-        return View::make('users.signup'); 
+    {
+        return View::make('users.signup');
     }
 
     /**
      * Stores new account
      *
-     * @return  Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
     public function store()
     {
 
         // Check password confirmation
-        if( \Illuminate\Support\Facades\Request::get('password') != \Illuminate\Support\Facades\Request::get('password_confirmation') ){
-            $alert[] = [   'class' => 'alert-danger', 'message'   => '<strong><i class="fa fa-warning"></i></strong> Os campos de senha estão diferentes!' ];
-                Session::flash('alerts', $alert);
-                return Redirect::to( 'users/create' )
-                    ->withInput( \Illuminate\Support\Facades\Request::all() );
+        if (\Illuminate\Support\Facades\Request::get('password') != \Illuminate\Support\Facades\Request::get('password_confirmation')) {
+            $alert[] = ['class' => 'alert-danger', 'message' => '<strong><i class="fa fa-warning"></i></strong> Os campos de senha estão diferentes!'];
+            Session::flash('alerts', $alert);
+
+            return Redirect::to('users/create')
+                ->withInput(\Illuminate\Support\Facades\Request::all());
         }
 
         // Check username
         $username = User::where('username', \Illuminate\Support\Facades\Request::get('username'))->get();
-        if ($username->count()){
-                $alert[] = [   'class' => 'alert-warning', 'message'   => '<strong><i class="fa fa-warning"></i></strong> Nome de usuário já cadastrado!<br/>Utilize outro.' ];
-                Session::flash('alerts', $alert);            
-                return Redirect::to( URL::previous() );
-            };
+        if ($username->count()) {
+            $alert[] = ['class' => 'alert-warning', 'message' => '<strong><i class="fa fa-warning"></i></strong> Nome de usuário já cadastrado!<br/>Utilize outro.'];
+            Session::flash('alerts', $alert);
+
+            return Redirect::to(URL::previous());
+        }
 
         // Check email
         $email = User::where('email', \Illuminate\Support\Facades\Request::get('email'))->get();
-        if ($email->count()){
-                $alert[] = [   'class' => 'alert-warning', 'message'   => '<strong><i class="fa fa-warning"></i></strong> O email '.$user->email.' já está cadastrado no sitema!<br/>Deseja recuperar a senha? <a href="'.url('users/reset_password').'">Clique aqui</a>.' ];
-                Session::flash('alerts', $alert);            
-                return Redirect::to( URL::previous() );
-            }
-        
+        if ($email->count()) {
+            $alert[] = ['class' => 'alert-warning', 'message' => '<strong><i class="fa fa-warning"></i></strong> O email '.$user->email.' já está cadastrado no sitema!<br/>Deseja recuperar a senha? <a href="'.url('users/reset_password').'">Clique aqui</a>.'];
+            Session::flash('alerts', $alert);
+
+            return Redirect::to(URL::previous());
+        }
+
         $repo = App::make('UserRepository');
         $user = $repo->signup(\Illuminate\Support\Facades\Request::all());
 
-        if( Confide::user() ){
-            if ($user->id){
-                $alert[] = [   'class' => 'alert-success', 'message'   => '<strong><i class="fa fa-check"></i></strong> Usuário adicionado!' ];
-                Session::flash('alerts', $alert);            
-                return Redirect::to( 'users/' );
-            }else{
-                $alert[] = [   'class' => 'alert-danger', 'message'   => '<strong><i class="fa fa-warning"></i></strong> Não foi possível criar o usuário!' ];
+        if (Confide::user()) {
+            if ($user->id) {
+                $alert[] = ['class' => 'alert-success', 'message' => '<strong><i class="fa fa-check"></i></strong> Usuário adicionado!'];
                 Session::flash('alerts', $alert);
-                return Redirect::to( URL::previous() )
-                    ->withInput( \Illuminate\Support\Facades\Request::all() );        
+
+                return Redirect::to('users/');
+            } else {
+                $alert[] = ['class' => 'alert-danger', 'message' => '<strong><i class="fa fa-warning"></i></strong> Não foi possível criar o usuário!'];
+                Session::flash('alerts', $alert);
+
+                return Redirect::to(URL::previous())
+                    ->withInput(\Illuminate\Support\Facades\Request::all());
             }
         }
 
         if ($user->id) {
-            
+
             if (Config::get('confide::signup_email')) {
                 Mail::queueOn(
                     Config::get('confide::email_queue'),
@@ -114,7 +121,7 @@ class UsersController extends Controller
     /**
      * Displays the login form
      *
-     * @return  Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
     public function login()
     {
@@ -127,38 +134,36 @@ class UsersController extends Controller
         // $user->password              = $hash;
         // $user->password_confirmation = $hash;
         // $user->confirmation_code = NULL;
-        // $user->remember_token    = NULL;            
-        // $user->confirmed         = 1;  
+        // $user->remember_token    = NULL;
+        // $user->confirmed         = 1;
 
         // $user->save();
 
-
         // User::create([
-        //     'organization_id'   => 1,            
+        //     'organization_id'   => 1,
         //     'username'          => 'tonetlds',
         //     'email'             => 'tonetlds@gmail.com',
         //     'password'          => Hash::make('254608'),
         //     'confirmation_code' => NULL,
-        //     'remember_token'    => NULL,            
-        //     'confirmed'         => 1,  
-        // ]);  
+        //     'remember_token'    => NULL,
+        //     'confirmed'         => 1,
+        // ]);
 
         // print_r( $user );
         // exit;
 
-
         if (Confide::user()) {
             return Redirect::to('/');
         } else {
-            //return View::make(Config::get('confide::login_form'));
-            return View::make('users.login'); 
+            // return View::make(Config::get('confide::login_form'));
+            return View::make('users.login');
         }
     }
 
     /**
      * Attempt to do login
      *
-     * @return  Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
     public function doLogin()
     {
@@ -186,18 +191,19 @@ class UsersController extends Controller
     /**
      * Attempt to confirm account with code
      *
-     * @param  string $code
-     *
-     * @return  Illuminate\Http\Response
+     * @param  string  $code
+     * @return Illuminate\Http\Response
      */
     public function confirm($code)
     {
         if (Confide::confirm($code)) {
             $notice_msg = Lang::get('confide::confide.alerts.confirmation');
+
             return Redirect::action('UsersController@login')
                 ->with('notice', $notice_msg);
         } else {
             $error_msg = Lang::get('confide::confide.alerts.wrong_confirmation');
+
             return Redirect::action('UsersController@login')
                 ->with('error', $error_msg);
         }
@@ -206,7 +212,7 @@ class UsersController extends Controller
     /**
      * Displays the forgot password form
      *
-     * @return  Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
     public function forgotPassword()
     {
@@ -216,16 +222,18 @@ class UsersController extends Controller
     /**
      * Attempt to send change password link to the given email
      *
-     * @return  Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
     public function doForgotPassword()
     {
         if (Confide::forgotPassword(\Illuminate\Support\Facades\Request::get('email'))) {
             $notice_msg = Lang::get('confide::confide.alerts.password_forgot');
+
             return Redirect::action('UsersController@login')
                 ->with('notice', $notice_msg);
         } else {
             $error_msg = Lang::get('confide::confide.alerts.wrong_password_forgot');
+
             return Redirect::action('UsersController@doForgotPassword')
                 ->withInput()
                 ->with('error', $error_msg);
@@ -235,38 +243,39 @@ class UsersController extends Controller
     /**
      * Shows the change password form with the given token
      *
-     * @param  string $token
-     *
-     * @return  Illuminate\Http\Response
+     * @param  string  $token
+     * @return Illuminate\Http\Response
      */
     public function resetPassword($token)
     {
         return View::make(Config::get('confide::reset_password_form'))
-                ->with('token', $token);
+            ->with('token', $token);
     }
 
     /**
      * Attempt change password of the user
      *
-     * @return  Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
     public function doResetPassword()
     {
         $repo = App::make('UserRepository');
-        $input = array(
-            'token'                 =>\Illuminate\Support\Facades\Request::get('token'),
-            'password'              =>\Illuminate\Support\Facades\Request::get('password'),
-            'password_confirmation' =>\Illuminate\Support\Facades\Request::get('password_confirmation'),
-        );
+        $input = [
+            'token' => \Illuminate\Support\Facades\Request::get('token'),
+            'password' => \Illuminate\Support\Facades\Request::get('password'),
+            'password_confirmation' => \Illuminate\Support\Facades\Request::get('password_confirmation'),
+        ];
 
         // By passing an array with the token, password and confirmation
         if ($repo->resetPassword($input)) {
             $notice_msg = Lang::get('confide::confide.alerts.password_reset');
+
             return Redirect::action('UsersController@login')
                 ->with('notice', $notice_msg);
         } else {
             $error_msg = Lang::get('confide::confide.alerts.wrong_password_reset');
-            return Redirect::action('UsersController@reset_password', array('token'=>$input['token']))
+
+            return Redirect::action('UsersController@reset_password', ['token' => $input['token']])
                 ->withInput()
                 ->with('error', $error_msg);
         }
@@ -275,7 +284,7 @@ class UsersController extends Controller
     /**
      * Log the user out of the application.
      *
-     * @return  Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
     public function logout()
     {
@@ -287,38 +296,39 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::all();
-        return View::make('users.index')->with('users', $users); 
+
+        return View::make('users.index')->with('users', $users);
     }
 
     public function edit($id)
     {
         $user = User::where('id', $id)->first();
-        if( $user ){            
-            if( Request::ajax() ){
+        if ($user) {
+            if (Request::ajax()) {
                 return View::make('users.panels.edit', compact('user'));
-            }else{
+            } else {
                 return View::make('users.edit', compact('user'));
-            }            
-        }else{
-            
-            $alert[] = [  'class'   => 'alert-danger',
-            'message'   => '<strong><i class="fa fa-warning"></i></strong> Não foi possível encontrar o usuário!' ];
+            }
+        } else {
+
+            $alert[] = ['class' => 'alert-danger',
+                'message' => '<strong><i class="fa fa-warning"></i></strong> Não foi possível encontrar o usuário!'];
             Session::flash('alerts', $alert);
-            
-            if( Request::ajax() ){
+
+            if (Request::ajax()) {
                 return View::make('users.panels.index');
-            }else{
+            } else {
                 return View::make('users.index');
-            }            
+            }
         }
 
     }
 
     public function update($id)
     {
-        $user      = User::findOrFail($id);
+        $user = User::findOrFail($id);
         $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), User::$rules);
-    
+
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput(\Illuminate\Support\Facades\Request::except('password'));
         } else {
@@ -329,29 +339,29 @@ class UsersController extends Controller
 
     public function destroy($id)
     {
-        $user = User::find($id);               
-        if(!$user){
+        $user = User::find($id);
+        if (! $user) {
             return Redirect::back()->withInput(\Illuminate\Support\Facades\Request::all());
         }
 
-
-        if( $user->destroy($id) ){
-            $alert[] = [  'class'   => 'alert-danger',
-            'message'   => '<strong><i class="fa fa-warning"></i></strong> Não foi possível excluir o usuário!' ];
-        }else{
-            $alert[] = [  'class'   => 'alert-success',
-            'message'   => '<strong><i class="fa fa-check"></i></strong> Úsuário excluído!' ];
+        if ($user->destroy($id)) {
+            $alert[] = ['class' => 'alert-danger',
+                'message' => '<strong><i class="fa fa-warning"></i></strong> Não foi possível excluir o usuário!'];
+        } else {
+            $alert[] = ['class' => 'alert-success',
+                'message' => '<strong><i class="fa fa-check"></i></strong> Úsuário excluído!'];
         }
         Session::flash('alerts', $alert);
+
         return Redirect::back()->withInput();
     }
 
     public function checkusername($username)
     {
         $user = User::where('username', $username)->first();
-        if( $user ){
+        if ($user) {
             echo 'true';
-        }else{
+        } else {
             echo 'false';
         }
     }
@@ -359,11 +369,10 @@ class UsersController extends Controller
     public function checkmail($email)
     {
         $user = User::where('email', $email)->first();
-        if( $user ){
+        if ($user) {
             echo 'true';
-        }else{
+        } else {
             echo 'false';
         }
     }
-
 }

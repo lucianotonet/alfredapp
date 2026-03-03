@@ -1,117 +1,113 @@
 <?php
 
-class EventosController extends \BaseController {
+class EventosController extends \BaseController
+{
+    /**
+     * Display a listing of eventos
+     *
+     * @return Response
+     */
+    public function index()
+    {
+        // CreateEventosTable::up();
+        $eventos = Evento::all();
 
-	/**
-	 * Display a listing of eventos
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-      //CreateEventosTable::up();
-      $eventos = Evento::all();
+        if (Request::ajax()) {
+            return $eventos;
+        } else {
+            return View::make('eventos.index', compact('eventos'));
+        }
 
+    }
 
-      if( Request::ajax() ){
-         return $eventos;
-      }else{
-   	   return View::make('eventos.index', compact('eventos')); 
-      }
+    /**
+     * Show the form for creating a new evento
+     *
+     * @return Response
+     */
+    public function create()
+    {
+        return View::make('eventos.create');
+    }
 
-	}
+    /**
+     * Store a newly created evento in storage.
+     *
+     * @return Response
+     */
+    public function store()
+    {
+        $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Evento::$rules);
 
-	/**
-	 * Show the form for creating a new evento
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		return View::make('eventos.create');
-	}
+        print_r($data);
+        exit;
 
-	/**
-	 * Store a newly created evento in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		$validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Evento::$rules);
+        if ($validator->fails()) {
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
 
-      print_r( $data );
-      exit;
+        Evento::create($data);
 
-		if ($validator->fails())
-		{
-			return Redirect::back()->withErrors($validator)->withInput();
-		}
+        return Redirect::route('eventos.index');
+    }
 
-		Evento::create($data);
+    /**
+     * Display the specified evento.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function show($id)
+    {
+        $evento = Evento::findOrFail($id);
 
-		return Redirect::route('eventos.index');
-	}
+        return View::make('eventos.show', compact('evento'));
+    }
 
-	/**
-	 * Display the specified evento.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		$evento = Evento::findOrFail($id);
+    /**
+     * Show the form for editing the specified evento.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function edit($id)
+    {
+        $evento = Evento::find($id);
 
-		return View::make('eventos.show', compact('evento'));
-	}
+        return View::make('eventos.edit', compact('evento'));
+    }
 
-	/**
-	 * Show the form for editing the specified evento.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		$evento = Evento::find($id);
+    /**
+     * Update the specified evento in storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function update($id)
+    {
+        $evento = Evento::findOrFail($id);
 
-		return View::make('eventos.edit', compact('evento'));
-	}
+        $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Evento::$rules);
 
-	/**
-	 * Update the specified evento in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		$evento = Evento::findOrFail($id);
+        if ($validator->fails()) {
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
 
-		$validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Evento::$rules);
+        $evento->update($data);
 
-		if ($validator->fails())
-		{
-			return Redirect::back()->withErrors($validator)->withInput();
-		}
+        return Redirect::route('eventos.index');
+    }
 
-		$evento->update($data);
+    /**
+     * Remove the specified evento from storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        Evento::destroy($id);
 
-		return Redirect::route('eventos.index');
-	}
-
-	/**
-	 * Remove the specified evento from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		Evento::destroy($id);
-
-		return Redirect::route('eventos.index');
-	}
-
+        return Redirect::route('eventos.index');
+    }
 }
