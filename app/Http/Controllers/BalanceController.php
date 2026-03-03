@@ -151,7 +151,7 @@ class BalanceController extends BaseController
         }
         $balance->save();
 
-        return View::make('transactions.panels.balance')->with('balance');
+        return view('transactions.panels.balance')->with('balance');
     }
 
     /**
