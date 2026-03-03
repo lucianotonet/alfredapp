@@ -72,7 +72,7 @@ form .form-actions {
 		    <input type="hidden" name="_token" value="{{ Session::getToken() }}">
 		    <fieldset>
 		        @if (Cache::remember('username_in_confide', 5, function() {
-		            return Schema::hasColumn(Config::get('auth.table'), 'username');
+		            return Schema::hasColumn(config('auth.table'), 'username');
 		        }))
 		            <div class="form-group">
 		                <label for="username">{{ Lang::get('confide::confide.username') }}</label>
