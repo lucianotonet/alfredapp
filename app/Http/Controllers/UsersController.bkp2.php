@@ -14,16 +14,16 @@ class UsersController extends Controller
      */
     public function create()
     {
-        // return View::make(Config::get('confide::signup_form'));
+        // return view(config('confide::signup_form'));
 
         if (Confide::user()) {
             if (Request::ajax()) {
-                return View::make('users.panels.create');
+                return view('users.panels.create');
             } else {
-                return View::make('users.create');
+                return view('users.create');
             }
         } else {
-            return View::make('users.signup');
+            return view('users.signup');
         }
 
     }
@@ -35,14 +35,14 @@ class UsersController extends Controller
      */
     public function store()
     {
-        $repo = App::make('UserRepository');
+        $repo = app()->make('UserRepository');
         $user = $repo->signup(\Illuminate\Support\Facades\Request::all());
 
         if ($user->id) {
-            if (Config::get('confide::signup_email')) {
+            if (config('confide::signup_email')) {
                 Mail::queueOn(
-                    Config::get('confide::email_queue'),
-                    Config::get('confide::email_account_confirmation'),
+                    config('confide::email_queue'),
+                    config('confide::email_account_confirmation'),
                     compact('user'),
                     function ($message) use ($user) {
                         $message
@@ -71,10 +71,10 @@ class UsersController extends Controller
     public function login()
     {
         if (Confide::user()) {
-            return Redirect::to('/');
+            return redirect()->to('/');
         } else {
-            // return View::make(Config::get('confide::login_form'));
-            return View::make('users.login');
+            // return view(config('confide::login_form'));
+            return view('users.login');
         }
     }
 
@@ -85,7 +85,7 @@ class UsersController extends Controller
      */
     public function doLogin()
     {
-        $repo = App::make('UserRepository');
+        $repo = app()->make('UserRepository');
         $input = \Illuminate\Support\Facades\Request::all();
 
         if ($repo->login($input)) {
@@ -133,7 +133,7 @@ class UsersController extends Controller
      */
     public function forgotPassword()
     {
-        return View::make(Config::get('confide::forgot_password_form'));
+        return view(config('confide::forgot_password_form'));
     }
 
     /**
@@ -165,7 +165,7 @@ class UsersController extends Controller
      */
     public function resetPassword($token)
     {
-        return View::make(Config::get('confide::reset_password_form'))
+        return view(config('confide::reset_password_form'))
             ->with('token', $token);
     }
 
@@ -176,7 +176,7 @@ class UsersController extends Controller
      */
     public function doResetPassword()
     {
-        $repo = App::make('UserRepository');
+        $repo = app()->make('UserRepository');
         $input = [
             'token' => \Illuminate\Support\Facades\Request::get('token'),
             'password' => \Illuminate\Support\Facades\Request::get('password'),
@@ -207,6 +207,6 @@ class UsersController extends Controller
     {
         Confide::logout();
 
-        return Redirect::to('/');
+        return redirect()->to('/');
     }
 }
