@@ -1,54 +1,56 @@
 <?php
 
-class AgendaEvent extends \Eloquent {
-	protected $table = 'agendaevents';
-	// Add your validation rules here
-	public static $rules = [
-		'title' => 'required'
-	];
-	public static $messages = array(
-                                  'required' => 'O :attribute é obrigatório.',
-                              );
+class AgendaEvent extends \Eloquent
+{
+    protected $table = 'agendaevents';
 
-	// Don't forget to fill this array
-	protected $fillable = [
-                           'title',
-                           'description',
-                           'icon', // integer
-                           'date_start',
-                           'date_end',                           
-                           'time_start',
-                           'time_end',    
-                           'done', //bool
-                           'category_id',
-                           'cliente_id',
-                           'owner_id', 
-                        ];
+    // Add your validation rules here
+    public static $rules = [
+        'title' => 'required',
+    ];
 
-    protected $visible = array(
-	                           'title', 
-	                           'description', 
-	                           'icon', 	                           	                          
-	                           'date_start',
-	                           'date_end',                           
-	                           'time_start',
-	                           'time_end',  
-	                           'done'	                           
-	                        );
+    public static $messages = [
+        'required' => 'O :attribute é obrigatório.',
+    ];
 
-	public function category()
-	{
-		return $this->belongsTo('Category');
-	}
+    // Don't forget to fill this array
+    protected $fillable = [
+        'title',
+        'description',
+        'icon', // integer
+        'date_start',
+        'date_end',
+        'time_start',
+        'time_end',
+        'done', // bool
+        'category_id',
+        'cliente_id',
+        'owner_id',
+    ];
 
-	public function cliente()
-	{
-		return $this->belongsTo('Cliente');
-	}
+    protected $visible = [
+        'title',
+        'description',
+        'icon',
+        'date_start',
+        'date_end',
+        'time_start',
+        'time_end',
+        'done',
+    ];
 
-	public function user()
-	{
-		return $this->belongsTo('User');
-	}	
+    public function category()
+    {
+        return $this->belongsTo('Category');
+    }
 
+    public function cliente()
+    {
+        return $this->belongsTo('Cliente');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('User');
+    }
 }
