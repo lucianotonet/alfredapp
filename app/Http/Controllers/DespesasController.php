@@ -132,7 +132,7 @@ class DespesasController extends \BaseController
 
         $despesa->update($data);
 
-        return Redirect::route('despesas.index');
+        return redirect()->route('despesas.index');
     }
 
     /**

@@ -177,7 +177,7 @@ class TarefasController extends \BaseController
         //        print_r($tarefa);
         //        return $tarefa;
         //     }
-        // return Redirect::route('tarefas.index');
+        // return redirect()->route('tarefas.index');
 
     }
 
