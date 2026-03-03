@@ -42,7 +42,9 @@ if (file_exists($compiled = __DIR__.'/compiled.php')) {
 |
 */
 
-Patchwork\Utf8\Bootup::initMbstring();
+if (class_exists('Patchwork\\Utf8\\Bootup')) {
+    Patchwork\Utf8\Bootup::initMbstring();
+}
 
 /*
 |--------------------------------------------------------------------------
