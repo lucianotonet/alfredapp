@@ -21,7 +21,7 @@ class AgendaEventsController extends BaseController
      */
     public function create()
     {
-        $data = Input::all();
+        $data = \Illuminate\Support\Facades\Request::all();
         if (Request::ajax()) {
             return View::make('agendaevents.panels.create', compact('data'));
         } else {
@@ -37,15 +37,15 @@ class AgendaEventsController extends BaseController
      */
     public function store()
     {
-        $validator = Validator::make($data = Input::all(), AgendaEvent::$rules, AgendaEvent::$messages);
+        $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), AgendaEvent::$rules, AgendaEvent::$messages);
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
         }
 
-        $data['date_start'] = Input::has('date_start') ? date('Y-m-d', strtotime($data['date_start'])) : null;
-        $data['date_end'] = Input::has('date_end') ? date('Y-m-d', strtotime($data['date_end'])) : null;
-        $data['time_start'] = Input::has('time_start') ? date('H:i:s', strtotime($data['time_start'])) : null;
-        $data['time_end'] = Input::has('time_end') ? date('H:i:s', strtotime($data['time_end'])) : null;
+        $data['date_start'] = \Illuminate\Support\Facades\Request::has('date_start') ? date('Y-m-d', strtotime($data['date_start'])) : null;
+        $data['date_end'] = \Illuminate\Support\Facades\Request::has('date_end') ? date('Y-m-d', strtotime($data['date_end'])) : null;
+        $data['time_start'] = \Illuminate\Support\Facades\Request::has('time_start') ? date('H:i:s', strtotime($data['time_start'])) : null;
+        $data['time_end'] = \Illuminate\Support\Facades\Request::has('time_end') ? date('H:i:s', strtotime($data['time_end'])) : null;
         $data['owner_id'] = Auth::id();
 
         // dd( $data );
@@ -112,15 +112,15 @@ class AgendaEventsController extends BaseController
     {
         $event = AgendaEvent::find($id);
 
-        $validator = Validator::make($data = Input::all(), AgendaEvent::$rules, AgendaEvent::$messages);
+        $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), AgendaEvent::$rules, AgendaEvent::$messages);
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
         }
 
-        $data['date_start'] = Input::has('date_start') ? date('Y-m-d', strtotime($data['date_start'])) : null;
-        $data['date_end'] = Input::has('date_end') ? date('Y-m-d', strtotime($data['date_end'])) : null;
-        $data['time_start'] = Input::has('time_start') ? date('H:i:s', strtotime($data['time_start'])) : null;
-        $data['time_end'] = Input::has('time_end') ? date('H:i:s', strtotime($data['time_end'])) : null;
+        $data['date_start'] = \Illuminate\Support\Facades\Request::has('date_start') ? date('Y-m-d', strtotime($data['date_start'])) : null;
+        $data['date_end'] = \Illuminate\Support\Facades\Request::has('date_end') ? date('Y-m-d', strtotime($data['date_end'])) : null;
+        $data['time_start'] = \Illuminate\Support\Facades\Request::has('time_start') ? date('H:i:s', strtotime($data['time_start'])) : null;
+        $data['time_end'] = \Illuminate\Support\Facades\Request::has('time_end') ? date('H:i:s', strtotime($data['time_end'])) : null;
         $data['owner_id'] = Auth::id();
 
         // dd( $data );
