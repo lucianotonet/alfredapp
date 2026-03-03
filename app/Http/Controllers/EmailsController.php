@@ -9,7 +9,7 @@ class EmailsController extends \BaseController {
 	 */
 	public function index()
 	{
-		$emails = Email::orderBy('id', 'desc')->paginate( Input::get('paginate', 10) );
+		$emails = Email::orderBy('id', 'desc')->paginate( \Illuminate\Support\Facades\Request::get('paginate', 10) );
 
 		return View::make('emails.index', compact('emails'));
 	}
@@ -137,7 +137,7 @@ class EmailsController extends \BaseController {
 	public function store()
 	{
 			
-		$validator = Validator::make($data = Input::all(), Email::$rules);
+		$validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Email::$rules);
 		//return Response::json($data);
 
 		if( $validator->fails() ){
@@ -339,7 +339,7 @@ class EmailsController extends \BaseController {
 	{
 		$email = Email::findOrFail($id);
 
-		$validator = Validator::make($data = Input::all(), Email::$rules);
+		$validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Email::$rules);
 
 		if ($validator->fails())
 		{
@@ -439,7 +439,7 @@ class EmailsController extends \BaseController {
 	public function getContacts()
 	{
 	 	//if( Request::ajax() ){
- 			$query = Input::get('query');         
+ 			$query = \Illuminate\Support\Facades\Request::get('query');         
 
 			$clientes 		= Cliente::where('email', 'like', '%'.$query.'%')->get();
 			$fornecedores 	= Fornecedor::where('email', 'like', '%'.$query.'%')->get();

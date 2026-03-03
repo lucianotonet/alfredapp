@@ -31,7 +31,7 @@ class OrganizationsController extends \BaseController {
 	 */
 	public function store()
 	{
-		$validator = Validator::make($data = Input::all(), Organization::$rules);
+		$validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Organization::$rules);
 
 		if ($validator->fails())
 		{
@@ -79,7 +79,7 @@ class OrganizationsController extends \BaseController {
 	{
 		$organization = Organization::findOrFail($id);
 
-		$validator = Validator::make($data = Input::all(), Organization::$rules);
+		$validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Organization::$rules);
 
 		if ($validator->fails())
 		{

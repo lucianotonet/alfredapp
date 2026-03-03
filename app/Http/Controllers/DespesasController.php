@@ -53,7 +53,7 @@ class DespesasController extends \BaseController {
 	 */
 	public function store()
     {
-      $validator = Validator::make($data = Input::all(), Despesa::$rules);
+      $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Despesa::$rules);
 
 
 
@@ -128,7 +128,7 @@ class DespesasController extends \BaseController {
 	{
 		$despesa = Despesa::findOrFail($id);
 
-		$validator = Validator::make($data = Input::all(), Despesa::$rules);
+		$validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Despesa::$rules);
 
 		if ($validator->fails())
 		{

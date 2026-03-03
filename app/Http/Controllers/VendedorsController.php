@@ -11,7 +11,7 @@ class VendedorsController extends \BaseController {
    {     
 
        if( Request::ajax() ){
-         $query = Input::get('query');         
+         $query = \Illuminate\Support\Facades\Request::get('query');         
 
          //return Response::json($query);
 
@@ -70,31 +70,31 @@ class VendedorsController extends \BaseController {
          // 'nome'       => 'required',
          // 'empresa'    => 'required'       
       );
-      $validator = Validator::make(Input::all(), $rules);
+      $validator = Validator::make(\Illuminate\Support\Facades\Request::all(), $rules);
       
       if ($validator->fails()) {
 
          return Redirect::to('vendedors/create')
             ->withErrors($validator)
-            ->withInput(Input::except('password'));
+            ->withInput(\Illuminate\Support\Facades\Request::except('password'));
 
 
       } else {
          // store
          $vendedor = new Vendedor;
 
-         $vendedor->nome       = Input::get('nome');
-         $vendedor->empresa    = Input::get('empresa');
-         $vendedor->endereco   = Input::get('endereco');
-         $vendedor->bairro     = Input::get('bairro');
-         $vendedor->cidade     = Input::get('cidade');
-         $vendedor->cep        = Input::get('cep');
-         $vendedor->uf         = Input::get('uf');
+         $vendedor->nome       = \Illuminate\Support\Facades\Request::get('nome');
+         $vendedor->empresa    = \Illuminate\Support\Facades\Request::get('empresa');
+         $vendedor->endereco   = \Illuminate\Support\Facades\Request::get('endereco');
+         $vendedor->bairro     = \Illuminate\Support\Facades\Request::get('bairro');
+         $vendedor->cidade     = \Illuminate\Support\Facades\Request::get('cidade');
+         $vendedor->cep        = \Illuminate\Support\Facades\Request::get('cep');
+         $vendedor->uf         = \Illuminate\Support\Facades\Request::get('uf');
 
-         $vendedor->telefone   = Input::get('telefone');
-         $vendedor->celular    = Input::get('celular');
-         $vendedor->email      = Input::get('email');
-         $vendedor->cpf       = Input::get('cpf');
+         $vendedor->telefone   = \Illuminate\Support\Facades\Request::get('telefone');
+         $vendedor->celular    = \Illuminate\Support\Facades\Request::get('celular');
+         $vendedor->email      = \Illuminate\Support\Facades\Request::get('email');
+         $vendedor->cpf       = \Illuminate\Support\Facades\Request::get('cpf');
 
          $vendedor->save();
 
@@ -160,29 +160,29 @@ class VendedorsController extends \BaseController {
       $rules = array(
          
       );
-      $validator = Validator::make(Input::all(), $rules);
+      $validator = Validator::make(\Illuminate\Support\Facades\Request::all(), $rules);
 
       // process the login
       if ($validator->fails()) {
          return Redirect::to('vendedors/' . $id . '/edit')
             ->withErrors($validator)
-            ->withInput(Input::except('password'));
+            ->withInput(\Illuminate\Support\Facades\Request::except('password'));
       } else {
          // store
          $vendedor = Vendedor::find($id);
          
-         $vendedor->nome       = Input::get('nome');
-         $vendedor->empresa    = Input::get('empresa');
-         $vendedor->endereco   = Input::get('endereco');
-         $vendedor->bairro     = Input::get('bairro');
-         $vendedor->cidade     = Input::get('cidade');
-         $vendedor->cep        = Input::get('cep');
-         $vendedor->uf         = Input::get('uf');
+         $vendedor->nome       = \Illuminate\Support\Facades\Request::get('nome');
+         $vendedor->empresa    = \Illuminate\Support\Facades\Request::get('empresa');
+         $vendedor->endereco   = \Illuminate\Support\Facades\Request::get('endereco');
+         $vendedor->bairro     = \Illuminate\Support\Facades\Request::get('bairro');
+         $vendedor->cidade     = \Illuminate\Support\Facades\Request::get('cidade');
+         $vendedor->cep        = \Illuminate\Support\Facades\Request::get('cep');
+         $vendedor->uf         = \Illuminate\Support\Facades\Request::get('uf');
 
-         $vendedor->telefone   = Input::get('telefone');
-         $vendedor->celular    = Input::get('celular');
-         $vendedor->email      = Input::get('email');         
-         $vendedor->cpf       = Input::get('cpf');
+         $vendedor->telefone   = \Illuminate\Support\Facades\Request::get('telefone');
+         $vendedor->celular    = \Illuminate\Support\Facades\Request::get('celular');
+         $vendedor->email      = \Illuminate\Support\Facades\Request::get('email');         
+         $vendedor->cpf       = \Illuminate\Support\Facades\Request::get('cpf');
 
          $vendedor->save();
 

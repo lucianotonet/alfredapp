@@ -46,7 +46,7 @@ class UsersController extends Controller
 
         if( Confide::user() ){
 
-            $data = Input::all();
+            $data = \Illuminate\Support\Facades\Request::all();
 
             $user                        = new User;
             $user->username              = $data['username'];
@@ -73,7 +73,7 @@ class UsersController extends Controller
 
 
         $repo = App::make('UserRepository');
-        $user = $repo->signup(Input::all());
+        $user = $repo->signup(\Illuminate\Support\Facades\Request::all());
 
         if ($user->id) {
             if (Config::get('confide::signup_email')) {
@@ -95,7 +95,7 @@ class UsersController extends Controller
             $error = $user->errors()->all(':message');
 
             return Redirect::action('UsersController@create')
-                ->withInput(Input::except('password'))
+                ->withInput(\Illuminate\Support\Facades\Request::except('password'))
                 ->with('error', $error);
         }
     }
@@ -105,7 +105,7 @@ class UsersController extends Controller
     public function update($id)
     {
         $user = User::find($id);
-        $data = Input::all();
+        $data = \Illuminate\Support\Facades\Request::all();
                     
         $user->username          = $data['username'];
         $user->email             = $data['email'];        
@@ -125,7 +125,7 @@ class UsersController extends Controller
                         'message'   => '<strong><i class="fa fa-check"></i></strong> Usuário alterado com sucesso!' ];
         }
         Session::flash('alerts', $alert);
-        return Redirect::back()->withInput(Input::except('password'));
+        return Redirect::back()->withInput(\Illuminate\Support\Facades\Request::except('password'));
 
     }
 
@@ -154,7 +154,7 @@ class UsersController extends Controller
     public function doLogin()
     {
         $repo = App::make('UserRepository');
-        $input = Input::all();
+        $input = \Illuminate\Support\Facades\Request::all();
 
         if ($repo->login($input)) {
             return Redirect::intended('/');
@@ -168,7 +168,7 @@ class UsersController extends Controller
             }
 
             return Redirect::action('UsersController@login')
-                ->withInput(Input::except('password'))
+                ->withInput(\Illuminate\Support\Facades\Request::except('password'))
                 ->with('error', $err_msg);
         }
     }
@@ -211,7 +211,7 @@ class UsersController extends Controller
      */
     public function doForgotPassword()
     {
-        if (Confide::forgotPassword(Input::get('email'))) {
+        if (Confide::forgotPassword(\Illuminate\Support\Facades\Request::get('email'))) {
             $notice_msg = Lang::get('confide::confide.alerts.password_forgot');
             return Redirect::action('UsersController@login')
                 ->with('notice', $notice_msg);
@@ -247,9 +247,9 @@ class UsersController extends Controller
     {
         $repo = App::make('UserRepository');
         $input = array(
-            'token'                 =>Input::get('token'),
-            'password'              =>Input::get('password'),
-            'password_confirmation' =>Input::get('password_confirmation'),
+            'token'                 =>\Illuminate\Support\Facades\Request::get('token'),
+            'password'              =>\Illuminate\Support\Facades\Request::get('password'),
+            'password_confirmation' =>\Illuminate\Support\Facades\Request::get('password_confirmation'),
         );
 
         // By passing an array with the token, password and confirmation
@@ -282,7 +282,7 @@ class UsersController extends Controller
     {
         $user = User::find($id);               
         if(!$user){
-            return Redirect::back()->withInput(Input::all());
+            return Redirect::back()->withInput(\Illuminate\Support\Facades\Request::all());
         }
 
 
@@ -327,13 +327,13 @@ class UsersController extends Controller
 
     public function checkusername()
     {               
-        $user = User::where('username', Input::get('username'))->get();
+        $user = User::where('username', \Illuminate\Support\Facades\Request::get('username'))->get();
         return $user->count();
     }
 
     public function checkmail()
     {
-        $user = User::where('email', Input::get('email'))->get();
+        $user = User::where('email', \Illuminate\Support\Facades\Request::get('email'))->get();
         return $user->count();
     }
 

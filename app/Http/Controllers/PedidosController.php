@@ -110,14 +110,14 @@ class PedidosController extends \BaseController {
 	 */
 	public function store()
 	{
-		$validator = Validator::make($data = Input::all(), Pedido::$rules);
+		$validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Pedido::$rules);
 	  if ($validator->fails())
 	  {
 
 		 $alert[] = [   'class'   => 'alert-danger',
 						'message'   => 'Erros de validação. Verifique!' ];
 		 Session::flash('alerts', $alert);
-		 return Redirect::back()->withErrors($validator)->withInput(Input::except('password'));
+		 return Redirect::back()->withErrors($validator)->withInput(\Illuminate\Support\Facades\Request::except('password'));
 	  }
 		   
 	  $total = NULL;
@@ -437,7 +437,7 @@ class PedidosController extends \BaseController {
 
 	  $pedido = Pedido::find($id);
 	  
-	  $validator = Validator::make($data = Input::all(), Pedido::$rules, Pedido::$messages);      
+	  $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Pedido::$rules, Pedido::$messages);      
 	  
 
 	  // echo "<pre>";
@@ -574,7 +574,7 @@ class PedidosController extends \BaseController {
 	*/
    public function sendNow()
    {
-	  $data                = Input::all();
+	  $data                = \Illuminate\Support\Facades\Request::all();
 	 
 	  $pedido              = Pedido::find($data['id']);      
 	  $pedido->cliente     = Cliente::find($pedido->cliente_id);

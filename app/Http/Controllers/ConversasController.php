@@ -70,7 +70,7 @@ class ConversasController extends \BaseController {
 	 */
 	public function store()
 	{
-      $validator = Validator::make($data = Input::all(), Conversa::$rules);
+      $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Conversa::$rules);
          
          //return Conversa::create($data);
          if ($validator->fails())
@@ -168,7 +168,7 @@ class ConversasController extends \BaseController {
 	{
 		$conversa = Conversa::findOrFail($id);
 
-		$validator = Validator::make($data = Input::all(), Conversa::$rules);
+		$validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Conversa::$rules);
 
 		if ($validator->fails())
 		{
@@ -178,7 +178,7 @@ class ConversasController extends \BaseController {
 
          return Redirect::back()
             ->withErrors($validator)
-            ->withInput(Input::all());			
+            ->withInput(\Illuminate\Support\Facades\Request::all());			
 		}
 
       //else
