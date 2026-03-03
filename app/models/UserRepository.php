@@ -52,7 +52,7 @@ class UserRepository
             $input['password'] = null;
         }
 
-        return Confide::logAttempt($input, Config::get('confide::signup_confirm'));
+        return // Confide removed: logAttempt($input, config('confide::signup_confirm'));
     }
 
     /**
@@ -65,7 +65,7 @@ class UserRepository
      */
     public function isThrottled($input)
     {
-        return Confide::isThrottled($input);
+        return // Confide removed: isThrottled($input);
     }
 
     /**
@@ -78,7 +78,7 @@ class UserRepository
      */
     public function existsButNotConfirmed($input)
     {
-        $user = Confide::getUserByEmailOrUsername($input);
+        $user = // Confide removed: getUserByEmailOrUsername($input);
 
         if ($user) {
             $correctPassword = Hash::check(
@@ -100,7 +100,7 @@ class UserRepository
     public function resetPassword($input)
     {
         $result = false;
-        $user   = Confide::userByResetPasswordToken($input['token']);
+        $user   = // Confide removed: userByResetPasswordToken($input['token']);
 
         if ($user) {
             $user->password              = $input['password'];
@@ -110,7 +110,7 @@ class UserRepository
 
         // If result is positive, destroy token
         if ($result) {
-            Confide::destroyForgotPasswordToken($input['token']);
+            // Confide removed: destroyForgotPasswordToken($input['token']);
         }
 
         return $result;
