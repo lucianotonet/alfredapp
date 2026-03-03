@@ -128,7 +128,7 @@ class SettingsController extends \BaseController
         if (Request::header('referer')) {
             return redirect()->back();
         } else {
-            return Redirect::route('settings.index');
+            return redirect()->route('settings.index');
         }
 
     }
@@ -177,7 +177,7 @@ class SettingsController extends \BaseController
 
         $setting->update($data);
 
-        return Redirect::route('settings.index');
+        return redirect()->route('settings.index');
     }
 
     /**
@@ -190,7 +190,7 @@ class SettingsController extends \BaseController
     {
         Setting::destroy($id);
 
-        return Redirect::route('settings.index');
+        return redirect()->route('settings.index');
     }
 
     public function reset()
@@ -207,7 +207,7 @@ class SettingsController extends \BaseController
         if (Request::header('referer')) {
             return redirect()->back();
         } else {
-            return Redirect::route('settings.index');
+            return redirect()->route('settings.index');
         }
 
     }
