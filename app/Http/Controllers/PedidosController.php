@@ -50,9 +50,9 @@ class PedidosController extends \BaseController
 
                     $alert[] = ['class' => 'alert-warning',
                         'message' => '<strong><i class="fa fa-warning"></i></strong> Há um problema com este pedido!<br/><strong>O Fornecedor não existe mais</strong><br/>Por favor corrija e salve novamente.'];
-                    Session::flash('alerts', $alert);
+                    session()->flash('alerts', $alert);
 
-                    return Redirect::to(url('pedidos/'.$pedido->id.'/edit'));
+                    return redirect()->to(url('pedidos/'.$pedido->id.'/edit'));
                 }
                 $pedido->vendedor = Vendedor::find($pedido->vendedor_id);
 
@@ -72,13 +72,13 @@ class PedidosController extends \BaseController
 
             }
 
-            return View::make('pedidos.index', compact('pedidos', 'produtos', 'emails'));
+            return view('pedidos.index', compact('pedidos', 'produtos', 'emails'));
         } else {
             $alert[] = ['class' => 'alert-warning',
                 'message' => 'Nenhum pedido ainda?'];
-            Session::flash('alerts', $alert);
+            session()->flash('alerts', $alert);
 
-            return Redirect::to(URL::previous());
+            return redirect()->to(URL::previous());
         }
     }
 
@@ -95,7 +95,7 @@ class PedidosController extends \BaseController
         $vendedores = Vendedor::all();
         $categories = Category::all();
 
-        return View::make('pedidos.create', compact('cliente', 'produtos', 'fornecedores', 'vendedores', 'categories'));
+        return view('pedidos.create', compact('cliente', 'produtos', 'fornecedores', 'vendedores', 'categories'));
 
     }
 
@@ -111,9 +111,9 @@ class PedidosController extends \BaseController
 
             $alert[] = ['class' => 'alert-danger',
                 'message' => 'Erros de validação. Verifique!'];
-            Session::flash('alerts', $alert);
+            session()->flash('alerts', $alert);
 
-            return Redirect::back()->withErrors($validator)->withInput(\Illuminate\Support\Facades\Request::except('password'));
+            return redirect()->back()->withErrors($validator)->withInput(\Illuminate\Support\Facades\Request::except('password'));
         }
 
         $total = null;
@@ -149,21 +149,21 @@ class PedidosController extends \BaseController
 
             $alert[] = ['class' => 'alert-success',
                 'message' => 'O pedido foi fechado. Não esqueça de enviá-lo!'];
-            Session::flash('alerts', $alert);
+            session()->flash('alerts', $alert);
 
             // GERA PDF
             $this->gerarPdf($pedido->id);
 
             $pedido = $pedido->id;
 
-            return Redirect::route('pedidos.show', compact('pedido'));
+            return redirect()->route('pedidos.show', compact('pedido'));
         } else {
 
             $alert[] = ['class' => 'alert-danger',
                 'message' => 'Erro: Não foi possível fechar o pedido.'];
-            Session::flash('alerts', $alert);
+            session()->flash('alerts', $alert);
 
-            return Redirect::back()->withErrors();
+            return redirect()->back()->withErrors();
         }
 
     }
@@ -185,9 +185,9 @@ class PedidosController extends \BaseController
             if (! $pedido->cliente) {
                 $alert[] = ['class' => 'alert-warning',
                     'message' => 'O Cliente deste pedido foi excluído ou alterado!<br/>Por favor corrija e salve novamente.'];
-                Session::flash('alerts', $alert);
+                session()->flash('alerts', $alert);
 
-                return Redirect::to(url('pedidos/'.$pedido->id.'/edit'));
+                return redirect()->to(url('pedidos/'.$pedido->id.'/edit'));
 
             }
 
@@ -196,9 +196,9 @@ class PedidosController extends \BaseController
 
                 $alert[] = ['class' => 'alert-warning',
                     'message' => 'O Fornecedor não existe!<br/>Por favor corrija e salve novamente.'];
-                Session::flash('alerts', $alert);
+                session()->flash('alerts', $alert);
 
-                return Redirect::to(url('pedidos/'.$pedido->id.'/edit'));
+                return redirect()->to(url('pedidos/'.$pedido->id.'/edit'));
 
             }
 
@@ -207,9 +207,9 @@ class PedidosController extends \BaseController
 
                 $alert[] = ['class' => 'alert-warning',
                     'message' => 'O Vendedor deste pedido foi excluído!<br/>Por favor corrija e salve novamente.'];
-                Session::flash('alerts', $alert);
+                session()->flash('alerts', $alert);
 
-                return Redirect::to(url('pedidos/'.$pedido->id.'/edit'));
+                return redirect()->to(url('pedidos/'.$pedido->id.'/edit'));
 
             }
             // $produtos          = Produto::all();
@@ -261,14 +261,14 @@ class PedidosController extends \BaseController
             // // SALVA O PDF
             // $pdf = PDF::loadView( 'pedidos.email.preview', compact('pedido'))->save( 'pdf/pedido-'.$pedido->id.'.pdf' );
 
-            return View::make('pedidos.show', compact('pedido', 'cliente', 'fornecedor', 'vendedor', 'produtos', 'pedido_itens'));
+            return view('pedidos.show', compact('pedido', 'cliente', 'fornecedor', 'vendedor', 'produtos', 'pedido_itens'));
 
         } else {
 
             $alert[] = ['class' => 'alert-danger',
                 'message' => 'O pedido não existe.'];
 
-            Session::flash('alerts', $alert);
+            session()->flash('alerts', $alert);
 
             // Report::create([
             //    'user_id'        => Auth::id(),
@@ -280,8 +280,8 @@ class PedidosController extends \BaseController
             //    'resource_obj'   => json_encode($pedido),
             // ]);
 
-            // return Redirect::to( URL::previous() )->withErrors($alert);
-            return Redirect::to('pedidos');
+            // return redirect()->to( URL::previous() )->withErrors($alert);
+            return redirect()->to('pedidos');
         }
 
     }
@@ -355,7 +355,7 @@ class PedidosController extends \BaseController
 
                     $alert[] = ['class' => 'alert-warning',
                         'message' => '<i class="fa fa-3x fa-warning pull-left"></i> O Cliente deste pedido foi excluído!<br/>Por favor corrija e salve novamente.'];
-                    Session::flash('alerts', $alert);
+                    session()->flash('alerts', $alert);
 
                     $pedido->cliente = null;
                 }
@@ -365,7 +365,7 @@ class PedidosController extends \BaseController
 
                     $alert[] = ['class' => 'alert-warning',
                         'message' => '<i class="fa fa-4x fa-warning pull-left"></i>Atençao! Há um problema com o <strong>pedido nº'.$pedido->id.'</strong><br/>O Fornecedor deste pedido foi excluído ou alterado!<br/>Por favor informe outro e salve novamente.'];
-                    Session::flash('alerts', $alert);
+                    session()->flash('alerts', $alert);
 
                     $pedido->fornecedor = 0;
                 }
@@ -401,27 +401,27 @@ class PedidosController extends \BaseController
                 }
                 $pedido->itens = $pedido_itens;
 
-                return View::make('pedidos.edit', compact('pedido', 'produtos', 'fornecedores', 'vendedores', 'categories'));
+                return view('pedidos.edit', compact('pedido', 'produtos', 'fornecedores', 'vendedores', 'categories'));
 
             } else {
 
                 $alert[] = ['class' => 'alert-warning',
                     'message' => 'Não foi possível encontrar o pedido solicitado.'];
-                Session::flash('alerts', $alert);
+                session()->flash('alerts', $alert);
 
-                return Redirect::to(URL::previous());
+                return redirect()->to(URL::previous());
             }
         } else {
 
             $alert[] = ['class' => 'alert-warning',
                 'message' => 'Não foi possível encontrar o pedido solicitado.'];
-            Session::flash('alerts', $alert);
+            session()->flash('alerts', $alert);
 
-            return Redirect::to('pedidos');
+            return redirect()->to('pedidos');
 
         }
 
-        return View::make('pedidos.edit', compact('pedido'));
+        return view('pedidos.edit', compact('pedido'));
     }
 
     /**
@@ -446,9 +446,9 @@ class PedidosController extends \BaseController
             $alert[] = ['class' => 'alert-danger',
                 'message' => 'Erros de validação. Verifique!'];
 
-            Session::flash('alerts', $alert);
+            session()->flash('alerts', $alert);
 
-            return Redirect::back()->withErrors($validator)->withInput($data);
+            return redirect()->back()->withErrors($validator)->withInput($data);
         }
 
         $fornecedor = Fornecedor::find($data['fornecedor_id']);
@@ -457,9 +457,9 @@ class PedidosController extends \BaseController
             // redirect to edit
             $alert[] = ['class' => 'alert-warning',
                 'message' => 'O Fornecedor não existe!<br/>Por favor corrija e salve novamente!'];
-            Session::flash('alerts', $alert);
+            session()->flash('alerts', $alert);
 
-            return Redirect::to(url('pedidos/'.$pedido->id.'/edit'));
+            return redirect()->to(url('pedidos/'.$pedido->id.'/edit'));
         }
 
         $total = null;
@@ -499,12 +499,12 @@ class PedidosController extends \BaseController
 
         $alert[] = ['class' => 'alert-success',
             'message' => 'Pedido atualizado! Você terá que enviá-lo novamente.'];
-        Session::flash('alerts', $alert);
+        session()->flash('alerts', $alert);
 
         // GERA PDF
         $this->gerarPdf($pedido->id);
 
-        return Redirect::route('pedidos.index');
+        return redirect()->route('pedidos.index');
     }
 
     /**
@@ -527,15 +527,15 @@ class PedidosController extends \BaseController
 
             $alert[] = ['class' => 'alert-warning',
                 'message' => 'O pedido foi excluído definitivamente. Agora não adianta chorar!'];
-            Session::flash('alerts', $alert);
+            session()->flash('alerts', $alert);
 
-            return Redirect::route('pedidos.index');
+            return redirect()->route('pedidos.index');
         } else {
             $alert[] = ['class' => 'alert-danger',
                 'message' => 'Opa, algo errado. Não deu para excluir o pedido.'];
-            Session::flash('alerts', $alert);
+            session()->flash('alerts', $alert);
 
-            return Redirect::back()->withErrors();
+            return redirect()->back()->withErrors();
         }
     }
 
@@ -552,7 +552,7 @@ class PedidosController extends \BaseController
         $vendedores = Vendedor::all();
         $clientes = Cliente::all();
 
-        return View::make('pedidos.enviar', compact('pedido', 'fornecedores', 'vendedores', 'clientes'));
+        return view('pedidos.enviar', compact('pedido', 'fornecedores', 'vendedores', 'clientes'));
     }
 
     /**
@@ -596,7 +596,7 @@ class PedidosController extends \BaseController
         $pedido->itens = $itens;
         $pedido->total = number_format($pedido->total, '2', ',', '.');
 
-        // return View::make('pedidos.email.index', compact('pedido','fornecedores'));
+        // return view('pedidos.email.index', compact('pedido','fornecedores'));
 
         // Change Pedido Status
         $p = Pedido::find($data['id']);
@@ -675,15 +675,15 @@ class PedidosController extends \BaseController
         // $alert = array(
         //                'alert-danger' => 'Opa, algo errado. Não deu para enviar o pedido.'
         //             );
-        // Session::flash('alerts', $alert);
-        // return Redirect::route('pedidos.index');
+        // session()->flash('alerts', $alert);
+        // return redirect()->route('pedidos.index');
 
         // }else{
         $alert[] = ['class' => 'alert-success',
             'message' => 'O pedido foi enviado! Note que se você alterar este pedido novamente, o status mudará para <strong>não enviado</strong>.'];
-        Session::flash('alerts', $alert);
+        session()->flash('alerts', $alert);
 
-        return Redirect::route('pedidos.index');
+        return redirect()->route('pedidos.index');
         // }
     }
 
@@ -703,18 +703,18 @@ class PedidosController extends \BaseController
             // redirect to edit
             $alert[] = ['class' => 'alert-warning',
                 'message' => 'O Fornecedor não existe!<br/>Por favor corrija e salve novamente.'];
-            Session::flash('alerts', $alert);
+            session()->flash('alerts', $alert);
 
-            return Redirect::to(url('pedidos/'.$pedido->id.'/edit'));
+            return redirect()->to(url('pedidos/'.$pedido->id.'/edit'));
 
         }
         $pedido->vendedor = Vendedor::find($pedido->vendedor_id);
         if (count($pedido->vendedor) < 1) {
             $alert[] = ['class' => 'alert-warning',
                 'message' => 'O VENDEDOR para este pedido foi excluído!<br/>Por favor corrija e tente novamente.'];
-            Session::flash('alerts', $alert);
+            session()->flash('alerts', $alert);
 
-            return Redirect::to(url('pedidos/'.$pedido->id.'/edit'));
+            return redirect()->to(url('pedidos/'.$pedido->id.'/edit'));
         }
         $pedido->vendedorArr = Vendedor::find($pedido->vendedor_id)->toArray();
 
@@ -754,7 +754,7 @@ class PedidosController extends \BaseController
         $pdf = PDF::loadView('pedidos.email.preview', compact('pedido'))->setPaper('a4')->setOrientation('portrait')->setWarnings(false)->save('pdf/pedido-'.$pedido->id.'.pdf');
         //   return $pdf->stream();
 
-        return View::make('pedidos.email.preview', compact('pedido'));
+        return view('pedidos.email.preview', compact('pedido'));
     }
 
     /**
@@ -883,6 +883,6 @@ class PedidosController extends \BaseController
         $pedido->itens = $itens;
         $pedido->total = number_format($pedido->total, '2', ',', '.');
 
-        return View::make('pedidos.print', compact('pedido'));
+        return view('pedidos.print', compact('pedido'));
     }
 }
