@@ -143,7 +143,7 @@ Route::filter('auth.basic', function () {
 
 Route::filter('guest', function () {
     if (Auth::check()) {
-        return Redirect::to(URL::previous());
+        return redirect()->to(URL::previous());
     }
 });
 

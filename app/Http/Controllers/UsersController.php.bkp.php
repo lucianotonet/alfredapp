@@ -23,12 +23,12 @@ class UsersController extends Controller
     public function create()
     {
 
-        // return View::make(Config::get('confide::signup_form'));
+        // return view(config('confide::signup_form'));
         if (Confide::user()) {
             if (Request::ajax()) {
-                return View::make('users.panels.create');
+                return view('users.panels.create');
             } else {
-                return View::make('users.create');
+                return view('users.create');
             }
         }
 
@@ -36,7 +36,7 @@ class UsersController extends Controller
 
     public function signUp()
     {
-        return View::make('users.signup');
+        return view('users.signup');
     }
 
     /**
@@ -50,9 +50,9 @@ class UsersController extends Controller
         // Check password confirmation
         if (\Illuminate\Support\Facades\Request::get('password') != \Illuminate\Support\Facades\Request::get('password_confirmation')) {
             $alert[] = ['class' => 'alert-danger', 'message' => '<strong><i class="fa fa-warning"></i></strong> Os campos de senha estão diferentes!'];
-            Session::flash('alerts', $alert);
+            session()->flash('alerts', $alert);
 
-            return Redirect::to('users/create')
+            return redirect()->to('users/create')
                 ->withInput(\Illuminate\Support\Facades\Request::all());
         }
 
@@ -60,18 +60,18 @@ class UsersController extends Controller
         $username = User::where('username', \Illuminate\Support\Facades\Request::get('username'))->get();
         if ($username->count()) {
             $alert[] = ['class' => 'alert-warning', 'message' => '<strong><i class="fa fa-warning"></i></strong> Nome de usuário já cadastrado!<br/>Utilize outro.'];
-            Session::flash('alerts', $alert);
+            session()->flash('alerts', $alert);
 
-            return Redirect::to(URL::previous());
+            return redirect()->to(URL::previous());
         }
 
         // Check email
         $email = User::where('email', \Illuminate\Support\Facades\Request::get('email'))->get();
         if ($email->count()) {
             $alert[] = ['class' => 'alert-warning', 'message' => '<strong><i class="fa fa-warning"></i></strong> O email '.$user->email.' já está cadastrado no sitema!<br/>Deseja recuperar a senha? <a href="'.url('users/reset_password').'">Clique aqui</a>.'];
-            Session::flash('alerts', $alert);
+            session()->flash('alerts', $alert);
 
-            return Redirect::to(URL::previous());
+            return redirect()->to(URL::previous());
         }
 
         $repo = App::make('UserRepository');
@@ -80,24 +80,24 @@ class UsersController extends Controller
         if (Confide::user()) {
             if ($user->id) {
                 $alert[] = ['class' => 'alert-success', 'message' => '<strong><i class="fa fa-check"></i></strong> Usuário adicionado!'];
-                Session::flash('alerts', $alert);
+                session()->flash('alerts', $alert);
 
-                return Redirect::to('users/');
+                return redirect()->to('users/');
             } else {
                 $alert[] = ['class' => 'alert-danger', 'message' => '<strong><i class="fa fa-warning"></i></strong> Não foi possível criar o usuário!'];
-                Session::flash('alerts', $alert);
+                session()->flash('alerts', $alert);
 
-                return Redirect::to(URL::previous())
+                return redirect()->to(URL::previous())
                     ->withInput(\Illuminate\Support\Facades\Request::all());
             }
         }
 
         if ($user->id) {
 
-            if (Config::get('confide::signup_email')) {
+            if (config('confide::signup_email')) {
                 Mail::queueOn(
-                    Config::get('confide::email_queue'),
-                    Config::get('confide::email_account_confirmation'),
+                    config('confide::email_queue'),
+                    config('confide::email_account_confirmation'),
                     compact('user'),
                     function ($message) use ($user) {
                         $message
@@ -153,10 +153,10 @@ class UsersController extends Controller
         // exit;
 
         if (Confide::user()) {
-            return Redirect::to('/');
+            return redirect()->to('/');
         } else {
-            // return View::make(Config::get('confide::login_form'));
-            return View::make('users.login');
+            // return view(config('confide::login_form'));
+            return view('users.login');
         }
     }
 
@@ -216,7 +216,7 @@ class UsersController extends Controller
      */
     public function forgotPassword()
     {
-        return View::make(Config::get('confide::forgot_password_form'));
+        return view(config('confide::forgot_password_form'));
     }
 
     /**
@@ -248,7 +248,7 @@ class UsersController extends Controller
      */
     public function resetPassword($token)
     {
-        return View::make(Config::get('confide::reset_password_form'))
+        return view(config('confide::reset_password_form'))
             ->with('token', $token);
     }
 
@@ -290,14 +290,14 @@ class UsersController extends Controller
     {
         Confide::logout();
 
-        return Redirect::to('/');
+        return redirect()->to('/');
     }
 
     public function index()
     {
         $users = User::all();
 
-        return View::make('users.index')->with('users', $users);
+        return view('users.index')->with('users', $users);
     }
 
     public function edit($id)
@@ -305,20 +305,20 @@ class UsersController extends Controller
         $user = User::where('id', $id)->first();
         if ($user) {
             if (Request::ajax()) {
-                return View::make('users.panels.edit', compact('user'));
+                return view('users.panels.edit', compact('user'));
             } else {
-                return View::make('users.edit', compact('user'));
+                return view('users.edit', compact('user'));
             }
         } else {
 
             $alert[] = ['class' => 'alert-danger',
                 'message' => '<strong><i class="fa fa-warning"></i></strong> Não foi possível encontrar o usuário!'];
-            Session::flash('alerts', $alert);
+            session()->flash('alerts', $alert);
 
             if (Request::ajax()) {
-                return View::make('users.panels.index');
+                return view('users.panels.index');
             } else {
-                return View::make('users.index');
+                return view('users.index');
             }
         }
 
@@ -330,7 +330,7 @@ class UsersController extends Controller
         $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), User::$rules);
 
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput(\Illuminate\Support\Facades\Request::except('password'));
+            return redirect()->back()->withErrors($validator)->withInput(\Illuminate\Support\Facades\Request::except('password'));
         } else {
             // UPDATE RESOURCE
             $user->update($data);
@@ -341,7 +341,7 @@ class UsersController extends Controller
     {
         $user = User::find($id);
         if (! $user) {
-            return Redirect::back()->withInput(\Illuminate\Support\Facades\Request::all());
+            return redirect()->back()->withInput(\Illuminate\Support\Facades\Request::all());
         }
 
         if ($user->destroy($id)) {
@@ -351,9 +351,9 @@ class UsersController extends Controller
             $alert[] = ['class' => 'alert-success',
                 'message' => '<strong><i class="fa fa-check"></i></strong> Úsuário excluído!'];
         }
-        Session::flash('alerts', $alert);
+        session()->flash('alerts', $alert);
 
-        return Redirect::back()->withInput();
+        return redirect()->back()->withInput();
     }
 
     public function checkusername($username)
