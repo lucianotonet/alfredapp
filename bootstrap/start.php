@@ -11,7 +11,7 @@
 |
 */
 
-$app = new Illuminate\Foundation\Application;
+$app = new Illuminate\Foundation\Application(realpath(__DIR__.'/..'));
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +39,9 @@ $env = $app->detectEnvironment(function () {
 |
 */
 
-$app->bindInstallPaths(require __DIR__.'/paths.php');
+if (method_exists($app, 'bindInstallPaths')) {
+    $app->bindInstallPaths(require __DIR__.'/paths.php');
+}
 
 /*
 |--------------------------------------------------------------------------
