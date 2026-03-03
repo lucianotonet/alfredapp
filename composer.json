@@ -18,11 +18,11 @@
     },
     "autoload": {
         "classmap": [
-            "app/commands",
-            "app/controllers",
+            "app/Console/Commands",
+            "app/Http/Controllers",
             "app/models",
-            "app/database/migrations",
-            "app/database/seeds",
+            "database/migrations",
+            "database/seeds",
             "app/tests/TestCase.php"
         ]
     },
