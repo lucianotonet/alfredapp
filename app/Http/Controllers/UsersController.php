@@ -68,7 +68,7 @@ class UsersController extends Controller
 
         }
 
-        $repo = App::make('UserRepository');
+        $repo = app()->make('UserRepository');
         $user = $repo->signup(\Illuminate\Support\Facades\Request::all());
 
         if ($user->id) {
@@ -146,7 +146,7 @@ class UsersController extends Controller
      */
     public function doLogin()
     {
-        $repo = App::make('UserRepository');
+        $repo = app()->make('UserRepository');
         $input = \Illuminate\Support\Facades\Request::all();
 
         if ($repo->login($input)) {
@@ -240,7 +240,7 @@ class UsersController extends Controller
      */
     public function doResetPassword()
     {
-        $repo = App::make('UserRepository');
+        $repo = app()->make('UserRepository');
         $input = [
             'token' => \Illuminate\Support\Facades\Request::get('token'),
             'password' => \Illuminate\Support\Facades\Request::get('password'),

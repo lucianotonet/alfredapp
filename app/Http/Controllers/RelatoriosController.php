@@ -583,7 +583,7 @@ class RelatoriosController extends \BaseController
 
         $relatorio->update($data);
 
-        return Redirect::route('relatorios.index');
+        return redirect()->route('relatorios.index');
     }
 
     /**
@@ -596,7 +596,7 @@ class RelatoriosController extends \BaseController
     {
         Relatorio::destroy($id);
 
-        return Redirect::route('relatorios.index');
+        return redirect()->route('relatorios.index');
     }
 
     /**
@@ -672,7 +672,7 @@ class RelatoriosController extends \BaseController
 
         // $pdf = $this->gerarPdf( $relatorio->id );
 
-        $pdf = App::make('dompdf');
+        $pdf = app()->make('dompdf');
 
         if (! is_file(asset($pdf_file))) {
             $pdf = $pdf->loadView($pdf_view, compact('relatorio'))->setPaper('a4')->setOrientation('portrait')->setWarnings(false)->save($pdf_file);
@@ -753,9 +753,9 @@ class RelatoriosController extends \BaseController
     {
 
         if (is_file(asset('pdf/relatorios/relatorio-'.$relatorio->id.'_'.$relatorio->type.'.pdf'))) {
-            $pdf = App::make('dompdf');
+            $pdf = app()->make('dompdf');
         } else {
-            // $pdf = App::make('dompdf');
+            // $pdf = app()->make('dompdf');
             $pdf = PDF::loadView('relatorios.'.$relatorio->type.'.pdf', compact('relatorio'))->setPaper('a4')->setOrientation('portrait')->setWarnings(false)->save('pdf/relatorios/relatorio-'.$relatorio->id.'_'.$relatorio->type.'.pdf');
         }
 
