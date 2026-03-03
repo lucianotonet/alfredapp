@@ -37,7 +37,7 @@ class EventosController extends \BaseController
      */
     public function store()
     {
-        $validator = Validator::make($data = Input::all(), Evento::$rules);
+        $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Evento::$rules);
 
         print_r($data);
         exit;
@@ -87,7 +87,7 @@ class EventosController extends \BaseController
     {
         $evento = Evento::findOrFail($id);
 
-        $validator = Validator::make($data = Input::all(), Evento::$rules);
+        $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Evento::$rules);
 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
