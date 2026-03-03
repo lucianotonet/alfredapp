@@ -156,7 +156,7 @@ class PedidosController extends \BaseController
 
             $pedido = $pedido->id;
 
-            return Redirect::route('pedidos.show', compact('pedido'));
+            return redirect()->route('pedidos.show', compact('pedido'));
         } else {
 
             $alert[] = ['class' => 'alert-danger',
@@ -504,7 +504,7 @@ class PedidosController extends \BaseController
         // GERA PDF
         $this->gerarPdf($pedido->id);
 
-        return Redirect::route('pedidos.index');
+        return redirect()->route('pedidos.index');
     }
 
     /**
@@ -529,7 +529,7 @@ class PedidosController extends \BaseController
                 'message' => 'O pedido foi excluído definitivamente. Agora não adianta chorar!'];
             session()->flash('alerts', $alert);
 
-            return Redirect::route('pedidos.index');
+            return redirect()->route('pedidos.index');
         } else {
             $alert[] = ['class' => 'alert-danger',
                 'message' => 'Opa, algo errado. Não deu para excluir o pedido.'];
@@ -676,14 +676,14 @@ class PedidosController extends \BaseController
         //                'alert-danger' => 'Opa, algo errado. Não deu para enviar o pedido.'
         //             );
         // session()->flash('alerts', $alert);
-        // return Redirect::route('pedidos.index');
+        // return redirect()->route('pedidos.index');
 
         // }else{
         $alert[] = ['class' => 'alert-success',
             'message' => 'O pedido foi enviado! Note que se você alterar este pedido novamente, o status mudará para <strong>não enviado</strong>.'];
         session()->flash('alerts', $alert);
 
-        return Redirect::route('pedidos.index');
+        return redirect()->route('pedidos.index');
         // }
     }
 

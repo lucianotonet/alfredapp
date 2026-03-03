@@ -39,7 +39,7 @@ class OrganizationsController extends \BaseController
 
         Organization::create($data);
 
-        return Redirect::route('organizations.index');
+        return redirect()->route('organizations.index');
     }
 
     /**
@@ -86,7 +86,7 @@ class OrganizationsController extends \BaseController
 
         $organization->update($data);
 
-        return Redirect::route('organizations.index');
+        return redirect()->route('organizations.index');
     }
 
     /**
@@ -99,6 +99,6 @@ class OrganizationsController extends \BaseController
     {
         Organization::destroy($id);
 
-        return Redirect::route('organizations.index');
+        return redirect()->route('organizations.index');
     }
 }
