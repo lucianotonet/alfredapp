@@ -76,9 +76,9 @@ class TarefasController extends \BaseController
         }
 
         if (Route::is('tarefas.print')) {
-            return View::make('tarefas.print', compact('tarefas'));
+            return view('tarefas.print', compact('tarefas'));
         } else {
-            return View::make('tarefas.index', compact('tarefas'));
+            return view('tarefas.index', compact('tarefas'));
         }
     }
 
@@ -109,9 +109,9 @@ class TarefasController extends \BaseController
         }
 
         if (Request::ajax()) {
-            return View::make('tarefas.panels.create', compact('conversa', 'cliente'));
+            return view('tarefas.panels.create', compact('conversa', 'cliente'));
         } else {
-            return View::make('tarefas.create', compact('conversa', 'cliente'));
+            return view('tarefas.create', compact('conversa', 'cliente'));
         }
     }
 
@@ -124,7 +124,7 @@ class TarefasController extends \BaseController
     {
         $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Tarefa::$rules, Tarefa::$messages);
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         // echo "<pre>";
@@ -154,13 +154,13 @@ class TarefasController extends \BaseController
 
             $alert[] = ['class' => 'alert-success',
                 'message' => '<strong><i class="fa fa-check"></i></strong> Nova tarefa criada!'];
-            Session::flash('alerts', $alert);
+            session()->flash('alerts', $alert);
 
-            return Redirect::back();
+            return redirect()->back();
 
         }
 
-        return Redirect::back()->withErrors($validator)->withInput(\Illuminate\Support\Facades\Request::all());
+        return redirect()->back()->withErrors($validator)->withInput(\Illuminate\Support\Facades\Request::all());
 
         //     if( !\Illuminate\Support\Facades\Request::get('id') ){
 
@@ -214,10 +214,10 @@ class TarefasController extends \BaseController
         // exit;
 
         if (Request::ajax()) {
-            return View::make('tarefas.panels.show', compact('tarefa'));
+            return view('tarefas.panels.show', compact('tarefa'));
         }
 
-        return View::make('tarefas.show', compact('tarefa'));
+        return view('tarefas.show', compact('tarefa'));
     }
 
     /**
@@ -250,7 +250,7 @@ class TarefasController extends \BaseController
         // echo $dt->diffInDays($dt->copy()->addMonth());                         // 31
         // echo $dt->diffInDays($dt->copy()->subMonth(), false);
 
-        return View::make('tarefas.edit', compact('tarefa'));
+        return view('tarefas.edit', compact('tarefa'));
     }
 
     /**
@@ -266,7 +266,7 @@ class TarefasController extends \BaseController
 
         $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Tarefa::$rules);
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         if (@$data['done'] == 1) {
@@ -284,9 +284,9 @@ class TarefasController extends \BaseController
 
         $alert[] = ['class' => 'alert-success',
             'message' => '<strong><i class="fa fa-check"></i></strong> Salvo!'];
-        Session::flash('alerts', $alert);
+        session()->flash('alerts', $alert);
 
-        return Redirect::to(URL::previous());
+        return redirect()->to(URL::previous());
     }
 
     /**
@@ -300,9 +300,9 @@ class TarefasController extends \BaseController
         if (! isset($id)) {
             $alert[] = ['class' => 'alert-warning', 'message' => '<strong><i class="fa fa-warning"></i></strong> Você precisa informar o ID da tarefa.'];
 
-            Session::flash('alerts', $alert);
+            session()->flash('alerts', $alert);
 
-            return Redirect::to(URL::previous());
+            return redirect()->to(URL::previous());
         }
 
         $tarefa = Tarefa::find($id);
@@ -315,9 +315,9 @@ class TarefasController extends \BaseController
             $alert[] = ['class' => 'alert-success', 'message' => '<strong><i class="fa fa-check"></i></strong> Tarefa '.$tarefa->id.' marcada como <strong>NÃO CONCLUÍDA</strong>!'];
         }
 
-        Session::flash('alerts', $alert);
+        session()->flash('alerts', $alert);
 
-        return Redirect::to(URL::previous());
+        return redirect()->to(URL::previous());
     }
 
     /**
@@ -330,7 +330,7 @@ class TarefasController extends \BaseController
     {
         $tarefa = Tarefa::find($id);
         if (! $tarefa) {
-            return Redirect::back()->withInput();
+            return redirect()->back()->withInput();
         }
 
         if ($tarefa->destroy($id)) {
@@ -340,9 +340,9 @@ class TarefasController extends \BaseController
             $alert[] = ['class' => 'alert-danger',
                 'message' => '<strong><i class="fa fa-warning"></i></strong> Não foi possível excluir a tarefa!'];
         }
-        Session::flash('alerts', $alert);
+        session()->flash('alerts', $alert);
 
-        return Redirect::back()->withInput();
+        return redirect()->back()->withInput();
     }
 
     /**
@@ -356,8 +356,8 @@ class TarefasController extends \BaseController
         Tarefa::destroy($id);
 
         $alert[] = ['class' => 'alert-success', 'message' => '<strong><i class="fa fa-check"></i></strong> Tarefa excluída com successo'];
-        Session::flash('alerts', $alert);
+        session()->flash('alerts', $alert);
 
-        return Redirect::to(URL::previous());
+        return redirect()->to(URL::previous());
     }
 }
