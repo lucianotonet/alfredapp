@@ -27,9 +27,8 @@ require __DIR__.'/../vendor/autoload.php';
 |
 */
 
-if (file_exists($compiled = __DIR__.'/compiled.php'))
-{
-	require $compiled;
+if (file_exists($compiled = __DIR__.'/compiled.php')) {
+    require $compiled;
 }
 
 /*
@@ -43,7 +42,9 @@ if (file_exists($compiled = __DIR__.'/compiled.php'))
 |
 */
 
-Patchwork\Utf8\Bootup::initMbstring();
+if (class_exists('Patchwork\\Utf8\\Bootup')) {
+    Patchwork\Utf8\Bootup::initMbstring();
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -69,7 +70,6 @@ Illuminate\Support\ClassLoader::register();
 |
 */
 
-if (is_dir($workbench = __DIR__.'/../workbench'))
-{
-	Illuminate\Workbench\Starter::start($workbench);
+if (is_dir($workbench = __DIR__.'/../workbench')) {
+    Illuminate\Workbench\Starter::start($workbench);
 }
