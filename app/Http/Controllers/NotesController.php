@@ -52,7 +52,7 @@ class NotesController extends \BaseController
             return view('notes.create');
         }
 
-        return Redirect::route('notes.index');
+        return redirect()->route('notes.index');
     }
 
     /**
@@ -99,7 +99,7 @@ class NotesController extends \BaseController
 
         $note->update($data);
 
-        return Redirect::route('notes.index');
+        return redirect()->route('notes.index');
     }
 
     /**
@@ -112,6 +112,6 @@ class NotesController extends \BaseController
     {
         Note::destroy($id);
 
-        return Redirect::route('notes.index');
+        return redirect()->route('notes.index');
     }
 }
