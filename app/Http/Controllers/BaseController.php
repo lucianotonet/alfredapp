@@ -18,7 +18,7 @@ class BaseController extends Controller
     {
         $data = [];
         foreach ($array as $value) {
-            $data[$value] = Input::get($value);
+            $data[$value] = \Illuminate\Support\Facades\Request::get($value);
         }
 
         return $data;
