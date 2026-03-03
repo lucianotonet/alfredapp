@@ -78,7 +78,7 @@ class MovimentosController extends \BaseController
 
         Movimento::create($data);
 
-        return Redirect::route('movimentos.index');
+        return redirect()->route('movimentos.index');
     }
 
     /**
@@ -125,7 +125,7 @@ class MovimentosController extends \BaseController
 
         $movimento->update($data);
 
-        return Redirect::route('movimentos.index');
+        return redirect()->route('movimentos.index');
     }
 
     /**
@@ -138,6 +138,6 @@ class MovimentosController extends \BaseController
     {
         Movimento::destroy($id);
 
-        return Redirect::route('movimentos.index');
+        return redirect()->route('movimentos.index');
     }
 }
