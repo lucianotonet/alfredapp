@@ -41,9 +41,20 @@ $app = require_once __DIR__.'/bootstrap/start.php';
 |
 */
 
-$app->setRequestForConsoleEnvironment();
+if (method_exists($app, 'setRequestForConsoleEnvironment')) {
+    $app->setRequestForConsoleEnvironment();
+}
 
-$artisan = Illuminate\Console\Application::start($app);
+if (method_exists(Illuminate\Console\Application::class, 'start')) {
+    $artisan = Illuminate\Console\Application::start($app);
+} else {
+    $kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
+    $status = $kernel->handle(
+        $input = new Symfony\Component\Console\Input\ArgvInput,
+        new Symfony\Component\Console\Output\ConsoleOutput
+    );
+    $kernel->terminate($input, $status);
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -69,6 +80,8 @@ $status = $artisan->run();
 |
 */
 
-$app->shutdown();
+if (method_exists($app, 'shutdown')) {
+    $app->shutdown();
+}
 
 exit($status);
