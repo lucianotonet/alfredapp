@@ -1,18 +1,21 @@
 <?php
+
 namespace CanI;
 
 class Rule
 {
     public $action;
+
     public $entity;
+
     public $condition;
 
     const WILDCARD = 'all';
 
     public function __construct($action, $entity, $condition = null)
     {
-        $this->action    = $action;
-        $this->entity    = $entity;
+        $this->action = $action;
+        $this->entity = $entity;
         $this->condition = $condition;
     }
 
@@ -21,9 +24,9 @@ class Rule
         $result = true;
 
         if ($this->condition) {
-            $context   = $context ?: $this;
+            $context = $context ?: $this;
             $condition = $this->condition->bindTo($context);
-            $result    = ! is_string($entity) && $condition($entity);
+            $result = ! is_string($entity) && $condition($entity);
         }
 
         return $result;
