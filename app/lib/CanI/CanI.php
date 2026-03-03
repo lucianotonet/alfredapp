@@ -1,9 +1,11 @@
 <?php
+
 namespace CanI;
 
 class CanI
 {
     protected $user;
+
     protected $rules = [];
 
     const WILDCARD = 'all';
@@ -15,10 +17,11 @@ class CanI
 
     public function can($action, $entity)
     {
-        return array_reduce($this->rules, function($result, $rule) use ($action, $entity) {
+        return array_reduce($this->rules, function ($result, $rule) use ($action, $entity) {
             if ($this->isRelevant($rule, $action, $entity)) {
                 $result = $result || $rule->isAllowed($action, $entity, $this);
             }
+
             return $result;
         }, false);
     }
@@ -40,7 +43,7 @@ class CanI
 
     protected function isRelevant($rule, $action, $entity)
     {
-        $entityClass   = is_string($entity) ? $entity : get_class($entity);
+        $entityClass = is_string($entity) ? $entity : get_class($entity);
         $matchesEntity = in_array($rule->entity, [$entityClass, static::WILDCARD]);
 
         return $matchesEntity && $rule->action === $action;
