@@ -9,9 +9,9 @@ class ProdutosController extends \BaseController
      */
     public function index()
     {
-        $view = (Input::has('view')) ? Input::get('view') : 'index';
+        $view = (\Illuminate\Support\Facades\Request::has('view')) ? \Illuminate\Support\Facades\Request::get('view') : 'index';
 
-        $produtos = Produto::orderBy('cod', 'ASC')->paginate(Input::get('paginate', 50));
+        $produtos = Produto::orderBy('cod', 'ASC')->paginate(\Illuminate\Support\Facades\Request::get('paginate', 50));
 
         $categories = Category::where('owner_type', 'Produto')->get();
 
@@ -45,7 +45,7 @@ class ProdutosController extends \BaseController
      */
     public function store()
     {
-        $validator = Validator::make($data = Input::all(), Produto::$rules);
+        $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Produto::$rules);
 
         $preco = str_replace('.', '', $data['preco']);
         $preco = str_replace(',', '.', $preco);
@@ -81,7 +81,7 @@ class ProdutosController extends \BaseController
             Session::flash('alerts', $alert);
         }
 
-        return Redirect::back()->withErrors($validator)->withInput(Input::all());
+        return Redirect::back()->withErrors($validator)->withInput(\Illuminate\Support\Facades\Request::all());
     }
 
     /**
@@ -108,7 +108,7 @@ class ProdutosController extends \BaseController
             'message' => '<strong><i class="fa fa-warning"></i></strong> Produto não encontrado!'];
         Session::flash('alerts', $alert);
 
-        return Redirect::back()->withInput(Input::all());
+        return Redirect::back()->withInput(\Illuminate\Support\Facades\Request::all());
 
     }
 
@@ -140,7 +140,7 @@ class ProdutosController extends \BaseController
     {
         $produto = Produto::findOrFail($id);
 
-        $validator = Validator::make($data = Input::all(), Produto::$rules);
+        $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Produto::$rules);
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
         }
@@ -213,7 +213,7 @@ class ProdutosController extends \BaseController
         }
         $produtos->reverse();
 
-        $acabamentos = Category::where('owner_type', 'Produto')->paginate(Input::get('paginate', 10));
+        $acabamentos = Category::where('owner_type', 'Produto')->paginate(\Illuminate\Support\Facades\Request::get('paginate', 10));
         if ($acabamentos) {
 
             if (Request::ajax()) {
@@ -227,6 +227,6 @@ class ProdutosController extends \BaseController
             'message' => '<strong><i class="fa fa-warning"></i></strong> Acabamento não encontrado!'];
         Session::flash('alerts', $alert);
 
-        return Redirect::back()->withInput(Input::all());
+        return Redirect::back()->withInput(\Illuminate\Support\Facades\Request::all());
     }
 }
