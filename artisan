@@ -41,9 +41,16 @@ $app = require_once __DIR__.'/bootstrap/start.php';
 |
 */
 
-$app->setRequestForConsoleEnvironment();
+if (method_exists($app, 'setRequestForConsoleEnvironment')) {
+    $app->setRequestForConsoleEnvironment();
+}
 
-$artisan = Illuminate\Console\Application::start($app);
+if (method_exists(Illuminate\Console\Application::class, 'start')) {
+    $artisan = Illuminate\Console\Application::start($app);
+} else {
+    $artisan = new Illuminate\Console\Application($app, $app['events'], $app->version());
+    $status = $artisan->run();
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -69,6 +76,8 @@ $status = $artisan->run();
 |
 */
 
-$app->shutdown();
+if (method_exists($app, 'shutdown')) {
+    $app->shutdown();
+}
 
 exit($status);
