@@ -48,7 +48,7 @@ class EventosController extends \BaseController
 
         Evento::create($data);
 
-        return Redirect::route('eventos.index');
+        return redirect()->route('eventos.index');
     }
 
     /**
@@ -95,7 +95,7 @@ class EventosController extends \BaseController
 
         $evento->update($data);
 
-        return Redirect::route('eventos.index');
+        return redirect()->route('eventos.index');
     }
 
     /**
@@ -108,6 +108,6 @@ class EventosController extends \BaseController
     {
         Evento::destroy($id);
 
-        return Redirect::route('eventos.index');
+        return redirect()->route('eventos.index');
     }
 }
