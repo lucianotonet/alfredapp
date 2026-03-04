@@ -12,7 +12,8 @@
         "doctrine/dbal": "^2.5",
         "fzaninotto/faker": "v1.3.0",
         "guzzlehttp/guzzle": "^6.0",
-        "laravel/framework": "5.8.*"
+        "laravel/framework": "5.8.*",
+        "laravelcollective/html": "^5.8"
     },
     "autoload": {
         "classmap": [
