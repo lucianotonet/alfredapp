@@ -334,7 +334,7 @@ class EmailsController extends \BaseController
 
         $email->update($data);
 
-        return Redirect::route('emails.index');
+        return redirect()->route('emails.index');
     }
 
     /**
@@ -347,7 +347,7 @@ class EmailsController extends \BaseController
     {
         Email::destroy($id);
 
-        return Redirect::route('emails.index');
+        return redirect()->route('emails.index');
     }
 
     /**

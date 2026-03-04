@@ -39,7 +39,7 @@ class FornecedorsController extends \BaseController
 
         Fornecedor::create($data);
 
-        return Redirect::route('fornecedors.index');
+        return redirect()->route('fornecedors.index');
     }
 
     /**
@@ -92,7 +92,7 @@ class FornecedorsController extends \BaseController
 
         $fornecedor->update($data);
 
-        return Redirect::route('fornecedors.index');
+        return redirect()->route('fornecedors.index');
     }
 
     /**
@@ -105,6 +105,6 @@ class FornecedorsController extends \BaseController
     {
         Fornecedor::destroy($id);
 
-        return Redirect::route('fornecedors.index');
+        return redirect()->route('fornecedors.index');
     }
 }
