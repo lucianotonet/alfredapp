@@ -2,7 +2,7 @@
 <html lang="{{ App::getLocale() }}">
 <head>
 	<meta charset="utf-8">
-	<title>{{Config::get('settings.app_title')}}</title>
+	<title>{{config('settings.app_title')}}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<!-- Bootcards CSS for desktop -->
@@ -112,7 +112,7 @@
 
 			<a id="logo" class="pull-right hidden-xs"  href="<?php echo url('/') ?>" >
 
-				<img src="{{Config::get('settings.app_logo')}}" alt="" class="img-responsive">
+				<img src="{{config('settings.app_logo')}}" alt="" class="img-responsive">
 
 				<!-- <img src="{{asset('img/logo.png')}}" alt="" class="img-responsive"> -->
 
