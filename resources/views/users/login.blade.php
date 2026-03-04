@@ -85,7 +85,7 @@ p.text-center img.img-responsive {
 
 		<br>
 
-		@if ( Config::get('settings.app_allow_register') )
+		@if ( config('settings.app_allow_register') )
 		<p class="text-center">
 			<a href="{{ url('/signup') }}" class="btn btn-link">Novo cadastro</a>
 		</p>      
