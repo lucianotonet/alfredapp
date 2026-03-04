@@ -27,7 +27,7 @@
 		</div>
 	</div>			
 
-	{{ Form::hidden('owner_type', Input::get('owner_type')) }}
+	{{ Form::hidden('owner_type', \Illuminate\Support\Facades\Request::get('owner_type')) }}
 	{{ Form::hidden('owner_id') }}
 
 	{{ Form::close() }}	
