@@ -165,7 +165,7 @@ class ProdutosController extends \BaseController
         // UPDATE RESOURCE
         $produto->update($data);
 
-        return Redirect::route('produtos.index');
+        return redirect()->route('produtos.index');
     }
 
     /**
