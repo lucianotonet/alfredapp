@@ -14,7 +14,7 @@ class SettingsController extends \BaseController
         // $settings->down();
         // $settings->up();
 
-        $settings = Config::get('settings');
+        $settings = config('settings');
         $user_settings = Confide::user()->settings;
 
         // Check if view exists
@@ -22,19 +22,19 @@ class SettingsController extends \BaseController
 
             $alert[] = ['class' => 'alert-warning',
                 'message' => '<strong><i class="fa fa-warning"></i></strong> Módulo de configurações não encontrado!'];
-            Session::flash('alerts', $alert);
+            session()->flash('alerts', $alert);
 
             if (Request::header('referer')) {
-                return Redirect::back();
+                return redirect()->back();
             } else {
                 $module = 'general';
             }
         }
 
-        // echo "<pre>"; print_r( Config::get('settings') ); echo "</pre>"; exit;
+        // echo "<pre>"; print_r( config('settings') ); echo "</pre>"; exit;
         // echo "<pre>"; print_r( $requested_page ); echo "</pre>"; exit;
 
-        return View::make('settings.index', compact('settings', 'module'));
+        return view('settings.index', compact('settings', 'module'));
     }
 
     /**
@@ -44,7 +44,7 @@ class SettingsController extends \BaseController
      */
     public function create()
     {
-        return View::make('settings.create');
+        return view('settings.create');
     }
 
     /**
@@ -123,10 +123,10 @@ class SettingsController extends \BaseController
         $alert[] = ['class' => 'alert-success',
             'message' => '<strong><i class="fa fa-check"></i></strong> Configurações salvas!'];
 
-        Session::flash('alerts', $alert);
+        session()->flash('alerts', $alert);
 
         if (Request::header('referer')) {
-            return Redirect::back();
+            return redirect()->back();
         } else {
             return Redirect::route('settings.index');
         }
@@ -143,7 +143,7 @@ class SettingsController extends \BaseController
     {
         $setting = Setting::findOrFail($id);
 
-        return View::make('settings.show', compact('setting'));
+        return view('settings.show', compact('setting'));
     }
 
     /**
@@ -156,7 +156,7 @@ class SettingsController extends \BaseController
     {
         $setting = Setting::find($id);
 
-        return View::make('settings.edit', compact('setting'));
+        return view('settings.edit', compact('setting'));
     }
 
     /**
@@ -172,7 +172,7 @@ class SettingsController extends \BaseController
         $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Setting::$rules);
 
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $setting->update($data);
@@ -202,10 +202,10 @@ class SettingsController extends \BaseController
 
         $alert[] = ['class' => 'alert-success',
             'message' => '<strong><i class="fa fa-check"></i></strong> Configurações restauradas com sucesso!'];
-        Session::flash('alerts', $alert);
+        session()->flash('alerts', $alert);
 
         if (Request::header('referer')) {
-            return Redirect::back();
+            return redirect()->back();
         } else {
             return Redirect::route('settings.index');
         }
