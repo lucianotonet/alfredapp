@@ -11,9 +11,9 @@ class TarefasController extends \BaseController
      */
     public function index()
     {
-        $data = Input::get();
-        $data['view'] = Input::has('view') ? Input::get('view') : 'today'; 	// today, late, next, done
-        $data['paginate'] = Input::has('paginate') ? Input::get('paginate') : 10;
+        $data = \Illuminate\Support\Facades\Request::get();
+        $data['view'] = \Illuminate\Support\Facades\Request::has('view') ? \Illuminate\Support\Facades\Request::get('view') : 'today'; 	// today, late, next, done
+        $data['paginate'] = \Illuminate\Support\Facades\Request::has('paginate') ? \Illuminate\Support\Facades\Request::get('paginate') : 10;
         $dt = new Carbon;
 
         $tarefas = Tarefa::where(function ($query) use ($data, $dt) {
@@ -40,9 +40,9 @@ class TarefasController extends \BaseController
             }
 
         })
-            ->orderBy(Input::get('order_by', 'date'), Input::get('order', 'DESC'))
+            ->orderBy(\Illuminate\Support\Facades\Request::get('order_by', 'date'), \Illuminate\Support\Facades\Request::get('order', 'DESC'))
             ->with('cliente', 'conversas')
-            ->paginate(Input::get('paginate', 10));
+            ->paginate(\Illuminate\Support\Facades\Request::get('paginate', 10));
 
         // $tarefas = Tarefa::orderBy('date', 'DESC')->with('cliente')->get();
 
@@ -122,7 +122,7 @@ class TarefasController extends \BaseController
      */
     public function store()
     {
-        $validator = Validator::make($data = Input::all(), Tarefa::$rules, Tarefa::$messages);
+        $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Tarefa::$rules, Tarefa::$messages);
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
         }
@@ -160,9 +160,9 @@ class TarefasController extends \BaseController
 
         }
 
-        return Redirect::back()->withErrors($validator)->withInput(Input::all());
+        return Redirect::back()->withErrors($validator)->withInput(\Illuminate\Support\Facades\Request::all());
 
-        //     if( !Input::get('id') ){
+        //     if( !\Illuminate\Support\Facades\Request::get('id') ){
 
         //     }else{
         //        /**
@@ -170,7 +170,7 @@ class TarefasController extends \BaseController
         //         * MARCA TAREFA COMO CONCLUÍDA OU NÃO
         //         * @var [type]
         //         */
-        //        $id = Input::get('id');
+        //        $id = \Illuminate\Support\Facades\Request::get('id');
         //        $tarefa = Tarefa::findOrFail($id);
         //        $tarefa->check();
 
@@ -264,7 +264,7 @@ class TarefasController extends \BaseController
 
         $tarefa = Tarefa::with('notifications')->find($id);
 
-        $validator = Validator::make($data = Input::all(), Tarefa::$rules);
+        $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Tarefa::$rules);
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
         }
