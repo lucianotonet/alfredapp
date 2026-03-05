@@ -48,7 +48,7 @@ class UserRepository
             $input['password'] = null;
         }
 
-        return // Confide removed: logAttempt($input, Config::get('confide::signup_confirm'));
+        return // Confide removed: logAttempt($input, config('confide::signup_confirm'));
     }
 
     /**

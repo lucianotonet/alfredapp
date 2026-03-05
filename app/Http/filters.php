@@ -96,7 +96,7 @@ App::before(function ($request) {
         }
     });
     if ($notifications) {
-        Session::put('notifications', $notifications);
+        session()->put('notifications', $notifications);
     }
 
 });
@@ -143,7 +143,7 @@ Route::filter('auth.basic', function () {
 
 Route::filter('guest', function () {
     if (Auth::check()) {
-        return Redirect::to(URL::previous());
+        return redirect()->to(URL::previous());
     }
 });
 
