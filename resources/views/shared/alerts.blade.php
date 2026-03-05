@@ -1,7 +1,7 @@
-	@if (Session::has('alerts')) 
+	@if (session()->has('alerts')) 
 
 	<div class="container">
-		@foreach (Session::get('alerts') as $alert)
+		@foreach (session()->get('alerts') as $alert)
 
 
 		<div class="alert <?php echo @$alert['class'] ?> fade in" role="alert">
