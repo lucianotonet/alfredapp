@@ -1,29 +1,29 @@
 <?php
 
-class Produto extends \Eloquent {
+class Produto extends \Eloquent
+{
+    // Add your validation rules here
+    public static $rules = [
+        'cod' => 'required',
+        'nome' => 'required',
+    ];
 
-	// Add your validation rules here
-	public static $rules = [
-		'cod' => 'required',
-      'nome' => 'required'
-	];
+    // Don't forget to fill this array
+    protected $fillable = [
+        'cod',
+        'nome',
+        'preco',
+        'unidade',
+        'category_id',
+        'detalhes',
+    ];
 
-	// Don't forget to fill this array
-	protected $fillable = [
-         'cod',
-         'nome',
-         'preco',
-         'unidade',
-         'category_id',
-         'detalhes'
-      ];
+    protected $table = 'produtos';
 
-   protected $table = 'produtos';
-   public $timestamps = true;
+    public $timestamps = true;
 
-   public function category()
-   {
-      return $this->belongsTo('Category');
-   }
-
+    public function category()
+    {
+        return $this->belongsTo('Category');
+    }
 }
