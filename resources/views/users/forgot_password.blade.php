@@ -66,7 +66,7 @@ form .form-actions {
         <div class="form-group">
             <label for="email">Digite seu e-mail</label>
             <div class="input-append input-group">
-                <input class="form-control" placeholder="{{ Lang::get('confide::confide.e_mail') }}" type="text" name="email" id="email" value="{{ Input::old('email') }}">
+                <input class="form-control" placeholder="{{ Lang::get('confide::confide.e_mail') }}" type="text" name="email" id="email" value="{{ \Illuminate\Support\Facades\Request::old('email') }}">
                 <span class="input-group-btn">
                     <input class="btn btn-primary btn-lg" type="submit" value="{{ Lang::get('confide::confide.forgot.submit') }}">
                 </span>
