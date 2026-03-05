@@ -88,8 +88,8 @@
                 </div>
 
 
-                @if (Session::has('info'))              
-                    @foreach (Session::get('info') as $info)
+                @if (session()->has('info'))              
+                    @foreach (session()->get('info') as $info)
                         <div class="{{ @$info['class'] }} list-group-item text-center">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             {{@$info['message']}}
