@@ -11,7 +11,7 @@ class OrganizationsController extends \BaseController
     {
         $organizations = Organization::all();
 
-        return View::make('organizations.index', compact('organizations'));
+        return view('organizations.index', compact('organizations'));
     }
 
     /**
@@ -21,7 +21,7 @@ class OrganizationsController extends \BaseController
      */
     public function create()
     {
-        return View::make('organizations.create');
+        return view('organizations.create');
     }
 
     /**
@@ -34,7 +34,7 @@ class OrganizationsController extends \BaseController
         $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Organization::$rules);
 
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         Organization::create($data);
@@ -52,7 +52,7 @@ class OrganizationsController extends \BaseController
     {
         $organization = Organization::findOrFail($id);
 
-        return View::make('organizations.show', compact('organization'));
+        return view('organizations.show', compact('organization'));
     }
 
     /**
@@ -65,7 +65,7 @@ class OrganizationsController extends \BaseController
     {
         $organization = Organization::find($id);
 
-        return View::make('organizations.edit', compact('organization'));
+        return view('organizations.edit', compact('organization'));
     }
 
     /**
@@ -81,7 +81,7 @@ class OrganizationsController extends \BaseController
         $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Organization::$rules);
 
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $organization->update($data);
