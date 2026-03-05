@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - ..:/workspaces/alfredapp:cached
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_DATABASE=alfredapp
+      - DB_USERNAME=root
+      - DB_PASSWORD=rootpassword
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - alfred-network
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: alfredapp
+      MYSQL_USER: alfred
+      MYSQL_PASSWORD: alfredpassword
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - alfred-network
+
+  # Optional: Adminer for database management
+  adminer:
+    image: adminer
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    networks:
+      - alfred-network
+
+networks:
+  alfred-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
