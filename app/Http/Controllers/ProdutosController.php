@@ -21,7 +21,7 @@ class ProdutosController extends \BaseController
         }
         $produtos->getCollection()->reverse();
 
-        return View::make('produtos.index', compact('produtos', 'categories'));
+        return view('produtos.index', compact('produtos', 'categories'));
     }
 
     /**
@@ -32,9 +32,9 @@ class ProdutosController extends \BaseController
     public function create()
     {
         if (Request::ajax()) {
-            return View::make('produtos.panels.create');
+            return view('produtos.panels.create');
         } else {
-            return View::make('produtos.create');
+            return view('produtos.create');
         }
     }
 
@@ -55,9 +55,9 @@ class ProdutosController extends \BaseController
             // Show message
             $alert[] = ['class' => 'alert-danger',
                 'message' => '<strong><i class="fa fa-warning"></i></strong> Erros de validação!'];
-            Session::flash('alerts', $alert);
+            session()->flash('alerts', $alert);
 
-            return Redirect::back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         // CATEGORIA
@@ -78,10 +78,10 @@ class ProdutosController extends \BaseController
         if ($produto) {
             $alert[] = ['class' => 'alert-success',
                 'message' => '<strong><i class="fa fa-check"></i></strong> Produto adicionado com sucesso!'];
-            Session::flash('alerts', $alert);
+            session()->flash('alerts', $alert);
         }
 
-        return Redirect::back()->withErrors($validator)->withInput(\Illuminate\Support\Facades\Request::all());
+        return redirect()->back()->withErrors($validator)->withInput(\Illuminate\Support\Facades\Request::all());
     }
 
     /**
@@ -98,17 +98,17 @@ class ProdutosController extends \BaseController
             $produto->load('category');
             if (Request::ajax()) {
                 // return Response::json( $produto );
-                return View::make('produtos.panels.edit', compact('produto'));
+                return view('produtos.panels.edit', compact('produto'));
             } else {
-                return View::make('produtos.edit', compact('produto'));
+                return view('produtos.edit', compact('produto'));
             }
         }
 
         $alert[] = ['class' => 'alert-danger',
             'message' => '<strong><i class="fa fa-warning"></i></strong> Produto não encontrado!'];
-        Session::flash('alerts', $alert);
+        session()->flash('alerts', $alert);
 
-        return Redirect::back()->withInput(\Illuminate\Support\Facades\Request::all());
+        return redirect()->back()->withInput(\Illuminate\Support\Facades\Request::all());
 
     }
 
@@ -124,9 +124,9 @@ class ProdutosController extends \BaseController
         $categories = Category::where('owner_type', 'Produto')->get();
 
         if (Request::ajax()) {
-            return View::make('produtos.panels.edit', compact('produto', 'categories'));
+            return view('produtos.panels.edit', compact('produto', 'categories'));
         } else {
-            return View::make('produtos.edit', compact('produto', 'categories'));
+            return view('produtos.edit', compact('produto', 'categories'));
         }
     }
 
@@ -142,7 +142,7 @@ class ProdutosController extends \BaseController
 
         $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Produto::$rules);
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $preco = str_replace('.', '', $data['preco']);
@@ -178,7 +178,7 @@ class ProdutosController extends \BaseController
     {
         $produto = Produto::find($id);
         if (! $produto) {
-            return Redirect::back()->withInput();
+            return redirect()->back()->withInput();
         }
 
         if ($produto->destroy($id)) {
@@ -188,9 +188,9 @@ class ProdutosController extends \BaseController
             $alert[] = ['class' => 'alert-danger',
                 'message' => '<strong><i class="fa fa-warning"></i></strong> Não foi possível excluir o produto!'];
         }
-        Session::flash('alerts', $alert);
+        session()->flash('alerts', $alert);
 
-        return Redirect::back()->withInput();
+        return redirect()->back()->withInput();
     }
 
     public function categories()
@@ -198,9 +198,9 @@ class ProdutosController extends \BaseController
         $categories = Category::where('owner_type', 'Produto')->get();
         if (Request::ajax()) {
             // return Response::json( $produto );
-            return View::make('produtos.panels.categories', compact('categories'));
+            return view('produtos.panels.categories', compact('categories'));
         } else {
-            return View::make('produtos.categories', compact('categories'));
+            return view('produtos.categories', compact('categories'));
         }
     }
 
@@ -218,15 +218,15 @@ class ProdutosController extends \BaseController
 
             if (Request::ajax()) {
                 // return Response::json( $produto );
-                return View::make('produtos.panels.acabamentos', compact('produtos', 'acabamentos'));
+                return view('produtos.panels.acabamentos', compact('produtos', 'acabamentos'));
             } else {
-                return View::make('produtos.index', compact('produtos', 'acabamentos'));
+                return view('produtos.index', compact('produtos', 'acabamentos'));
             }
         }
         $alert[] = ['class' => 'alert-danger',
             'message' => '<strong><i class="fa fa-warning"></i></strong> Acabamento não encontrado!'];
-        Session::flash('alerts', $alert);
+        session()->flash('alerts', $alert);
 
-        return Redirect::back()->withInput(\Illuminate\Support\Facades\Request::all());
+        return redirect()->back()->withInput(\Illuminate\Support\Facades\Request::all());
     }
 }

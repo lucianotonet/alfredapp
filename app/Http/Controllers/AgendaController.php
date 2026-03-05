@@ -53,9 +53,9 @@ class AgendaController extends BaseController
         $labels = $this->getLabels($data);
 
         if (Route::is('agenda.print')) {
-            return View::make('agenda.print', compact('events', 'navigation_links', 'labels', 'carbon'));
+            return view('agenda.print', compact('events', 'navigation_links', 'labels', 'carbon'));
         } else {
-            return View::make('agenda.index', compact('events', 'navigation_links', 'labels', 'carbon'));
+            return view('agenda.index', compact('events', 'navigation_links', 'labels', 'carbon'));
         }
 
     }
