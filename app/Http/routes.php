@@ -1,0 +1,630 @@
+<?php
+
+use Carbon\Carbon;
+
+/*
+|--------------------------------------------------------------------------
+| Application Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register all of the routes for an application.
+| It's a breeze. Simply tell Laravel the URIs it should respond to
+| and give it the Closure to execute when that URI is requested.
+|
+*/
+App::setLocale('pt_BR');
+setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.iso-8859-1', 'portuguese');
+
+Route::get('/locale', function () {
+    return 'Hi, your locale is '.App::getLocale();
+});
+
+/*
+|--------------------------------------------------------------------------
+| TIMELINE
+|--------------------------------------------------------------------------
+|
+|   Home
+|
+*/
+Route::get('timeline', function () {
+    return view('timeline');
+});
+
+/*
+|--------------------------------------------------------------------------
+| NOTIFICATOR
+|--------------------------------------------------------------------------
+*/
+Route::get('notifications', 'NotificatorController');
+
+/*
+|--------------------------------------------------------------------------
+| CLIENTES
+|--------------------------------------------------------------------------
+*/
+Route::get('getcostumers', ['as' => 'getcostumers', 'uses' => 'ClienteController@getCostumers']);
+Route::get('clientes/{cliente_id}/mini', ['uses' => 'ClienteController@mini']);
+Route::get('clientes/{cliente_id}/enviarcontato', ['uses' => 'ClienteController@enviarcontato']);
+Route::get('clientes/{cliente_id}/conversas', ['as' => 'conversas', 'uses' => 'ClienteController@getConversas']);
+Route::get('clientes/{cliente_id}/tarefas', ['as' => 'cliente.tarefas', 'uses' => 'ClienteController@getTarefas']);
+Route::resource('clientes', ClienteController::class);
+Route::middleware('auth')->any('clientes*', function () {
+    // TODO: Review route logic - L4 filter 'auth' converted to middleware
+});;
+
+/*
+|--------------------------------------------------------------------------
+| TAREFAS
+|--------------------------------------------------------------------------
+*/
+Route::get('tarefas/{tarefa_id}/check', ['uses' => 'TarefasController@check']);
+Route::get('tarefas/print', ['as' => 'tarefas.print', 'uses' => 'TarefasController@index']);
+Route::delete('tarefas/{tarefa_id}/excluir', ['uses' => 'TarefasController@excluir']);
+Route::resource('tarefas', TarefasController::class);
+Route::middleware('auth')->any('tarefas*', function () {
+    // TODO: Review route logic - L4 filter 'auth' converted to middleware
+});;
+
+/*
+|--------------------------------------------------------------------------
+| DespesaS
+|--------------------------------------------------------------------------
+*/
+Route::resource('despesas', DespesasController::class);
+Route::middleware('auth')->any('despesas*', function () {
+    // TODO: Review route logic - L4 filter 'auth' converted to middleware
+});;
+
+/*
+|--------------------------------------------------------------------------
+| CONVERSAS
+|--------------------------------------------------------------------------
+*/
+Route::resource('conversas', ConversasController::class);
+Route::get('conversas/create/{cliente_id}', ['as' => 'createconversa', 'uses' => 'ConversasController@create']);
+Route::middleware('auth')->any('conversas*', function () {
+    // TODO: Review route logic - L4 filter 'auth' converted to middleware
+});;
+
+/*
+|--------------------------------------------------------------------------
+| Relatórios
+|--------------------------------------------------------------------------
+*/
+Route::group(['prefix' => 'relatorios'], function () {
+    // NOVO RELATÓRIO BASEADO NO RESOURCE INFORMADO
+    Route::get('create/{resource_name}', ['uses' => 'RelatoriosController@create']);
+
+});
+Route::get('relatorios/{relatorio_id}/download', ['as' => 'relatorios.download', 'uses' => 'RelatoriosController@downloadpdf']);
+Route::get('relatorios/{relatorio_id}/pdf', ['as' => 'relatorios.pdf', 'uses' => 'RelatoriosController@streampdf']);
+Route::get('relatorios/{relatorio_id}/print', ['as' => 'relatorios.pdf', 'uses' => 'RelatoriosController@printThis']);
+Route::resource('relatorios', RelatoriosController::class);
+
+Route::middleware('auth')->any('relatorios/create*', function () {
+    // TODO: Review route logic - L4 filter 'auth' converted to middleware
+});;
+Route::middleware('auth')->any('relatorios/edit*', function () {
+    // TODO: Review route logic - L4 filter 'auth' converted to middleware
+});;
+Route::when('relatorios*', 'auth', ['post', 'delete']);
+
+/*
+|--------------------------------------------------------------------------
+| HOME
+|--------------------------------------------------------------------------
+*/
+Route::get('/', function () {
+    return redirect()->to('agenda');
+});
+Route::middleware('auth')->any('/', function () {
+    // TODO: Review route logic - L4 filter 'auth' converted to middleware
+});;
+
+/*
+|--------------------------------------------------------------------------
+| DEMO
+|--------------------------------------------------------------------------
+*/
+Route::get('/demo', function () {
+    $clientes = Cliente::all();
+    $tarefas = Tarefa::all();
+
+    return view('demo', compact('clientes', 'tarefas'));
+});
+
+/*
+|--------------------------------------------------------------------------
+| AGENDA
+|--------------------------------------------------------------------------
+*/
+Route::get('agenda/print', ['as' => 'agenda.print', 'uses' => 'AgendaController@index']);
+Route::resource('agenda', AgendaEventsController::class);
+Route::get('agenda/{id}/delete', ['uses' => 'AgendaEventsController@destroy']);
+Route::get('agenda/', ['uses' => 'AgendaController@index']);
+Route::middleware('auth')->any('agenda*', function () {
+    // TODO: Review route logic - L4 filter 'auth' converted to middleware
+});;
+
+/*
+|--------------------------------------------------------------------------
+| FINANCEIRO
+|--------------------------------------------------------------------------
+*/
+// SALDO
+// Route::resource('financeiro/saldo', BalanceController::class);
+Route::get('financeiro/lancamentos', ['uses' => 'TransactionsController@lancamentos']);
+Route::get('financeiro/relatorios', ['uses' => 'TransactionsController@relatorios']);
+
+Route::get('financeiro/{id}/delete', ['uses' => 'TransactionsController@confirmDestroy']);
+Route::resource('financeiro', TransactionsController::class);
+
+Route::get('financeiro/create/{type}', ['uses' => 'TransactionsController@create']);
+
+Route::get('financeiro/', ['uses' => 'TransactionsController@index']);
+
+Route::middleware('auth')->any('financeiro*', function () {
+    // TODO: Review route logic - L4 filter 'auth' converted to middleware
+});;
+
+/*
+|--------------------------------------------------------------------------
+| PRODUTOS
+|--------------------------------------------------------------------------
+*/
+Route::get('produtos/acabamentos', ['as' => 'produtos.acabamentos', 'uses' => 'ProdutosController@acabamentos']);
+Route::get('produtos/categories', ['as' => 'produtos', 'uses' => 'ProdutosController@categories']);
+Route::get('produtos/{id}/delete', ['uses' => 'ProdutosController@destroy']);
+Route::resource('produtos', ProdutosController::class);
+Route::middleware('auth')->any('produtos*', function () {
+    // TODO: Review route logic - L4 filter 'auth' converted to middleware
+});;
+
+/*
+|--------------------------------------------------------------------------
+| CATEGORIAS
+|--------------------------------------------------------------------------
+*/
+Route::resource('categories', CategoriesController::class);
+Route::resource('categorias', CategoriesController::class);
+
+/*
+|--------------------------------------------------------------------------
+| FORNECEDORS
+|--------------------------------------------------------------------------
+*/
+Route::resource('fornecedors', FornecedorsController::class);
+Route::resource('fornecedores', FornecedorsController::class);
+Route::middleware('auth')->any('fornecedors*', function () {
+    // TODO: Review route logic - L4 filter 'auth' converted to middleware
+});;
+
+/*
+|--------------------------------------------------------------------------
+| VENDEDORES
+|--------------------------------------------------------------------------
+*/
+Route::resource('vendedors', VendedorsController::class);
+Route::middleware('auth')->any('vendedors*', function () {
+    // TODO: Review route logic - L4 filter 'auth' converted to middleware
+});;
+
+/*
+|--------------------------------------------------------------------------
+| NOTIFICAÇÕES
+|--------------------------------------------------------------------------
+*/
+
+Route::get('notifications/{id}/close', ['as' => 'close', 'uses' => 'NotificationsController@fechar']);
+Route::get('notifications/unread', ['as' => 'naolidas', 'uses' => 'NotificationsController@unread']);
+Route::get('notifications/clean', ['as' => 'limpar', 'uses' => 'NotificationsController@clean']);
+Route::resource('notifications', NotificationsController::class);
+
+/*
+|--------------------------------------------------------------------------
+| NOTES
+|--------------------------------------------------------------------------
+*/
+Route::resource('notes', NotesController::class);
+Route::middleware('auth')->any('notes*', function () {
+    // TODO: Review route logic - L4 filter 'auth' converted to middleware
+});;
+
+/*
+|--------------------------------------------------------------------------
+| LOGS
+|--------------------------------------------------------------------------
+*/
+Route::resource('reports', ReportsController::class);
+Route::middleware('auth')->any('reports*', function () {
+    // TODO: Review route logic - L4 filter 'auth' converted to middleware
+});;
+
+/*
+|--------------------------------------------------------------------------
+| PEDIDOS
+|--------------------------------------------------------------------------
+*/
+Route::resource('pedidos', PedidosController::class);
+
+Route::get('pedidos/create/{cliente_id}', ['as' => 'createpedido', 'uses' => 'PedidosController@create']);
+Route::get('pedidos/send/{pedido_id}', ['as' => 'pedidos.sendto', 'uses' => 'PedidosController@sendTo']);
+Route::post('pedidos/send', ['as' => 'pedidos.sendnow', 'uses' => 'PedidosController@sendNow']);
+Route::get('pedidos/preview/{pedido_id}', ['as' => 'pedidos.preview', 'uses' => 'PedidosController@preview']);
+
+Route::get('pedidos/{pedido_id}/arquivar', function ($id) {
+    $pedido = Pedido::find($id);
+    if ($pedido) {
+        $pedido->arquivar();
+        $pedido->save();
+
+        $alert[] = ['class' => 'alert-success',
+            'message' => 'Pedido arquivado!'];
+
+        session()->flash('alerts', $alert);
+    } else {
+        $alert[] = ['class' => 'alert-danger',
+            'message' => 'Pedidos não encontrado!'];
+
+        session()->flash('alerts', $alert);
+    }
+
+    return redirect()->to(URL::previous());
+});
+
+Route::get('pedidos/{pedido_id}/pdf', ['as' => 'pedidos.pdf', 'uses' => 'PedidosController@pdf']);
+Route::get('pedidos/{pedido_id}/download', ['as' => 'pedidos.donwload', 'uses' => 'PedidosController@download']);
+Route::get('pedidos/{pedido_id}/print', ['as' => 'pedidos.printpreview', 'uses' => 'PedidosController@printPreview']);
+
+Route::middleware('auth')->any('pedidos*', function () {
+    // TODO: Review route logic - L4 filter 'auth' converted to middleware
+});;
+
+/*
+|--------------------------------------------------------------------------
+| EMAILS
+|--------------------------------------------------------------------------
+*/
+Route::get('emails/getcontacts', ['as' => 'email.getcontacts', 'uses' => 'EmailsController@getContacts']);
+Route::get('emails/create/{resource}/{id}', ['as' => 'email.create', 'uses' => 'EmailsController@create']);
+Route::resource('emails', EmailsController::class);
+Route::get('emails/track/{id}', ['as' => 'email.track', 'uses' => 'EmailsController@track']);
+
+// Route::middleware('auth')->any('emails*', function () {
+    // TODO: Review route logic - L4 filter 'auth' converted to middleware
+});;
+
+/*
+|--------------------------------------------------------------------------
+| EVENTOS
+|--------------------------------------------------------------------------
+*/
+Route::resource('eventos', EventosController::class);
+Route::middleware('auth')->any('eventos*', function () {
+    // TODO: Review route logic - L4 filter 'auth' converted to middleware
+});;
+
+/*
+|--------------------------------------------------------------------------
+| PRINT PAGE
+|--------------------------------------------------------------------------
+*/
+Route::get('print', function () {
+    $alert[] = ['class' => 'alert-warning',
+        'message' => 'Informe o objeto a ser impresso!'];
+
+    session()->flash('alerts', $alert);
+
+    return redirect()->to(URL::previous());
+});
+Route::get('print/{resource}', function ($resource) {
+    return $resource;
+});
+Route::middleware('auth')->any('print*', function () {
+    // TODO: Review route logic - L4 filter 'auth' converted to middleware
+});;
+
+/*
+|--------------------------------------------------------------------------
+| MOVIMENTOS
+|--------------------------------------------------------------------------
+*/
+Route::resource('movimentos', MovimentosController::class);
+Route::middleware('auth')->any('movimentos*', function () {
+    // TODO: Review route logic - L4 filter 'auth' converted to middleware
+});;
+
+/*
+|--------------------------------------------------------------------------
+| CONFIGURAÇÕES
+|--------------------------------------------------------------------------
+*/
+Route::get('settings/reset', ['uses' => 'SettingsController@reset']);
+Route::get('settings/{module}', ['uses' => 'SettingsController@index']);
+Route::resource('settings', 'SettingsController', ['names' => ['store' => 'settings.store']]);
+
+Route::middleware('auth')->any('settings*', function () {
+    // TODO: Review route logic - L4 filter 'auth' converted to middleware
+});;
+
+// TEMPLATE
+Route::get('/template', function () {
+    return view('template');
+});
+
+// Confide routes
+Route::get('users/forgot_password', 'UsersController@forgotPassword');
+Route::post('users/forgot_password', 'UsersController@doForgotPassword');
+Route::get('users/reset_password/{token}', 'UsersController@resetPassword');
+Route::post('users/reset_password', 'UsersController@doResetPassword');
+
+Route::group(['before' => 'auth'], function () {
+    Route::get('users/checkmail', ['uses' => 'UsersController@checkmail']);
+    Route::get('users/checkusername', ['uses' => 'UsersController@checkusername']);
+
+    Route::get('users/create', ['uses' => 'UsersController@create']);
+    Route::get('users/{id}/delete', ['uses' => 'UsersController@destroy']);
+    Route::get('users/{id}', ['uses' => 'UsersController@edit']);
+    Route::get('users/{id}/edit', ['uses' => 'UsersController@edit']);
+    Route::get('users', ['uses' => 'UsersController@index']);
+    Route::resource('users', UsersController::class);
+});
+Route::post('users', ['as' => 'users.store', 'uses' => 'UsersController@store']);
+Route::post('users/{id}', ['as' => 'users.update', 'uses' => 'UsersController@update']);
+Route::get('login', 'UsersController@login');
+Route::post('login', 'UsersController@doLogin');
+Route::get('users/confirm/{code}', 'UsersController@confirm');
+Route::get('users/logout', 'UsersController@logout');
+Route::get('logout', 'UsersController@logout');
+
+if (config()->get('settings.app_allow_register')) {
+    Route::get('signup', 'UsersController@create');
+    // Route::get('users/create', 'UsersController@create');
+}
+
+View::share('canI', function ($action, $entity) {
+    return CanI::can($action, $entity);
+});
+
+Route::get('invoice', function () {
+    return view('clientes.invoice');
+});
+
+/*
+ * Outputs a color (#000000) based Text input
+ *
+ * @param $text String of text
+ * @param $min_brightness Integer between 0 and 100
+ * @param $spec Integer between 2-10, determines how unique each color will be
+ */
+
+function magicColor($text, $min_brightness = 100, $spec = 2)
+{
+    // Check inputs
+    if (! is_int($min_brightness)) {
+        throw new Exception("$min_brightness is not an integer");
+    }
+    if (! is_int($spec)) {
+        throw new Exception("$spec is not an integer");
+    }
+    if ($spec < 2 or $spec > 10) {
+        throw new Exception("$spec is out of range");
+    }
+    if ($min_brightness < 0 or $min_brightness > 255) {
+        throw new Exception("$min_brightness is out of range");
+    }
+
+    $hash = md5($text);  // Gen hash of text
+    $colors = [];
+    for ($i = 0; $i < 3; $i++) {
+        $colors[$i] = max([round(((hexdec(substr($hash, $spec * $i, $spec))) / hexdec(str_pad('', $spec, 'F'))) * 255), $min_brightness]);
+    } // convert hash into 3 decimal values between 0 and 255
+
+    if ($min_brightness > 0) {  // only check brightness requirements if min_brightness is about 100
+        while (array_sum($colors) / 3 < $min_brightness) {  // loop until brightness is above or equal to min_brightness
+            for ($i = 0; $i < 3; $i++) {
+                $colors[$i] += 10;
+            }
+        }
+    }  // increase each color by 10
+
+    $output = '';
+
+    for ($i = 0; $i < 3; $i++) {
+        $output .= str_pad(dechex($colors[$i]), 2, 0, STR_PAD_LEFT);
+    }  // convert each color to hex and append to output
+
+    return '#'.$output;
+}
+
+class Saudacoes
+{
+    public function __construct() {}
+
+    public static function ola()
+    {
+
+        date_default_timezone_set('America/Sao_Paulo');
+        $nome = Confide::user() ? Confide::user()->username : '';
+        $hr = date(' H ');
+
+        if ($hr >= 12 && $hr < 20) {
+            $turno = 'Boa tarde';
+        } elseif ($hr >= 20 && $hr < 24) {
+            $turno = 'Boa noite';
+        } elseif ($hr >= 0 && $hr < 6) {
+            $turno = "Dormir é para os fracos \o/";
+        } elseif ($hr >= 6 && $hr < 12) {
+            $turno = 'Bom dia';
+        } else {
+            $turno = 'Que horas são?';
+        }
+
+        return $turno;
+    }
+}
+
+/**
+ *     FAZMERIR
+ *     Não faz quase nada...
+ *       Mas converte formato monetário para numérico =)
+ *       ( Útil para tratamento de valores que precisam ser processados )
+ *
+ *       FazMeRir::bonito('1234567890');
+ *          returns "1.234.567.890,00"
+ *
+ *       FazMeRir::feio('1234567890');
+ *          retunrs "1234567890.00"
+ *
+ *       FazMeRir::igual('1234567890');
+ *          returns "1234567890"
+ *
+ **/
+class FazMeRir
+{
+    public function __construct($valor)
+    {
+        $valor = $valor;
+    }
+
+    public static function feio($valor)
+    {
+        $valor = str_replace('.', '', $valor);
+        $valor = str_replace(',', '.', $valor);
+        $valor = number_format($valor, 2, '.', '');
+
+        return $valor;
+    }
+
+    public static function bonito($valor)
+    {
+        $valor = number_format((float) $valor, 2, ',', '.');
+
+        return $valor;
+    }
+
+    public static function igual($valor)
+    {
+        $valor = $valor;
+
+        return $valor;
+    }
+}
+
+class AboutDate
+{
+    public function __construct(string $data) {}
+
+    public static function timeAgo($value = '')
+    {
+        // setlocale(LC_TIME, 'pt_BR.utf-8');
+        $value = strtotime($value);
+
+        // $year   = date('Y', $value);
+        // $month  = date('m', $value);
+        // $day    = date('d', $value);
+        // $hour   = date('H', $value);
+        // $minute = date('i', $value);
+        // $second = date('s', $value);
+        // $dt = Carbon::create($year, $month, $day, $hour, $minute, $second);
+        // return $dt->formatLocalized('%A, %d de %B');
+        return Carbon::createFromTimeStamp($value)->diffForHumans();
+    }
+
+    public static function diaDaSemana($data = '')
+    {
+        // setlocale(LC_TIME, 'pt_BR.utf-8');
+        // $dt = Carbon::create($data);
+        $dt = Carbon::createFromFormat('Y-m-d', $data);
+
+        if ($dt->dayOfWeek === Carbon::SUNDAY) {
+            echo 'Domingo';
+        } elseif ($dt->dayOfWeek === Carbon::MONDAY) {
+            echo 'Segunda-feira';
+        } elseif ($dt->dayOfWeek === Carbon::TUESDAY) {
+            echo 'Terça-feira';
+        } elseif ($dt->dayOfWeek === Carbon::WEDNESDAY) {
+            echo 'Quarta-feira';
+        } elseif ($dt->dayOfWeek === Carbon::THURSDAY) {
+            echo 'Quinta-feira';
+        } elseif ($dt->dayOfWeek === Carbon::FRIDAY) {
+            echo 'Sexta-feira';
+        } elseif ($dt->dayOfWeek === Carbon::SATURDAY) {
+            echo 'Sábado';
+        }
+    }
+
+    public static function date($data, $tipo)
+    {
+
+        if (isset($tipo) and isset($data)) {
+
+            $dataEnviada = $data;
+
+            $diasextenso = [
+                'Domingo',
+                'Segunda-feira',
+                'Terça-feira',
+                'Quarta-feira',
+                'Quinta-feira',
+                'Sexta-feira',
+                'Sábado',
+            ];
+            $date = DateTime::createFromFormat('d/m/Y', $dataEnviada);
+
+            $feriados = ['01/01', '31/12', '25/12', '01/05', '25/04'];
+
+            switch ($tipo) {
+                case 'l':
+                    return $diasextenso[$date->format('w')];
+                    break;
+                default:
+
+                    echo 'Data Informada: ', $date->format('d/m/Y H:i'), PHP_EOL.'<br />';
+                    echo 'Dia da semana (numero): ', $date->format('w'), PHP_EOL.'<br />';
+                    echo 'Dia da semana (extenso): ', $diasextenso[$date->format('w')], PHP_EOL.'<br />';
+                    echo 'Ultimo dia do mes: ', $date->format('t'), PHP_EOL.'<br />';
+                    echo 'Final de semana?: ', $date->format('w') == 0 || $date->format('w') == 6 ? 'Sim' : 'Não', PHP_EOL.'<br />';
+                    echo 'É feriado?: ', in_array($date->format('d/m'), $feriados) ? 'Sim' : 'Não'.'<br />';
+
+                    return $date;
+                    break;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public static function semana()
+    {
+        $tomorrow = mktime(0, 0, 0, date('m'), date('d') + 1, date('Y'));
+        $yesterday = mktime(0, 0, 0, date('m'), date('d') - 1, date('Y'));
+        $lastmonth = mktime(0, 0, 0, date('m') - 1, date('d'), date('Y'));
+        $nextyear = mktime(0, 0, 0, date('m'), date('d'), date('Y') + 1);
+
+        // $pastweend =
+
+        $lastWeekStart = mktime(0, 0, 0, date('n'), date('j') - 6, date('Y')) - ((date('N')) * 3600 * 24);
+        $lastWeekEnd = mktime(23, 59, 59, date('n'), date('j'), date('Y')) - ((date('N')) * 3600 * 24);
+
+        $thisWeekStart = mktime(0, 0, 0, date('n'), date('j') + 1, date('Y')) - ((date('N')) * 3600 * 24);
+        $thisWeekEnd = mktime(23, 59, 59, date('n'), date('j') + 7, date('Y')) - ((date('N')) * 3600 * 24);
+
+        $nextWeekStart = mktime(0, 0, 0, date('n'), date('j') + 8, date('Y')) - ((date('N')) * 3600 * 24);
+        $nextWeekEnd = mktime(23, 59, 59, date('n'), date('j') + 14, date('Y')) - ((date('N')) * 3600 * 24);
+
+        echo date('d/m/Y', $lastWeekStart);
+        echo ' - ';
+        echo date('d/m/Y', $lastWeekEnd);
+        echo '<br>';
+        echo date('d/m/Y', $thisWeekStart);
+        echo ' - ';
+        echo date('d/m/Y', $thisWeekEnd);
+        echo '<br>';
+        echo date('d/m/Y', $nextWeekStart);
+        echo ' - ';
+        echo date('d/m/Y', $nextWeekEnd);
+        echo '<br>';
+    }
+}
