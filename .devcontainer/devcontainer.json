@@ -1,0 +1,33 @@
+{
+  "name": "Alfred App - Laravel 5.8",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "."
+  },
+  "runArgs": [
+    "-u", "root"
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "bmewburn.vscode-intelephense-client",
+        "onecentlin.laravel-blade",
+        "ctf0.laravel-blade-snippets",
+        "eamodio.gitlens",
+        "esbenp.prettier-vscode"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "php.validate.executablePath": "/usr/bin/php"
+      }
+    }
+  },
+  "postCreateCommand": "chown -R www-data:www-data /workspaces/alfredapp && su www-data -c 'composer update && cp .env.example .env && php artisan key:generate'",
+  "ports": [
+    {
+      "port": 80,
+      "service": "http"
+    }
+  ],
+  "remoteUser": "www-data"
+}
