@@ -1,7 +1,5 @@
 <?php
 
-
-
 /**
  * UsersController Class
  *
@@ -9,23 +7,22 @@
  */
 class UsersController extends Controller
 {
-
     /**
      * Displays the form for account creation
      *
-     * @return  Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
     public function create()
     {
-        //return View::make(Config::get('confide::signup_form'));
+        // return View::make(Config::get('confide::signup_form'));
 
-        if( Confide::user() ){         
-            if( Request::ajax() ){
-                return View::make('users.panels.create');         
-            }else{
-                return View::make('users.create');        
+        if (Confide::user()) {
+            if (Request::ajax()) {
+                return View::make('users.panels.create');
+            } else {
+                return View::make('users.create');
             }
-        }else{
+        } else {
             return View::make('users.signup');
         }
 
@@ -34,7 +31,7 @@ class UsersController extends Controller
     /**
      * Stores new account
      *
-     * @return  Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
     public function store()
     {
@@ -69,22 +66,22 @@ class UsersController extends Controller
     /**
      * Displays the login form
      *
-     * @return  Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
     public function login()
     {
         if (Confide::user()) {
             return Redirect::to('/');
         } else {
-            //return View::make(Config::get('confide::login_form'));
-            return View::make( 'users.login' );
+            // return View::make(Config::get('confide::login_form'));
+            return View::make('users.login');
         }
     }
 
     /**
      * Attempt to do login
      *
-     * @return  Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
     public function doLogin()
     {
@@ -111,18 +108,19 @@ class UsersController extends Controller
     /**
      * Attempt to confirm account with code
      *
-     * @param  string $code
-     *
-     * @return  Illuminate\Http\Response
+     * @param  string  $code
+     * @return Illuminate\Http\Response
      */
     public function confirm($code)
     {
         if (Confide::confirm($code)) {
             $notice_msg = Lang::get('confide::confide.alerts.confirmation');
+
             return Redirect::action('UsersController@login')
                 ->with('notice', $notice_msg);
         } else {
             $error_msg = Lang::get('confide::confide.alerts.wrong_confirmation');
+
             return Redirect::action('UsersController@login')
                 ->with('error', $error_msg);
         }
@@ -131,7 +129,7 @@ class UsersController extends Controller
     /**
      * Displays the forgot password form
      *
-     * @return  Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
     public function forgotPassword()
     {
@@ -141,16 +139,18 @@ class UsersController extends Controller
     /**
      * Attempt to send change password link to the given email
      *
-     * @return  Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
     public function doForgotPassword()
     {
         if (Confide::forgotPassword(Input::get('email'))) {
             $notice_msg = Lang::get('confide::confide.alerts.password_forgot');
+
             return Redirect::action('UsersController@login')
                 ->with('notice', $notice_msg);
         } else {
             $error_msg = Lang::get('confide::confide.alerts.wrong_password_forgot');
+
             return Redirect::action('UsersController@doForgotPassword')
                 ->withInput()
                 ->with('error', $error_msg);
@@ -160,38 +160,39 @@ class UsersController extends Controller
     /**
      * Shows the change password form with the given token
      *
-     * @param  string $token
-     *
-     * @return  Illuminate\Http\Response
+     * @param  string  $token
+     * @return Illuminate\Http\Response
      */
     public function resetPassword($token)
     {
         return View::make(Config::get('confide::reset_password_form'))
-                ->with('token', $token);
+            ->with('token', $token);
     }
 
     /**
      * Attempt change password of the user
      *
-     * @return  Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
     public function doResetPassword()
     {
         $repo = App::make('UserRepository');
-        $input = array(
-            'token'                 =>Input::get('token'),
-            'password'              =>Input::get('password'),
-            'password_confirmation' =>Input::get('password_confirmation'),
-        );
+        $input = [
+            'token' => Input::get('token'),
+            'password' => Input::get('password'),
+            'password_confirmation' => Input::get('password_confirmation'),
+        ];
 
         // By passing an array with the token, password and confirmation
         if ($repo->resetPassword($input)) {
             $notice_msg = Lang::get('confide::confide.alerts.password_reset');
+
             return Redirect::action('UsersController@login')
                 ->with('notice', $notice_msg);
         } else {
             $error_msg = Lang::get('confide::confide.alerts.wrong_password_reset');
-            return Redirect::action('UsersController@resetPassword', array('token'=>$input['token']))
+
+            return Redirect::action('UsersController@resetPassword', ['token' => $input['token']])
                 ->withInput()
                 ->with('error', $error_msg);
         }
@@ -200,7 +201,7 @@ class UsersController extends Controller
     /**
      * Log the user out of the application.
      *
-     * @return  Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
     public function logout()
     {

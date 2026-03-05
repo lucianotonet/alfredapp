@@ -1,4 +1,4 @@
-<?php use Carbon\Carbon as Carbon; ?>
+<?php ?>
 
 @include('notifications.panels.create')
 
@@ -8,7 +8,9 @@
 	@endif
 	<li class="active">
 		<a href="#naolidas" data-toggle="tab">
-			<h3 class="title <?php if( count($notifications->naolidas) ){ echo 'danger'; } ?>">Não lidas <span class="badge badge-danger">{{count($notifications->naolidas)}}</span></h3>
+			<h3 class="title <?php if (count($notifications->naolidas)) {
+			    echo 'danger';
+			} ?>">Não lidas <span class="badge badge-danger">{{count($notifications->naolidas)}}</span></h3>
 		</a>
 	</li>			
 	<li>
