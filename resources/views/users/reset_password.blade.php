@@ -53,12 +53,12 @@ form .form-actions {
     <p class="text-center">Recuperação de senha</p>
 
     <form method="POST" action="{{ URL::to('/users/reset_password') }}" accept-charset="UTF-8">
-        @if (Session::get('error'))
-            <div class="alert alert-error alert-danger">{{ Session::get('error') }}</div>
+        @if (session()->get('error'))
+            <div class="alert alert-error alert-danger">{{ session()->get('error') }}</div>
         @endif
 
-        @if (Session::get('notice'))
-            <div class="alert">{{ Session::get('notice') }}</div>
+        @if (session()->get('notice'))
+            <div class="alert">{{ session()->get('notice') }}</div>
         @endif
 
         <br>
