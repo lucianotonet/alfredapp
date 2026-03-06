@@ -36,7 +36,7 @@ class UsersController extends Controller
     public function store()
     {
         $repo = App::make('UserRepository');
-        $user = $repo->signup(Input::all());
+        $user = $repo->signup(\Illuminate\Support\Facades\Request::all());
 
         if ($user->id) {
             if (Config::get('confide::signup_email')) {
@@ -58,7 +58,7 @@ class UsersController extends Controller
             $error = $user->errors()->all(':message');
 
             return Redirect::action('UsersController@create')
-                ->withInput(Input::except('password'))
+                ->withInput(\Illuminate\Support\Facades\Request::except('password'))
                 ->with('error', $error);
         }
     }
@@ -86,7 +86,7 @@ class UsersController extends Controller
     public function doLogin()
     {
         $repo = App::make('UserRepository');
-        $input = Input::all();
+        $input = \Illuminate\Support\Facades\Request::all();
 
         if ($repo->login($input)) {
             return Redirect::intended('/');
@@ -100,7 +100,7 @@ class UsersController extends Controller
             }
 
             return Redirect::action('UsersController@login')
-                ->withInput(Input::except('password'))
+                ->withInput(\Illuminate\Support\Facades\Request::except('password'))
                 ->with('error', $err_msg);
         }
     }
@@ -143,7 +143,7 @@ class UsersController extends Controller
      */
     public function doForgotPassword()
     {
-        if (Confide::forgotPassword(Input::get('email'))) {
+        if (Confide::forgotPassword(\Illuminate\Support\Facades\Request::get('email'))) {
             $notice_msg = Lang::get('confide::confide.alerts.password_forgot');
 
             return Redirect::action('UsersController@login')
@@ -178,9 +178,9 @@ class UsersController extends Controller
     {
         $repo = App::make('UserRepository');
         $input = [
-            'token' => Input::get('token'),
-            'password' => Input::get('password'),
-            'password_confirmation' => Input::get('password_confirmation'),
+            'token' => \Illuminate\Support\Facades\Request::get('token'),
+            'password' => \Illuminate\Support\Facades\Request::get('password'),
+            'password_confirmation' => \Illuminate\Support\Facades\Request::get('password_confirmation'),
         ];
 
         // By passing an array with the token, password and confirmation
