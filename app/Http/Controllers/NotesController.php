@@ -11,7 +11,7 @@ class NotesController extends \BaseController
     {
         $notes = Note::all();
 
-        return View::make('notes.index', compact('notes'));
+        return view('notes.index', compact('notes'));
     }
 
     /**
@@ -22,9 +22,9 @@ class NotesController extends \BaseController
     public function create()
     {
         if (Request::ajax()) {
-            return View::make('notes.panels.create');
+            return view('notes.panels.create');
         } else {
-            return View::make('notes.create');
+            return view('notes.create');
         }
     }
 
@@ -41,18 +41,18 @@ class NotesController extends \BaseController
 
             $note = Note::create($data);
 
-            return View::make('notes.panels.show', compact('note'));
+            return view('notes.panels.show', compact('note'));
 
         } else {
 
             if ($validator->fails()) {
-                return Redirect::back()->withErrors($validator)->withInput();
+                return redirect()->back()->withErrors($validator)->withInput();
             }
 
-            return View::make('notes.create');
+            return view('notes.create');
         }
 
-        return Redirect::route('notes.index');
+        return redirect()->route('notes.index');
     }
 
     /**
@@ -65,7 +65,7 @@ class NotesController extends \BaseController
     {
         $note = Note::findOrFail($id);
 
-        return View::make('notes.show', compact('note'));
+        return view('notes.show', compact('note'));
     }
 
     /**
@@ -78,7 +78,7 @@ class NotesController extends \BaseController
     {
         $note = Note::find($id);
 
-        return View::make('notes.edit', compact('note'));
+        return view('notes.edit', compact('note'));
     }
 
     /**
@@ -94,12 +94,12 @@ class NotesController extends \BaseController
         $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Note::$rules);
 
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $note->update($data);
 
-        return Redirect::route('notes.index');
+        return redirect()->route('notes.index');
     }
 
     /**
@@ -112,6 +112,6 @@ class NotesController extends \BaseController
     {
         Note::destroy($id);
 
-        return Redirect::route('notes.index');
+        return redirect()->route('notes.index');
     }
 }
