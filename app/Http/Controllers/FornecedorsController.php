@@ -31,7 +31,7 @@ class FornecedorsController extends \BaseController
      */
     public function store()
     {
-        $validator = Validator::make($data = Input::all(), Fornecedor::$rules);
+        $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Fornecedor::$rules);
 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
@@ -84,7 +84,7 @@ class FornecedorsController extends \BaseController
     {
         $fornecedor = Fornecedor::findOrFail($id);
 
-        $validator = Validator::make($data = Input::all(), Fornecedor::$rules);
+        $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Fornecedor::$rules);
 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
