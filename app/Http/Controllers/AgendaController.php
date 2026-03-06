@@ -17,12 +17,12 @@ class AgendaController extends BaseController
         // $agenda->up();
         // exit;
 
-        $data = Input::get();
-        $data['view'] = Input::has('view') ? Input::get('view') : 'day';
-        $data['date'] = Input::has('date') ? Input::get('date') : date('Y-m-d');
-        $data['next'] = Input::has('next') ? Input::get('next') : 0;
-        $data['prev'] = Input::has('prev') ? Input::get('prev') : 0;
-        $data['type'] = Input::has('type') ? Input::get('type') : null;
+        $data = \Illuminate\Support\Facades\Request::all();
+        $data['view'] = \Illuminate\Support\Facades\Request::has('view') ? \Illuminate\Support\Facades\Request::get('view') : 'day';
+        $data['date'] = \Illuminate\Support\Facades\Request::has('date') ? \Illuminate\Support\Facades\Request::get('date') : date('Y-m-d');
+        $data['next'] = \Illuminate\Support\Facades\Request::has('next') ? \Illuminate\Support\Facades\Request::get('next') : 0;
+        $data['prev'] = \Illuminate\Support\Facades\Request::has('prev') ? \Illuminate\Support\Facades\Request::get('prev') : 0;
+        $data['type'] = \Illuminate\Support\Facades\Request::has('type') ? \Illuminate\Support\Facades\Request::get('type') : null;
 
         $tarefas = [];
         $agendaevents = [];
