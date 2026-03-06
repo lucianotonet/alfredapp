@@ -5,7 +5,7 @@
  *          * http://inlinestyler.torchboxapps.com/
  *
  *      Cole o conteúdo inlinificado no arquivo "email.blade.php"
- *      
+ *
  **/
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -508,8 +508,8 @@ vertical-align: top;
                                                 <p>
                                                     <strong>Data</strong><br />
                                                     <strong style="font-size:110% !important;">{{$pedido->entrega_data}}</strong><br />
-                                                    <small><?php //echo AboutDate::diaDaSemana($pedido->entrega_data) ?></small>
-                                                    <small><?php //echo AboutDate::getCreatedAtAttribute($pedido->created_at) ?></small>
+                                                    <small><?php // echo AboutDate::diaDaSemana($pedido->entrega_data)?></small>
+                                                    <small><?php // echo AboutDate::getCreatedAtAttribute($pedido->created_at)?></small>
                                                     
                                                     <!-- <small>{{-- AboutDate::date($pedido->entrega_data, 'l') --}}</small> -->
                                                 </p>
@@ -558,7 +558,7 @@ vertical-align: top;
                             </tr>
                         </thead>
                         <tbody>       
-                            <?php foreach ($pedido->itens as $item){ ?>
+                            <?php foreach ($pedido->itens as $item) { ?>
                             <tr>
                                 <td align="center"  width="65">{{ $item['qtd'] }} {{ $item['unidade'] }}</td>
                                 <td align="center">{{ @$item['produto']->cod }}</td>
