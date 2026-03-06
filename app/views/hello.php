@@ -39,7 +39,7 @@
 		<h1>Hello from Confide</h1>
        <p>
            Hi
-           <?php echo (Confide::user() ?: 'visitor') ?>
+           <?php echo Confide::user() ?: 'visitor' ?>
        </p>
 	</div>
 </body>
