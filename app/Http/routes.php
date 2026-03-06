@@ -50,7 +50,6 @@ Route::get('clientes/{cliente_id}/conversas', ['as' => 'conversas', 'uses' => 'C
 Route::get('clientes/{cliente_id}/tarefas', ['as' => 'cliente.tarefas', 'uses' => 'ClienteController@getTarefas'])->middleware('auth');
 Route::resource('clientes', ClienteController::class)->middleware('auth');
 
-
 /*
 |--------------------------------------------------------------------------
 | TAREFAS
@@ -61,14 +60,12 @@ Route::get('tarefas/print', ['as' => 'tarefas.print', 'uses' => 'TarefasControll
 Route::delete('tarefas/{tarefa_id}/excluir', ['uses' => 'TarefasController@excluir'])->middleware('auth');
 Route::resource('tarefas', TarefasController::class)->middleware('auth');
 
-
 /*
 |--------------------------------------------------------------------------
 | DespesaS
 |--------------------------------------------------------------------------
 */
 Route::resource('despesas', DespesasController::class)->middleware('auth');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -77,7 +74,6 @@ Route::resource('despesas', DespesasController::class)->middleware('auth');
 */
 Route::resource('conversas', ConversasController::class)->middleware('auth');
 Route::get('conversas/create/{cliente_id}', ['as' => 'createconversa', 'uses' => 'ConversasController@create'])->middleware('auth');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -94,8 +90,6 @@ Route::get('relatorios/{relatorio_id}/pdf', ['as' => 'relatorios.pdf', 'uses' =>
 Route::get('relatorios/{relatorio_id}/print', ['as' => 'relatorios.pdf', 'uses' => 'RelatoriosController@printThis']);
 Route::resource('relatorios', RelatoriosController::class);
 
-
-
 Route::when('relatorios*', 'auth', ['post', 'delete']);
 
 /*
@@ -106,7 +100,6 @@ Route::when('relatorios*', 'auth', ['post', 'delete']);
 Route::get('/', function () {
     return Redirect::to('agenda');
 });
-
 
 /*
 |--------------------------------------------------------------------------
@@ -130,7 +123,6 @@ Route::resource('agenda', AgendaEventsController::class)->middleware('auth');
 Route::get('agenda/{id}/delete', ['uses' => 'AgendaEventsController@destroy'])->middleware('auth');
 Route::get('agenda/', ['uses' => 'AgendaController@index'])->middleware('auth');
 
-
 /*
 |--------------------------------------------------------------------------
 | FINANCEIRO
@@ -148,8 +140,6 @@ Route::get('financeiro/create/{type}', ['uses' => 'TransactionsController@create
 
 Route::get('financeiro/', ['uses' => 'TransactionsController@index'])->middleware('auth');
 
-
-
 /*
 |--------------------------------------------------------------------------
 | PRODUTOS
@@ -159,7 +149,6 @@ Route::get('produtos/acabamentos', ['as' => 'produtos.acabamentos', 'uses' => 'P
 Route::get('produtos/categories', ['as' => 'produtos', 'uses' => 'ProdutosController@categories'])->middleware('auth');
 Route::get('produtos/{id}/delete', ['uses' => 'ProdutosController@destroy'])->middleware('auth');
 Route::resource('produtos', ProdutosController::class)->middleware('auth');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -177,14 +166,12 @@ Route::resource('categorias', CategoriesController::class);
 Route::resource('fornecedors', FornecedorsController::class)->middleware('auth');
 Route::resource('fornecedores', FornecedorsController::class);
 
-
 /*
 |--------------------------------------------------------------------------
 | VENDEDORES
 |--------------------------------------------------------------------------
 */
 Route::resource('vendedors', VendedorsController::class)->middleware('auth');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -204,14 +191,12 @@ Route::resource('notifications', NotificationsController::class);
 */
 Route::resource('notes', NotesController::class)->middleware('auth');
 
-
 /*
 |--------------------------------------------------------------------------
 | LOGS
 |--------------------------------------------------------------------------
 */
 Route::resource('reports', ReportsController::class)->middleware('auth');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -249,8 +234,6 @@ Route::get('pedidos/{pedido_id}/pdf', ['as' => 'pedidos.pdf', 'uses' => 'Pedidos
 Route::get('pedidos/{pedido_id}/download', ['as' => 'pedidos.donwload', 'uses' => 'PedidosController@download'])->middleware('auth');
 Route::get('pedidos/{pedido_id}/print', ['as' => 'pedidos.printpreview', 'uses' => 'PedidosController@printPreview'])->middleware('auth');
 
-
-
 /*
 |--------------------------------------------------------------------------
 | EMAILS
@@ -261,7 +244,7 @@ Route::get('emails/create/{resource}/{id}', ['as' => 'email.create', 'uses' => '
 Route::resource('emails', EmailsController::class)->middleware('auth');
 Route::get('emails/track/{id}', ['as' => 'email.track', 'uses' => 'EmailsController@track'])->middleware('auth');
 
-// 
+//
 
 /*
 |--------------------------------------------------------------------------
@@ -269,7 +252,6 @@ Route::get('emails/track/{id}', ['as' => 'email.track', 'uses' => 'EmailsControl
 |--------------------------------------------------------------------------
 */
 Route::resource('eventos', EventosController::class)->middleware('auth');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -288,14 +270,12 @@ Route::get('print/{resource}', function ($resource) {
     return $resource;
 });
 
-
 /*
 |--------------------------------------------------------------------------
 | MOVIMENTOS
 |--------------------------------------------------------------------------
 */
 Route::resource('movimentos', MovimentosController::class)->middleware('auth');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -305,8 +285,6 @@ Route::resource('movimentos', MovimentosController::class)->middleware('auth');
 Route::get('settings/reset', ['uses' => 'SettingsController@reset'])->middleware('auth');
 Route::get('settings/{module}', ['uses' => 'SettingsController@index'])->middleware('auth');
 Route::resource('settings', 'SettingsController', ['names' => ['store' => 'settings.store']])->middleware('auth');
-
-
 
 // TEMPLATE
 Route::get('/template', function () {
