@@ -1,193 +1,194 @@
 <?php
 
-class CategoriesController extends \BaseController {
+class CategoriesController extends \BaseController
+{
+    /**
+     * Display a listing of categories
+     *
+     * @return Response
+     */
+    public function index()
+    {
+        $data = Input::all();
+        $categories = Category::where(function ($query) {
+            if (Input::has('owner_type')) {
+                $query->where('owner_type', Input::get('owner_type'));
+            }
+            if (Input::has('query')) {
+                $query->where('name', 'like', '%'.Input::get('query').'%');
+            }
+        });
+        $types = Category::get(['owner_type']);
+        $types = $types->groupBy(function ($category) {
+            return $category->owner_type;
+        })->toArray();
 
-	/**
-	 * Display a listing of categories
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		$data 		= Input::all();
-		$categories = Category::where( function( $query ){
-										if( Input::has('owner_type') ){
-						                	$query->where('owner_type', Input::get('owner_type') );	                
-										}
-										if( Input::has('query') ){
-        									$query->where('name', 'like', '%'. Input::get('query') .'%');	                
-        								}
-        							});				            
-		$types 		= Category::get(['owner_type']);
-		$types 		= $types->groupBy(function( $category ){
-			return $category->owner_type;
-		})->toArray();
+        if (Request::ajax()) {
 
-		if( Request::ajax() ) { 
-			
-			// SUGGESTIONS FOR AUTOCOMPLETE
-			$categories = $categories->get();	
+            // SUGGESTIONS FOR AUTOCOMPLETE
+            $categories = $categories->get();
 
-			if( Input::has('query') ){
-				$suggestions = array();	
+            if (Input::has('query')) {
+                $suggestions = [];
 
-				foreach ($categories as $category) {
-					$suggestions[] = array(
-					                       	"value"  => $category->name,
-					                       	"data"	 => array(
-					                       	               'owner_type' => $category->owner_type
-					                       	            )		 							
-					                    );				
-				}
-	 			$categories = array( 'suggestions' => $suggestions );			
-			 	return Response::json($categories);
-			}			
+                foreach ($categories as $category) {
+                    $suggestions[] = [
+                        'value' => $category->name,
+                        'data' => [
+                            'owner_type' => $category->owner_type,
+                        ],
+                    ];
+                }
+                $categories = ['suggestions' => $suggestions];
 
-			// RETURN INDEX PANEL
-			return View::make('categories.panels.index', compact('categories', 'types')); 
+                return Response::json($categories);
+            }
 
-		} else { 
-			$categories = $categories->paginate( Input::get('paginate', 10) );	
-			return View::make('categories.index', compact('categories', 'types')); 
-		}
-	}
+            // RETURN INDEX PANEL
+            return View::make('categories.panels.index', compact('categories', 'types'));
 
-	/**
-	 * Show the form for creating a new category
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		$types = array(
-					'tarefa' 		=> 'Tarefas',
-					'agedaevent' 	=> 'Evento',
-					'produto' 		=> 'Produtos',
-					'transaction' 	=> 'Lanç. financeiro',
-				);
+        } else {
+            $categories = $categories->paginate(Input::get('paginate', 10));
 
-		if( Request::ajax() ) { 
-			return View::make('categories.panels.create', compact('types'));
-		}else{
-			return View::make('categories.create', compact('types'));
-		}
-	}
+            return View::make('categories.index', compact('categories', 'types'));
+        }
+    }
 
-	/**
-	 * Store a newly created category in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		$validator = Validator::make($data = Input::all(), Category::$rules);
+    /**
+     * Show the form for creating a new category
+     *
+     * @return Response
+     */
+    public function create()
+    {
+        $types = [
+            'tarefa' => 'Tarefas',
+            'agedaevent' => 'Evento',
+            'produto' => 'Produtos',
+            'transaction' => 'Lanç. financeiro',
+        ];
 
-		if ($validator->fails())
-		{
-			return Redirect::back()->withErrors($validator)->withInput();
-		}
+        if (Request::ajax()) {
+            return View::make('categories.panels.create', compact('types'));
+        } else {
+            return View::make('categories.create', compact('types'));
+        }
+    }
 
-		
-		$category = Category::create($data);
-		if( $category ){         
-			$alert[] = [  'class' 	=> 'alert-success',
-			            	'message'   => '<strong><i class="fa fa-check"></i></strong> Adicionado com sucesso!' ];		
-		}else{
-			//Show message         
-	        $alert[] = [  'class' 	=> 'alert-danger',
-			              'message'   => '<strong><i class="fa fa-warning"></i></strong> Erro ao salvar o item' ];
-		}
-	    Session::flash('alerts', $alert);
-		return Redirect::back();
-	}
+    /**
+     * Store a newly created category in storage.
+     *
+     * @return Response
+     */
+    public function store()
+    {
+        $validator = Validator::make($data = Input::all(), Category::$rules);
 
-	/**
-	 * Display the specified category.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		$category = Category::find($id);
+        if ($validator->fails()) {
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
 
-		if( !$category ){
-			$alert[] = [ 'class' 	=> 'alert-danger',
-     	    			 'message'  => '<strong><i class="fa fa-warning"></i></strong> A categoria não existe' ];
-            Session::flash('alerts', $alert);	
-		
-			return Redirect::to( URL::previous() ); 
-		}
+        $category = Category::create($data);
+        if ($category) {
+            $alert[] = ['class' => 'alert-success',
+                'message' => '<strong><i class="fa fa-check"></i></strong> Adicionado com sucesso!'];
+        } else {
+            // Show message
+            $alert[] = ['class' => 'alert-danger',
+                'message' => '<strong><i class="fa fa-warning"></i></strong> Erro ao salvar o item'];
+        }
+        Session::flash('alerts', $alert);
 
-		return View::make('categories.show', compact('category'));
-	}
+        return Redirect::back();
+    }
 
-	/**
-	 * Show the form for editing the specified category.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		$category = Category::find($id);
-		if( !$category ){
-			$alert[] = [ 'class' 	=> 'alert-danger',
-     	    			 'message'  => '<strong><i class="fa fa-warning"></i></strong> A categoria não existe' ];
-            Session::flash('alerts', $alert);	
-		
-			return Redirect::to( URL::previous() ); 
-		}else{
-			if( Request::ajax() ) { 
-				return View::make('categories.panels.edit', compact('category'));
-			}else{
-				return View::make('categories.edit', compact('category'));
-			}
-		}
-	}
+    /**
+     * Display the specified category.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function show($id)
+    {
+        $category = Category::find($id);
 
-	/**
-	 * Update the specified category in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		$category = Category::findOrFail($id);
+        if (! $category) {
+            $alert[] = ['class' => 'alert-danger',
+                'message' => '<strong><i class="fa fa-warning"></i></strong> A categoria não existe'];
+            Session::flash('alerts', $alert);
 
-		$validator = Validator::make($data = Input::all(), Category::$rules);
+            return Redirect::to(URL::previous());
+        }
 
-		if ($validator->fails())
-		{
-			return Redirect::back()->withErrors($validator)->withInput();
-		}
+        return View::make('categories.show', compact('category'));
+    }
 
-		if( $category->update($data) ){
-			//Show message         
-	        $alert[] = [  'class' 	=> 'alert-success',
-			              'message' => '<strong><i class="fa fa-check"></i></strong> Atualizado!' ];
-		    Session::flash('alerts', $alert);
-		}
-		return Redirect::to( URL::previous() ); 
+    /**
+     * Show the form for editing the specified category.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function edit($id)
+    {
+        $category = Category::find($id);
+        if (! $category) {
+            $alert[] = ['class' => 'alert-danger',
+                'message' => '<strong><i class="fa fa-warning"></i></strong> A categoria não existe'];
+            Session::flash('alerts', $alert);
 
-	}
+            return Redirect::to(URL::previous());
+        } else {
+            if (Request::ajax()) {
+                return View::make('categories.panels.edit', compact('category'));
+            } else {
+                return View::make('categories.edit', compact('category'));
+            }
+        }
+    }
 
-	/**
-	 * Remove the specified category from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		if( Category::destroy($id) ){
-			//Show message         
-	        $alert[] = [  'class' 	=> 'alert-success',
-			              'message' => '<strong><i class="fa fa-check"></i></strong> Excluído!' ];
-		    Session::flash('alerts', $alert);
-		}
-		return Redirect::to( URL::previous() ); 
-	}
+    /**
+     * Update the specified category in storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function update($id)
+    {
+        $category = Category::findOrFail($id);
 
+        $validator = Validator::make($data = Input::all(), Category::$rules);
+
+        if ($validator->fails()) {
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
+
+        if ($category->update($data)) {
+            // Show message
+            $alert[] = ['class' => 'alert-success',
+                'message' => '<strong><i class="fa fa-check"></i></strong> Atualizado!'];
+            Session::flash('alerts', $alert);
+        }
+
+        return Redirect::to(URL::previous());
+
+    }
+
+    /**
+     * Remove the specified category from storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        if (Category::destroy($id)) {
+            // Show message
+            $alert[] = ['class' => 'alert-success',
+                'message' => '<strong><i class="fa fa-check"></i></strong> Excluído!'];
+            Session::flash('alerts', $alert);
+        }
+
+        return Redirect::to(URL::previous());
+    }
 }
