@@ -1,17 +1,16 @@
 <?php
 
-class OrganizationsTableSeeder extends Seeder {
+class OrganizationsTableSeeder extends Seeder
+{
+    public function run()
+    {
 
-	public function run()
-	{
+        Organization::create([
+            'name' => 'Demo',
+        ]);
+        Organization::create([
+            'name' => 'MAV',
+        ]);
 
-		Organization::create([
-			'name' => 'Demo'
-		]);
-		Organization::create([
-			'name' => 'MAV'
-		]);
-
-	}
-
+    }
 }
