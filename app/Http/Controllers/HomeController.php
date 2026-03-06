@@ -50,20 +50,20 @@ class HomeController extends BaseController
         ];
 
         // run the validation rules on the inputs from the form
-        $validator = Validator::make(Input::all(), $rules, $messages);
+        $validator = Validator::make(\Illuminate\Support\Facades\Request::all(), $rules, $messages);
 
         // if the validator fails, redirect back to the form
         if ($validator->fails()) {
 
             return Redirect::to('login')
                 ->withErrors($messages) // send back all errors to the login form
-                ->withInput(Input::except('password')); // send back the input (not the password) so that we can repopulate the form
+                ->withInput(\Illuminate\Support\Facades\Request::except('password')); // send back the input (not the password) so that we can repopulate the form
         } else {
 
             // create our user data for the authentication
             $userdata = [
-                'email' => Input::get('email'),
-                'password' => Input::get('password'),
+                'email' => \Illuminate\Support\Facades\Request::get('email'),
+                'password' => \Illuminate\Support\Facades\Request::get('password'),
             ];
 
             // attempt to do the login

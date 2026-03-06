@@ -28,7 +28,7 @@ class ClienteController extends \BaseController
     {
 
         if (Request::ajax()) {
-            $query = Input::get('query');
+            $query = \Illuminate\Support\Facades\Request::get('query');
 
             // return Response::json($query);
 
@@ -42,7 +42,7 @@ class ClienteController extends \BaseController
 
         } else {
 
-            $customers = Cliente::paginate(Input::get('paginate', 10));
+            $customers = Cliente::paginate(\Illuminate\Support\Facades\Request::get('paginate', 10));
 
             // get all the clientes
             if (isset($_GET['orderby'])) {
@@ -108,13 +108,13 @@ class ClienteController extends \BaseController
             // 'nome'       => 'required',
             // 'empresa'    => 'required'
         ];
-        $validator = Validator::make(Input::all(), $rules);
+        $validator = Validator::make(\Illuminate\Support\Facades\Request::all(), $rules);
 
         if ($validator->fails()) {
 
             return Redirect::to('clientes/create')
                 ->withErrors($validator)
-                ->withInput(Input::except('password'));
+                ->withInput(\Illuminate\Support\Facades\Request::except('password'));
 
         } else {
             // store
@@ -146,7 +146,7 @@ class ClienteController extends \BaseController
         if ($cliente) {
             $pedidos = $cliente->pedidos();
 
-            $tarefas = Tarefa::where('cliente_id', $cliente->id)->paginate(Input::get('perpage', 10));
+            $tarefas = Tarefa::where('cliente_id', $cliente->id)->paginate(\Illuminate\Support\Facades\Request::get('perpage', 10));
             $tarefas->days = $tarefas->groupBy(function ($tarefa) {
                 return date('Y-m-d', strtotime($tarefa->start));
             });
@@ -212,13 +212,13 @@ class ClienteController extends \BaseController
         $rules = [
 
         ];
-        $validator = Validator::make(Input::all(), $rules);
+        $validator = Validator::make(\Illuminate\Support\Facades\Request::all(), $rules);
 
         // process the login
         if ($validator->fails()) {
             return Redirect::to('clientes/'.$id.'/edit')
                 ->withErrors($validator)
-                ->withInput(Input::except('password'));
+                ->withInput(\Illuminate\Support\Facades\Request::except('password'));
         } else {
             // store
             Cliente::where('id', $id)->update($this->post_to_array($this->table_fields));
@@ -325,7 +325,7 @@ class ClienteController extends \BaseController
     public function getCostumers()
     {
         // if( Request::ajax() ){
-        $query = Input::get('query');
+        $query = \Illuminate\Support\Facades\Request::get('query');
 
         $clientes = Cliente::where('nome', 'like', '%'.$query.'%')->orWhere('empresa', 'like', '%'.$query.'%')->get();
         $fornecedores = Fornecedor::where('nome', 'like', '%'.$query.'%')->orWhere('empresa', 'like', '%'.$query.'%')->get();
