@@ -23,12 +23,12 @@
 		            <div class="col-sm-3 col-md-3 col-lg-3">
 				    	<div class="list-group">
 				    		@foreach ($types as $type => $cats)
-								<a class="list-group-item {{ (!empty( $type ) and Input::get('owner_type') == $type) ? 'active' : '' }}" href="{{ url( 'categories/?owner_type='.$type ) }}">
+								<a class="list-group-item {{ (!empty( $type ) and \Illuminate\Support\Facades\Request::get('owner_type') == $type) ? 'active' : '' }}" href="{{ url( 'categories/?owner_type='.$type ) }}">
 									{{ !empty( $type ) ? $type : '<small>(sem nome)</small>' }}
 									<span class="badge">{{ count($cats) }}</span>
 								</a>			    		
 				    		@endforeach	
-				    		<a class="list-group-item {{ ( !Input::has('owner_type') ) ? 'active' : '' }}" href="{{ url( 'categories/' ) }}">
+				    		<a class="list-group-item {{ ( !\Illuminate\Support\Facades\Request::has('owner_type') ) ? 'active' : '' }}" href="{{ url( 'categories/' ) }}">
 								Todas
 								<span class="badge"></span>
 							</a>						
