@@ -44,40 +44,42 @@ Route::get('notifications', 'NotificatorController');
 |--------------------------------------------------------------------------
 */
 Route::get('getcostumers', ['as' => 'getcostumers', 'uses' => 'ClienteController@getCostumers']);
-Route::get('clientes/{cliente_id}/mini', ['uses' => 'ClienteController@mini']);
-Route::get('clientes/{cliente_id}/enviarcontato', ['uses' => 'ClienteController@enviarcontato']);
-Route::get('clientes/{cliente_id}/conversas', ['as' => 'conversas', 'uses' => 'ClienteController@getConversas']);
-Route::get('clientes/{cliente_id}/tarefas', ['as' => 'cliente.tarefas', 'uses' => 'ClienteController@getTarefas']);
-Route::resource('clientes', 'ClienteController');
-Route::when('clientes*', 'auth');
-
+Route::get('clientes/{cliente_id}/mini', ['uses' => 'ClienteController@mini'])->middleware('auth');
+Route::get('clientes/{cliente_id}/enviarcontato', ['uses' => 'ClienteController@enviarcontato'])->middleware('auth');
+Route::get('clientes/{cliente_id}/conversas', ['as' => 'conversas', 'uses' => 'ClienteController@getConversas'])->middleware('auth');
+Route::get('clientes/{cliente_id}/tarefas', ['as' => 'cliente.tarefas', 'uses' => 'ClienteController@getTarefas'])->middleware('auth');
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('clientes', ClienteController::class);
+});
 /*
 |--------------------------------------------------------------------------
 | TAREFAS
 |--------------------------------------------------------------------------
 */
-Route::get('tarefas/{tarefa_id}/check', ['uses' => 'TarefasController@check']);
-Route::get('tarefas/print', ['as' => 'tarefas.print', 'uses' => 'TarefasController@index']);
-Route::delete('tarefas/{tarefa_id}/excluir', ['uses' => 'TarefasController@excluir']);
-Route::resource('tarefas', 'TarefasController');
-Route::when('tarefas*', 'auth');
-
+Route::get('tarefas/{tarefa_id}/check', ['uses' => 'TarefasController@check'])->middleware('auth');
+Route::get('tarefas/print', ['as' => 'tarefas.print', 'uses' => 'TarefasController@index'])->middleware('auth');
+Route::delete('tarefas/{tarefa_id}/excluir', ['uses' => 'TarefasController@excluir'])->middleware('auth');
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('tarefas', TarefasController::class);
+});
 /*
 |--------------------------------------------------------------------------
 | DespesaS
 |--------------------------------------------------------------------------
 */
-Route::resource('despesas', 'DespesasController');
-Route::when('despesas*', 'auth');
-
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('despesas', DespesasController::class);
+});
 /*
 |--------------------------------------------------------------------------
 | CONVERSAS
 |--------------------------------------------------------------------------
 */
-Route::resource('conversas', 'ConversasController');
-Route::get('conversas/create/{cliente_id}', ['as' => 'createconversa', 'uses' => 'ConversasController@create']);
-Route::when('conversas*', 'auth');
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('conversas', ConversasController::class);
+});
+Route::get('conversas/create/{cliente_id}', ['as' => 'createconversa', 'uses' => 'ConversasController@create'])->middleware('auth');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -92,10 +94,10 @@ Route::group(['prefix' => 'relatorios'], function () {
 Route::get('relatorios/{relatorio_id}/download', ['as' => 'relatorios.download', 'uses' => 'RelatoriosController@downloadpdf']);
 Route::get('relatorios/{relatorio_id}/pdf', ['as' => 'relatorios.pdf', 'uses' => 'RelatoriosController@streampdf']);
 Route::get('relatorios/{relatorio_id}/print', ['as' => 'relatorios.pdf', 'uses' => 'RelatoriosController@printThis']);
-Route::resource('relatorios', 'RelatoriosController');
+Route::resource('relatorios', RelatoriosController::class);
 
-Route::when('relatorios/create*', 'auth');
-Route::when('relatorios/edit*', 'auth');
+
+
 Route::when('relatorios*', 'auth', ['post', 'delete']);
 
 /*
@@ -106,7 +108,7 @@ Route::when('relatorios*', 'auth', ['post', 'delete']);
 Route::get('/', function () {
     return Redirect::to('agenda');
 });
-Route::when('/', 'auth');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -125,11 +127,13 @@ Route::get('/demo', function () {
 | AGENDA
 |--------------------------------------------------------------------------
 */
-Route::get('agenda/print', ['as' => 'agenda.print', 'uses' => 'AgendaController@index']);
-Route::resource('agenda', 'AgendaEventsController');
-Route::get('agenda/{id}/delete', ['uses' => 'AgendaEventsController@destroy']);
-Route::get('agenda/', ['uses' => 'AgendaController@index']);
-Route::when('agenda*', 'auth');
+Route::get('agenda/print', ['as' => 'agenda.print', 'uses' => 'AgendaController@index'])->middleware('auth');
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('agenda', AgendaEventsController::class);
+});
+Route::get('agenda/{id}/delete', ['uses' => 'AgendaEventsController@destroy'])->middleware('auth');
+Route::get('agenda/', ['uses' => 'AgendaController@index'])->middleware('auth');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -137,55 +141,58 @@ Route::when('agenda*', 'auth');
 |--------------------------------------------------------------------------
 */
 // SALDO
-// Route::resource('financeiro/saldo', 'BalanceController');
-Route::get('financeiro/lancamentos', ['uses' => 'TransactionsController@lancamentos']);
-Route::get('financeiro/relatorios', ['uses' => 'TransactionsController@relatorios']);
+// Route::resource('financeiro/saldo', BalanceController::class)->middleware('auth');
+Route::get('financeiro/lancamentos', ['uses' => 'TransactionsController@lancamentos'])->middleware('auth');
+Route::get('financeiro/relatorios', ['uses' => 'TransactionsController@relatorios'])->middleware('auth');
 
-Route::get('financeiro/{id}/delete', ['uses' => 'TransactionsController@confirmDestroy']);
-Route::resource('financeiro', 'TransactionsController');
+Route::get('financeiro/{id}/delete', ['uses' => 'TransactionsController@confirmDestroy'])->middleware('auth');
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('financeiro', TransactionsController::class);
+});
+Route::get('financeiro/create/{type}', ['uses' => 'TransactionsController@create'])->middleware('auth');
 
-Route::get('financeiro/create/{type}', ['uses' => 'TransactionsController@create']);
+Route::get('financeiro/', ['uses' => 'TransactionsController@index'])->middleware('auth');
 
-Route::get('financeiro/', ['uses' => 'TransactionsController@index']);
 
-Route::when('financeiro*', 'auth');
 
 /*
 |--------------------------------------------------------------------------
 | PRODUTOS
 |--------------------------------------------------------------------------
 */
-Route::get('produtos/acabamentos', ['as' => 'produtos.acabamentos', 'uses' => 'ProdutosController@acabamentos']);
-Route::get('produtos/categories', ['as' => 'produtos', 'uses' => 'ProdutosController@categories']);
-Route::get('produtos/{id}/delete', ['uses' => 'ProdutosController@destroy']);
-Route::resource('produtos', 'ProdutosController');
-Route::when('produtos*', 'auth');
-
+Route::get('produtos/acabamentos', ['as' => 'produtos.acabamentos', 'uses' => 'ProdutosController@acabamentos'])->middleware('auth');
+Route::get('produtos/categories', ['as' => 'produtos', 'uses' => 'ProdutosController@categories'])->middleware('auth');
+Route::get('produtos/{id}/delete', ['uses' => 'ProdutosController@destroy'])->middleware('auth');
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('produtos', ProdutosController::class);
+});
 /*
 |--------------------------------------------------------------------------
 | CATEGORIAS
 |--------------------------------------------------------------------------
 */
-Route::resource('categories', 'CategoriesController');
-Route::resource('categorias', 'CategoriesController');
+Route::resource('categories', CategoriesController::class);
+Route::resource('categorias', CategoriesController::class);
 
 /*
 |--------------------------------------------------------------------------
 | FORNECEDORS
 |--------------------------------------------------------------------------
 */
-Route::resource('fornecedors', 'FornecedorsController');
-Route::resource('fornecedores', 'FornecedorsController');
-Route::when('fornecedors*', 'auth');
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('fornecedors', FornecedorsController::class);
+});
+Route::resource('fornecedores', FornecedorsController::class);
+
 
 /*
 |--------------------------------------------------------------------------
 | VENDEDORES
 |--------------------------------------------------------------------------
 */
-Route::resource('vendedors', 'VendedorsController');
-Route::when('vendedors*', 'auth');
-
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('vendedors', VendedorsController::class);
+});
 /*
 |--------------------------------------------------------------------------
 | NOTIFICAÇÕES
@@ -195,35 +202,36 @@ Route::when('vendedors*', 'auth');
 Route::get('notifications/{id}/close', ['as' => 'close', 'uses' => 'NotificationsController@fechar']);
 Route::get('notifications/unread', ['as' => 'naolidas', 'uses' => 'NotificationsController@unread']);
 Route::get('notifications/clean', ['as' => 'limpar', 'uses' => 'NotificationsController@clean']);
-Route::resource('notifications', 'NotificationsController');
+Route::resource('notifications', NotificationsController::class);
 
 /*
 |--------------------------------------------------------------------------
 | NOTES
 |--------------------------------------------------------------------------
 */
-Route::resource('notes', 'NotesController');
-Route::when('notes*', 'auth');
-
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('notes', NotesController::class);
+});
 /*
 |--------------------------------------------------------------------------
 | LOGS
 |--------------------------------------------------------------------------
 */
-Route::resource('reports', 'ReportsController');
-Route::when('reports*', 'auth');
-
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('reports', ReportsController::class);
+});
 /*
 |--------------------------------------------------------------------------
 | PEDIDOS
 |--------------------------------------------------------------------------
 */
-Route::resource('pedidos', 'PedidosController');
-
-Route::get('pedidos/create/{cliente_id}', ['as' => 'createpedido', 'uses' => 'PedidosController@create']);
-Route::get('pedidos/send/{pedido_id}', ['as' => 'pedidos.sendto', 'uses' => 'PedidosController@sendTo']);
-Route::post('pedidos/send', ['as' => 'pedidos.sendnow', 'uses' => 'PedidosController@sendNow']);
-Route::get('pedidos/preview/{pedido_id}', ['as' => 'pedidos.preview', 'uses' => 'PedidosController@preview']);
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('pedidos', PedidosController::class);
+});
+Route::get('pedidos/create/{cliente_id}', ['as' => 'createpedido', 'uses' => 'PedidosController@create'])->middleware('auth');
+Route::get('pedidos/send/{pedido_id}', ['as' => 'pedidos.sendto', 'uses' => 'PedidosController@sendTo'])->middleware('auth');
+Route::post('pedidos/send', ['as' => 'pedidos.sendnow', 'uses' => 'PedidosController@sendNow'])->middleware('auth');
+Route::get('pedidos/preview/{pedido_id}', ['as' => 'pedidos.preview', 'uses' => 'PedidosController@preview'])->middleware('auth');
 
 Route::get('pedidos/{pedido_id}/arquivar', function ($id) {
     $pedido = Pedido::find($id);
@@ -245,32 +253,34 @@ Route::get('pedidos/{pedido_id}/arquivar', function ($id) {
     return Redirect::to(URL::previous());
 });
 
-Route::get('pedidos/{pedido_id}/pdf', ['as' => 'pedidos.pdf', 'uses' => 'PedidosController@pdf']);
-Route::get('pedidos/{pedido_id}/download', ['as' => 'pedidos.donwload', 'uses' => 'PedidosController@download']);
-Route::get('pedidos/{pedido_id}/print', ['as' => 'pedidos.printpreview', 'uses' => 'PedidosController@printPreview']);
+Route::get('pedidos/{pedido_id}/pdf', ['as' => 'pedidos.pdf', 'uses' => 'PedidosController@pdf'])->middleware('auth');
+Route::get('pedidos/{pedido_id}/download', ['as' => 'pedidos.donwload', 'uses' => 'PedidosController@download'])->middleware('auth');
+Route::get('pedidos/{pedido_id}/print', ['as' => 'pedidos.printpreview', 'uses' => 'PedidosController@printPreview'])->middleware('auth');
 
-Route::when('pedidos*', 'auth');
+
 
 /*
 |--------------------------------------------------------------------------
 | EMAILS
 |--------------------------------------------------------------------------
 */
-Route::get('emails/getcontacts', ['as' => 'email.getcontacts', 'uses' => 'EmailsController@getContacts']);
-Route::get('emails/create/{resource}/{id}', ['as' => 'email.create', 'uses' => 'EmailsController@create']);
-Route::resource('emails', 'EmailsController');
-Route::get('emails/track/{id}', ['as' => 'email.track', 'uses' => 'EmailsController@track']);
+Route::get('emails/getcontacts', ['as' => 'email.getcontacts', 'uses' => 'EmailsController@getContacts'])->middleware('auth');
+Route::get('emails/create/{resource}/{id}', ['as' => 'email.create', 'uses' => 'EmailsController@create'])->middleware('auth');
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('emails', EmailsController::class);
+});
+Route::get('emails/track/{id}', ['as' => 'email.track', 'uses' => 'EmailsController@track'])->middleware('auth');
 
-// Route::when('emails*', 'auth');
+// 
 
 /*
 |--------------------------------------------------------------------------
 | EVENTOS
 |--------------------------------------------------------------------------
 */
-Route::resource('eventos', 'EventosController');
-Route::when('eventos*', 'auth');
-
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('eventos', EventosController::class);
+});
 /*
 |--------------------------------------------------------------------------
 | PRINT PAGE
@@ -287,27 +297,26 @@ Route::get('print', function () {
 Route::get('print/{resource}', function ($resource) {
     return $resource;
 });
-Route::when('print*', 'auth');
+
 
 /*
 |--------------------------------------------------------------------------
 | MOVIMENTOS
 |--------------------------------------------------------------------------
 */
-Route::resource('movimentos', 'MovimentosController');
-Route::when('movimentos*', 'auth');
-
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('movimentos', MovimentosController::class);
+});
 /*
 |--------------------------------------------------------------------------
 | CONFIGURAÇÕES
 |--------------------------------------------------------------------------
 */
-Route::get('settings/reset', ['uses' => 'SettingsController@reset']);
-Route::get('settings/{module}', ['uses' => 'SettingsController@index']);
-Route::resource('settings', 'SettingsController', ['names' => ['store' => 'settings.store']]);
-
-Route::when('settings*', 'auth');
-
+Route::get('settings/reset', ['uses' => 'SettingsController@reset'])->middleware('auth');
+Route::get('settings/{module}', ['uses' => 'SettingsController@index'])->middleware('auth');
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('settings', 'SettingsController', ['names' => ['store' => 'settings.store']]);
+});
 // TEMPLATE
 Route::get('/template', function () {
     return View::make('template');
@@ -328,7 +337,7 @@ Route::group(['before' => 'auth'], function () {
     Route::get('users/{id}', ['uses' => 'UsersController@edit']);
     Route::get('users/{id}/edit', ['uses' => 'UsersController@edit']);
     Route::get('users', ['uses' => 'UsersController@index']);
-    Route::resource('users', 'UsersController');
+    Route::resource('users', UsersController::class);
 });
 Route::post('users', ['as' => 'users.store', 'uses' => 'UsersController@store']);
 Route::post('users/{id}', ['as' => 'users.update', 'uses' => 'UsersController@update']);
@@ -338,7 +347,7 @@ Route::get('users/confirm/{code}', 'UsersController@confirm');
 Route::get('users/logout', 'UsersController@logout');
 Route::get('logout', 'UsersController@logout');
 
-if (Config::get('settings.app_allow_register')) {
+if (config()->get('settings.app_allow_register')) {
     Route::get('signup', 'UsersController@create');
     // Route::get('users/create', 'UsersController@create');
 }
