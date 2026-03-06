@@ -1,21 +1,23 @@
-<?php 
-use Carbon\Carbon as Carbon;
-class BalanceController extends BaseController {
+<?php
 
+use Carbon\Carbon;
+
+class BalanceController extends BaseController
+{
     /**
-    * Display a listing of the resource.
-    *
-    * @return Response
-    */
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
     public function index()
     {
-        setlocale(LC_ALL, "pt_BR", "pt_BR.iso-8859-1", "pt_BR.utf-8", "portuguese");
+        setlocale(LC_ALL, 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
 
-        $balance = Balance::orderBy('id', 'DESC')->where( 'user_id', Auth::id() )->first();
-     
+        $balance = Balance::orderBy('id', 'DESC')->where('user_id', Auth::id())->first();
+
         // SALDO DE HOJE
-        // $hoje = Carbon::now();      
+        // $hoje = Carbon::now();
         // $balanceToday = DB::table('transactions')
         //                             ->where( 'created_at', '>=', $hoje->startOfDay() ) // Desde a meia noite
         //                             ->where( 'created_at', '<=', date('Y-m-d H:i:s') ) // Até agora
@@ -23,13 +25,12 @@ class BalanceController extends BaseController {
         //                             ->where( 'done', 1 )
         //                             //->get();
         //                             ->sum( 'amount' );
-    
 
         // // BALANCE
         // $lastBalance = Balance::orderBy('id', 'DESC')->where( 'user_id', Auth::id() )->first();
-        // if( !$lastBalance ){ 
+        // if( !$lastBalance ){
         //     // PRIMEIRO BALANCO
-        //     $firstBalance = DB::table('transactions')                                    
+        //     $firstBalance = DB::table('transactions')
         //                             ->where( 'created_at', '<', $hoje->startOfDay() ) // Até agora
         //                             ->where( 'user_id', Auth::id() )
         //                             ->where( 'done', 1 )
@@ -54,55 +55,49 @@ class BalanceController extends BaseController {
         // echo "Saldo anterior: " . $lastBalance->amount;
         // echo "<br />";
 
-        // echo "Hoje: " . $balanceToday;       
+        // echo "Hoje: " . $balanceToday;
 
         // echo "<br />";
 
         // echo "Total: " . $balance->amount;
-        
-        return Response::json( $balance );
+
+        return Response::json($balance);
         exit;
 
-
-
-
         // SE NÃO EXISTE REGISTRO DE SALDO, CRIA NOVO
-        if( !$balance ){
+        if (! $balance) {
             $balance = new Balance;
             // Calcula Valor inicial do novo saldo
-            $amount = DB::table('transactions')->where( 'created_at', '<', $hoje->startOfDay() )->where('user_id', Auth::id() )->where('done', 1 )->sum('amount');
+            $amount = DB::table('transactions')->where('created_at', '<', $hoje->startOfDay())->where('user_id', Auth::id())->where('done', 1)->sum('amount');
             $balance->amount = $amount;
             $balance->save();
         }
-        
-                
-        $lastBalanceDate = Carbon::createFromFormat('Y-m-d H:i:s', $balance->created_at );
 
+        $lastBalanceDate = Carbon::createFromFormat('Y-m-d H:i:s', $balance->created_at);
 
         // SE O SALDO NÂO É DE HOJE, CRIA NOVO
-        if(  !$lastBalanceDate->isToday() ){
+        if (! $lastBalanceDate->isToday()) {
             $lastBalance = $balance->amount;
-            $balance     = new Balance;
+            $balance = new Balance;
             $balance->amount = $lastBalance;
             $balance->save();
-        
+
         }
-        
+
         // ATUALIZA O ÚLTIMO BALANCE
-        $amount      = DB::table('transactions')
-                                    ->where( 'created_at', '>=', $hoje->startOfDay() ) // Desde a meia noite
-                                    ->where( 'created_at', '<=', date('Y-m-d H:i:s') ) // Até agora
-                                    ->where( 'user_id', Auth::id() )
-                                    ->where( 'done', 1 )
-                                    //->get();
-                                    ->sum( 'amount' );
-        
+        $amount = DB::table('transactions')
+            ->where('created_at', '>=', $hoje->startOfDay()) // Desde a meia noite
+            ->where('created_at', '<=', date('Y-m-d H:i:s')) // Até agora
+            ->where('user_id', Auth::id())
+            ->where('done', 1)
+                                    // ->get();
+            ->sum('amount');
+
         // $transactionsToday = Transaction::where( 'created_at', '>=', $hoje->startOfDay() )
         //                              ->where( 'created_at', '<=', date('Y-m-d H:i:s') )
         //                              ->where( 'user_id', Auth::id() )
         //                              ->where( 'done', 1 )
         //                              ->get();
-
 
         // Soma valor do dia com o saldo anterior
         $amount = ($amount + $balance->amount);
@@ -118,45 +113,39 @@ class BalanceController extends BaseController {
     }
 
     /**
-    * Show the form for creating a new resource.
-    *
-    * @return Response
-    */
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
     public function create()
     {
-        return "creating a balance?";
+        return 'creating a balance?';
     }
 
     /**
-    * Store a newly created resource in storage.
-    *
-    * @return Response
-    */
-    public function store()
-    {
-
-    }
+     * Store a newly created resource in storage.
+     *
+     * @return Response
+     */
+    public function store() {}
 
     /**
-    * Display the specified resource.
-    *
-    * @param  int  $id
-    * @return Response
-    */
-    public function show($id)
-    {
-
-    }
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function show($id) {}
 
     /**
-    * Show the form for editing the specified resource.
-    *    
-    * @return Response
-    */
+     * Show the form for editing the specified resource.
+     *
+     * @return Response
+     */
     public function edit()
     {
         $balance = Balance::orderBy('id', 'desc')->first();
-        if( !$balance ){
+        if (! $balance) {
             $balance = new Balance;
             $balance->amount = '0';
         }
@@ -166,27 +155,18 @@ class BalanceController extends BaseController {
     }
 
     /**
-    * Update the specified resource in storage.
-    *
-    * @param  int  $id
-    * @return Response
-    */
-    public function update($id)
-    {
-
-    }
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function update($id) {}
 
     /**
-    * Remove the specified resource from storage.
-    *
-    * @param  int  $id
-    * @return Response
-    */
-    public function destroy($id)
-    {
-
-    }
-  
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function destroy($id) {}
 }
-
-?>
