@@ -14,7 +14,7 @@
 	<div class="form-group">
 		<label for="app_logo" class="col-sm-2 control-label">Logo:</label>
 		<div class="col-sm-10">
-			{{-- Input::file('image/save', array( 'name'=>"settings[app_logo]", 'id'=>"app_logo", 'value'=>Config::get('settings.app_logo'), 'required'=>"required", 'files'=> true)) --}}
+			{{-- \Illuminate\Support\Facades\Request::file('image/save', array( 'name'=>"settings[app_logo]", 'id'=>"app_logo", 'value'=>Config::get('settings.app_logo'), 'required'=>"required", 'files'=> true)) --}}
 			<input type="text" name="settings[app_logo]" id="app_logo" class="form-control" value="{{Config::get('settings.app_logo')}}" required="required" title="">
 		</div>
 	</div>
@@ -26,5 +26,5 @@
 	</div>
 			
 	{{-- <input type="file" name="settings[app_logo]" id="app_logo" class="form-control" value="{{Config::get('settings.app_logo')}}" required="required" title="">
-	{{ Input::file("settings[app_logo]") }}			 --}}	
+	{{ \Illuminate\Support\Facades\Request::file("settings[app_logo]") }}			 --}}	
 {{ Form::close() }}
