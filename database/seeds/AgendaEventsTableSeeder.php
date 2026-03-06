@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Database\Seeder;
 // Composer: "fzaninotto/faker": "v1.3.0"
 use Faker\Factory as Faker;
 
