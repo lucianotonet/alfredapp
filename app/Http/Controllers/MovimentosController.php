@@ -46,7 +46,7 @@ class MovimentosController extends \BaseController
             }
         }
 
-        return View::make('movimentos.index', compact('movimentos'));
+        return view('movimentos.index', compact('movimentos'));
     }
 
     /**
@@ -57,9 +57,9 @@ class MovimentosController extends \BaseController
     public function create()
     {
         if (Request::ajax()) {
-            return View::make('movimentos.panels.create');
+            return view('movimentos.panels.create');
         } else {
-            return View::make('movimentos.create');
+            return view('movimentos.create');
         }
     }
 
@@ -73,12 +73,12 @@ class MovimentosController extends \BaseController
         $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Movimento::$rules);
 
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         Movimento::create($data);
 
-        return Redirect::route('movimentos.index');
+        return redirect()->route('movimentos.index');
     }
 
     /**
@@ -91,7 +91,7 @@ class MovimentosController extends \BaseController
     {
         $movimento = Movimento::findOrFail($id);
 
-        return View::make('movimentos.show', compact('movimento'));
+        return view('movimentos.show', compact('movimento'));
     }
 
     /**
@@ -104,7 +104,7 @@ class MovimentosController extends \BaseController
     {
         $movimento = Movimento::find($id);
 
-        return View::make('movimentos.edit', compact('movimento'));
+        return view('movimentos.edit', compact('movimento'));
     }
 
     /**
@@ -120,12 +120,12 @@ class MovimentosController extends \BaseController
         $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Movimento::$rules);
 
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $movimento->update($data);
 
-        return Redirect::route('movimentos.index');
+        return redirect()->route('movimentos.index');
     }
 
     /**
@@ -138,6 +138,6 @@ class MovimentosController extends \BaseController
     {
         Movimento::destroy($id);
 
-        return Redirect::route('movimentos.index');
+        return redirect()->route('movimentos.index');
     }
 }
