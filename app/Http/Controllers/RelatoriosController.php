@@ -50,7 +50,7 @@ class RelatoriosController extends \BaseController
         $status = $this->status($resource_name);
 
         // OLD INPUTS
-        Input::flash();
+        \Illuminate\Support\Facades\Request::flash();
 
         // TIPO DE RELATÓRIO
         switch ($resource_name) {
@@ -289,7 +289,7 @@ class RelatoriosController extends \BaseController
      */
     public function store()
     {
-        $validator = Validator::make($data = Input::all(), Relatorio::$rules);
+        $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Relatorio::$rules);
 
         // Cria o novo relatório
         $relatorio = new Relatorio;
@@ -535,7 +535,7 @@ class RelatoriosController extends \BaseController
     {
         $relatorio = Relatorio::find($id);
 
-        $validator = Validator::make($data = Input::all(), Relatorio::$rules);
+        $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Relatorio::$rules);
 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
