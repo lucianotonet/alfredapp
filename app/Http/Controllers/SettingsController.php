@@ -54,7 +54,7 @@ class SettingsController extends \BaseController
      */
     public function store()
     {
-        $validator = Validator::make($data = Input::all(), Setting::$rules);
+        $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Setting::$rules);
 
         // echo "<pre>"; print_r( $data ); echo "</pre>"; exit;
 
@@ -169,7 +169,7 @@ class SettingsController extends \BaseController
     {
         $setting = Setting::findOrFail($id);
 
-        $validator = Validator::make($data = Input::all(), Setting::$rules);
+        $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Setting::$rules);
 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
