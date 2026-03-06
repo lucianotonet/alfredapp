@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-use Exception;
+use Throwable;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -11,12 +11,12 @@ class Handler extends ExceptionHandler
 
     protected $dontFlash = ['password', 'password_confirmation'];
 
-    public function report(Exception $e)
+    public function report(Throwable $e)
     {
         parent::report($e);
     }
 
-    public function render($request, Exception $e)
+    public function render($request, Throwable $e)
     {
         return parent::render($request, $e);
     }
