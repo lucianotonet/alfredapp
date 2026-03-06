@@ -38,6 +38,9 @@
         "audit": {
             "block-insecure": false,
             "abandoned": "ignore"
+        },
+        "allow-plugins": {
+            "kylekatarnls/update-helper": true
         }
     },
     "minimum-stability": "stable",
