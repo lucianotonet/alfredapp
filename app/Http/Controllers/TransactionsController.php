@@ -101,7 +101,7 @@ class TransactionsController extends \BaseController
 
     public function lancamentos()
     {
-        $data = Input::all();
+        $data = \Illuminate\Support\Facades\Request::all();
         if (! isset($data['view'])) {
             $data['view'] = 'month';
         }
@@ -366,7 +366,7 @@ class TransactionsController extends \BaseController
      */
     public function create()
     {
-        $data = Input::all();
+        $data = \Illuminate\Support\Facades\Request::all();
 
         // return View::make('transactions.create');
         if (Request::ajax()) {
@@ -383,7 +383,7 @@ class TransactionsController extends \BaseController
      */
     public function store()
     {
-        $validator = Validator::make($data = Input::all(), Transaction::$rules);
+        $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Transaction::$rules);
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
         }
@@ -819,7 +819,7 @@ class TransactionsController extends \BaseController
     {
         $transaction = Transaction::find($id);
         $transactions = $transaction->getRecurringTransactions;
-        $validator = Validator::make($data = Input::all(), Transaction::$rules);
+        $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Transaction::$rules);
         if ($validator->fails()) {
             $alert[] = ['class' => 'alert-danger', 'message' => '<strong><i class="fa fa-warning"></i></strong> Erro!'];
             Session::flash('alerts', $alert);
@@ -967,7 +967,7 @@ class TransactionsController extends \BaseController
     {
         $transaction = Transaction::find($id);
         $transactions = $transaction->getRecurringTransactions;
-        $data = Input::all();
+        $data = \Illuminate\Support\Facades\Request::all();
 
         // return View::make('transactions.create');
         if (Request::ajax()) {
@@ -986,7 +986,7 @@ class TransactionsController extends \BaseController
      */
     public function destroy($id)
     {
-        $data = Input::all();
+        $data = \Illuminate\Support\Facades\Request::all();
 
         $transaction = Transaction::find($id);
 
@@ -1057,7 +1057,7 @@ class TransactionsController extends \BaseController
 
     public function relatorios()
     {
-        $data = Input::all();
+        $data = \Illuminate\Support\Facades\Request::all();
         if (! isset($data['view'])) {
             $data['view'] = 'month';
         }
