@@ -9,13 +9,13 @@ class CategoriesController extends \BaseController
      */
     public function index()
     {
-        $data = Input::all();
+        $data = \Illuminate\Support\Facades\Request::all();
         $categories = Category::where(function ($query) {
-            if (Input::has('owner_type')) {
-                $query->where('owner_type', Input::get('owner_type'));
+            if (\Illuminate\Support\Facades\Request::has('owner_type')) {
+                $query->where('owner_type', \Illuminate\Support\Facades\Request::get('owner_type'));
             }
-            if (Input::has('query')) {
-                $query->where('name', 'like', '%'.Input::get('query').'%');
+            if (\Illuminate\Support\Facades\Request::has('query')) {
+                $query->where('name', 'like', '%'.\Illuminate\Support\Facades\Request::get('query').'%');
             }
         });
         $types = Category::get(['owner_type']);
@@ -28,7 +28,7 @@ class CategoriesController extends \BaseController
             // SUGGESTIONS FOR AUTOCOMPLETE
             $categories = $categories->get();
 
-            if (Input::has('query')) {
+            if (\Illuminate\Support\Facades\Request::has('query')) {
                 $suggestions = [];
 
                 foreach ($categories as $category) {
@@ -48,7 +48,7 @@ class CategoriesController extends \BaseController
             return View::make('categories.panels.index', compact('categories', 'types'));
 
         } else {
-            $categories = $categories->paginate(Input::get('paginate', 10));
+            $categories = $categories->paginate(\Illuminate\Support\Facades\Request::get('paginate', 10));
 
             return View::make('categories.index', compact('categories', 'types'));
         }
@@ -82,7 +82,7 @@ class CategoriesController extends \BaseController
      */
     public function store()
     {
-        $validator = Validator::make($data = Input::all(), Category::$rules);
+        $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Category::$rules);
 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
@@ -157,7 +157,7 @@ class CategoriesController extends \BaseController
     {
         $category = Category::findOrFail($id);
 
-        $validator = Validator::make($data = Input::all(), Category::$rules);
+        $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Category::$rules);
 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
