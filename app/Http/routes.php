@@ -28,7 +28,7 @@ Route::get('/locale', function () {
 |
 */
 Route::get('timeline', function () {
-    return View::make('timeline');
+    return view('timeline');
 });
 
 /*
@@ -103,7 +103,7 @@ Route::when('relatorios*', 'auth', ['post', 'delete']);
 |--------------------------------------------------------------------------
 */
 Route::get('/', function () {
-    return Redirect::to('agenda');
+    return redirect()->to('agenda');
 });
 
 /*
@@ -115,7 +115,7 @@ Route::get('/demo', function () {
     $clientes = Cliente::all();
     $tarefas = Tarefa::all();
 
-    return View::make('demo', compact('clientes', 'tarefas'));
+    return view('demo', compact('clientes', 'tarefas'));
 });
 
 /*
@@ -234,15 +234,15 @@ Route::get('pedidos/{pedido_id}/arquivar', function ($id) {
         $alert[] = ['class' => 'alert-success',
             'message' => 'Pedido arquivado!'];
 
-        Session::flash('alerts', $alert);
+        session()->flash('alerts', $alert);
     } else {
         $alert[] = ['class' => 'alert-danger',
             'message' => 'Pedidos não encontrado!'];
 
-        Session::flash('alerts', $alert);
+        session()->flash('alerts', $alert);
     }
 
-    return Redirect::to(URL::previous());
+    return redirect()->to(URL::previous());
 });
 
 Route::get('pedidos/{pedido_id}/pdf', ['as' => 'pedidos.pdf', 'uses' => 'PedidosController@pdf'])->middleware('auth');
@@ -280,9 +280,9 @@ Route::get('print', function () {
     $alert[] = ['class' => 'alert-warning',
         'message' => 'Informe o objeto a ser impresso!'];
 
-    Session::flash('alerts', $alert);
+    session()->flash('alerts', $alert);
 
-    return Redirect::to(URL::previous());
+    return redirect()->to(URL::previous());
 });
 Route::get('print/{resource}', function ($resource) {
     return $resource;
@@ -308,7 +308,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 // TEMPLATE
 Route::get('/template', function () {
-    return View::make('template');
+    return view('template');
 });
 
 // Confide routes
@@ -346,7 +346,7 @@ View::share('canI', function ($action, $entity) {
 });
 
 Route::get('invoice', function () {
-    return View::make('clientes.invoice');
+    return view('clientes.invoice');
 });
 
 /*
