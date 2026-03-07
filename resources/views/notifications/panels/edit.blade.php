@@ -6,7 +6,7 @@
 				<h4 class="panel-title title"><i class="icon-bell-o"></i> Editar notificação {{$notification->id}}</h4>
 			</div>
 			
-			{{ Form::model($notification, [ 'method' => 'PATCH', 'route' =>[ 'notifications.update', $notification->id ], 'class' => 'form-horizontal' ] ) }}   
+			{!! Form::model($notification, [ 'method' => 'PATCH', 'route' =>[ 'notifications.update', $notification->id ], 'class' => 'form-horizontal' ] ) !!}   
 				
 				<div class="panel-body">
 
@@ -80,6 +80,6 @@
 					<button type="submit" class="btn btn-success pull-right">Salvar</button>
 					<a href="{{ url( URL::previous() ) }}" class="btn btn-primary">Voltar</a>
 				</div>
-			{{Form::close()}}
+			{!! Form::close() !!}
 		
 </div>

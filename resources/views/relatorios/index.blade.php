@@ -53,7 +53,7 @@
 									@foreach ( $relatorios->despesas as $relatorio )
 									<div class="list-group-item">						
 			
-										{{ Form::open(array('url' => 'relatorios/' . $relatorio->id, 'class' => '')) }}
+										{!! Form::open(array('url' => 'relatorios/' . $relatorio->id, 'class' => '')) !!}
 							                <div class="pull-right">
 			
 							                    <?php if( Confide::user() ){ ?>
@@ -66,14 +66,14 @@
 								                        <i class="fa fa-edit"></i>
 								                    </a>
 			
-								                    {{ Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-danger btn-sm', 'type'=>'sumbit', 'onclick'=>'javascript:return confirm("Excluir o relatório?")')) }}
+								                    {!! Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-danger btn-sm', 'type'=>'sumbit', 'onclick'=>'javascript:return confirm("Excluir o relatório?")')) !!}
 			
-								                    {{ Form::hidden('_method', 'DELETE') }}									
+								                    {!! Form::hidden('_method', 'DELETE') !!}									
 												<?php } ?>
 			
 							                
 							                </div>
-							            {{ Form::close() }} 
+							            {!! Form::close() !!} 
 									
 										<a href="{{url('relatorios',$relatorio->id)}}" class="">		
 											<?php if( Confide::user() ){ ?>					
@@ -118,7 +118,7 @@
 									@foreach ( $relatorios->conversas as $relatorio )
 									<div class="list-group-item">						
 			
-										{{ Form::open(array('url' => 'relatorios/' . $relatorio->id, 'class' => '')) }}
+										{!! Form::open(array('url' => 'relatorios/' . $relatorio->id, 'class' => '')) !!}
 							                <div class="pull-right">
 												
 							                    <?php if( Confide::user() ){ ?>
@@ -130,15 +130,15 @@
 								                        <i class="fa fa-edit"></i>
 								                    </a> -->
 								                    
-								                    {{ Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-danger btn-sm', 'type'=>'sumbit', 'onclick'=>'javascript:return confirm("Excluir o relatório?")')) }}
+								                    {!! Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-danger btn-sm', 'type'=>'sumbit', 'onclick'=>'javascript:return confirm("Excluir o relatório?")')) !!}
 			
-								                    {{ Form::hidden('_method', 'DELETE') }}
+								                    {!! Form::hidden('_method', 'DELETE') !!}
 							                	<?php } ?>
 												<!-- <a href="#" class="btn btn-sm btn-link">Right</a> -->
 			
 							                
 							                </div>
-							            {{ Form::close() }} 
+							            {!! Form::close() !!} 
 									
 										<a href="{{url('relatorios',$relatorio->id)}}" class="">							
 											<?php if( Confide::user() ){ ?>

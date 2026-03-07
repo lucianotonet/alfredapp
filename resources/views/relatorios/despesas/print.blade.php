@@ -7,7 +7,7 @@
     <title></title>
 
     <!-- Bootstrap CSS -->
-    {{ HTML::style('http://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css') }}
+    {!! HTML::style('http://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css') !!}
 
     <!-- PureCSS -->
     {{-- HTML::style('http://yui.yahooapis.com/pure/0.5.0/pure-min.css') --}}

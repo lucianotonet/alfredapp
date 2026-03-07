@@ -1,7 +1,7 @@
 <div class="modal fade" id="conversas_create">
     <div class="modal-dialog">
         <div class="modal-content">
-            {{ Form::open(array('url' => 'conversas','class'=>'form-horizontal')) }}
+            {!! Form::open(array('url' => 'conversas','class'=>'form-horizontal')) !!}
                 <div class="modal-header bg-primary">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title title">Registrar conversa</h4>
@@ -47,8 +47,8 @@
                     <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Fechar</button>
                     <button type="submit" class="btn btn-sm btn-success">Salvar</button>
                 </div>
-                {{ Form::hidden('cliente_id', $cliente->id) }}
-            {{ Form::close() }}
+                {!! Form::hidden('cliente_id', $cliente->id) !!}
+            {!! Form::close() !!}
         </div>
     </div>
 </div>
