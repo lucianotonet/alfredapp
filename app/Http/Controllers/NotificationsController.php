@@ -12,12 +12,12 @@ class NotificationsController extends \BaseController
     public function index()
     {
 
-        $data = Input::all();
-        $pagination = Input::has('pagination') ? Input::get('pagination') : 10;
+        $data = \Illuminate\Support\Facades\Request::all();
+        $pagination = \Illuminate\Support\Facades\Request::has('pagination') ? \Illuminate\Support\Facades\Request::get('pagination') : 10;
 
         // FILTRA RESULTADOS
         $notifications = Notification::where(function ($query) {
-            switch (Input::get('view')) {
+            switch (\Illuminate\Support\Facades\Request::get('view')) {
                 case 'next':
                     // AGENDADAS
                     $query->where('date', '>', date('Y-m-d H:i:s'));
@@ -32,25 +32,25 @@ class NotificationsController extends \BaseController
                     break;
             }
 
-            if (Input::has('type')) {
-                $query->where('type', Input::get('type'));
+            if (\Illuminate\Support\Facades\Request::has('type')) {
+                $query->where('type', \Illuminate\Support\Facades\Request::get('type'));
             }
-            if (Input::has('owner_type')) {
-                $query->where('owner_type', Input::get('owner_type'));
+            if (\Illuminate\Support\Facades\Request::has('owner_type')) {
+                $query->where('owner_type', \Illuminate\Support\Facades\Request::get('owner_type'));
             }
-            if (Input::has('owner_id')) {
-                $query->where('owner_id', Input::get('owner_id'));
+            if (\Illuminate\Support\Facades\Request::has('owner_id')) {
+                $query->where('owner_id', \Illuminate\Support\Facades\Request::get('owner_id'));
             }
-            if (Input::has('order')) {
-                $query->orderBy('date', Input::get('order'));
+            if (\Illuminate\Support\Facades\Request::has('order')) {
+                $query->orderBy('date', \Illuminate\Support\Facades\Request::get('order'));
             }
 
         })
             ->where('user_id', Confide::user()->id)
-            ->orderBy('date', Input::get('order', 'DESC'))
+            ->orderBy('date', \Illuminate\Support\Facades\Request::get('order', 'DESC'))
             ->paginate($pagination);
 
-        switch (Input::get('view', 'unread')) {
+        switch (\Illuminate\Support\Facades\Request::get('view', 'unread')) {
             case 'next':
                 $labels['nothing'] = 'Nenhuma notificação agendada';
                 break;
@@ -238,7 +238,7 @@ class NotificationsController extends \BaseController
         // return;
         //    	}
 
-        $validator = Validator::make($data = Input::all(), Notification::$rules);
+        $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Notification::$rules);
 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
@@ -331,7 +331,7 @@ class NotificationsController extends \BaseController
     {
         $notification = Notification::findOrFail($id);
 
-        $validator = Validator::make($data = Input::all(), Notification::$rules);
+        $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Notification::$rules);
 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
@@ -449,7 +449,7 @@ class NotificationsController extends \BaseController
     public function filterResults()
     {
 
-        $data = Input::all();
+        $data = \Illuminate\Support\Facades\Request::all();
         $data['view'] = isset($data['view']) ? $data['view'] : 'day';
         $data['date'] = isset($data['date']) ? $data['date'] : date('Y-m-d');
         $data['next'] = isset($data['next']) ? $data['next'] : 0;
