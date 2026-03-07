@@ -12,7 +12,7 @@
 
 	<div class="panel panel-primary">
 		<div class="panel-heading">
-			<?php if( Confide::user() ){ ?>
+			<?php if( Auth::user() ){ ?>
 			<a href="{{url('relatorios/create')}}" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo</a>					
 			<?php } ?>
 			<h3 class="panel-title title">Relatórios</h3>
@@ -42,7 +42,7 @@
 									
 								@if ( isset( $relatorios->despesas ) )					
 						        	<div class="panel-body">
-						        		<?php if( Confide::user() ){ ?>
+						        		<?php if( Auth::user() ){ ?>
 						        		<a href="{{url('/relatorios/create/despesas')}}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Novo</a>
 						        		<?php } ?>
 							        	<h3 class="title">
@@ -56,7 +56,7 @@
 										{{ Form::open(array('url' => 'relatorios/' . $relatorio->id, 'class' => '')) }}
 							                <div class="pull-right">
 			
-							                    <?php if( Confide::user() ){ ?>
+							                    <?php if( Auth::user() ){ ?>
 													
 													@if( $relatorio->status < 1 )
 													<a href="{{ url('/emails/create/?owner_type=relatorio&owner_id='.$relatorio->id) }}" class="btn btn-sm btn-success send" data-toggle="modal" data-target="#email"><i class="fa fa-envelope-o"></i></a>
@@ -76,7 +76,7 @@
 							            {{ Form::close() }} 
 									
 										<a href="{{url('relatorios',$relatorio->id)}}" class="">		
-											<?php if( Confide::user() ){ ?>					
+											<?php if( Auth::user() ){ ?>					
 												@if( $relatorio->status )								
 													<span class="badge label label-success" title="Enviado"><i class="fa fa-check"></i></span>
 												@else
@@ -94,7 +94,7 @@
 							        	<h2 class="title">
 							        		Nenhum relatório de despesa
 							        	</h2>
-							        	<?php if( Confide::user() ){ ?>
+							        	<?php if( Auth::user() ){ ?>
 						        		<a href="{{url('/relatorios/create/despesas')}}" class="btn btn-success btn-lg"><i class="fa fa-plus"></i> Novo relatório</a>
 						        		<?php } ?>
 						        	</div>   
@@ -107,7 +107,7 @@
 			
 					        	@if ( isset( $relatorios->conversas ) )
 						        	<div class="panel-body">
-						        		<?php if( Confide::user() ){ ?>
+						        		<?php if( Auth::user() ){ ?>
 						        		<a href="{{url('/relatorios/create/conversas')}}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Novo</a>	        		
 						        		<?php } ?>
 							        	<h3 class="title">
@@ -121,7 +121,7 @@
 										{{ Form::open(array('url' => 'relatorios/' . $relatorio->id, 'class' => '')) }}
 							                <div class="pull-right">
 												
-							                    <?php if( Confide::user() ){ ?>
+							                    <?php if( Auth::user() ){ ?>
 													@if( $relatorio->status < 1 )
 													<a href="{{ url('/emails/create/?owner_type=relatorio&owner_id='.$relatorio->id) }}" class="btn btn-sm btn-success send" data-toggle="modal" data-target="#email"><i class="fa fa-envelope"></i></a>
 													@endif
@@ -141,7 +141,7 @@
 							            {{ Form::close() }} 
 									
 										<a href="{{url('relatorios',$relatorio->id)}}" class="">							
-											<?php if( Confide::user() ){ ?>
+											<?php if( Auth::user() ){ ?>
 											@if( $relatorio->status )								
 												<span class="badge label label-success" title="Enviado"><i class="fa fa-check"></i></span>
 											@else
@@ -159,7 +159,7 @@
 							        	<h2 class="title">
 							        		Nenhum relatório de conversas
 							        	</h2>
-							        	<?php if( Confide::user() ){ ?>
+							        	<?php if( Auth::user() ){ ?>
 						        		<a href="{{url('/relatorios/create/conversas')}}" class="btn btn-success btn-lg"><i class="fa fa-plus"></i> Novo relatório</a>
 						        		<?php } ?>
 						        	</div>   
