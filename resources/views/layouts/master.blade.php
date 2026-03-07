@@ -2,7 +2,7 @@
 <html lang="{{ App::getLocale() }}">
 <head>
 	<meta charset="utf-8">
-	<title>{{Config::get('settings.app_title')}}</title>
+	<title>{{config('settings.app_title')}}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<!-- Bootcards CSS for desktop -->
@@ -112,7 +112,7 @@
 
 			<a id="logo" class="pull-right hidden-xs"  href="<?php echo url('/') ?>" >
 
-				<img src="{{Config::get('settings.app_logo')}}" alt="" class="img-responsive">
+				<img src="{{config('settings.app_logo')}}" alt="" class="img-responsive">
 
 				<!-- <img src="{{asset('img/logo.png')}}" alt="" class="img-responsive"> -->
 
@@ -137,14 +137,14 @@
 
 	if(Auth::user()){ //SE ESTIVER LOGADO... ?>
 
-	@if  ( Session::has('notifications') )
+	@if  ( session()->has('notifications') )
 
 
 	<div class="modal fade" id="notifications_modal">
 		<div class="modal-dialog">
 			<div class="modal-content">                    
 				<div class="alert-group" style="">
-					@foreach ( Session::get('notifications') as $notification )
+					@foreach ( session()->get('notifications') as $notification )
 
 					@include('notifications.item')
 
