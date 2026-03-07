@@ -415,7 +415,7 @@ class Saudacoes
     {
 
         date_default_timezone_set('America/Sao_Paulo');
-        $nome = Confide::user() ? Confide::user()->username : '';
+        $nome = Auth::user() ? Auth::user()->username : '';
         $hr = date(' H ');
 
         if ($hr >= 12 && $hr < 20) {
