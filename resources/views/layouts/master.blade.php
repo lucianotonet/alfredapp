@@ -67,7 +67,7 @@
 <body>
 
 
-	<?php if(Confide::user()){ //SE ESTIVER LOGADO... ?>
+	<?php if(Auth::user()){ //SE ESTIVER LOGADO... ?>
 	
 	@include('layouts.menu')
 
@@ -135,7 +135,7 @@
 
 	<?php
 
-	if(Confide::user()){ //SE ESTIVER LOGADO... ?>
+	if(Auth::user()){ //SE ESTIVER LOGADO... ?>
 
 	@if  ( Session::has('notifications') )
 

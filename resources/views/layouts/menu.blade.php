@@ -2,7 +2,7 @@
 <nav class="pushy pushy-left navbar-inverse">
    <!--  <div class="well-sm">
     
-        {{Confide::user() ? Confide::user()->username : ''}}
+        {{Auth::user() ? Auth::user()->username : ''}}
 
     </div> -->
     <ul class="btn-group-vertical text-left">        
