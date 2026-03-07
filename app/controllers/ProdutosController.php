@@ -1,235 +1,232 @@
 <?php
 
-use Faker\Factory as Faker;
+class ProdutosController extends \BaseController
+{
+    /**
+     * Display a listing of produtos
+     *
+     * @return Response
+     */
+    public function index()
+    {
+        $view = (Input::has('view')) ? Input::get('view') : 'index';
 
-class ProdutosController extends \BaseController {
+        $produtos = Produto::orderBy('cod', 'ASC')->paginate(Input::get('paginate', 50));
 
-   /**
-    * Display a listing of produtos
-    *
-    * @return Response
-    */
-   public function index()
-   {   		
-	   	$view  = ( Input::has('view') ) ? Input::get('view') : 'index';   		
+        $categories = Category::where('owner_type', 'Produto')->get();
 
-	   	$produtos 	= Produto::orderBy('cod', 'ASC')->paginate( Input::get('paginate', 50) );  
+        foreach ($produtos as $produto) {
+            $produto->cod = (int) $produto->cod;
+            $produto->preco = number_format($produto->preco, '2', ',', '.');
+        }
+        $produtos->getCollection()->reverse();
 
-	   	$categories = Category::where('owner_type','Produto')->get();
+        return View::make('produtos.index', compact('produtos', 'categories'));
+    }
 
-	   	foreach ($produtos as $produto) {
-	   		$produto->cod 	= (Int)$produto->cod;
-	   		$produto->preco = number_format($produto->preco, '2', ',', '.');
-	   	}   
-	   	$produtos->getCollection()->reverse();
+    /**
+     * Show the form for creating a new produto
+     *
+     * @return Response
+     */
+    public function create()
+    {
+        if (Request::ajax()) {
+            return View::make('produtos.panels.create');
+        } else {
+            return View::make('produtos.create');
+        }
+    }
 
-	   	return View::make('produtos.index', compact('produtos','categories'));
-   }
+    /**
+     * Store a newly created produto in storage.
+     *
+     * @return Response
+     */
+    public function store()
+    {
+        $validator = Validator::make($data = Input::all(), Produto::$rules);
 
-	/**
-	 * Show the form for creating a new produto
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		if( Request::ajax() ){
-			return View::make('produtos.panels.create');	
-		}else{
-			return View::make('produtos.create');
-		}
-	}
+        $preco = str_replace('.', '', $data['preco']);
+        $preco = str_replace(',', '.', $preco);
+        $data['preco'] = number_format((float) $preco, 2, '.', '');
 
-	/**
-	 * Store a newly created produto in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		$validator = Validator::make($data = Input::all(), Produto::$rules);
+        if ($validator->fails()) {
+            // Show message
+            $alert[] = ['class' => 'alert-danger',
+                'message' => '<strong><i class="fa fa-warning"></i></strong> Erros de validação!'];
+            Session::flash('alerts', $alert);
 
-		$preco = str_replace( '.', '', $data['preco'] );
-		$preco = str_replace( ',', '.', $preco );
-		$data['preco'] = number_format( (float)$preco, 2, '.', '');      
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
 
-		if ($validator->fails())
-		{
-         //Show message         
-			$alert[] = [  'class' 	=> 'alert-danger',
-			'message'   => '<strong><i class="fa fa-warning"></i></strong> Erros de validação!' ];
-			Session::flash('alerts', $alert);
-			return Redirect::back()->withErrors($validator)->withInput();
-		}
+        // CATEGORIA
+        if (isset($data['category']) and ! empty($data['category'])) {
+            $category = Category::where('name', '=', $data['category'])->first();
+            if (! $category) {
+                // cria se não existir
+                $category = Category::create([
+                    'name' => ucfirst($data['category']),
+                    'owner_type' => 'produto',
+                ]);
+            }
+            $data['category_id'] = $category->id;
+        }
 
-		// CATEGORIA		
-		if( isset( $data['category'] ) and !empty($data['category']) ){
-			$category = Category::where('name', '=', $data['category'] )->first();
-			if( !$category ){
-				// cria se não existir
-				$category = Category::create([
-						'name' 			=> ucfirst( $data['category'] ),
-						'owner_type' 	=> 'produto',					
-					]);
-			}		
-			$data['category_id'] = $category->id;
-		}
+        $produto = Produto::create($data);
 
-		$produto = Produto::create($data);
+        if ($produto) {
+            $alert[] = ['class' => 'alert-success',
+                'message' => '<strong><i class="fa fa-check"></i></strong> Produto adicionado com sucesso!'];
+            Session::flash('alerts', $alert);
+        }
 
-		if( $produto ){         
-			$alert[] = [  'class' 	=> 'alert-success',
-						'message'   => '<strong><i class="fa fa-check"></i></strong> Produto adicionado com sucesso!' ];
-			Session::flash('alerts', $alert);
-		};
+        return Redirect::back()->withErrors($validator)->withInput(Input::all());
+    }
 
-		return Redirect::back()->withErrors($validator)->withInput(Input::all()); 
-	}
+    /**
+     * Display the specified produto.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function show($id)
+    {
+        $produto = Produto::find($id);
 
-	/**
-	 * Display the specified produto.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		$produto = Produto::find($id);
+        if ($produto) {
+            $produto->load('category');
+            if (Request::ajax()) {
+                // return Response::json( $produto );
+                return View::make('produtos.panels.edit', compact('produto'));
+            } else {
+                return View::make('produtos.edit', compact('produto'));
+            }
+        }
 
-		if( $produto ){
-			$produto->load('category');
-			if( Request::ajax() ){
-				// return Response::json( $produto );         
-				return View::make('produtos.panels.edit', compact('produto'));         
-			}else{
-				return View::make('produtos.edit', compact('produto'));         
-			}			
-		}
-		
-		$alert[] = [  'class' 	=> 'alert-danger',
-					'message'   => '<strong><i class="fa fa-warning"></i></strong> Produto não encontrado!' ];
-		Session::flash('alerts', $alert);
-		return Redirect::back()->withInput(Input::all());
+        $alert[] = ['class' => 'alert-danger',
+            'message' => '<strong><i class="fa fa-warning"></i></strong> Produto não encontrado!'];
+        Session::flash('alerts', $alert);
 
-	}
+        return Redirect::back()->withInput(Input::all());
 
-	/**
-	 * Show the form for editing the specified produto.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		$produto  	= Produto::find($id);        
-		$categories = Category::where('owner_type','Produto')->get();
+    }
 
-		if( Request::ajax() ){			
-			return View::make('produtos.panels.edit', compact('produto','categories'));
-		}else{
-			return View::make('produtos.edit', compact('produto','categories'));			
-		}
-	}
+    /**
+     * Show the form for editing the specified produto.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function edit($id)
+    {
+        $produto = Produto::find($id);
+        $categories = Category::where('owner_type', 'Produto')->get();
 
-	/**
-	 * Update the specified produto in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		$produto = Produto::findOrFail($id);
+        if (Request::ajax()) {
+            return View::make('produtos.panels.edit', compact('produto', 'categories'));
+        } else {
+            return View::make('produtos.edit', compact('produto', 'categories'));
+        }
+    }
 
-		$validator = Validator::make($data = Input::all(), Produto::$rules);
-		if ($validator->fails())
-		{
-			return Redirect::back()->withErrors($validator)->withInput();
-		}
+    /**
+     * Update the specified produto in storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function update($id)
+    {
+        $produto = Produto::findOrFail($id);
 
-		$preco = str_replace( '.', '', $data['preco'] );
-		$preco = str_replace( ',', '.', $preco );
-		$data['preco'] = number_format( $preco, 2, '.', '');      
+        $validator = Validator::make($data = Input::all(), Produto::$rules);
+        if ($validator->fails()) {
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
 
-		// CATEGORIA
-		if( isset( $data['category'] ) and !empty($data['category']) ){
-			$category = Category::where('name', '=', $data['category'] )->first();
-			if( !$category ){
-				// cria se não existir
-				$category = Category::create([
-						'name' 			=> ucfirst( $data['category'] ),
-						'owner_type' 	=> 'produto',					
-					]);
-			}		
-			$data['category_id'] = $category->id;
-		};
+        $preco = str_replace('.', '', $data['preco']);
+        $preco = str_replace(',', '.', $preco);
+        $data['preco'] = number_format($preco, 2, '.', '');
 
-		// UPDATE RESOURCE
-		$produto->update($data);
+        // CATEGORIA
+        if (isset($data['category']) and ! empty($data['category'])) {
+            $category = Category::where('name', '=', $data['category'])->first();
+            if (! $category) {
+                // cria se não existir
+                $category = Category::create([
+                    'name' => ucfirst($data['category']),
+                    'owner_type' => 'produto',
+                ]);
+            }
+            $data['category_id'] = $category->id;
+        }
 
-		return Redirect::route('produtos.index');
-	}
+        // UPDATE RESOURCE
+        $produto->update($data);
 
-	/**
-	 * Remove the specified produto from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{		
-		$produto = Produto::find($id);		
-		if(!$produto){
-			return Redirect::back()->withInput();
-		}
+        return Redirect::route('produtos.index');
+    }
 
+    /**
+     * Remove the specified produto from storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        $produto = Produto::find($id);
+        if (! $produto) {
+            return Redirect::back()->withInput();
+        }
 
-		if( $produto->destroy($id) ){
-			$alert[] = [  'class' 	=> 'alert-success',
-			'message'   => '<strong><i class="fa fa-check"></i></strong> Produto excluído!' ];
-		}else{
-			$alert[] = [  'class' 	=> 'alert-danger',
-			'message'   => '<strong><i class="fa fa-warning"></i></strong> Não foi possível excluir o produto!' ];
-		}
-		Session::flash('alerts', $alert);
-		return Redirect::back()->withInput();
-	}
+        if ($produto->destroy($id)) {
+            $alert[] = ['class' => 'alert-success',
+                'message' => '<strong><i class="fa fa-check"></i></strong> Produto excluído!'];
+        } else {
+            $alert[] = ['class' => 'alert-danger',
+                'message' => '<strong><i class="fa fa-warning"></i></strong> Não foi possível excluir o produto!'];
+        }
+        Session::flash('alerts', $alert);
 
+        return Redirect::back()->withInput();
+    }
 
-	public function categories(){
-		$categories = Category::where('owner_type','Produto')->get();
-		if( Request::ajax() ){
-			// return Response::json( $produto );         
-			return View::make('produtos.panels.categories', compact('categories'));         
-		}else{
-			return View::make('produtos.categories', compact('categories'));         
-		}
-	}
+    public function categories()
+    {
+        $categories = Category::where('owner_type', 'Produto')->get();
+        if (Request::ajax()) {
+            // return Response::json( $produto );
+            return View::make('produtos.panels.categories', compact('categories'));
+        } else {
+            return View::make('produtos.categories', compact('categories'));
+        }
+    }
 
-	
+    public function acabamentos()
+    {
+        $produtos = Produto::all();
+        foreach ($produtos as $produto) {
+            $produto->cod = (int) $produto->cod;
+            $produto->preco = number_format($produto->preco, '2', ',', '.');
+        }
+        $produtos->reverse();
 
-	public function acabamentos(){
-		$produtos 	= Produto::all();  	   
-	   	foreach ($produtos as $produto) {
-	   		$produto->cod 	= (Int)$produto->cod;
-	   		$produto->preco = number_format($produto->preco, '2', ',', '.');
-	   	}   
-	   	$produtos->reverse();	   	
+        $acabamentos = Category::where('owner_type', 'Produto')->paginate(Input::get('paginate', 10));
+        if ($acabamentos) {
 
-		$acabamentos = Category::where('owner_type','Produto')->paginate( Input::get('paginate', 10) );
-		if( $acabamentos ){
+            if (Request::ajax()) {
+                // return Response::json( $produto );
+                return View::make('produtos.panels.acabamentos', compact('produtos', 'acabamentos'));
+            } else {
+                return View::make('produtos.index', compact('produtos', 'acabamentos'));
+            }
+        }
+        $alert[] = ['class' => 'alert-danger',
+            'message' => '<strong><i class="fa fa-warning"></i></strong> Acabamento não encontrado!'];
+        Session::flash('alerts', $alert);
 
-			if( Request::ajax() ){
-				// return Response::json( $produto );         
-				return View::make('produtos.panels.acabamentos', compact('produtos','acabamentos'));         
-			}else{
-				return View::make('produtos.index', compact('produtos','acabamentos'));         
-			}
-		}
-		$alert[] = [  'class' 	=> 'alert-danger',
-					'message'   => '<strong><i class="fa fa-warning"></i></strong> Acabamento não encontrado!' ];
-		Session::flash('alerts', $alert);
-		return Redirect::back()->withInput(Input::all());
-	}
-
+        return Redirect::back()->withInput(Input::all());
+    }
 }
