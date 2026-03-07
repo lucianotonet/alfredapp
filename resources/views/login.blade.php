@@ -47,7 +47,7 @@
             <div class="form-group">
               <!-- <input type="text" class="form-control login-field" value="" placeholder="Digite seu nome" id="login-name" />
               <label class="login-field-icon fui-user" for="login-name"></label> -->
-              {!! Form::text('email', Input::old('email'), array('placeholder' => 'Digite seu e-mail', 'class' => 'form-control input-lg login-field')) !!}
+              {!! Form::text('email', \Illuminate\Support\Facades\Request::old('email'), array('placeholder' => 'Digite seu e-mail', 'class' => 'form-control input-lg login-field')) !!}
               {!! Form::label('email', ' ', array("class"=>"login-field-icon fui-user" )) !!}
             </div>
 
