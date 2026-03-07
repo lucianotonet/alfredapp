@@ -28,22 +28,22 @@
 			
 				<div class="form-group">
 					<label class="" for="input">Cliente:</label><br>
-					{{ Form::select('cliente', $filters['clientes'], Input::old('cliente'), array('class'=>'form-control') ) }}
+					{!! Form::select('cliente', $filters['clientes'], Input::old('cliente'), array('class'=>'form-control') ) !!}
 				</div>
 				
 				<div class="form-group">
 					<label for="input" class="">Status:</label><br>				
-					{{ Form::select('status', $filters['status'], Input::old('status'), array('class'=>'form-control') ) }}
+					{!! Form::select('status', $filters['status'], Input::old('status'), array('class'=>'form-control') ) !!}
 				</div>
 				
 				<div class="form-group">
 					<label class="" for="input">De:</label><br>
-					{{ Form::input('date', 'from', '', array('class' => 'form-control', 'min' => $filters['from']['min'], 'max' => $filters['from']['max'] ) ) }}
+					{!! Form::input('date', 'from', '', array('class' => 'form-control', 'min' => $filters['from']['min'], 'max' => $filters['from']['max'] ) ) !!}
 				</div>
 
 				<div class="form-group">
 					<label class="" for="input">Até:</label><br>
-					{{ Form::input('date', 'to', @$filters['from']['max'], array('class' => 'form-control', 'min' => $filters['from']['min'], 'max' => $filters['from']['max'] )  ) }}
+					{!! Form::input('date', 'to', @$filters['from']['max'], array('class' => 'form-control', 'min' => $filters['from']['min'], 'max' => $filters['from']['max'] )  ) !!}
 				</div>
 				
 				<div class="form-group">
@@ -63,15 +63,15 @@
 					<p>Você tem {{ $status['nao_enviadas'] }} novas conversas. Gostaria de gerar um <strong>relatório automático</strong> com elas?</p>
 					<br>	
 
-					{{Form::open(array('url' => url('relatorios')))}}
+					{!! Form::open(array('url' => url('relatorios'))) !!}
 
-						{{ Form::hidden('type', 'conversas') }}
-						{{ Form::hidden('auto', 'true') }}						
+						{!! Form::hidden('type', 'conversas') !!}
+						{!! Form::hidden('auto', 'true') !!}						
 						
 						<button type="submit" class="btn btn-sm btn-success"><i class="fa fa-check"></i> Gerar relatório</button>
 						<a class="btn btn-sm btn-default" data-toggle="modal" href='#modal-id'>Ver todas conversas</a>						
 
-					{{ Form::close() }}
+					{!! Form::close() !!}
 
 						<div class="modal fade" id="modal-id">
 							<div class="modal-dialog">
@@ -121,7 +121,7 @@
 
 		<form action="{{url('relatorios')}}" method="POST" role="form">
 
-			{{Form::hidden('type', 'conversas')}}
+			{!! Form::hidden('type', 'conversas') !!}
 			
 			<div class="panel-body bg-info">
 				<div class="pull-right">
@@ -147,7 +147,7 @@
 								<li class="list-group-item form-inline">
 									<div class="form-group">
 										<div class="media-left">
-											{{ Form::checkbox('conversas_ids[]', $conversa->id, Input::old('conversas_ids'), array("class"=>"checkbox") ) }}											
+											{!! Form::checkbox('conversas_ids[]', $conversa->id, Input::old('conversas_ids'), array("class"=>"checkbox") ) !!}											
 										</div>	
 									</div>
 									<div class="form-group">	

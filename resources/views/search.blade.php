@@ -3,19 +3,19 @@
 @section('content')
       <h1>Buscar</h1>
       
-      {{ Form::open( array('url' => '/search') ) }}
+      {!! Form::open( array('url' => '/search') ) !!}
       
         <div class="control-group large">
             <div class="input-append">
-              {{ Form::text( 'keyword', null, array( 'placeholder' => 'Digite o que procura aqui',
+              {!! Form::text( 'keyword', null, array( 'placeholder' => 'Digite o que procura aqui',
                                                         'class'    => 'span2',
-                                                        'id'       => 'appendedInputButton-02' ) ) }}
+                                                        'id'       => 'appendedInputButton-02' ) ) !!}
               <!-- <button class="btn btn-large" type="button"><span class="fui-search"></span></button> -->
-              {{ Form::submit('Buscar', array( 'class' => 'btn btn-large') ) }}
+              {!! Form::submit('Buscar', array( 'class' => 'btn btn-large') ) !!}
             </div>
           </div>
 
-      {{ Form::close() }}
+      {!! Form::close() !!}
 
             
                 @if (@$clientes)

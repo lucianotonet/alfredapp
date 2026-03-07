@@ -4,7 +4,7 @@
         <h3 class="title">EDITAR CONVERSA</h3>
     </div>
             
-{{ Form::model($conversa, [ 'method' => 'PATCH', 'route' =>[ 'conversas.update', $conversa->id ], 'id' => 'conversa_edit' ] ) }}   
+{!! Form::model($conversa, [ 'method' => 'PATCH', 'route' =>[ 'conversas.update', $conversa->id ], 'id' => 'conversa_edit' ] ) !!}   
   
         <!-- List group -->
         <ul class="list-group">
@@ -100,7 +100,7 @@
         </ul>
 
     
-{{ Form::close() }}
+{!! Form::close() !!}
         
         <style>
             #amostras input[type="number"]{
@@ -122,17 +122,17 @@
                 </button>
             </div>            
 
-            {{ Form::open(array('url' => 'conversas/' . $conversa->id, 'class' => '')) }}
+            {!! Form::open(array('url' => 'conversas/' . $conversa->id, 'class' => '')) !!}
                 <div class="btn-group pull-right">               
-                    {{ Form::button('<i class="fa fa-times"></i> Excluir', array('class' => 'btn btn-danger btn-sm', 'type'=>'sumbit', 'onclick'=>'javascript:return confirm("Deseja excluir esta conversa para sempre?")')) }}
+                    {!! Form::button('<i class="fa fa-times"></i> Excluir', array('class' => 'btn btn-danger btn-sm', 'type'=>'sumbit', 'onclick'=>'javascript:return confirm("Deseja excluir esta conversa para sempre?")')) !!}
 
-                    {{ Form::hidden('_method', 'DELETE') }}
+                    {!! Form::hidden('_method', 'DELETE') !!}
 
                     <a href="#" class="btn btn-success btn-sm" onclick="javascript: getElementById('conversa_edit').submit();">
                         <i class="fa fa-edit"></i> Salvar
                     </a>
                 </div>
-            {{ Form::close() }} 
+            {!! Form::close() !!} 
   
             <div class="clearfix"></div>
         </div>

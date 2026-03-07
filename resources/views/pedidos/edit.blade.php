@@ -21,7 +21,7 @@
              
     </div>
             
-{{ Form::model($pedido, [ 'method' => 'PATCH', 'route' =>[ 'pedidos.update', $pedido->id ] ] ) }}  
+{!! Form::model($pedido, [ 'method' => 'PATCH', 'route' =>[ 'pedidos.update', $pedido->id ] ] ) !!}  
 
 <!-- List group -->
 <ul class="list-group">
@@ -309,7 +309,7 @@
         <div class="clearfix"></div>
     </div>
 
-{{ Form::close() }}
+{!! Form::close() !!}
 </div>
 
 </div>

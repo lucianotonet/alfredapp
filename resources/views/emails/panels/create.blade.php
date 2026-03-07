@@ -8,7 +8,7 @@
                 <h3 class="panel-title title"><i class="fa fa-envelope"></i> Enviar e-mail</h3>
             </div>
 
-        {{Form::open(array('url' => 'emails', 'method' => 'post', 'id' => 'sendmail' ))}}
+        {!! Form::open(array('url' => 'emails', 'method' => 'post', 'id' => 'sendmail' )) !!}
 
             <table class="table table-condensed">        
                 <tbody>
@@ -65,7 +65,7 @@
                                 </a>                                
                             </td>
                         </tr>
-                        {{Form::hidden('attachments', $email['attachments'] )}}
+                        {!! Form::hidden('attachments', $email['attachments'] ) !!}
                     @endif
 
                     @if ( $email['owner_type'] == 'cliente' )
@@ -96,10 +96,10 @@
                 </div>
             </div>
 
-            {{Form::hidden('owner_type', $email['owner_type'] )}}
-            {{Form::hidden('owner_id', $email['owner_id'] )}}
+            {!! Form::hidden('owner_type', $email['owner_type'] ) !!}
+            {!! Form::hidden('owner_id', $email['owner_id'] ) !!}
 
-        {{Form::close()}}
+        {!! Form::close() !!}
 
         </div>
 
