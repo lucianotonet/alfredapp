@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('styles')
-    {{HTML::style('css/reports.css')}}
+    {!! HTML::style('css/reports.css') !!}
 @stop
 
 @section('content')

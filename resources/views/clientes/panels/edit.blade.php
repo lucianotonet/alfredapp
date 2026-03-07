@@ -6,11 +6,11 @@
     
     <div class="panel-body">   
         
-        {{ HTML::ul($errors->all()) }}
+        {!! HTML::ul($errors->all()) !!}
 
     </div>
 
-    {{ Form::model($cliente, [ 'method' => 'PATCH', 'route' =>[ 'clientes.update', $cliente->id ] ] ) }}   
+    {!! Form::model($cliente, [ 'method' => 'PATCH', 'route' =>[ 'clientes.update', $cliente->id ] ] ) !!}   
     
         <div class="panel-body">
             
@@ -24,7 +24,7 @@
                                 <span class="glyphicon glyphicon-briefcase"></span>
                             </div>          
 
-                            {{ Form::text('empresa', NULL, array('class' => 'form-control input', 'placeholder' => 'Empresa' ) ) }}            
+                            {!! Form::text('empresa', NULL, array('class' => 'form-control input', 'placeholder' => 'Empresa' ) ) !!}            
 
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                                 <span class="glyphicon glyphicon-briefcase"></span>
                             </div>          
 
-                            {{ Form::text('nome', NULL, array('class' => 'form-control input', 'placeholder' => 'Nome' ) ) }}            
+                            {!! Form::text('nome', NULL, array('class' => 'form-control input', 'placeholder' => 'Nome' ) ) !!}            
 
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                                 <span class="glyphicon glyphicon-earphone"></span>
                             </div>          
 
-                            {{ Form::text('telefone', NULL, array('class' => 'form-control input mask phone', 'placeholder' => 'Telefone' ) ) }}            
+                            {!! Form::text('telefone', NULL, array('class' => 'form-control input mask phone', 'placeholder' => 'Telefone' ) ) !!}            
 
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                                 <span class="glyphicon glyphicon-phone"></span>
                             </div>          
 
-                            {{ Form::text('celular', NULL, array('class' => 'form-control input mask phone', 'placeholder' => 'Celular' ) ) }}            
+                            {!! Form::text('celular', NULL, array('class' => 'form-control input mask phone', 'placeholder' => 'Celular' ) ) !!}            
 
                         </div>
                     </div>
@@ -74,7 +74,7 @@
                                 <span class="glyphicon glyphicon-envelope"></span>
                             </div>
 
-                            {{ Form::text('email', NULL, array('class' => 'form-control input', 'placeholder' => 'E-mail' ) ) }}       
+                            {!! Form::text('email', NULL, array('class' => 'form-control input', 'placeholder' => 'E-mail' ) ) !!}       
 
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                                 <span class="glyphicon glyphicon-envelope"></span>
                             </div>
 
-                            {{ Form::text('ie', NULL, array('class' => 'form-control input mask ie', 'placeholder' => 'IE' ) ) }}       
+                            {!! Form::text('ie', NULL, array('class' => 'form-control input mask ie', 'placeholder' => 'IE' ) ) !!}       
 
                         </div>
                     </div>
@@ -96,7 +96,7 @@
                                 <span class="glyphicon glyphicon-envelope"></span>
                             </div>
 
-                            {{ Form::text('cnpj', NULL, array('class' => 'form-control input mask cnpj', 'placeholder' => 'CNPJ' ) ) }}       
+                            {!! Form::text('cnpj', NULL, array('class' => 'form-control input mask cnpj', 'placeholder' => 'CNPJ' ) ) !!}       
 
                         </div>
                     </div>
@@ -111,7 +111,7 @@
                                 <span class="glyphicon glyphicon-earphone"></span>
                             </div>          
 
-                            {{ Form::text('endereco', NULL, array('class' => 'form-control input', 'placeholder' => 'Endereço' ) ) }}            
+                            {!! Form::text('endereco', NULL, array('class' => 'form-control input', 'placeholder' => 'Endereço' ) ) !!}            
 
                         </div>
                     </div>
@@ -123,7 +123,7 @@
                                 <span class="glyphicon glyphicon-phone"></span>
                             </div>          
 
-                            {{ Form::text('bairro', NULL, array('class' => 'form-control input', 'placeholder' => 'Bairro' ) ) }}            
+                            {!! Form::text('bairro', NULL, array('class' => 'form-control input', 'placeholder' => 'Bairro' ) ) !!}            
 
                         </div>
                     </div>
@@ -134,7 +134,7 @@
                                 <span class="glyphicon glyphicon-envelope"></span>
                             </div>
 
-                            {{ Form::text('cidade', NULL, array('class' => 'form-control input', 'placeholder' => 'Cidade' ) ) }}       
+                            {!! Form::text('cidade', NULL, array('class' => 'form-control input', 'placeholder' => 'Cidade' ) ) !!}       
 
                         </div>
                     </div>
@@ -177,7 +177,7 @@
                                     )
                             ?>                
 
-                            {{ Form::select('uf', $estados, $cliente->estado, array('class'=>'form-control input') ) }}
+                            {!! Form::select('uf', $estados, $cliente->estado, array('class'=>'form-control input') ) !!}
                             
                         </div>                    
                     </div>
@@ -188,7 +188,7 @@
                                 <span class="glyphicon glyphicon-map-marker"></span>
                             </div>
 
-                            {{ Form::text('cep', NULL, array('class' => 'form-control input mask cep', 'placeholder' => 'CEP' ) ) }}       
+                            {!! Form::text('cep', NULL, array('class' => 'form-control input mask cep', 'placeholder' => 'CEP' ) ) !!}       
 
                         </div>
                     </div>
@@ -223,6 +223,6 @@
 
         </div>
         
-    {{ Form::close() }}    
+    {!! Form::close() !!}    
 
 </div>   

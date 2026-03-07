@@ -1,7 +1,7 @@
 <div class="list-group-item">
 
-	{{ Form::open(array('url' => 'tarefas/' . $tarefa->id . '/excluir', 'class'=>'pull-right text-muted')) }}
-	{{ Form::hidden('_method', 'DELETE') }}
+	{!! Form::open(array('url' => 'tarefas/' . $tarefa->id . '/excluir', 'class'=>'pull-right text-muted')) !!}
+	{!! Form::hidden('_method', 'DELETE') !!}
 
 	<p class="pull-right text-right">		
 
@@ -19,7 +19,7 @@
 	</p>
 
 
-	{{ Form::close() }} 
+	{!! Form::close() !!} 
 
 	<p>		
 		<a href="{{ url( 'tarefas/'.$tarefa->id ) }}" data-target="#modal" data-toggle="modal">
