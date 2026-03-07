@@ -11,13 +11,13 @@
                 <div class="row">
                     <div class="col-sm-2 col-md-2 col-lg-2">
                         <div class="list-group">
-                            <a class="list-group-item {{ ( !Input::has('view') || Input::get('view') == 'unread' ) ? 'active' : '' }}" href="{{ url('notifications') }}">
+                            <a class="list-group-item {{ ( !\Illuminate\Support\Facades\Request::has('view') || \Illuminate\Support\Facades\Request::get('view') == 'unread' ) ? 'active' : '' }}" href="{{ url('notifications') }}">
                                 Não lidas <span class="badge">{{ $labels['count_unread'] }}</span>                                
                             </a>
-                            <a class="list-group-item {{ (Input::has('view') && Input::get('view') == 'next' ) ? 'active' : '' }}" href="{{ url('notifications/?view=next') }}">
+                            <a class="list-group-item {{ (\Illuminate\Support\Facades\Request::has('view') && \Illuminate\Support\Facades\Request::get('view') == 'next' ) ? 'active' : '' }}" href="{{ url('notifications/?view=next') }}">
                                 Agendadas  <span class="badge">{{ $labels['count_next'] }}</span>                            
                             </a>
-                            <a class="list-group-item {{ (Input::has('view') && Input::get('view') == 'all' ) ? 'active' : '' }}" href="{{ url('notifications/?view=all') }}">
+                            <a class="list-group-item {{ (\Illuminate\Support\Facades\Request::has('view') && \Illuminate\Support\Facades\Request::get('view') == 'all' ) ? 'active' : '' }}" href="{{ url('notifications/?view=all') }}">
                                 Todas                                
                                 <span class="badge">{{ $labels['count_all'] }}</span>
                             </a>                            
@@ -26,8 +26,8 @@
                     <div class="col-sm-10 col-md-10 col-lg-10">
                     
                         <?php 
-                            if( Input::get('order') == 'asc' ){ 
-                                $new_url = array_merge( Input::query(), ['order'=>'desc'] );
+                            if( \Illuminate\Support\Facades\Request::get('order') == 'asc' ){ 
+                                $new_url = array_merge( \Illuminate\Support\Facades\Request::query(), ['order'=>'desc'] );
                                 ?>
                                 <a href="{{ url( 'notifications/?'. http_build_query( $new_url ) ) }}">
                                     <i class="fa fa-chevron-circle-up"></i>
@@ -35,7 +35,7 @@
                                 </a>
                         <?php 
                             }else{ 
-                                $new_url = array_merge( Input::query(), ['order'=>'asc'] );
+                                $new_url = array_merge( \Illuminate\Support\Facades\Request::query(), ['order'=>'asc'] );
                                 ?>
                                 <a href="{{ url( 'notifications/?'. http_build_query( $new_url ) ) }}">
                                     <i class="fa fa-chevron-circle-down"></i>
