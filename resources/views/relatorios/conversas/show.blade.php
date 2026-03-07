@@ -22,7 +22,7 @@
 						
 						<a href="{{ url('/emails/create/?owner_type=relatorio&owner_id='.$relatorio->id) }}" class="btn btn-success btn-sm send" data-toggle="modal" data-target="#email"><i class="fa fa-envelope-o"></i> Enviar por e-mail</a>
 						
-						<?php if( Confide::user() ){ ?>
+						<?php if( Auth::user() ){ ?>
 	                    
 		                    {!! Form::button('<i class="fa fa-times"></i> Excluir', array('class' => 'btn btn-danger btn-sm', 'type'=>'sumbit', 'onclick'=>'javascript:return confirm("Excluir o relatório?")')) !!}
 
@@ -38,7 +38,7 @@
 			
 			    <h3 class="title">
 			    	Relatório <strong>Nº{{$relatorio->id}}</strong>
-			    	<?php if( Confide::user() ){ ?>
+			    	<?php if( Auth::user() ){ ?>
 						@if( $relatorio->status )
 						    <span class="badge label label-success" title="Enviado"><i class="fa fa-check"></i> Enviado</span>
 						@else
