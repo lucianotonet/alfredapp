@@ -18,5 +18,5 @@
 	</div>
 			
 	{{-- <input type="file" name="settings[app_logo]" id="app_logo" class="form-control" value="{{Config::get('settings.app_logo')}}" required="required" title="">
-	{{ Input::file("settings[app_logo]") }}			 --}}	
+	{{ \Illuminate\Support\Facades\Request::file("settings[app_logo]") }}			 --}}	
 {!! Form::close() !!}
