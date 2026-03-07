@@ -176,7 +176,7 @@ class EmailsController extends \BaseController
                 $resource = Relatorio::find($data['owner_id']);
                 $view = 'relatorios.email';
                 unset($data['attachments']);
-                if ($resource and Confide::user()) {
+                if ($resource and Auth::user()) {
                     $resource->status = '2';
                     $resource->save();
                 }
