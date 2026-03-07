@@ -56,7 +56,7 @@
 	            		</div>	 
                         <div class="btn-group">
                             <button type="button" class="btn btn-default dropdown-toggle text-capitalize" data-toggle="dropdown" aria-expanded="false">
-                                {{ (Input::get('order') == 'asc') ? 'Mais antigo antes' : 'Mais recente antes' }} <span class="caret"></span>
+                                {{ (\Illuminate\Support\Facades\Request::get('order') == 'asc') ? 'Mais antigo antes' : 'Mais recente antes' }} <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
                                 <li>
