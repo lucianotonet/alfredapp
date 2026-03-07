@@ -8,11 +8,11 @@
             NOVA NOTA
         </h3>
     </div>
-    {{ Form::open(array('url' => 'notes', 'method' => 'post', 'id' => 'quick_add')) }}                  
+    {!! Form::open(array('url' => 'notes', 'method' => 'post', 'id' => 'quick_add')) !!}                  
 
-        {{ Form::textarea('note') }}
-        {{ Form::hidden( 'resource_name', null ) }}
-        {{ Form::hidden( 'resource_id', null) }}
+        {!! Form::textarea('note') !!}
+        {!! Form::hidden( 'resource_name', null ) !!}
+        {!! Form::hidden( 'resource_id', null) !!}
             
         <div class="panel-footer">
             <button type="submit" class="btn btn-success btn-sm pull-right">
@@ -23,7 +23,7 @@
                 <i class="fa fa-chevron-left"></i>
             </a>
         </div>
-    {{ Form::close() }}                
+    {!! Form::close() !!}                
 
 <?php if( Request::ajax() ){ ?>
 <script>

@@ -3,12 +3,12 @@
         <div class="pull-right hidden-print">
             <a href="{{url('clientes/'.$cliente->id.'/edit')}}" class="btn btn-info"><i class="fa fa-pencil"></i></a>
                    
-            {{ Form::open(array('url' => 'clientes/' . $cliente->id, 'class' => 'btn-group')) }}
+            {!! Form::open(array('url' => 'clientes/' . $cliente->id, 'class' => 'btn-group')) !!}
                 <button type="submit" class="btn btn-danger" onclick="return confirm('Excluir permanetemente o cliente {{$cliente->nome}}?')" role="menuitem">
                     <i class="fa fa-times"></i>
                 </button>
                 <input type="hidden" name="_method" value="DELETE">
-            {{ Form::close()}}               
+            {!! Form::close() !!}               
         </div>                                   
          <h3 class="panel-title title">Cliente {{$cliente->id}}</h3>
     </div>

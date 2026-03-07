@@ -69,7 +69,7 @@
                                 <td width="auto" align="right">
 
 
-                                    {{ Form::open(array('url' => 'pedidos/' . $pedido->id, 'class' => 'text-right', 'style' => 'min-width:175px;' )) }}
+                                    {!! Form::open(array('url' => 'pedidos/' . $pedido->id, 'class' => 'text-right', 'style' => 'min-width:175px;' )) !!}
 
                                     <a href="{{ url('/emails/create/?owner_type=pedido&owner_id='.$pedido->id) }}" class="btn btn-link btn-sm send" data-toggle="modal" data-target="#email">
                                      <i class="fa fa-envelope"></i>
@@ -84,12 +84,12 @@
                                 </a>  
 
                                 <div class="btn-group btn-group-sm">
-                                    {{ Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-danger btn-sm danger text-danger', 'type'=>'submit', 'onclick'=>'javascript:return confirm("Deseja excluir este pedido da lista?")', 'tabindex'=>"-1" )) }}
+                                    {!! Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-danger btn-sm danger text-danger', 'type'=>'submit', 'onclick'=>'javascript:return confirm("Deseja excluir este pedido da lista?")', 'tabindex'=>"-1" )) !!}
                                 </div> 
 
-                                {{ Form::hidden('_method', 'DELETE') }}
+                                {!! Form::hidden('_method', 'DELETE') !!}
 
-                                {{ Form::close() }}  
+                                {!! Form::close() !!}  
 
                                             <!-- <a href="{{ url('/pedidos/'.$pedido->id) }}" role="menuitem" tabindex="-1" class="">
                                                <i class="fa fa-chevron-right"></i>
@@ -139,7 +139,7 @@
                                 <td><span class="money">{{$pedido->total}}</span></td>
                                 <td align="right">
 
-                                    {{ Form::open(array('url' => 'pedidos/' . $pedido->id, 'class' => 'text-right', 'style' => 'min-width:175px;' )) }}
+                                    {!! Form::open(array('url' => 'pedidos/' . $pedido->id, 'class' => 'text-right', 'style' => 'min-width:175px;' )) !!}
 
                                     <a href="{{ url('/emails/create/?owner_type=pedido&owner_id='.$pedido->id) }}" class="btn btn-link btn-sm send" data-toggle="modal" data-target="#email">
                                      <i class="fa fa-envelope"></i>
@@ -154,12 +154,12 @@
                                 </a>  
 
                                 <div class="btn-group btn-group-sm">
-                                    {{ Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-danger btn-sm', 'type'=>'submit', 'onclick'=>'javascript:return confirm("Deseja excluir este pedido da lista?")', 'tabindex'=>"-1" )) }}
+                                    {!! Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-danger btn-sm', 'type'=>'submit', 'onclick'=>'javascript:return confirm("Deseja excluir este pedido da lista?")', 'tabindex'=>"-1" )) !!}
                                 </div> 
 
-                                {{ Form::hidden('_method', 'DELETE') }}
+                                {!! Form::hidden('_method', 'DELETE') !!}
 
-                                {{ Form::close() }}  
+                                {!! Form::close() !!}  
 
 
                             </div>

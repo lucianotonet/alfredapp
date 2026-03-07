@@ -1,4 +1,4 @@
-{{ Form::open(array('url'=>URL::route('settings.store'), 'method'=>"POST", 'class'=>"form-horizontal", 'role'=>"form", 'files'=>true)) }}
+{!! Form::open(array('url'=>URL::route('settings.store'), 'method'=>"POST", 'class'=>"form-horizontal", 'role'=>"form", 'files'=>true)) !!}
 	
 	<div class="page-header">
 		<h3>Notificações</h3>
@@ -19,4 +19,4 @@
 			
 	{{-- <input type="file" name="settings[app_logo]" id="app_logo" class="form-control" value="{{Config::get('settings.app_logo')}}" required="required" title="">
 	{{ Input::file("settings[app_logo]") }}			 --}}	
-{{ Form::close() }}
+{!! Form::close() !!}
