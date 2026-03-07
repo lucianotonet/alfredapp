@@ -54,21 +54,21 @@ form .form-actions {
 
     <form method="POST" action="{{ URL::to('/users/forgot_password') }}" accept-charset="UTF-8">
         @if (Session::get('error'))
-            <div class="alert alert-error alert-danger">{{{ Session::get('error') }}}</div>
+            <div class="alert alert-error alert-danger">{{ Session::get('error') }}</div>
         @endif
 
         @if (Session::get('notice'))
-            <div class="alert">{{{ Session::get('notice') }}}</div>
+            <div class="alert">{{ Session::get('notice') }}</div>
         @endif
 
-        <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
+        <input type="hidden" name="_token" value="{{ Session::getToken() }}">
 
         <div class="form-group">
             <label for="email">Digite seu e-mail</label>
             <div class="input-append input-group">
-                <input class="form-control" placeholder="{{{ Lang::get('confide::confide.e_mail') }}}" type="text" name="email" id="email" value="{{{ Input::old('email') }}}">
+                <input class="form-control" placeholder="{{ Lang::get('confide::confide.e_mail') }}" type="text" name="email" id="email" value="{{ Input::old('email') }}">
                 <span class="input-group-btn">
-                    <input class="btn btn-primary btn-lg" type="submit" value="{{{ Lang::get('confide::confide.forgot.submit') }}}">
+                    <input class="btn btn-primary btn-lg" type="submit" value="{{ Lang::get('confide::confide.forgot.submit') }}">
                 </span>
             </div>
         </div>
