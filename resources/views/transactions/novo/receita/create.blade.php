@@ -2,7 +2,7 @@
 	<div class="panel-heading">
 		<h3 class="panel-title"><i class="icon-inbox"></i> REGISTRAR RECEITA</h3>
 	</div>
-  	{{ Form::open(array('route' => 'financeiro.store', 'method' => 'POST', "class"=>"", "role"=>"form", "id"=>"transaction_create" )) }}
+  	{!! Form::open(array('route' => 'financeiro.store', 'method' => 'POST', "class"=>"", "role"=>"form", "id"=>"transaction_create" )) !!}
 		<table class="table panel-body form-horizontal">			
 			<tbody>
 				<tr>
@@ -115,8 +115,8 @@
 			</div>
 			
 		</div>	
-		{{ Form::hidden('type', 'receita') }}
-	{{ Form::close() }}
+		{!! Form::hidden('type', 'receita') !!}
+	{!! Form::close() !!}
 </div>			
 
 

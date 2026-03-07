@@ -5,7 +5,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title title"><i class="icon-bell-o"></i> Criar notificação</h4>
 			</div>
-			{{ Form::open(array('url' => 'notifications', 'class'=>"form-horizontal" )) }}
+			{!! Form::open(array('url' => 'notifications', 'class'=>"form-horizontal" )) !!}
 			<div class="modal-body">
 
 				<p>
@@ -64,9 +64,9 @@
 			</div>
 
 
-			{{Form::hidden('tarefa_id', @$tarefa->id)}}
+			{!! Form::hidden('tarefa_id', @$tarefa->id) !!}
 
-			{{Form::close()}}
+			{!! Form::close() !!}
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

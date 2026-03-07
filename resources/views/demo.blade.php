@@ -55,7 +55,7 @@
                 <ul class="list-group">
                     @foreach($tarefas as $tarefa)
                         <li class="list-group-item {{ $tarefa->done ? 'disabled' : '' }} tarefa-{{ $tarefa->id }}">
-                            {{ Form::open() }}
+                            {!! Form::open() !!}
                                 <i class="pull-left">
                                     <input type="checkbox" class="primary" name="done" id="tarefa-{{ $tarefa->id }}"  {{ $tarefa->done ? 'checked' : '' }} />
                                 </i>
@@ -67,7 +67,7 @@
                                 </a>
 
                                 <input type="hidden" name="id" value="{{ $tarefa->id }}">
-                            {{ Form::close() }}
+                            {!! Form::close() !!}
                         </li>
                     @endforeach
                 </ul>

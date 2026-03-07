@@ -20,12 +20,12 @@
                 </a>
             </li> -->
 
-            {{ Form::open(array('url' => 'clientes/' . $cliente->id, 'class' => '')) }}
+            {!! Form::open(array('url' => 'clientes/' . $cliente->id, 'class' => '')) !!}
                 <button type="submit" class="btn btn-danger btn-block btn-sm" onclick="return confirm('Excluir permanetenmente?')" role="menuitem">
                     <i class="fa fa-times"></i> Excluir
                 </button>
                 <input type="hidden" name="_method" value="DELETE">
-            {{ Form::close() }}
+            {!! Form::close() !!}
 
 
           </ul>
@@ -233,10 +233,10 @@
                                             </li>
                                             <li role="presentation" class="divider"></li>
                                             <li role="presentation">
-                                                {{ Form::open(array('url' => 'pedidos/' . $pedido->id, 'class' => '')) }}
-                                                    {{ Form::button('<i class="fa fa-times"></i> Excluir', array('class' => 'btn btn-danger btn-block btn-sm', 'type'=>'sumbit', 'onclick'=>'javascript:return confirm("Deseja excluir este pedido da lista?")', 'role'=>"menuitem", 'tabindex'=>"-1" )) }}
-                                                    {{ Form::hidden('_method', 'DELETE') }}
-                                                {{ Form::close() }}
+                                                {!! Form::open(array('url' => 'pedidos/' . $pedido->id, 'class' => '')) !!}
+                                                    {!! Form::button('<i class="fa fa-times"></i> Excluir', array('class' => 'btn btn-danger btn-block btn-sm', 'type'=>'sumbit', 'onclick'=>'javascript:return confirm("Deseja excluir este pedido da lista?")', 'role'=>"menuitem", 'tabindex'=>"-1" )) !!}
+                                                    {!! Form::hidden('_method', 'DELETE') !!}
+                                                {!! Form::close() !!}
                                             </li>
 
                                         </ul>
