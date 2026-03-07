@@ -2,7 +2,7 @@
 @extends('layouts.master')
 
 @section('styles')
-	{{ HTML::style('css/agenda.css') }}
+	{!! HTML::style('css/agenda.css') !!}
 @stop
 
 @section('content')
