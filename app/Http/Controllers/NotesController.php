@@ -35,7 +35,7 @@ class NotesController extends \BaseController
      */
     public function store()
     {
-        $validator = Validator::make($data = Input::all(), Note::$rules);
+        $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Note::$rules);
 
         if (Request::ajax()) {
 
@@ -91,7 +91,7 @@ class NotesController extends \BaseController
     {
         $note = Note::findOrFail($id);
 
-        $validator = Validator::make($data = Input::all(), Note::$rules);
+        $validator = Validator::make($data = \Illuminate\Support\Facades\Request::all(), Note::$rules);
 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
