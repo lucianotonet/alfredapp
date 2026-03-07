@@ -2,6 +2,7 @@
 
 use Zizaco\Confide\ConfideUser;
 use Zizaco\Confide\ConfideUserInterface;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Eloquent implements ConfideUserInterface
 {
@@ -72,4 +73,26 @@ class User extends Eloquent implements ConfideUserInterface
     {
         return $this->username;
     }
+
+    public function save(array $options = [])
+    {
+        if (array_key_exists('password_confirmation', $this->attributes)) {
+            unset($this->attributes['password_confirmation']);
+        }
+
+        if (property_exists($this, 'password_confirmation')) {
+            unset($this->password_confirmation);
+        }
+
+        if (array_key_exists('password', $this->attributes)) {
+            $info = password_get_info($this->attributes['password']);
+
+            if ($this->attributes['password'] !== null && $this->attributes['password'] !== '' && $info['algo'] === 0) {
+                $this->attributes['password'] = Hash::make($this->attributes['password']);
+            }
+        }
+
+        return parent::save($options);
+    }
+
 }

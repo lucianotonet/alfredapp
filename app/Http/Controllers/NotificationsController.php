@@ -23,7 +23,7 @@ class NotificationsController extends \BaseController
                     $query->where('date', '>', date('Y-m-d H:i:s'));
                     break;
                 case 'all':
-                    // $query->where( 'user_id', Confide::user()->id );
+                    // $query->where( 'user_id', Auth::user()->id );
                     break;
                 default:
                     // NÃO LIDAS
@@ -46,7 +46,7 @@ class NotificationsController extends \BaseController
             }
 
         })
-            ->where('user_id', Confide::user()->id)
+            ->where('user_id', Auth::user()->id)
             ->orderBy('date', \Illuminate\Support\Facades\Request::get('order', 'DESC'))
             ->paginate($pagination);
 
@@ -63,12 +63,12 @@ class NotificationsController extends \BaseController
                 $labels['nothing'] = 'Nenhuma notificação não lida';
                 break;
         }
-        $labels['count_next'] = Notification::where('user_id', Confide::user()->id)
+        $labels['count_next'] = Notification::where('user_id', Auth::user()->id)
             ->where('date', '>', date('Y-m-d H:i:s'))
             ->count();
-        $labels['count_all'] = Notification::where('user_id', Confide::user()->id)
+        $labels['count_all'] = Notification::where('user_id', Auth::user()->id)
             ->count();
-        $labels['count_unread'] = Notification::where('user_id', Confide::user()->id)
+        $labels['count_unread'] = Notification::where('user_id', Auth::user()->id)
             ->where('date', '<', date('Y-m-d H:i:s'))
             ->where('status', false)
             ->count();
