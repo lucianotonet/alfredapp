@@ -7,21 +7,21 @@
 	<div class="form-group">
 		<label for="mail_name" class="col-sm-2 control-label">Remetente Nome</label>
 		<div class="col-sm-10">
-			<input type="text" name="mail[from][name]" id="mail_name" class="form-control" value="{{ Config::get('mail.from.name') }}" title="">
+			<input type="text" name="mail[from][name]" id="mail_name" class="form-control" value="{{ config('mail.from.name') }}" title="">
 		</div>
 	</div>
 
 	<div class="form-group">
 		<label for="mail_address" class="col-sm-2 control-label">Remetente E-mail</label>
 		<div class="col-sm-10">
-			<input type="email" name="mail[from][address]" id="mail_address" class="form-control" value="{{	Config::get('mail.from.address') }}" title="">
+			<input type="email" name="mail[from][address]" id="mail_address" class="form-control" value="{{	config('mail.from.address') }}" title="">
 		</div>
 	</div>
 
 	<div class="form-group">
 		<label for="" class="col-sm-2 control-label">Assinatura:</label>
 		<div class="col-sm-10">
-			<textarea class="form-control wysiwyg" name="settings[mail_signature]" rows="3">{{ Config::get('settings.mail_signature') }}</textarea>
+			<textarea class="form-control wysiwyg" name="settings[mail_signature]" rows="3">{{ config('settings.mail_signature') }}</textarea>
 		</div>
 	</div>
 
@@ -37,7 +37,7 @@
 										'mailgun' 	=> 'Mailgun',
 										'mandrill' 	=> 'Mandrill',
 										'log' 		=> 'Just Log',
-										], Config::get('mail.driver'),
+										], config('mail.driver'),
 										array( "class"=>"form-control")); !!}
 			
 		</div>
@@ -47,14 +47,14 @@
 	<div class="form-group">
 		<label for="host" class="col-sm-2 control-label">HOST</label>
 		<div class="col-sm-10">
-			<input type="text" name="mail[host]" id="host" class="form-control" value="{{ Config::get('mail.host') }}" title="">
+			<input type="text" name="mail[host]" id="host" class="form-control" value="{{ config('mail.host') }}" title="">
 		</div>
 	</div>
 
 	<div class="form-group">
 		<label for="port" class="col-sm-2 control-label">PORTA</label>
 		<div class="col-sm-10">
-			<input type="number" name="mail[port]" id="port" class="form-control" value="{{ Config::get('mail.port') }}" title="">
+			<input type="number" name="mail[port]" id="port" class="form-control" value="{{ config('mail.port') }}" title="">
 		</div>
 	</div>
 
@@ -64,7 +64,7 @@
 			{!! Form::select('mail[encryption]', [										
 										'tls' 	=> 'TLS',
 										'ssl' 	=> 'SSL',										
-										], Config::get('mail.encryption'),
+										], config('mail.encryption'),
 										array( "class"=>"form-control")); !!}
 		</div>
 	</div>
@@ -72,21 +72,21 @@
 	<div class="form-group">
 		<label for="username" class="col-sm-2 control-label">USERNAME</label>
 		<div class="col-sm-10">
-			<input type="text" name="mail[username]" id="username" class="form-control" value="{{ Config::get('mail.username') }}" title="">
+			<input type="text" name="mail[username]" id="username" class="form-control" value="{{ config('mail.username') }}" title="">
 		</div>
 	</div>
 
 	<div class="form-group">
 		<label for="password" class="col-sm-2 control-label">PASSWORD</label>
 		<div class="col-sm-10">
-			<input type="text" name="mail[password]" id="password" class="form-control" value="{{ Config::get('mail.password') }}" title="">
+			<input type="text" name="mail[password]" id="password" class="form-control" value="{{ config('mail.password') }}" title="">
 		</div>
 	</div>
 
 	<div class="form-group">
 		<label for="sendmail" class="col-sm-2 control-label">SENDMAIL</label>
 		<div class="col-sm-10">
-			<input type="text" name="mail[sendmail]" id="sendmail" class="form-control" value="{{ Config::get('mail.sendmail') }}" title="">
+			<input type="text" name="mail[sendmail]" id="sendmail" class="form-control" value="{{ config('mail.sendmail') }}" title="">
 		</div>
 	</div>
 
