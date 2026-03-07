@@ -3,18 +3,16 @@
 // Composer: "fzaninotto/faker": "v1.3.0"
 use Faker\Factory as Faker;
 
-class EventsTableSeeder extends Seeder {
+class EventsTableSeeder extends Seeder
+{
+    public function run()
+    {
+        $faker = Faker::create();
 
-	public function run()
-	{
-		$faker = Faker::create();
+        foreach (range(1, 10) as $index) {
+            Event::create([
 
-		foreach(range(1, 10) as $index)
-		{
-			Event::create([
-
-			]);
-		}
-	}
-
+            ]);
+        }
+    }
 }
