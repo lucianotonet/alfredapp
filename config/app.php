@@ -163,6 +163,7 @@ return [
 		'App'       => 'Illuminate\Support\Facades\App',
 		'Artisan'   => 'Illuminate\Support\Facades\Artisan',
 		'Auth'      => 'Illuminate\Support\Facades\Auth',
+		'Confide'   => 'Illuminate\Support\Facades\Auth',
 		'Blade'     => 'Illuminate\Support\Facades\Blade',
 		'Bus'       => 'Illuminate\Support\Facades\Bus',
 		'Cache'     => 'Illuminate\Support\Facades\Cache',
