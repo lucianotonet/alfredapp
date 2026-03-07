@@ -104,7 +104,7 @@
 										</div>
 										<div class="modal-body form-inline text-center">
 											
-											{{ Form::hidden('view', 'range') }}
+											{!! Form::hidden('view', 'range') !!}
 										
 											<div class="form-group">
 												<input type="date" name="date_from" id="input" class="form-control" value="" required="required" title="">

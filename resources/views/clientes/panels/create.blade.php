@@ -7,7 +7,7 @@
     <div class="panel-body">
                         
 
-            {{ Form::open(array('url' => 'clientes', 'id' => 'cliente_create')) }}
+            {!! Form::open(array('url' => 'clientes', 'id' => 'cliente_create')) !!}
 
                 <div class="row">
                     <div class="col col-md-12">
@@ -146,4 +146,4 @@
         </div>
 </div>
 
-{{ Form::close() }}
+{!! Form::close() !!}
