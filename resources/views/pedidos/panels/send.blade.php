@@ -4,7 +4,7 @@
         <h3 class="panel-title title">ENVIAR PEDIDO nº {{$pedido}}</h3>
     </div>
 
-{{Form::open(array('url' => 'pedidos/send', 'method' => 'post'))}}
+{!! Form::open(array('url' => 'pedidos/send', 'method' => 'post')) !!}
 
     <table class="table table-condensed">        
         <tbody>
@@ -95,8 +95,8 @@
         <div class="clearfix"></div>
     </div>
 
-    {{Form::hidden('id', $pedido)}}
+    {!! Form::hidden('id', $pedido) !!}
 
-{{Form::close()}}
+{!! Form::close() !!}
 
 </div>

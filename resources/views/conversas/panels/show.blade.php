@@ -6,7 +6,7 @@
              
     </div>
             
-{{ Form::open(array('url' => 'conversas', 'id' => 'conversa_create', 'class' => '')) }}
+{!! Form::open(array('url' => 'conversas', 'id' => 'conversa_create', 'class' => '')) !!}
 
     <fieldset disabled>
 
@@ -103,7 +103,7 @@
         </ul>
 
     </fieldset>
-{{ Form::close() }}
+{!! Form::close() !!}
         
         <style>
             #amostras input[type="number"]{
@@ -125,18 +125,18 @@
                 </button>
             </div>            
 
-            {{ Form::open(array('url' => 'conversas/' . $conversa->id, 'class' => '')) }}
+            {!! Form::open(array('url' => 'conversas/' . $conversa->id, 'class' => '')) !!}
                 <div class="btn-group pull-right">               
-                    {{ Form::button('<i class="fa fa-times"></i> Excluir', array('class' => 'btn btn-danger btn-sm', 'type'=>'sumbit', 'onclick'=>'javascript:return confirm("Deseja excluir esta conversa para sempre?")')) }}
+                    {!! Form::button('<i class="fa fa-times"></i> Excluir', array('class' => 'btn btn-danger btn-sm', 'type'=>'sumbit', 'onclick'=>'javascript:return confirm("Deseja excluir esta conversa para sempre?")')) !!}
 
-                    {{ Form::hidden('_method', 'DELETE') }}
+                    {!! Form::hidden('_method', 'DELETE') !!}
 
                     <a href="{{ url('/conversas/'.$conversa->id.'/edit') }}" class="btn btn-info btn-sm">
                         <i class="fa fa-edit"></i> Editar
                     </a>
                 
                 </div>
-            {{ Form::close() }} 
+            {!! Form::close() !!} 
   
             <div class="clearfix"></div>
         </div>

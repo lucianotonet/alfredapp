@@ -1,6 +1,6 @@
 <?php if ( $transaction->type == 'despesa'): ?>
 
-{{ Form::model($transaction, [ 'method' => 'PATCH', 'route' =>[ 'financeiro.update', $transaction->id ] ] ) }}
+{!! Form::model($transaction, [ 'method' => 'PATCH', 'route' =>[ 'financeiro.update', $transaction->id ] ] ) !!}
 	   		
 	<div class="panel panel-primary">
 		
@@ -65,17 +65,17 @@
 			
 	</div>
 
-	{{ Form::hidden('type', $transaction->type) }}
-	{{ Form::hidden('date', $transaction->date) }}
-	{{ Form::hidden('description', $transaction->description) }}	
+	{!! Form::hidden('type', $transaction->type) !!}
+	{!! Form::hidden('date', $transaction->date) !!}
+	{!! Form::hidden('description', $transaction->description) !!}	
 
-{{ Form::close() }}									
+{!! Form::close() !!}									
 		
 <?php else: ?>
 	
 		
 
-{{ Form::model($transaction, [ 'method' => 'PATCH', 'route' =>[ 'financeiro.update', $transaction->id ] ] ) }}
+{!! Form::model($transaction, [ 'method' => 'PATCH', 'route' =>[ 'financeiro.update', $transaction->id ] ] ) !!}
 	   		
 	<div class="panel panel-primary">
 		
@@ -143,11 +143,11 @@
 			
 	</div>
 
-	{{ Form::hidden('type', $transaction->type) }}
-	{{ Form::hidden('date', $transaction->date) }}
-	{{ Form::hidden('description', $transaction->description) }}	
+	{!! Form::hidden('type', $transaction->type) !!}
+	{!! Form::hidden('date', $transaction->date) !!}
+	{!! Form::hidden('description', $transaction->description) !!}	
 
-{{ Form::close() }}	
+{!! Form::close() !!}	
 
 
 
