@@ -1,9 +1,10 @@
 <?php
 
+use Illuminate\Database\Seeder;
 // Composer: "fzaninotto/faker": "v1.3.0"
 use Faker\Factory as Faker;
 
-class EventsTableSeeder extends Seeder {
+class RelatoriosTableSeeder extends Seeder {
 
 	public function run()
 	{
@@ -11,7 +12,7 @@ class EventsTableSeeder extends Seeder {
 
 		foreach(range(1, 10) as $index)
 		{
-			Event::create([
+			Relatorio::create([
 
 			]);
 		}

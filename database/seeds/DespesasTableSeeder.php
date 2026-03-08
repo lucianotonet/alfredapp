@@ -1,9 +1,10 @@
 <?php
 
+use Illuminate\Database\Seeder;
 // Composer: "fzaninotto/faker": "v1.3.0"
 use Faker\Factory as Faker;
 
-class EmailsTableSeeder extends Seeder {
+class DespesasTableSeeder extends Seeder {
 
 	public function run()
 	{
@@ -11,8 +12,8 @@ class EmailsTableSeeder extends Seeder {
 
 		foreach(range(1, 10) as $index)
 		{
-			Email::create([
-
+			Despesa::create([
+		        
 			]);
 		}
 	}
