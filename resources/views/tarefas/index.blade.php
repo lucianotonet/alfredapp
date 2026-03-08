@@ -43,16 +43,16 @@
 
 				<div class="btn-group">
 				
-					<a href="{{ url( '/tarefas?' . http_build_query( array_merge( Request::except('page'), ['view'=>'today'] ) ) ) }}" class="btn {{ (Input::get('view') == 'today' || Input::get('view') == NULL) ? 'btn-primary active' : 'btn-default' }}">
+					<a href="{{ url( '/tarefas?' . http_build_query( array_merge( Request::except('page'), ['view'=>'today'] ) ) ) }}" class="btn {{ (\Illuminate\Support\Facades\Request::get('view') == 'today' || \Illuminate\Support\Facades\Request::get('view') == NULL) ? 'btn-primary active' : 'btn-default' }}">
 						Hoje <span class="badge badge-success">{{count($tarefas->hoje)}}</span>
 					</a>
-					<a href="{{ url( '/tarefas?' . http_build_query( array_merge( Request::except('page'), ['view'=>'late'] ) ) ) }}" class="btn {{ (Input::get('view') == 'late') ? 'btn-primary active' : 'btn-default' }}">
+					<a href="{{ url( '/tarefas?' . http_build_query( array_merge( Request::except('page'), ['view'=>'late'] ) ) ) }}" class="btn {{ (\Illuminate\Support\Facades\Request::get('view') == 'late') ? 'btn-primary active' : 'btn-default' }}">
 						Atrasadas <span class="badge badge-danger">{{count($tarefas->pendentes)}}</span>
 					</a>
-					<a href="{{ url( '/tarefas?' . http_build_query( array_merge( Request::except('page'), ['view'=>'next'] ) ) ) }}" class="btn {{ (Input::get('view') == 'next') ? 'btn-primary active' : 'btn-default' }}">
+					<a href="{{ url( '/tarefas?' . http_build_query( array_merge( Request::except('page'), ['view'=>'next'] ) ) ) }}" class="btn {{ (\Illuminate\Support\Facades\Request::get('view') == 'next') ? 'btn-primary active' : 'btn-default' }}">
 						Próximas <span class="badge badge-success">{{count($tarefas->proximas)}}</span>
 					</a>
-					<a href="{{ url( '/tarefas?' . http_build_query( array_merge( Request::except('page'), ['view'=>'done'] ) ) ) }}" class="btn {{ (Input::get('view') == 'done') ? 'btn-primary active' : 'btn-default' }}">
+					<a href="{{ url( '/tarefas?' . http_build_query( array_merge( Request::except('page'), ['view'=>'done'] ) ) ) }}" class="btn {{ (\Illuminate\Support\Facades\Request::get('view') == 'done') ? 'btn-primary active' : 'btn-default' }}">
 						Concluídas <span class="badge badge-primary">{{count($tarefas->concluidas)}}</span>
 					</a>
 					
@@ -64,7 +64,7 @@
 						<label for="">Exibir:</label>
 	            		<div class="btn-group">
 	            			<button type="button" class="btn btn-default dropdown-toggle text-capitalize" data-toggle="dropdown" aria-expanded="false">
-	            				{{ (Input::get('order') == 'asc') ? 'Mais antigo antes' : 'Mais recente antes' }} <span class="caret"></span>
+	            				{{ (\Illuminate\Support\Facades\Request::get('order') == 'asc') ? 'Mais antigo antes' : 'Mais recente antes' }} <span class="caret"></span>
 	            			</button>
 	            			<ul class="dropdown-menu" role="menu">
 	            				<li>

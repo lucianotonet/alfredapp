@@ -28,12 +28,12 @@
 			
 				<div class="form-group">
 					<label class="" for="input">Cliente:</label><br>
-					{!! Form::select('cliente', $filters['clientes'], Input::old('cliente'), array('class'=>'form-control') ) !!}
+					{!! Form::select('cliente', $filters['clientes'], \Illuminate\Support\Facades\Request::old('cliente'), array('class'=>'form-control') ) !!}
 				</div>
 				
 				<div class="form-group">
 					<label for="input" class="">Status:</label><br>				
-					{!! Form::select('status', $filters['status'], Input::old('status'), array('class'=>'form-control') ) !!}
+					{!! Form::select('status', $filters['status'], \Illuminate\Support\Facades\Request::old('status'), array('class'=>'form-control') ) !!}
 				</div>
 				
 				<div class="form-group">
@@ -147,7 +147,7 @@
 								<li class="list-group-item form-inline">
 									<div class="form-group">
 										<div class="media-left">
-											{!! Form::checkbox('conversas_ids[]', $conversa->id, Input::old('conversas_ids'), array("class"=>"checkbox") ) !!}											
+											{!! Form::checkbox('conversas_ids[]', $conversa->id, \Illuminate\Support\Facades\Request::old('conversas_ids'), array("class"=>"checkbox") ) !!}											
 										</div>	
 									</div>
 									<div class="form-group">	

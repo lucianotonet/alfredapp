@@ -72,14 +72,14 @@ p.text-center img.img-responsive {
 		@endif
 
 		<input type="hidden" name="_token" value="{{ Session::getToken() }}">        
-		<input class="form-control" placeholder="Nome ou E-mail" type="text" name="email" id="email" value="{{ Input::old('email') }}">
+		<input class="form-control" placeholder="Nome ou E-mail" type="text" name="email" id="email" value="{{ \Illuminate\Support\Facades\Request::old('email') }}">
 		<input type="password" class="form-control" name="password" id="password" placeholder="Senha" required>
 		<button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
 
 		<br>
 
 		<label class="pull-left">
-			<input type="checkbox" id="flat-checkbox-1" class="icheckbox_flat-blue info" name="remember" {{ (Input::old('remember')) ? 'checked' : '' }} >
+			<input type="checkbox" id="flat-checkbox-1" class="icheckbox_flat-blue info" name="remember" {{ (\Illuminate\Support\Facades\Request::old('remember')) ? 'checked' : '' }} >
 			<label for="flat-checkbox-1">Permanecer conectado</label>
 		</label> 
 
