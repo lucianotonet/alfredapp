@@ -11,7 +11,7 @@
 |
 */
 
-$app = new Illuminate\Foundation\Application;
+$app = new Illuminate\Foundation\Application(realpath(__DIR__.'/..'));
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +39,9 @@ $env = $app->detectEnvironment(function () {
 |
 */
 
-$app->bindInstallPaths(require __DIR__.'/paths.php');
+if (method_exists($app, 'bindInstallPaths')) {
+    $app->bindInstallPaths(require __DIR__.'/paths.php');
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -52,10 +54,14 @@ $app->bindInstallPaths(require __DIR__.'/paths.php');
 |
 */
 
-$framework = $app['path.base'].
-                 '/vendor/laravel/framework/src';
+if (file_exists(__DIR__.'/app.php')) {
+    return require __DIR__.'/app.php';
+}
 
-require $framework.'/Illuminate/Foundation/start.php';
+$framework = $app['path.base'].'/vendor/laravel/framework/src';
+if (is_file($framework.'/Illuminate/Foundation/start.php')) {
+    require $framework.'/Illuminate/Foundation/start.php';
+}
 
 /*
 |--------------------------------------------------------------------------
