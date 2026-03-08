@@ -1,7 +1,7 @@
 <?php
-$canI = new CanI\CanI(Confide::user());
+$canI = new CanI\CanI(Auth::user());
 if (Auth::check()) {
-    if (Confide::user()->isAdmin()) {
+    if (Auth::user()->isAdmin()) {
         $canI->allow('manage', 'Organization', function($org) {
             return $this->getUser()->isMemberOf($org);
         });
@@ -22,4 +22,4 @@ if (Auth::check()) {
         });
     }
 }
-App::instance('canI', $canI);
+app()->instance('canI', $canI);

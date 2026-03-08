@@ -37,7 +37,7 @@ class Note extends \Eloquent {
          $alert = array(                     
                      'alert-success' => 'Nota criada!'
                   );       
-         Session::flash('alerts', $alert);
+         session()->flash('alerts', $alert);
 
       });
 
@@ -79,7 +79,7 @@ class Note extends \Eloquent {
          $alert = array(                     
                      'alert-success' => 'Nota salva!'
                   );       
-         Session::flash('alerts', $alert);
+         session()->flash('alerts', $alert);
       });
 
       Note::deleting(function($note)
@@ -101,7 +101,7 @@ class Note extends \Eloquent {
          $alert = array(                     
                      'alert-warning' => 'Nota excluída!'
                   );       
-         Session::flash('alerts', $alert);
+         session()->flash('alerts', $alert);
       });
 
    }
