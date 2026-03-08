@@ -10,7 +10,7 @@
     </div>
 
 
-    {{ Form::model($tarefa, [ 'method' => 'PATCH', 'route' =>[ 'tarefas.update', $tarefa->id ] ] ) }}  
+    {!! Form::model($tarefa, [ 'method' => 'PATCH', 'route' =>[ 'tarefas.update', $tarefa->id ] ] ) !!}  
     <!-- <pre><?php print_r($tarefa); ?></pre> -->
         
 
@@ -68,7 +68,7 @@
             <div class="form-group">
                 <label for="tipo" class="col-sm-3 control-label">Tipo</label>
                 <div class="col-sm-9">
-                    {{ Form::select('tipo',
+                    {!! Form::select('tipo',
                                     array(
                                         '1' => 'Ligação', 
                                         '2' => 'Visita',
@@ -76,7 +76,7 @@
                                         '4' => 'Relatório'
                                     ),
                                     $tarefa->tipo,
-                                    array( 'class'    => 'form-control' )) }}
+                                    array( 'class'    => 'form-control' )) !!}
                     <!-- <select class="form-control" name="tipo" id="tipo">
                         <option value="1">Ligação</option>
                         <option value="2">Visita</option>
@@ -122,7 +122,7 @@
         </div>
     
                         
-    {{ Form::close() }}      
+    {!! Form::close() !!}      
     
 </div>
 

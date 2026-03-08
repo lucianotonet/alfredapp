@@ -38,7 +38,7 @@
             <div class="form-group">
                 <label for="tipo" class="col-sm-3 control-label">Tipo</label>
                 <div class="col-sm-9">
-                    {{ Form::select('tipo',
+                    {!! Form::select('tipo',
                                     array(
                                         '1' => 'Ligação', 
                                         '2' => 'Visita',
@@ -48,7 +48,7 @@
                                     $tarefa->tipo,
                                     array( 'class'    => 'form-control',
                                            'readonly' => 'readonly',
-                                           'disabled' => 'disabled' )) }}                   
+                                           'disabled' => 'disabled' )) !!}                   
                 </div>
             </div>
             <div class="form-group">
@@ -71,13 +71,13 @@
         
         <div class="panel-footer clearfix">
 
-            {{ Form::open(array('url' => 'tarefas/' . $tarefa->id, 'class'=>'pull-right')) }}
+            {!! Form::open(array('url' => 'tarefas/' . $tarefa->id, 'class'=>'pull-right')) !!}
                 <div class="btn-group">
                     <a href="{{ URL::previous() }}" class="btn btn-primary">
                         <i class="fa fa-chevron-left"></i> Voltar
                     </a>                        
                     <div class="btn-group">
-                        {{ Form::button('<i class="fa fa-times"></i> Excluir', array('class' => 'btn btn-danger', 'type'=>'submit', 'onclick'=>'javascript:return confirm("Deseja excluir a tarefa da lista?")')) }}
+                        {!! Form::button('<i class="fa fa-times"></i> Excluir', array('class' => 'btn btn-danger', 'type'=>'submit', 'onclick'=>'javascript:return confirm("Deseja excluir a tarefa da lista?")')) !!}
                     </div>
                     <a href="{{ url('/tarefas/'.$tarefa->id.'/edit') }}" class="btn btn-primary">
                         <i class="fa fa-edit"></i> Editar
@@ -88,8 +88,8 @@
                         </a>
                     <?php } ?>                                              
                 </div>
-                {{ Form::hidden('_method', 'DELETE') }}
-            {{ Form::close() }}      
+                {!! Form::hidden('_method', 'DELETE') !!}
+            {!! Form::close() !!}      
                         
         </div>                      
     

@@ -4,9 +4,9 @@
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         <h3 class="title">{{ $relatorios->despesasNaoEnviadas }} despesas não reportadas</h3>
 
-        {{ Form::model( new Relatorio, array('class'=>'')) }}
+        {!! Form::model( new Relatorio, array('class'=>'')) !!}
 
-            {{ Form::hidden('resource_name', 'despesa') }}
+            {!! Form::hidden('resource_name', 'despesa') !!}
 
             <p>&nbsp;</p>
 
@@ -37,7 +37,7 @@
                 </div>
             </div>
             
-        {{ Form::close() }}
+        {!! Form::close() !!}
 
     </div>
 @else
