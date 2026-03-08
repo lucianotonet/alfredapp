@@ -8,7 +8,7 @@
                 <h3 class="panel-title title">Enviar E-mail</h3>
             </div>
 
-        {{Form::open(array('url' => 'emails', 'method' => 'post'))}}
+        {!! Form::open(array('url' => 'emails', 'method' => 'post')) !!}
 
             <table class="table table-condensed">        
                 <tbody>
@@ -67,9 +67,9 @@
                                     <i class="fa fa-file-pdf-o"></i> 
                                     {{$email['attachments']}}
 
-                                    {{Form::hidden('attachments', $email['attachments'])}}
-                                    {{Form::hidden('resource_id', $resource->id )}}
-                                    {{Form::hidden('resource_name', strtolower($email['resourcename']) )}}
+                                    {!! Form::hidden('attachments', $email['attachments']) !!}
+                                    {!! Form::hidden('resource_id', $resource->id ) !!}
+                                    {!! Form::hidden('resource_name', strtolower($email['resourcename']) ) !!}
 
 
                                    <!--  <a href="#" class="btn btn-primary">
@@ -110,9 +110,9 @@
                 </div>
             </div>
 
-            {{Form::hidden('id', 'INFORME O ID')}}
+            {!! Form::hidden('id', 'INFORME O ID') !!}
 
-        {{Form::close()}}
+        {!! Form::close() !!}
 
         </div>
 

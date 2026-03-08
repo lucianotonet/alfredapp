@@ -1,4 +1,4 @@
-{{ Form::open(array('url'=>URL::route('settings.store'), 'method'=>"POST", 'class'=>"form-horizontal", 'role'=>"form", 'files'=>true)) }}
+{!! Form::open(array('url'=>URL::route('settings.store'), 'method'=>"POST", 'class'=>"form-horizontal", 'role'=>"form", 'files'=>true)) !!}
 	
 	<div class="page-header">
 		<h3>E-mail</h3>	  
@@ -30,7 +30,7 @@
 	<div class="form-group">
 		<label for="input" class="col-sm-2 control-label">Driver:</label>
 		<div class="col-sm-10">
-			{{ Form::select('mail[driver]', [	
+			{!! Form::select('mail[driver]', [	
 										'smtp' 		=> 'SMTP',
 										'mail' 		=> 'PHP Mail',
 										'sendmail' 	=> 'PHP Sendmail',
@@ -38,7 +38,7 @@
 										'mandrill' 	=> 'Mandrill',
 										'log' 		=> 'Just Log',
 										], Config::get('mail.driver'),
-										array( "class"=>"form-control")); }}
+										array( "class"=>"form-control")); !!}
 			
 		</div>
 	</div>
@@ -61,11 +61,11 @@
 	<div class="form-group">
 		<label for="encryption" class="col-sm-2 control-label">CRIPTOGRAFIA</label>
 		<div class="col-sm-10">			
-			{{ Form::select('mail[encryption]', [										
+			{!! Form::select('mail[encryption]', [										
 										'tls' 	=> 'TLS',
 										'ssl' 	=> 'SSL',										
 										], Config::get('mail.encryption'),
-										array( "class"=>"form-control")); }}
+										array( "class"=>"form-control")); !!}
 		</div>
 	</div>
 
@@ -96,4 +96,4 @@
 		</div>
 	</div>
 
-{{ Form::close() }}
+{!! Form::close() !!}
