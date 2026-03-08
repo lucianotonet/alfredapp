@@ -8,15 +8,16 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "laravel/framework": "4.2.*",
-        "zizaco/confide": "~4.0@dev",
+        "barryvdh/laravel-dompdf": "0.4.*",
+        "doctrine/dbal": "2.4.*",
         "fzaninotto/faker": "v1.3.0",
         "guzzlehttp/guzzle": "~4.0",
+        "laravel/framework": "4.2.*",
+        "laravelcollective/html": "^5.0",
         "maatwebsite/excel": "~1.2.1",
-        "barryvdh/laravel-dompdf": "0.4.*",
-        "mandrill/mandrill": "1.0.*",
         "makzumi/calendar": "dev-master",
-        "doctrine/dbal": "2.4.*"
+        "mandrill/mandrill": "1.0.*",
+        "zizaco/confide": "~4.0@dev"
     },
     "autoload": {
         "classmap": [
