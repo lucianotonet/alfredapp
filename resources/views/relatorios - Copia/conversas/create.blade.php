@@ -4,9 +4,9 @@
 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 		<h3 class="title">{{ $relatorios->conversasNaoEnviadas }} conversas não reportadas</h3>
 
-		{{ Form::model( new Relatorio, array('class'=>'')) }}
+		{!! Form::model( new Relatorio, array('class'=>'')) !!}
 
-			{{ Form::hidden('resource_name', 'conversa') }}
+			{!! Form::hidden('resource_name', 'conversa') !!}
 
 			<p>&nbsp;</p>
 
@@ -52,7 +52,7 @@
 				</div>
 			</div>
 			
-		{{ Form::close() }}
+		{!! Form::close() !!}
 
 	</div>
 @else

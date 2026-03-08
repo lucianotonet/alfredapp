@@ -6,7 +6,7 @@
     <div class="panel-body">
                         
 
-            {{ Form::open(array('url' => 'fornecedors', 'id' => 'fornecedor_create')) }}
+            {!! Form::open(array('url' => 'fornecedors', 'id' => 'fornecedor_create')) !!}
 
                 <div class="row">
                     <div class="col col-md-12">
@@ -144,4 +144,4 @@
         </div>
 </div>
 
-{{ Form::close() }}
+{!! Form::close() !!}

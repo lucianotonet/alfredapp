@@ -9,7 +9,7 @@
 	{{-- HTML::style("//cdnjs.cloudflare.com/ajax/libs/bootcards/0.1.0/css/bootcards-desktop.min.css") --}}
 
 	<!-- Latest compiled and minified CSS -->
-	{{ HTML::style('css/bootstrap.min.css') }}
+	{!! HTML::style('css/bootstrap.min.css') !!}
 	{{-- HTML::style('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css') --}}
 
 	<!-- BootFlat CSS -->
@@ -17,10 +17,10 @@
 
 	<!-- Font Awesome -->
 	<!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> -->
-	{{ HTML::style('css/font-awesome.min.css') }}
+	{!! HTML::style('css/font-awesome.min.css') !!}
 
 	<!-- icheck theme -->
-	{{ HTML::style('js/icheck/skins/all.css') }}
+	{!! HTML::style('js/icheck/skins/all.css') !!}
 
 	<!-- Data tables -->
 	<!-- <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"> -->
@@ -29,30 +29,30 @@
 	{{-- HTML::style('css/simple-sidebar.css') --}}
 
 	<!-- SIDEBAR CSS -->
-	{{ HTML::style('css/pushy.css') }}
+	{!! HTML::style('css/pushy.css') !!}
 
 	<!-- CSS Animations -->
-	{{ HTML::style('css/animations.min.css') }}
+	{!! HTML::style('css/animations.min.css') !!}
 	
-	{{ HTML::style('css/jquery-ui.min.css') }}
-	{{ HTML::style('js/jquery-notifyjs/styles/metro/notify-metro.css') }}
+	{!! HTML::style('css/jquery-ui.min.css') !!}
+	{!! HTML::style('js/jquery-notifyjs/styles/metro/notify-metro.css') !!}
 
-	{{ HTML::style('css/icomoon/style.css')}}
+	{!! HTML::style('css/icomoon/style.css') !!}
 
 	{{-- HTML::style('//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.1.1/fullcalendar.min.css') --}}
 
-	{{ HTML::style('css/jquery.dynatable.css') }}
+	{!! HTML::style('css/jquery.dynatable.css') !!}
 
-	{{ HTML::style('css/bootstrap-datepicker3.min.css') }}
+	{!! HTML::style('css/bootstrap-datepicker3.min.css') !!}
 
 	<!-- Bootstrap-Iconpicker -->
-	{{ HTML::style('css/bootstrap-iconpicker.min.css') }}
+	{!! HTML::style('css/bootstrap-iconpicker.min.css') !!}
 
 
 
 
 	<!-- Custom styles -->
-	{{ HTML::style('css/style.css') }}
+	{!! HTML::style('css/style.css') !!}
 
 	<!-- Estilos de cada página -->
 	@yield('styles')
@@ -166,7 +166,7 @@
 	@if ($errors)
 	<div class="container">
 		<!-- if there are creation errors, they will show here -->
-		{{ HTML::ul($errors->all()) }}
+		{!! HTML::ul($errors->all()) !!}
 	</div>
 	@endif
 
