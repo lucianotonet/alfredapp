@@ -11,7 +11,7 @@ class EmailsController extends \BaseController {
 	{
 		$emails = Email::orderBy('id', 'desc')->paginate( Input::get('paginate', 10) );
 
-		return View::make('emails.index', compact('emails'));
+		return view('emails.index', compact('emails'));
 	}
 
 	/**
@@ -49,8 +49,8 @@ class EmailsController extends \BaseController {
 		 							'class'		=>	'alert-danger',
 		                            'message'   => '<strong><i class="fa fa-warning"></i></strong> O pedido n°'.$email['owner_id'].' não existe!'
 		                        );
-						Session::flash('alerts', $alert);	
-						return Redirect::to( URL::previous() );   
+						session()->flash('alerts', $alert);	
+						return redirect()->to( URL::previous() );   
 					}				
 				}				
 				break;
@@ -89,8 +89,8 @@ class EmailsController extends \BaseController {
 		 							'class'		=>	'alert-danger',
 		                            'message'   => '<strong><i class="fa fa-warning"></i></strong> O relatório n°'.$email['owner_id'].' não existe!'
 		                        );
-						Session::flash('alerts', $alert);	
-						return Redirect::to( URL::previous() );   
+						session()->flash('alerts', $alert);	
+						return redirect()->to( URL::previous() );   
 					}				
 				}	
 				break;
@@ -113,8 +113,8 @@ class EmailsController extends \BaseController {
 		 							'class'		=>	'alert-danger',
 		                            'message'   => '<strong><i class="fa fa-warning"></i></strong> O cliente n°'.$owner_id.' não existe!'
 		                        );
-						Session::flash('alerts', $alert);	
-						return Redirect::to( URL::previous() );   
+						session()->flash('alerts', $alert);	
+						return redirect()->to( URL::previous() );   
 					}				
 				}	
 				break;
@@ -124,8 +124,8 @@ class EmailsController extends \BaseController {
 				break;
 		}		
 
-		if (Request::ajax()) return View::make('emails.panels.create', compact('email', 'resource') );
-		else 				 return View::make('emails.create', compact('email', 'resource') );		
+		if (Request::ajax()) return view('emails.panels.create', compact('email', 'resource') );
+		else 				 return view('emails.create', compact('email', 'resource') );		
 	}
 
 	/**
@@ -142,7 +142,7 @@ class EmailsController extends \BaseController {
 
 		if( $validator->fails() ){
 			if ( Request::ajax() ) return Response::json('error', '503')->withErrors($validator);			
-			else return Redirect::back()->withErrors($validator)->withInput();			
+			else return redirect()->back()->withErrors($validator)->withInput();			
 		}
 
 		// echo "<pre>";
@@ -200,7 +200,7 @@ class EmailsController extends \BaseController {
 				// exit;
 
 				// DEBUG
-				// return View::make( $view, array('email'=>$content, 'resource'=>$resource) );
+				// return view( $view, array('email'=>$content, 'resource'=>$resource) );
 				// exit;
 
 				Mail::queue( $view, array('email'=>$content, 'resource'=>$resource ), function($message) use ($content, $to)
@@ -296,9 +296,9 @@ class EmailsController extends \BaseController {
  			
 			
 			
-			Session::flash('alerts', $alert);      
+			session()->flash('alerts', $alert);      
 
-			return Redirect::to( URL::previous() );
+			return redirect()->to( URL::previous() );
 
 	}
 
@@ -312,8 +312,8 @@ class EmailsController extends \BaseController {
 	{
 		$email = Email::findOrFail($id);
 
-		return View::make('emails.show', compact('email'));
-			//return View::make('layouts.email', compact('email'));
+		return view('emails.show', compact('email'));
+			//return view('layouts.email', compact('email'));
 	}
 
 	/**
@@ -326,7 +326,7 @@ class EmailsController extends \BaseController {
 	{
 		$email = Email::find($id);
 
-		return View::make('emails.edit', compact('email'));
+		return view('emails.edit', compact('email'));
 	}
 
 	/**
@@ -343,12 +343,12 @@ class EmailsController extends \BaseController {
 
 		if ($validator->fails())
 		{
-			return Redirect::back()->withErrors($validator)->withInput();
+			return redirect()->back()->withErrors($validator)->withInput();
 		}
 
 		$email->update($data);
 
-		return Redirect::route('emails.index');
+		return redirect()->route('emails.index');
 	}
 
 	/**
@@ -361,7 +361,7 @@ class EmailsController extends \BaseController {
 	{
 		Email::destroy($id);
 
-		return Redirect::route('emails.index');
+		return redirect()->route('emails.index');
 	}
 
 

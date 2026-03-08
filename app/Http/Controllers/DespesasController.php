@@ -31,7 +31,7 @@ class DespesasController extends \BaseController {
 
 		//if( Request::ajax() ){
 		//}else{
-		//	return View::make('despesas.index', compact('despesas'));
+		//	return view('despesas.index', compact('despesas'));
 		//}
 
 	}
@@ -43,7 +43,7 @@ class DespesasController extends \BaseController {
 	 */
 	public function create()
 	{
-		return View::make('despesas.create');
+		return view('despesas.create');
 	}
 
 	/**
@@ -59,7 +59,7 @@ class DespesasController extends \BaseController {
 
       if ($validator->fails())
       {		
-        return Redirect::back()->withErrors($validator)->withInput();
+        return redirect()->back()->withErrors($validator)->withInput();
 
       }else{
        		
@@ -85,8 +85,8 @@ class DespesasController extends \BaseController {
         // Alert
 		$alert[] = [	'class' => 'alert-success',
 						'message'   => '<strong><i class="fa fa-check"></i></strong> Despesa registrada com sucesso'];
-		Session::flash('alerts', $alert);	
-		return Redirect::to( URL::previous() );   
+		session()->flash('alerts', $alert);	
+		return redirect()->to( URL::previous() );   
 
 
       }
@@ -102,7 +102,7 @@ class DespesasController extends \BaseController {
 	{
 		$despesa = Despesa::findOrFail($id);
 
-		return View::make('despesas.show', compact('despesa'));
+		return view('despesas.show', compact('despesa'));
 	}
 
 	/**
@@ -115,7 +115,7 @@ class DespesasController extends \BaseController {
 	{
 		$despesa = Despesa::find($id);
 
-		return View::make('despesas.edit', compact('despesa'));
+		return view('despesas.edit', compact('despesa'));
 	}
 
 	/**
@@ -132,12 +132,12 @@ class DespesasController extends \BaseController {
 
 		if ($validator->fails())
 		{
-			return Redirect::back()->withErrors($validator)->withInput();
+			return redirect()->back()->withErrors($validator)->withInput();
 		}
 
 		$despesa->update($data);
 
-		return Redirect::route('despesas.index');
+		return redirect()->route('despesas.index');
 	}
 
 	/**
@@ -157,8 +157,8 @@ class DespesasController extends \BaseController {
 			$alert[] = [	'class' 	=> 'alert-danger',
 							'message'   => '<strong><i class="fa fa-check"></i></strong> Erro! Não foi possível excluir a despesa.'			                             ];
 		}
-		Session::flash('alerts', $alert);	
-		return Redirect::to( URL::previous() );      
+		session()->flash('alerts', $alert);	
+		return redirect()->to( URL::previous() );      
 	}
 
 }

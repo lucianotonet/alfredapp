@@ -85,7 +85,7 @@ class ClienteController extends \BaseController {
 
 				 
 				
-				 return View::make('clientes.index')
+				 return view('clientes.index')
 						->with('clientes', $clientes)
 						->with('customers', $customers);
 			}
@@ -107,7 +107,7 @@ class ClienteController extends \BaseController {
 	public function create()
 	{
 		// load the create form (app/views/clientes/create.blade.php)      
-		return View::make('clientes.create');
+		return view('clientes.create');
 
 	}
 	
@@ -129,7 +129,7 @@ class ClienteController extends \BaseController {
 			
 			if ($validator->fails()) {
 
-				 return Redirect::to('clientes/create')
+				 return redirect()->to('clientes/create')
 				->withErrors($validator)
 				->withInput(Input::except('password'));
 
@@ -139,8 +139,8 @@ class ClienteController extends \BaseController {
 			Cliente::create($this->post_to_array($this->table_fields));
 				 //Session::flush();
 				 $alert[] = [   'class' => 'alert-success', 'message'   => 'Novo cliente adicionado!' ];
-				 Session::flash('alerts', $alert);
-			return Redirect::to('clientes');
+				 session()->flash('alerts', $alert);
+			return redirect()->to('clientes');
 		}
 	}
 
@@ -192,12 +192,12 @@ class ClienteController extends \BaseController {
 
 				 
 			// show the view and pass the cliente to it
-			return View::make('clientes.show', compact('cliente','tarefas'));                     			
+			return view('clientes.show', compact('cliente','tarefas'));                     			
 															//->with( 'pedidos', $cliente->pedidos() );
 		}else{         
 			 $alert[] = [   'class' => 'alert-warning', 'message'   => 'O cliente que você procura não existe!' ];
-			 Session::flash('alerts', $alert);
-			 return Redirect::to('clientes');
+			 session()->flash('alerts', $alert);
+			 return redirect()->to('clientes');
 		} 	
 
 
@@ -216,7 +216,7 @@ class ClienteController extends \BaseController {
 		$cliente = Cliente::find($id);
 
 		// show the edit form and pass the cliente
-		return View::make('clientes.edit')
+		return view('clientes.edit')
 			->with('cliente', $cliente);
 	}
 
@@ -238,7 +238,7 @@ class ClienteController extends \BaseController {
 
 		// process the login
 		if ($validator->fails()) {
-			return Redirect::to('clientes/' . $id . '/edit')
+			return redirect()->to('clientes/' . $id . '/edit')
 				->withErrors($validator)
 				->withInput(Input::except('password'));
 		} else {
@@ -246,10 +246,10 @@ class ClienteController extends \BaseController {
 			Cliente::where('id', $id)->update($this->post_to_array($this->table_fields));
 				 //Show success message         
 					$alert[] = [   'class' => 'alert-success', 'message'   => 'Cliente atualizado com sucesso!' ];
-				 Session::flash('alerts', $alert);
+				 session()->flash('alerts', $alert);
 
 			// redirect
-			return Redirect::to('clientes');
+			return redirect()->to('clientes');
 		}
 	}
 	
@@ -264,14 +264,14 @@ class ClienteController extends \BaseController {
 				 
 
 				 // // redirect
-				 // Session::flash('message', 'Um cliente randomico foi adicionado!');
-				 // return Redirect::to('clientes');
+				 // session()->flash('message', 'Um cliente randomico foi adicionado!');
+				 // return redirect()->to('clientes');
 
 				 // get all the clientes
 				 $clientes = Cliente::all();      
 
 				 // load the view and pass the clientes
-				 return View::make('clientes.index')
+				 return view('clientes.index')
 						->with('clientes', $clientes);
 	 }
 
@@ -289,10 +289,10 @@ class ClienteController extends \BaseController {
 
 		//Show success message
 				 $alert[] = [   'class' => 'alert-success', 'message'   => 'O item foi excluído com sucesso!' ];
-				 Session::flash('alerts', $alert);
+				 session()->flash('alerts', $alert);
 			
 			// redirect
-		return Redirect::to('clientes');
+		return redirect()->to('clientes');
 	}
 
 
@@ -329,7 +329,7 @@ class ClienteController extends \BaseController {
 
 
 
-			return View::make('emails.create', compact('email','resource'));
+			return view('emails.create', compact('email','resource'));
 
 	 }
 
@@ -401,7 +401,7 @@ class ClienteController extends \BaseController {
     {
         $costumer = Cliente::find( $id );
         if( $costumer ){
-            return View::make('clientes.panels.item', ['cliente'=>$costumer]);
+            return view('clientes.panels.item', ['cliente'=>$costumer]);
         }else{
             return Response::json([ 'error' => 'true' ]);
         }

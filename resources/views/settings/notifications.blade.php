@@ -7,7 +7,7 @@
 	<div class="form-group">
 		<label for="notifications" class="col-sm-2 control-label">Enviar para:</label>
 		<div class="col-sm-10">
-			<input type="text" name="settings[notifications]" id="notifications" class="form-control" value="{{Config::get('settings.notifications')}}" title="" placeholder="">
+			<input type="text" name="settings[notifications]" id="notifications" class="form-control" value="{{config('settings.notifications')}}" title="" placeholder="">
 		</div>
 	</div>
 	
@@ -17,6 +17,6 @@
 		</div>
 	</div>
 			
-	{{-- <input type="file" name="settings[app_logo]" id="app_logo" class="form-control" value="{{Config::get('settings.app_logo')}}" required="required" title="">
+	{{-- <input type="file" name="settings[app_logo]" id="app_logo" class="form-control" value="{{config('settings.app_logo')}}" required="required" title="">
 	{{ Input::file("settings[app_logo]") }}			 --}}	
 {!! Form::close() !!}

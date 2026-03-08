@@ -194,7 +194,7 @@
 							<tr>
 								<td>
 									<hr />
-									<?php echo Config::get('settings.mail_signature'); ?>
+									<?php echo config('settings.mail_signature'); ?>
 									<!-- <strong style="">Olmar Primieri.</strong>
                         			<br/>
                     				(54) 9992-3377<br>

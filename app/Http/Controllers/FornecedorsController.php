@@ -11,7 +11,7 @@ class FornecedorsController extends \BaseController {
 	{
 		$fornecedores = Fornecedor::all();      
 
-		return View::make('fornecedors.index', compact('fornecedores'));
+		return view('fornecedors.index', compact('fornecedores'));
 	}
 
 	/**
@@ -21,7 +21,7 @@ class FornecedorsController extends \BaseController {
 	 */
 	public function create()
 	{
-		return View::make('fornecedors.create');
+		return view('fornecedors.create');
 	}
 
 	/**
@@ -35,12 +35,12 @@ class FornecedorsController extends \BaseController {
 
 		if ($validator->fails())
 		{
-			return Redirect::back()->withErrors($validator)->withInput();
+			return redirect()->back()->withErrors($validator)->withInput();
 		}
 
 		Fornecedor::create($data);
 
-		return Redirect::route('fornecedors.index');
+		return redirect()->route('fornecedors.index');
 	}
 
 	/**
@@ -56,7 +56,7 @@ class FornecedorsController extends \BaseController {
          return Response::json($fornecedor);
       }else{
          $fornecedor = Fornecedor::find($id);
-         return View::make('fornecedors.show', compact('fornecedor'));
+         return view('fornecedors.show', compact('fornecedor'));
       }
 	}
 
@@ -70,7 +70,7 @@ class FornecedorsController extends \BaseController {
 	{
 		$fornecedor = Fornecedor::find($id);
 
-		return View::make('fornecedors.edit', compact('fornecedor'));
+		return view('fornecedors.edit', compact('fornecedor'));
 	}
 
 	/**
@@ -87,12 +87,12 @@ class FornecedorsController extends \BaseController {
 
 		if ($validator->fails())
 		{
-			return Redirect::back()->withErrors($validator)->withInput();
+			return redirect()->back()->withErrors($validator)->withInput();
 		}
 
 		$fornecedor->update($data);
 
-		return Redirect::route('fornecedors.index');
+		return redirect()->route('fornecedors.index');
 	}
 
 	/**
@@ -105,7 +105,7 @@ class FornecedorsController extends \BaseController {
 	{
 		Fornecedor::destroy($id);
 
-		return Redirect::route('fornecedors.index');
+		return redirect()->route('fornecedors.index');
 	}
 
 }

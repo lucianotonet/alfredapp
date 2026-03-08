@@ -44,11 +44,11 @@ class CategoriesController extends \BaseController {
 			}			
 
 			// RETURN INDEX PANEL
-			return View::make('categories.panels.index', compact('categories', 'types')); 
+			return view('categories.panels.index', compact('categories', 'types')); 
 
 		} else { 
 			$categories = $categories->paginate( Input::get('paginate', 10) );	
-			return View::make('categories.index', compact('categories', 'types')); 
+			return view('categories.index', compact('categories', 'types')); 
 		}
 	}
 
@@ -67,9 +67,9 @@ class CategoriesController extends \BaseController {
 				);
 
 		if( Request::ajax() ) { 
-			return View::make('categories.panels.create', compact('types'));
+			return view('categories.panels.create', compact('types'));
 		}else{
-			return View::make('categories.create', compact('types'));
+			return view('categories.create', compact('types'));
 		}
 	}
 
@@ -84,7 +84,7 @@ class CategoriesController extends \BaseController {
 
 		if ($validator->fails())
 		{
-			return Redirect::back()->withErrors($validator)->withInput();
+			return redirect()->back()->withErrors($validator)->withInput();
 		}
 
 		
@@ -97,8 +97,8 @@ class CategoriesController extends \BaseController {
 	        $alert[] = [  'class' 	=> 'alert-danger',
 			              'message'   => '<strong><i class="fa fa-warning"></i></strong> Erro ao salvar o item' ];
 		}
-	    Session::flash('alerts', $alert);
-		return Redirect::back();
+	    session()->flash('alerts', $alert);
+		return redirect()->back();
 	}
 
 	/**
@@ -114,12 +114,12 @@ class CategoriesController extends \BaseController {
 		if( !$category ){
 			$alert[] = [ 'class' 	=> 'alert-danger',
      	    			 'message'  => '<strong><i class="fa fa-warning"></i></strong> A categoria não existe' ];
-            Session::flash('alerts', $alert);	
+            session()->flash('alerts', $alert);	
 		
-			return Redirect::to( URL::previous() ); 
+			return redirect()->to( URL::previous() ); 
 		}
 
-		return View::make('categories.show', compact('category'));
+		return view('categories.show', compact('category'));
 	}
 
 	/**
@@ -134,14 +134,14 @@ class CategoriesController extends \BaseController {
 		if( !$category ){
 			$alert[] = [ 'class' 	=> 'alert-danger',
      	    			 'message'  => '<strong><i class="fa fa-warning"></i></strong> A categoria não existe' ];
-            Session::flash('alerts', $alert);	
+            session()->flash('alerts', $alert);	
 		
-			return Redirect::to( URL::previous() ); 
+			return redirect()->to( URL::previous() ); 
 		}else{
 			if( Request::ajax() ) { 
-				return View::make('categories.panels.edit', compact('category'));
+				return view('categories.panels.edit', compact('category'));
 			}else{
-				return View::make('categories.edit', compact('category'));
+				return view('categories.edit', compact('category'));
 			}
 		}
 	}
@@ -160,16 +160,16 @@ class CategoriesController extends \BaseController {
 
 		if ($validator->fails())
 		{
-			return Redirect::back()->withErrors($validator)->withInput();
+			return redirect()->back()->withErrors($validator)->withInput();
 		}
 
 		if( $category->update($data) ){
 			//Show message         
 	        $alert[] = [  'class' 	=> 'alert-success',
 			              'message' => '<strong><i class="fa fa-check"></i></strong> Atualizado!' ];
-		    Session::flash('alerts', $alert);
+		    session()->flash('alerts', $alert);
 		}
-		return Redirect::to( URL::previous() ); 
+		return redirect()->to( URL::previous() ); 
 
 	}
 
@@ -185,9 +185,9 @@ class CategoriesController extends \BaseController {
 			//Show message         
 	        $alert[] = [  'class' 	=> 'alert-success',
 			              'message' => '<strong><i class="fa fa-check"></i></strong> Excluído!' ];
-		    Session::flash('alerts', $alert);
+		    session()->flash('alerts', $alert);
 		}
-		return Redirect::to( URL::previous() ); 
+		return redirect()->to( URL::previous() ); 
 	}
 
 }

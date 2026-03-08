@@ -100,7 +100,7 @@ class TransactionsController extends \BaseController {
 													->where( 'date', '<=', Carbon::now()->endOfMonth()->format('Y-m-d') )
 													->sum('amount');
 		
-		return View::make('transactions.novo.index', compact('transactions', 'transactions_days', 'receitas', 'despesas', 'balance'));
+		return view('transactions.novo.index', compact('transactions', 'transactions_days', 'receitas', 'despesas', 'balance'));
 	}
 
 
@@ -311,7 +311,7 @@ class TransactionsController extends \BaseController {
 			              'message' => '<strong><i class="fa fa-warning"></i></strong> Você tem <strong>'.count( $transactionsOverdue ) . '</strong> lançamentos pendentes. <a href="'. url( "financeiro/lancamentos?view=overdue" ) .'" class="">Ver lançamentos</a>' ];
 		}
 
-		Session::flash('info', $info);
+		session()->flash('info', $info);
 		
 		// AGRUPA POR DIA
 		$transactions_days = $transactions->groupBy( function($transaction)
@@ -343,7 +343,7 @@ class TransactionsController extends \BaseController {
 		$navigation = array();
 		
 		$view = 'transactions.novo.lancamentos';
-		return View::make( $view, compact('transactions', 'transactions_days', 'view', 'title', 'data', 'balance', 'labels'));		
+		return view( $view, compact('transactions', 'transactions_days', 'view', 'title', 'data', 'balance', 'labels'));		
 			
 	}
 
@@ -357,9 +357,9 @@ class TransactionsController extends \BaseController {
 	{
 		$data = Input::all();
 		
-		// return View::make('transactions.create');
-		if ( Request::ajax() ) 	return View::make('transactions.novo.'.$data['type'].'.create');
-		else 				 	return View::make('transactions.create', compact('type'));
+		// return view('transactions.create');
+		if ( Request::ajax() ) 	return view('transactions.novo.'.$data['type'].'.create');
+		else 				 	return view('transactions.create', compact('type'));
 	}
 
 	/**
@@ -372,7 +372,7 @@ class TransactionsController extends \BaseController {
 		$validator = Validator::make($data = Input::all(), Transaction::$rules);
 		if ($validator->fails())
 		{
-			return Redirect::back()->withErrors($validator)->withInput();
+			return redirect()->back()->withErrors($validator)->withInput();
 		}
 
 		// USER
@@ -673,8 +673,8 @@ class TransactionsController extends \BaseController {
 		}
 
 		
-	    Session::flash('alerts', $alert);
-		return Redirect::back()->withInput();			
+	    session()->flash('alerts', $alert);
+		return redirect()->back()->withInput();			
 
 	}
 
@@ -693,22 +693,22 @@ class TransactionsController extends \BaseController {
 		if( count( $transaction ) < 1 ){
 			$alert[] = [  'class' 	=> 'alert-warning',
 			              'message' => '<strong><i class="fa fa-warning"></i></strong> Lançamento não encontrado!' ];
-		    Session::flash('alerts', $alert);
+		    session()->flash('alerts', $alert);
 		    if ( Request::header('referer') ) {
-				return Redirect::back();				    	
+				return redirect()->back();				    	
 		    }else{
-		    	return Redirect::to('financeiro');
+		    	return redirect()->to('financeiro');
 		    }
 		}
 
 		if ( $transaction->user_id != Auth::id() ) {
 			$alert[] = [  'class' 	=> 'alert-danger',
 			              'message' => '<strong><i class="fa fa-warning"></i></strong> Hei! O que está tentando fazer?' ];
-		    Session::flash('alerts', $alert);
+		    session()->flash('alerts', $alert);
 		    if ( Request::header('referer') ) {
-				return Redirect::back();				    	
+				return redirect()->back();				    	
 		    }else{
-		    	return Redirect::to('financeiro');
+		    	return redirect()->to('financeiro');
 		    }
 		}
 
@@ -746,9 +746,9 @@ class TransactionsController extends \BaseController {
 
 		}		
 
-		if (Request::ajax()) return View::make('transactions.novo.'.$transaction->type.'.show', compact('transaction', 'labels') );
-		else 				 return View::make('transactions.novo.'.$transaction->type.'.show', compact('transaction', 'labels') );
-		// return View::make('transactions.show', compact('transaction'));
+		if (Request::ajax()) return view('transactions.novo.'.$transaction->type.'.show', compact('transaction', 'labels') );
+		else 				 return view('transactions.novo.'.$transaction->type.'.show', compact('transaction', 'labels') );
+		// return view('transactions.show', compact('transaction'));
 	}
 
 	/**
@@ -764,22 +764,22 @@ class TransactionsController extends \BaseController {
 		if( count( $transaction ) < 1 ){
 			$alert[] = [  'class' 	=> 'alert-warning',
 			              'message' => '<strong><i class="fa fa-warning"></i></strong> Lançamento não encontrado!' ];
-		    Session::flash('alerts', $alert);
+		    session()->flash('alerts', $alert);
 		    if ( Request::header('referer') ) {
-				return Redirect::back();				    	
+				return redirect()->back();				    	
 		    }else{
-		    	return Redirect::to('financeiro');
+		    	return redirect()->to('financeiro');
 		    }
 		}
 
 		if ( $transaction->user_id != Auth::id() ) {
 			$alert[] = [  'class' 	=> 'alert-danger',
 			              'message' => '<strong><i class="fa fa-warning"></i></strong> Hei! O que está tentando fazer?' ];
-		    Session::flash('alerts', $alert);
+		    session()->flash('alerts', $alert);
 		    if ( Request::header('referer') ) {
-				return Redirect::back();				    	
+				return redirect()->back();				    	
 		    }else{
-		    	return Redirect::to('financeiro');
+		    	return redirect()->to('financeiro');
 		    }
 		}
 
@@ -792,8 +792,8 @@ class TransactionsController extends \BaseController {
 		// $transaction->category = Category::find( $transaction->category_id );
 		//$transaction->category = ( $transaction->getCategory->name ) ? $transaction->getCategory->name : '';
 
-		if (Request::ajax()) {	return View::make('transactions.novo.'.$transaction->type.'.edit', compact('transaction'));} 
-		else {  				return View::make('transactions.edit', compact('transaction')); }
+		if (Request::ajax()) {	return view('transactions.novo.'.$transaction->type.'.edit', compact('transaction'));} 
+		else {  				return view('transactions.edit', compact('transaction')); }
 	}
 
 	/**
@@ -810,8 +810,8 @@ class TransactionsController extends \BaseController {
 		if ($validator->fails())
 		{
 			$alert[] = [   'class' => 'alert-danger', 'message'   => '<strong><i class="fa fa-warning"></i></strong> Erro!' ];
-			Session::flash('alerts', $alert);	
-			return Redirect::back()->withErrors($validator)->withInput();
+			session()->flash('alerts', $alert);	
+			return redirect()->back()->withErrors($validator)->withInput();
 		}
 
 		// DONE (bug fix)
@@ -944,9 +944,9 @@ class TransactionsController extends \BaseController {
 
 
 		$alert[] = [   'class' => 'alert-success', 'message'   => '<strong><i class="fa fa-check"></i></strong> Lançamento atualizado!' ];
-		Session::flash('alerts', $alert);			
+		session()->flash('alerts', $alert);			
 		
-		return Redirect::to( URL::previous() );  		
+		return redirect()->to( URL::previous() );  		
 	}
 
 
@@ -960,11 +960,11 @@ class TransactionsController extends \BaseController {
 		$transactions   = $transaction->getRecurringTransactions;
 		$data 			= Input::all();
 		
-		// return View::make('transactions.create');
+		// return view('transactions.create');
 		if ( Request::ajax() ){
-			return View::make('transactions.novo.delete', compact('transaction', 'transactions'));
+			return view('transactions.novo.delete', compact('transaction', 'transactions'));
 		}else{
-			return Redirect::to( URL::previous() );
+			return redirect()->to( URL::previous() );
 		}
 
 	}
@@ -1043,8 +1043,8 @@ class TransactionsController extends \BaseController {
 		}else{
 			$alert[] = [   'class' => 'alert-danger', 'message'   => '<strong><i class="fa fa-check"></i></strong> Sem permissão para excluir o lançamento!' ];
 		}
-		Session::flash('alerts', $alert);			
-		return Redirect::to( URL::previous() );  
+		session()->flash('alerts', $alert);			
+		return redirect()->to( URL::previous() );  
 	}
 
 
@@ -1207,7 +1207,7 @@ class TransactionsController extends \BaseController {
 	
 		}
 
-		Session::flash('info', $info);
+		session()->flash('info', $info);
 		
 		// AGRUPA POR DIA
 		$transactions_days = $transactions->groupBy( function($transaction)
@@ -1226,7 +1226,7 @@ class TransactionsController extends \BaseController {
 		$navigation = array();
 		
 		$view = 'transactions.novo.relatorios';
-		return View::make( $view, compact('transactions', 'transactions_days', 'view', 'title', 'data', 'balance', 'labels'));		
+		return view( $view, compact('transactions', 'transactions_days', 'view', 'title', 'data', 'balance', 'labels'));		
 			
 	}
 

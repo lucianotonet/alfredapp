@@ -57,22 +57,22 @@ form .form-actions {
 		{{-- Confide::makeSignupForm()->render(); --}} 
 		<form method="POST" action="{{ URL::to('users') }}" accept-charset="UTF-8">
 			
-			@if (Session::get('error'))
+			@if (session()->get('error'))
 		        <div class="alert alert-error alert-danger">
-		            @if (is_array(Session::get('error')))
-		                {{ head(Session::get('error')) }}
+		            @if (is_array(session()->get('error')))
+		                {{ head(session()->get('error')) }}
 		            @endif
 		        </div>
 		    @endif
 
-			 @if (Session::get('notice'))
-		        <div class="alert alert-info">{{ Session::get('notice') }}</div>
+			 @if (session()->get('notice'))
+		        <div class="alert alert-info">{{ session()->get('notice') }}</div>
 		    @endif
 
 		    <input type="hidden" name="_token" value="{{ Session::getToken() }}">
 		    <fieldset>
 		        @if (Cache::remember('username_in_confide', 5, function() {
-		            return Schema::hasColumn(Config::get('auth.table'), 'username');
+		            return Schema::hasColumn(config('auth.table'), 'username');
 		        }))
 		            <div class="form-group">
 		                <label for="username">{{ Lang::get('confide::confide.username') }}</label>

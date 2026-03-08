@@ -13,7 +13,7 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::all();
-        return View::make('users.index')->with('users', $users); 
+        return view('users.index')->with('users', $users); 
     }
 
     /**
@@ -23,16 +23,16 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //return View::make(Config::get('confide::signup_form'));
+        //return view(config('confide::signup_form'));
 
         if( Auth::user() ){         
             if( Request::ajax() ){
-                return View::make('users.panels.create');         
+                return view('users.panels.create');         
             }else{
-                return View::make('users.create');        
+                return view('users.create');        
             }
         }else{
-            return View::make('users.signup');
+            return view('users.signup');
         }
     }
 
@@ -59,27 +59,27 @@ class UsersController extends Controller
             if( !$user->save() ) {
                 $alert[] = [ 'class'    => 'alert-danger',
                              'message'  => '<strong><i class="fa fa-warning"></i></strong> Não foi possível adicionar o novo usuário!' ];
-                Session::flash('alerts', $alert);                   
+                session()->flash('alerts', $alert);                   
             } else {
                 $alert[] = [ 'class'    => 'alert-success',
                              'message'  => '<strong><i class="fa fa-check"></i></strong> Usuário adicionado com sucesso!' ];
-                Session::flash('alerts', $alert);   
+                session()->flash('alerts', $alert);   
             }
                 
-            return Redirect::back();
+            return redirect()->back();
 
         }
 
 
 
-        $repo = App::make('UserRepository');
+        $repo = app()->make('UserRepository');
         $user = $repo->signup(Input::all());
 
         if ($user->id) {
-            if (Config::get('confide::signup_email')) {
+            if (config('confide::signup_email')) {
                 Mail::queueOn(
-                    Config::get('confide::email_queue'),
-                    Config::get('confide::email_account_confirmation'),
+                    config('confide::email_queue'),
+                    config('confide::email_account_confirmation'),
                     compact('user'),
                     function ($message) use ($user) {
                         $message
@@ -89,12 +89,12 @@ class UsersController extends Controller
                 );
             }
 
-            return Redirect::action('UsersController@login')
+            return redirect()->action('UsersController@login')
                 ->with('notice', Lang::get('confide::confide.alerts.account_created'));
         } else {
             $error = $user->errors()->all(':message');
 
-            return Redirect::action('UsersController@create')
+            return redirect()->action('UsersController@create')
                 ->withInput(Input::except('password'))
                 ->with('error', $error);
         }
@@ -124,8 +124,8 @@ class UsersController extends Controller
             $alert[] = [  'class'   => 'alert-success',
                         'message'   => '<strong><i class="fa fa-check"></i></strong> Usuário alterado com sucesso!' ];
         }
-        Session::flash('alerts', $alert);
-        return Redirect::back()->withInput(Input::except('password'));
+        session()->flash('alerts', $alert);
+        return redirect()->back()->withInput(Input::except('password'));
 
     }
 
@@ -139,10 +139,10 @@ class UsersController extends Controller
     public function login()
     {
         if (Auth::user()) {
-            return Redirect::to('/');
+            return redirect()->to('/');
         } else {
-            //return View::make(Config::get('confide::login_form'));
-            return View::make( 'users.login' );
+            //return view(config('confide::login_form'));
+            return view( 'users.login' );
         }
     }
 
@@ -153,7 +153,7 @@ class UsersController extends Controller
      */
     public function doLogin()
     {
-        $repo = App::make('UserRepository');
+        $repo = app()->make('UserRepository');
         $input = Input::all();
 
         if ($repo->login($input)) {
@@ -167,7 +167,7 @@ class UsersController extends Controller
                 $err_msg = Lang::get('confide::confide.alerts.wrong_credentials');
             }
 
-            return Redirect::action('UsersController@login')
+            return redirect()->action('UsersController@login')
                 ->withInput(Input::except('password'))
                 ->with('error', $err_msg);
         }
@@ -184,11 +184,11 @@ class UsersController extends Controller
     {
         if (Confide::confirm($code)) {
             $notice_msg = Lang::get('confide::confide.alerts.confirmation');
-            return Redirect::action('UsersController@login')
+            return redirect()->action('UsersController@login')
                 ->with('notice', $notice_msg);
         } else {
             $error_msg = Lang::get('confide::confide.alerts.wrong_confirmation');
-            return Redirect::action('UsersController@login')
+            return redirect()->action('UsersController@login')
                 ->with('error', $error_msg);
         }
     }
@@ -200,8 +200,8 @@ class UsersController extends Controller
      */
     public function forgotPassword()
     {
-        //return View::make(Config::get('confide::forgot_password_form'));
-        return View::make('users.forgot_password');
+        //return view(config('confide::forgot_password_form'));
+        return view('users.forgot_password');
     }
 
     /**
@@ -213,11 +213,11 @@ class UsersController extends Controller
     {
         if (Confide::forgotPassword(Input::get('email'))) {
             $notice_msg = Lang::get('confide::confide.alerts.password_forgot');
-            return Redirect::action('UsersController@login')
+            return redirect()->action('UsersController@login')
                 ->with('notice', $notice_msg);
         } else {
             $error_msg = Lang::get('confide::confide.alerts.wrong_password_forgot');
-            return Redirect::action('UsersController@doForgotPassword')
+            return redirect()->action('UsersController@doForgotPassword')
                 ->withInput()
                 ->with('error', $error_msg);
         }
@@ -232,9 +232,9 @@ class UsersController extends Controller
      */
     public function resetPassword($token)
     {
-        //return View::make(Config::get('confide::reset_password_form'))
+        //return view(config('confide::reset_password_form'))
         //       ->with('token', $token);
-        return View::make( 'users.reset_password' )
+        return view( 'users.reset_password' )
                 ->with('token', $token);
     }
 
@@ -245,7 +245,7 @@ class UsersController extends Controller
      */
     public function doResetPassword()
     {
-        $repo = App::make('UserRepository');
+        $repo = app()->make('UserRepository');
         $input = array(
             'token'                 =>Input::get('token'),
             'password'              =>Input::get('password'),
@@ -255,11 +255,11 @@ class UsersController extends Controller
         // By passing an array with the token, password and confirmation
         if ($repo->resetPassword($input)) {
             $notice_msg = Lang::get('confide::confide.alerts.password_reset');
-            return Redirect::action('UsersController@login')
+            return redirect()->action('UsersController@login')
                 ->with('notice', $notice_msg);
         } else {
             $error_msg = Lang::get('confide::confide.alerts.wrong_password_reset');
-            return Redirect::action('UsersController@resetPassword', array('token'=>$input['token']))
+            return redirect()->action('UsersController@resetPassword', array('token'=>$input['token']))
                 ->withInput()
                 ->with('error', $error_msg);
         }
@@ -274,7 +274,7 @@ class UsersController extends Controller
     {
         Auth::logout();
 
-        return Redirect::to('/');
+        return redirect()->to('/');
     }
 
 
@@ -282,7 +282,7 @@ class UsersController extends Controller
     {
         $user = User::find($id);               
         if(!$user){
-            return Redirect::back()->withInput(Input::all());
+            return redirect()->back()->withInput(Input::all());
         }
 
 
@@ -293,8 +293,8 @@ class UsersController extends Controller
             $alert[] = [  'class'   => 'alert-success',
             'message'   => '<strong><i class="fa fa-check"></i></strong> Usuário excluído!' ];
         }
-        Session::flash('alerts', $alert);
-        return Redirect::back()->withInput();
+        session()->flash('alerts', $alert);
+        return redirect()->back()->withInput();
     }
 
 
@@ -304,20 +304,20 @@ class UsersController extends Controller
         $user = User::where('id', $id)->first();
         if( $user ){            
             if( Request::ajax() ){
-                return View::make('users.panels.edit', compact('user'));
+                return view('users.panels.edit', compact('user'));
             }else{
-                return View::make('users.edit', compact('user'));
+                return view('users.edit', compact('user'));
             }            
         }else{
             
             $alert[] = [  'class'   => 'alert-danger',
             'message'   => '<strong><i class="fa fa-warning"></i></strong> Não foi possível encontrar o usuário!' ];
-            Session::flash('alerts', $alert);
+            session()->flash('alerts', $alert);
             
             if( Request::ajax() ){
-                return View::make('users.panels.index');
+                return view('users.panels.index');
             }else{
-                return View::make('users.index');
+                return view('users.index');
             }            
         }
 

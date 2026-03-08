@@ -22,4 +22,4 @@ if (Auth::check()) {
         });
     }
 }
-App::instance('canI', $canI);
+app()->instance('canI', $canI);

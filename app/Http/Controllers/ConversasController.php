@@ -31,7 +31,7 @@ class ConversasController extends \BaseController {
       //if( Request::ajax() ){
       //return $conversas;
       //}else{         
-		  return View::make('conversas.index', compact('conversas'));
+		  return view('conversas.index', compact('conversas'));
       //}
         
 	}
@@ -50,16 +50,16 @@ class ConversasController extends \BaseController {
          $vendedores   = Vendedor::all();
 
          if (Request::ajax()) {
-            return View::make('conversas.panels.create');
+            return view('conversas.panels.create');
          } else {         
-   		   return View::make('conversas.create', compact('cliente','fornecedores','produtos','vendedores'));            
+   		   return view('conversas.create', compact('cliente','fornecedores','produtos','vendedores'));            
          }
 
 
       }else{
          $alert[] = [   'class' => 'alert-warning', 'message'   => 'Escolha um cliente para criar uma nova conversa.' ];
-         Session::flash('alerts', $alert);
-         return Redirect::to('clientes');    
+         session()->flash('alerts', $alert);
+         return redirect()->to('clientes');    
       }
 	}
 
@@ -105,8 +105,8 @@ class ConversasController extends \BaseController {
             $alert[] = [   'class' => 'alert-warning', 'message'   => '<strong><i class="fa fa-times"></i></strong> Erro! Não foi possível salvar a conversa.' ];
          }
          
-         Session::flash('alerts', $alert);
-         return Redirect::to( URL::previous() );  
+         session()->flash('alerts', $alert);
+         return redirect()->to( URL::previous() );  
          //return Response::json(array('success' => true));         
 
 	}
@@ -122,9 +122,9 @@ class ConversasController extends \BaseController {
 		$conversa = Conversa::find($id);
 
       if (Request::ajax()) {
-          return View::make('conversas.panels.show', compact('conversa'));
+          return view('conversas.panels.show', compact('conversa'));
       } else {         
-         return View::make('conversas.show', compact('conversa'));
+         return view('conversas.show', compact('conversa'));
       }
 	}
 
@@ -139,9 +139,9 @@ class ConversasController extends \BaseController {
       $conversa = Conversa::find($id);
 
       if (Request::ajax()) {
-          return View::make('conversas.item', compact('conversa'));
+          return view('conversas.item', compact('conversa'));
       } else {         
-         return View::make('conversas.show', compact('conversa'));
+         return view('conversas.show', compact('conversa'));
       }
    }
 
@@ -155,7 +155,7 @@ class ConversasController extends \BaseController {
 	{
 		$conversa = Conversa::find($id);
 
-		return View::make('conversas.edit', compact('conversa'));
+		return view('conversas.edit', compact('conversa'));
 	}
 
 	/**
@@ -174,9 +174,9 @@ class ConversasController extends \BaseController {
 		{
          //Show error message
          $alert[] = [   'class' => 'alert-danger', 'message'   => 'Opa! Confere aí...' ];            
-         Session::flash('alerts', $alert);
+         session()->flash('alerts', $alert);
 
-         return Redirect::back()
+         return redirect()->back()
             ->withErrors($validator)
             ->withInput(Input::all());			
 		}
@@ -186,10 +186,10 @@ class ConversasController extends \BaseController {
       //Show success message
 
       $alert[] = [   'class' => 'alert-success', 'message'   => '<strong><i class="fa fa-check"></i></strong> Conversa atualizada!' ];             
-      Session::flash('alerts', $alert);
+      session()->flash('alerts', $alert);
 
 
-      return Redirect::to( URL::previous() );  
+      return redirect()->to( URL::previous() );  
 	}
 
 	/**
@@ -202,8 +202,8 @@ class ConversasController extends \BaseController {
 	{
 		Conversa::destroy($id);      
       $alert[] = [   'class' => 'alert-success', 'message'   => '<strong><i class="fa fa-check"></i></strong> Conversa excluída!' ];              
-      Session::flash('alerts', $alert);
-      return Redirect::to( URL::previous() );  
+      session()->flash('alerts', $alert);
+      return redirect()->to( URL::previous() );  
 	}
 
 }

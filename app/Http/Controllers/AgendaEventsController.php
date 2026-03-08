@@ -22,8 +22,8 @@ class AgendaEventsController extends BaseController {
 	public function create()
 	{
 		$data = Input::all();
-		if ( Request::ajax() ) 	return View::make('agendaevents.panels.create', compact('data'));
-		else 				 	return View::make('agendaevents.create', compact('data'));
+		if ( Request::ajax() ) 	return view('agendaevents.panels.create', compact('data'));
+		else 				 	return view('agendaevents.create', compact('data'));
 	}
 
 	/**
@@ -36,7 +36,7 @@ class AgendaEventsController extends BaseController {
 	{
 		$validator = Validator::make($data = Input::all(), AgendaEvent::$rules, AgendaEvent::$messages);
 		if ($validator->fails()){
-			return Redirect::back()->withErrors($validator)->withInput();
+			return redirect()->back()->withErrors($validator)->withInput();
 		}
 
 		$data['date_start']		= Input::has('date_start')	? date('Y-m-d', strtotime( $data['date_start'] ))	: NULL;
@@ -58,8 +58,8 @@ class AgendaEventsController extends BaseController {
                 		 'message'   => 'Não foi possível agendar o evento.' ];   
 		}
 		
-        Session::flash('alerts', $alert);
-		return Redirect::back()->withInput();;
+        session()->flash('alerts', $alert);
+		return redirect()->back()->withInput();;
 	}
 
 	/**
@@ -73,8 +73,8 @@ class AgendaEventsController extends BaseController {
 	{
 		$event = AgendaEvent::find($id);
 		if( $event ){
-			if ( Request::ajax() ) 	return View::make('agendaevents.panels.edit', compact('event'));
-			else 				 	return View::make('agendaevents.edit', compact('event'));
+			if ( Request::ajax() ) 	return view('agendaevents.panels.edit', compact('event'));
+			else 				 	return view('agendaevents.edit', compact('event'));
 		}
 	}
 
@@ -87,8 +87,8 @@ class AgendaEventsController extends BaseController {
 	 */
 	public function edit($id)
 	{
-		if ( Request::ajax() ) 	return View::make('agendaevents.panels.edit');
-		else 				 	return View::make('agendaevents.edit');
+		if ( Request::ajax() ) 	return view('agendaevents.panels.edit');
+		else 				 	return view('agendaevents.edit');
 	}
 
 	/**
@@ -104,7 +104,7 @@ class AgendaEventsController extends BaseController {
 		
 		$validator = Validator::make($data = Input::all(), AgendaEvent::$rules, AgendaEvent::$messages);
 		if ($validator->fails()){
-			return Redirect::back()->withErrors($validator)->withInput();
+			return redirect()->back()->withErrors($validator)->withInput();
 		}
 
 		$data['date_start']		= Input::has('date_start')	? date('Y-m-d', strtotime( $data['date_start'] ))	: NULL;
@@ -126,8 +126,8 @@ class AgendaEventsController extends BaseController {
                 		 'message'   => 'Não foi possível atualizar o evento.' ];   
 		}
 		
-        Session::flash('alerts', $alert);
-		return Redirect::back()->withInput();;
+        session()->flash('alerts', $alert);
+		return redirect()->back()->withInput();;
 	}
 
 	/**
@@ -141,7 +141,7 @@ class AgendaEventsController extends BaseController {
 	{
 		$event = AgendaEvent::find($id);		
 		if(!$event){
-			return Redirect::back()->withInput();
+			return redirect()->back()->withInput();
 		}
 
 
@@ -152,8 +152,8 @@ class AgendaEventsController extends BaseController {
 			$alert[] = [  'class' 	=> 'alert-danger',
 			'message'   => '<strong><i class="fa fa-warning"></i></strong> Não foi possível excluir o evento!' ];
 		}
-		Session::flash('alerts', $alert);
-		return Redirect::back()->withInput();
+		session()->flash('alerts', $alert);
+		return redirect()->back()->withInput();
 	}
 
 }

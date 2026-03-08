@@ -57,17 +57,17 @@ p.text-center img.img-responsive {
 		</p>        
 		<p class="text-center">Por favor, identifique-se</p>
 
-		@if (Session::get('error'))     
+		@if (session()->get('error'))     
 		<div class="alert alert-danger">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-			{{ Session::get('error') }}<br>
+			{{ session()->get('error') }}<br>
 			<a href="{{ URL::to('users/forgot_password') }}" class="alert-link" >Esqueçeu a senha?</a>
 		</div> 
 		@endif
 
-		@if (Session::get('notice'))
+		@if (session()->get('notice'))
 		<div class="alert alert-info">
-			{{ Session::get('notice') }}
+			{{ session()->get('notice') }}
 		</div>
 		@endif
 
@@ -85,7 +85,7 @@ p.text-center img.img-responsive {
 
 		<br>
 
-		@if ( Config::get('settings.app_allow_register') )
+		@if ( config('settings.app_allow_register') )
 		<p class="text-center">
 			<a href="{{ url('/signup') }}" class="btn btn-link">Novo cadastro</a>
 		</p>      
