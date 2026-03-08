@@ -42,7 +42,7 @@
 		{{$conversa->resumo}}
 	</p>
 	<span class="label label-info">		
-		{{ date('d \d\e F, H:i', strtotime($conversa->created_at) );  }}
+		{{ date('d \d\e F, H:i', strtotime($conversa->created_at) ) }}
 	</span>
 	<span class="blank"></span>
 
