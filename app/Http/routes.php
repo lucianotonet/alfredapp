@@ -446,7 +446,7 @@ function magicColor($text,$min_brightness=100,$spec=2)
 	public static function ola(){           
 
 		date_default_timezone_set("America/Sao_Paulo");                  
-		$nome = Confide::user() ? Confide::user()->username : '';
+		$nome = Auth::user() ? Auth::user()->username : '';
 		$hr = date(" H ");           
 
 		if($hr >= 12 && $hr < 20) {  

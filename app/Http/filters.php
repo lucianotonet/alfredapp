@@ -75,8 +75,8 @@ App::before(function($request)
 
 
 
-	if( Confide::user() ){
-		$configs = User::find( Confide::user()->id )->settings;
+	if( Auth::user() ){
+		$configs = User::find( Auth::user()->id )->settings;
 
 		foreach ($configs as $config) {
 

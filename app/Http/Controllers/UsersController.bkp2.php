@@ -19,7 +19,7 @@ class UsersController extends Controller
     {
         //return View::make(Config::get('confide::signup_form'));
 
-        if( Confide::user() ){         
+        if( Auth::user() ){         
             if( Request::ajax() ){
                 return View::make('users.panels.create');         
             }else{
@@ -73,7 +73,7 @@ class UsersController extends Controller
      */
     public function login()
     {
-        if (Confide::user()) {
+        if (Auth::user()) {
             return Redirect::to('/');
         } else {
             //return View::make(Config::get('confide::login_form'));
@@ -204,7 +204,7 @@ class UsersController extends Controller
      */
     public function logout()
     {
-        Confide::logout();
+        Auth::logout();
 
         return Redirect::to('/');
     }
