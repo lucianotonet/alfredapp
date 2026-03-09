@@ -4,7 +4,7 @@
 		<h3 class="panel-title"><i class="fa fa-user"></i> {{ $user->username }}</h3>
 	</div>
 
-	{{ Form::model($user, [ 'method' => 'PATCH', 'route' =>[ 'users.update', $user->id ], "class"=>"form-horizontal", "role"=>"form" ] ) }}  
+	{!! Form::model($user, [ 'method' => 'PATCH', 'route' =>[ 'users.update', $user->id ], "class"=>"form-horizontal", "role"=>"form" ] ) !!}  
 	
 
 	<div class="panel-body form-horizontal">
@@ -55,7 +55,7 @@
 
 	</div>	
 
-	{{ Form::close() }}
+	{!! Form::close() !!}
 </div>			
 
 

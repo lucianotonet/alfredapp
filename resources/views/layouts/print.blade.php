@@ -20,12 +20,12 @@
 		<![endif]-->
 
 		<!-- Font Awesome -->		
-		{{ HTML::style('css/font-awesome.min.css') }}
+		{!! HTML::style('css/font-awesome.min.css') !!}
 		{{-- IcoMoon --}}
-		{{ HTML::style('css/icomoon/style.css')}}
+		{!! HTML::style('css/icomoon/style.css') !!}
 
 		<!-- Custom styles -->
-		{{ HTML::style('css/style.css') }}
+		{!! HTML::style('css/style.css') !!}
 
 	</head>
 	<body>

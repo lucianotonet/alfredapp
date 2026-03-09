@@ -57,15 +57,15 @@
     </div>
 
     <div class="panel-footer">
-        {{ Form::open(array('url' => 'produtos/' . $produto->id, 'class' => '')) }}                
-            {{ Form::button('<i class="fa fa-times"></i> Excluir', array('class' => 'btn btn-danger', 'type'=>'sumbit', 'onclick'=>'javascript:return confirm("Deseja excluir este item da lista?")')) }}
+        {!! Form::open(array('url' => 'produtos/' . $produto->id, 'class' => '')) !!}                
+            {!! Form::button('<i class="fa fa-times"></i> Excluir', array('class' => 'btn btn-danger', 'type'=>'sumbit', 'onclick'=>'javascript:return confirm("Deseja excluir este item da lista?")')) !!}
 
-            {{ Form::hidden('_method', 'DELETE') }}
+            {!! Form::hidden('_method', 'DELETE') !!}
 
             <a href="{{url('/produtos/'.$produto->id.'/edit')}}" class="btn btn-success" data-toggle="modal" data-target="#modal">
                 <i class="fa fa-edit"></i> Editar
             </a>                            
-        {{ Form::close() }}    
+        {!! Form::close() !!}    
     </div>
     
 </div>

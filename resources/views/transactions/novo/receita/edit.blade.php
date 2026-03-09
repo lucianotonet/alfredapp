@@ -2,7 +2,7 @@
 	<div class="panel-heading">
 		<h3 class="panel-title"><i class="icon-outbox"></i> EDITAR LANÇAMENTO</h3>
 	</div>
-  	{{ Form::model( $transaction, [ 'method' => 'PATCH', 'route' =>[ 'financeiro.update', $transaction->id ] ] ) }}
+  	{!! Form::model( $transaction, [ 'method' => 'PATCH', 'route' =>[ 'financeiro.update', $transaction->id ] ] ) !!}
 		<table class="table panel-body form-horizontal">			
 			<tbody>
 				<tr>
@@ -174,8 +174,8 @@
 			</div>
 			
 		</div>	
-		{{ Form::hidden('type', 'receita') }}
-	{{ Form::close() }}
+		{!! Form::hidden('type', 'receita') !!}
+	{!! Form::close() !!}
 </div>			
 
 
