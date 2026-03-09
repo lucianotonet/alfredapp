@@ -78,13 +78,13 @@
                                                             <strong>R$ {{$despesa->valor}}</strong>
                                                         </td>
                                                         <td>
-                                                            {{ Form::open(array('url' => 'despesas/' . $despesa->id, 'class' => '')) }}
+                                                            {!! Form::open(array('url' => 'despesas/' . $despesa->id, 'class' => '')) !!}
                                                                 <button class="btn-link" type="submit" onclick='javascript:return confirm("Deseja excluir este despesa?")' role="menuitem" href="">
                                                                     <span class="glyphicon glyphicon-remove pull-right text-danger"></span>
                                                                 </button> 
                                                                                                                                     
-                                                                {{ Form::hidden('_method', 'DELETE') }}
-                                                            {{ Form::close() }}    
+                                                                {!! Form::hidden('_method', 'DELETE') !!}
+                                                            {!! Form::close() !!}    
                                                         </td>
                                                     </tr>                                                    
                                                 @endforeach
@@ -107,13 +107,13 @@
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <hr style="border:1px dashed #dddddd;">                                        
-                                        {{Form::model( $relatorio, [ 'method' => 'PATCH', 'route' =>[ 'relatorios.update', $relatorio->id ], 'id' => 'relatorio_edit' ] ) }}
-                                            {{Form::hidden('type','despesas')}}
-                                            {{Form::hidden('id', $relatorio->id )}}
-                                            {{Form::hidden('ids', $relatorio->ids )}}
-                                            {{Form::hidden('method','PATCH')}}
+                                        {!! Form::model( $relatorio, [ 'method' => 'PATCH', 'route' =>[ 'relatorios.update', $relatorio->id ], 'id' => 'relatorio_edit' ] ) !!}
+                                            {!! Form::hidden('type','despesas') !!}
+                                            {!! Form::hidden('id', $relatorio->id ) !!}
+                                            {!! Form::hidden('ids', $relatorio->ids ) !!}
+                                            {!! Form::hidden('method','PATCH') !!}
                                             <button type="submit" class="btn btn-success btn-block despesa-fechar"><i class="fa fa-check"></i> SALVAR</button>
-                                        {{Form::close()}}
+                                        {!! Form::close() !!}
                                     </div>                
                                 </div>
                                     

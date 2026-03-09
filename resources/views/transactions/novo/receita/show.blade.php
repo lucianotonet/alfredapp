@@ -1,5 +1,5 @@
 <?php use Carbon\Carbon as Carbon; ?>
-{{ Form::model( $transaction, [ 'method' => 'PATCH', 'route' =>[ 'financeiro.update', $transaction->id ], 'class'=>'collapse colapsed in', 'id'=>"transaction_show" ] ) }}
+{!! Form::model( $transaction, [ 'method' => 'PATCH', 'route' =>[ 'financeiro.update', $transaction->id ], 'class'=>'collapse colapsed in', 'id'=>"transaction_show" ] ) !!}
 	   		
 	<div class="panel panel-primary">
 		
@@ -209,13 +209,13 @@
 			
 	</div>
 
-	{{ Form::hidden('apply_changes_to', 'this') }}
-	{{ Form::hidden('type', $transaction->type) }}
-	{{ Form::hidden('date', $transaction->date) }}
-	{{ Form::hidden('amount', $transaction->amount) }}
-	{{ Form::hidden('description', $transaction->description) }}	
+	{!! Form::hidden('apply_changes_to', 'this') !!}
+	{!! Form::hidden('type', $transaction->type) !!}
+	{!! Form::hidden('date', $transaction->date) !!}
+	{!! Form::hidden('amount', $transaction->amount) !!}
+	{!! Form::hidden('description', $transaction->description) !!}	
 
-{{ Form::close() }}	
+{!! Form::close() !!}	
 
 	
 

@@ -1,4 +1,4 @@
-{{ Form::open(array('url' => 'despesas')) }}
+{!! Form::open(array('url' => 'despesas')) !!}
 
 	<div class="panel panel-default">
 		<div class="panel-body form-horizontal payment-form bg-info">
@@ -45,6 +45,6 @@
 		</div>
 	</div>   
 
-	{{Form::hidden( 'relatorio_id', @$relatorio->id)}}
+	{!! Form::hidden( 'relatorio_id', @$relatorio->id) !!}
 
-{{Form::close()}}
+{!! Form::close() !!}
