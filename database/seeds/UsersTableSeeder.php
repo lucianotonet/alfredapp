@@ -13,21 +13,20 @@ class UsersTableSeeder extends Seeder
 
         // foreach (Organization::all() as $org) {
 
+        // $username = $username.'-'.$org->name;
 
-                // $username = $username.'-'.$org->name;
+        User::create([
+            'organization_id' => 1,
+            'username' => 'tonetlds',
+            'email' => 'tonetlds@gmail.com',
+            'password' => 'password',
+            'confirmation_code' => null,
+            'remember_token' => null,
+            'confirmed' => true,
+            'admin' => true,
+        ]);
 
-                User::create([
-                    'organization_id' => 1,
-                    'username' => 'tonetlds',
-                    'email' => 'tonetlds@gmail.com',
-                    'password' => 'password',                    
-                    'confirmation_code' => null,
-                    'remember_token' => null,
-                    'confirmed' => true,
-                    'admin' => true,
-                ]);
-                
-            // }
+        // }
 
         // }
 
