@@ -15,7 +15,7 @@
 						<thead class="bg-info">
 							<tr>
 								<th colspan="4" class="text-capitalize text-center">
-									{{ strftime("%A, %d de %B", strtotime( $transaction->date )); }}
+									{{ strftime("%A, %d de %B", strtotime( $transaction->date )) }}
 								</th>
 							</tr>
 						</thead>	

@@ -38,7 +38,7 @@
 										'mandrill' 	=> 'Mandrill',
 										'log' 		=> 'Just Log',
 										], Config::get('mail.driver'),
-										array( "class"=>"form-control")); !!}
+										array( "class"=>"form-control")) !!}
 			
 		</div>
 	</div>
@@ -65,7 +65,7 @@
 										'tls' 	=> 'TLS',
 										'ssl' 	=> 'SSL',										
 										], Config::get('mail.encryption'),
-										array( "class"=>"form-control")); !!}
+										array( "class"=>"form-control")) !!}
 		</div>
 	</div>
 
