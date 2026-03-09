@@ -12,8 +12,9 @@
         "doctrine/dbal": "^2.5",
         "fzaninotto/faker": "v1.3.0",
         "guzzlehttp/guzzle": "^6.0",
-        "laravel/framework": "5.0.*",
-        "laravelcollective/html": "^5.0",
+        "laravel/framework": "5.1.*",
+        "laravelcollective/html": "~5.1",
+        "php": ">=5.5.9",
         "zizaco/confide": "5.0.x-dev"
     },
     "autoload": {
@@ -38,6 +39,14 @@
     "scripts": {
         "post-create-project-cmd": [
             "php artisan key:generate"
+        ],
+        "post-install-cmd": [
+            "Illuminate\\Foundation\\ComposerScripts::postInstall",
+            "php artisan optimize"
+        ],
+        "post-update-cmd": [
+            "Illuminate\\Foundation\\ComposerScripts::postUpdate",
+            "php artisan optimize"
         ]
     },
     "config": {
@@ -51,5 +60,8 @@
         }
     },
     "minimum-stability": "stable",
-    "require-dev": {}
+    "require-dev": {
+        "mockery/mockery": "~0.9.3",
+        "phpunit/phpunit": "~4.8"
+    }
 }
