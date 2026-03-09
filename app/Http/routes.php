@@ -94,8 +94,6 @@ Route::get('relatorios/{relatorio_id}/pdf', ['as' => 'relatorios.pdf', 'uses' =>
 Route::get('relatorios/{relatorio_id}/print', ['as' => 'relatorios.pdf', 'uses' => 'RelatoriosController@printThis'])->middleware('auth');
 Route::resource('relatorios', RelatoriosController::class)->middleware('auth');
 
-
-
 /*
 |--------------------------------------------------------------------------
 | HOME
