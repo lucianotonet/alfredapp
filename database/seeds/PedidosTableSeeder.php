@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Seeder;
-// Composer: "fzaninotto/faker": "v1.3.0"
 use Faker\Factory as Faker;
+// Composer: "fzaninotto/faker": "v1.3.0"
+use Illuminate\Database\Seeder;
 
 class PedidosTableSeeder extends Seeder
 {
