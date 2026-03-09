@@ -66,6 +66,7 @@ return [
             'url_type' => 'publicURL',
         ],
         'ftp' => ['driver' => 'ftp', 'host' => 'ftp.example.com', 'username' => 'your-username', 'password' => 'your-password'],
+        'public' => ['driver' => 'local', 'root' => storage_path('app/public'), 'visibility' => 'public'],
 
     ],
 
