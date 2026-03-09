@@ -4,7 +4,7 @@
 		<h3 class="panel-title title">Alterar saldo</h3>			
 	</div>
 
-	{{ Form::model($balance, [ 'method' => 'PATCH', 'route' =>[ 'financeiro.balance.update', $balance->id ] ] ) }}
+	{!! Form::model($balance, [ 'method' => 'PATCH', 'route' =>[ 'financeiro.balance.update', $balance->id ] ] ) !!}
 		
 		<div class="panel-body form-horizontal">
 
@@ -37,7 +37,7 @@
 			
 		</div>	
 
-	{{ Form::close() }}
+	{!! Form::close() !!}
 </div>
 
 <script>

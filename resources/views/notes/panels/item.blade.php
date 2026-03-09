@@ -8,12 +8,12 @@
         {{$note->note}}
     </div>
     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-right">                                
-        {{ Form::open(array('url' => 'notes/' . $note->id, 'class' => '')) }}                             
+        {!! Form::open(array('url' => 'notes/' . $note->id, 'class' => '')) !!}                             
             <button type="submit" class="close pull-right" data-dismiss="modal" onclick="javascript:return confirm('Deseja mesmo excluir esta nota?')">
                 <span aria-hidden="false">&times;</span><span class="sr-only">Close</span>
             </button>                            
-            {{ Form::hidden('_method', 'DELETE') }}
-        {{ Form::close() }}
+            {!! Form::hidden('_method', 'DELETE') !!}
+        {!! Form::close() !!}
         
     </div>
 

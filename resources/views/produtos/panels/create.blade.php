@@ -3,7 +3,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h3 class="panel-title">Novo produto</h3>
     </div>
-    {{ Form::open(array('url' => 'produtos', 'class'=>"form-horizontal" )) }}
+    {!! Form::open(array('url' => 'produtos', 'class'=>"form-horizontal" )) !!}
         <div class="panel-body">
             <div class="form-group">
                 <label for="product_cod" class="col-sm-2 control-label">Código</label>
@@ -57,5 +57,5 @@
                 </div>
             </div>  
         </div>
-    {{ Form::close() }}           
+    {!! Form::close() !!}           
 </div>

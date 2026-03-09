@@ -5,11 +5,11 @@
 
     </div>
 
-    {{ Form::open(array('url' => 'vendendors', 'id' => 'vendendor_create')) }}
+    {!! Form::open(array('url' => 'vendendors', 'id' => 'vendendor_create')) !!}
     
         <div class="panel-body">
             
-        {{ HTML::ul($errors->all()) }}
+        {!! HTML::ul($errors->all()) !!}
         
             <div class="row">
 
@@ -21,7 +21,7 @@
                                 <span class="glyphicon glyphicon-briefcase"></span>
                             </div>          
 
-                            {{ Form::text('empresa', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'Empresa' ) ) }}            
+                            {!! Form::text('empresa', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'Empresa' ) ) !!}            
 
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                                 <span class="glyphicon glyphicon-briefcase"></span>
                             </div>          
 
-                            {{ Form::text('nome', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'Nome' ) ) }}            
+                            {!! Form::text('nome', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'Nome' ) ) !!}            
 
                         </div>
                     </div>
@@ -48,7 +48,7 @@
                                 <span class="glyphicon glyphicon-earphone"></span>
                             </div>          
 
-                            {{ Form::text('telefone', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'Telefone' ) ) }}            
+                            {!! Form::text('telefone', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'Telefone' ) ) !!}            
 
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                                 <span class="glyphicon glyphicon-phone"></span>
                             </div>          
 
-                            {{ Form::text('celular', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'Celular' ) ) }}            
+                            {!! Form::text('celular', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'Celular' ) ) !!}            
 
                         </div>
                     </div>
@@ -71,7 +71,7 @@
                                 <span class="glyphicon glyphicon-envelope"></span>
                             </div>
 
-                            {{ Form::text('email', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'E-mail' ) ) }}       
+                            {!! Form::text('email', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'E-mail' ) ) !!}       
 
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                                 <span class="glyphicon glyphicon-envelope"></span>
                             </div>
 
-                            {{ Form::text('cpf', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'CPF' ) ) }}       
+                            {!! Form::text('cpf', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'CPF' ) ) !!}       
 
                         </div>
                     </div>
@@ -97,7 +97,7 @@
                                 <span class="glyphicon glyphicon-earphone"></span>
                             </div>          
 
-                            {{ Form::text('endereco', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'Endereço' ) ) }}            
+                            {!! Form::text('endereco', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'Endereço' ) ) !!}            
 
                         </div>
                     </div>
@@ -109,7 +109,7 @@
                                 <span class="glyphicon glyphicon-phone"></span>
                             </div>          
 
-                            {{ Form::text('bairro', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'Bairro' ) ) }}            
+                            {!! Form::text('bairro', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'Bairro' ) ) !!}            
 
                         </div>
                     </div>
@@ -120,7 +120,7 @@
                                 <span class="glyphicon glyphicon-envelope"></span>
                             </div>
 
-                            {{ Form::text('cidade', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'Cidade' ) ) }}       
+                            {!! Form::text('cidade', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'Cidade' ) ) !!}       
 
                         </div>
                     </div>
@@ -163,7 +163,7 @@
                                     )
                             ?>                
 
-                            {{ Form::select('uf', $estados, array('class'=>'form-control input-lg') ) }}
+                            {!! Form::select('uf', $estados, array('class'=>'form-control input-lg') ) !!}
                             
                         </div>                    
                     </div>
@@ -174,7 +174,7 @@
                                 <span class="glyphicon glyphicon-map-marker"></span>
                             </div>
 
-                            {{ Form::text('cep', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'CEP' ) ) }}       
+                            {!! Form::text('cep', NULL, array('class' => 'form-control input-lg', 'placeholder' => 'CEP' ) ) !!}       
 
                         </div>
                     </div>
@@ -209,6 +209,6 @@
 
         </div>
         
-    {{ Form::close() }}    
+    {!! Form::close() !!}    
 
 </div>    
