@@ -89,12 +89,12 @@ Route::group(['prefix' => 'relatorios'], function () {
     Route::get('create/{resource_name}', ['uses' => 'RelatoriosController@create']);
 
 });
-Route::get('relatorios/{relatorio_id}/download', ['as' => 'relatorios.download', 'uses' => 'RelatoriosController@downloadpdf']);
-Route::get('relatorios/{relatorio_id}/pdf', ['as' => 'relatorios.pdf', 'uses' => 'RelatoriosController@streampdf']);
-Route::get('relatorios/{relatorio_id}/print', ['as' => 'relatorios.pdf', 'uses' => 'RelatoriosController@printThis']);
-Route::resource('relatorios', RelatoriosController::class);
+Route::get('relatorios/{relatorio_id}/download', ['as' => 'relatorios.download', 'uses' => 'RelatoriosController@downloadpdf'])->middleware('auth');
+Route::get('relatorios/{relatorio_id}/pdf', ['as' => 'relatorios.pdf', 'uses' => 'RelatoriosController@streampdf'])->middleware('auth');
+Route::get('relatorios/{relatorio_id}/print', ['as' => 'relatorios.pdf', 'uses' => 'RelatoriosController@printThis'])->middleware('auth');
+Route::resource('relatorios', RelatoriosController::class)->middleware('auth');
 
-Route::when('relatorios*', 'auth', ['post', 'delete']);
+
 
 /*
 |--------------------------------------------------------------------------
