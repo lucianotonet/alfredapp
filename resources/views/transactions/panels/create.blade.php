@@ -4,7 +4,7 @@
 		<h3 class="panel-title title">Registrar movimentação</h3>			
 	</div>
 
-	{{ Form::open(array('route' => 'financeiro.store', 'method' => 'POST', "class"=>"", "role"=>"form", "id"=>"transaction_create" )) }}
+	{!! Form::open(array('route' => 'financeiro.store', 'method' => 'POST', "class"=>"", "role"=>"form", "id"=>"transaction_create" )) !!}
 		
 		<div class="panel-body form-horizontal">
 
@@ -44,7 +44,7 @@
 			</div>							
 
 			<div class="form-group">
-				{{ Form::label('description', 'Descrição', array("class"=>"col-sm-3 control-label")) }}
+				{!! Form::label('description', 'Descrição', array("class"=>"col-sm-3 control-label")) !!}
 				<div class="col-sm-9">				
 					<textarea name="description" id="" cols="30" rows="2" class="form-control"></textarea>
 				</div>
@@ -106,5 +106,5 @@
 			
 		</div>	
 
-	{{ Form::close() }}
+	{!! Form::close() !!}
 </div>

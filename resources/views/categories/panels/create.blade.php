@@ -4,13 +4,13 @@
 		<h3 class="panel-title">Adicionar</h3>
 	</div>
 	
-	{{ Form::open(array('url' => 'categories', 'method' => 'POST', 'class'=>'form-horizontal' )) }}
+	{!! Form::open(array('url' => 'categories', 'method' => 'POST', 'class'=>'form-horizontal' )) !!}
 	
 	<div class="panel-body">
 		<div class="form-group">
-			{{ Form::label('name', 'Nome:', array("class"=>"col-sm-2 control-label")) }}			 
+			{!! Form::label('name', 'Nome:', array("class"=>"col-sm-2 control-label")) !!}			 
 			<div class="col-sm-10"> 
-				{{ Form::text('name', '', ["class"=>"form-control", "required"=>'required']) }}
+				{!! Form::text('name', '', ["class"=>"form-control", "required"=>'required']) !!}
 			</div>
 		</div>			
 		
@@ -27,8 +27,8 @@
 		</div>
 	</div>			
 
-	{{ Form::hidden('owner_type', Input::get('owner_type')) }}
-	{{ Form::hidden('owner_id') }}
+	{!! Form::hidden('owner_type', Input::get('owner_type')) !!}
+	{!! Form::hidden('owner_id') !!}
 
-	{{ Form::close() }}	
+	{!! Form::close() !!}	
 </div>

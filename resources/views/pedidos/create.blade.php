@@ -22,7 +22,7 @@
 
         </div>
 
-        {{ Form::open(array('url' => 'pedidos', 'id' => 'pedido_create')) }}
+        {!! Form::open(array('url' => 'pedidos', 'id' => 'pedido_create')) !!}
 
         <!-- List group -->
         <ul class="list-group">
@@ -307,7 +307,7 @@
         <div class="clearfix"></div>
     </div>
 
-    {{ Form::close() }}
+    {!! Form::close() !!}
 </div>
 
 </div>

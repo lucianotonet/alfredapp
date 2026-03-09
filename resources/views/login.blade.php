@@ -29,7 +29,7 @@
     <div class="container">
 
 
-        {{ Form::open(array('url' => 'login')) }}
+        {!! Form::open(array('url' => 'login')) !!}
           <div class="login-form">
             
             <h4>Painel administrativo</h4>
@@ -47,23 +47,23 @@
             <div class="form-group">
               <!-- <input type="text" class="form-control login-field" value="" placeholder="Digite seu nome" id="login-name" />
               <label class="login-field-icon fui-user" for="login-name"></label> -->
-              {{ Form::text('email', Input::old('email'), array('placeholder' => 'Digite seu e-mail', 'class' => 'form-control input-lg login-field')) }}
-              {{ Form::label('email', ' ', array("class"=>"login-field-icon fui-user" )) }}
+              {!! Form::text('email', Input::old('email'), array('placeholder' => 'Digite seu e-mail', 'class' => 'form-control input-lg login-field')) !!}
+              {!! Form::label('email', ' ', array("class"=>"login-field-icon fui-user" )) !!}
             </div>
 
             <div class="form-group">
               <!-- <input type="password" class="form-control login-field" value="" placeholder="Digite sua senha" id="login-pass" />
               <label class="login-field-icon fui-lock" for="login-pass"></label> -->
-              {{ Form::password('password', array('placeholder' => 'Digite sua senha', 'class' => 'form-control login-field')) }}
-              {{ Form::label('password', ' ', array("class"=>"login-field-icon fui-lock" )) }}
+              {!! Form::password('password', array('placeholder' => 'Digite sua senha', 'class' => 'form-control login-field')) !!}
+              {!! Form::label('password', ' ', array("class"=>"login-field-icon fui-lock" )) !!}
             </div>
 
             
-            {{ Form::submit('Entrar', array('class'=>'btn btn-primary btn-lg btn-block')) }}
+            {!! Form::submit('Entrar', array('class'=>'btn btn-primary btn-lg btn-block')) !!}
             <a class="login-link" href="#">Perdeu a senha?</a>
 
           </div>
-        {{ Form::close() }}        
+        {!! Form::close() !!}        
 
 
     </div>
