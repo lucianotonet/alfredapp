@@ -142,8 +142,8 @@
 				</div>				
 			</div>
 
-			@if (Session::has('info'))		        
-		        @foreach (Session::get('info') as $info)
+			@if (session()->has('info'))		        
+		        @foreach (session()->get('info') as $info)
 					<div class="{{ @$info['class'] }} list-group-item text-center">
 	               		{{@$info['message']}}
 					</div>           		            
