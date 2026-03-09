@@ -14,7 +14,7 @@ class CreateOrganizationsTable extends Migration
     {
         DB::transaction(function () {
 
-            Schema::create('Organizations', function (Blueprint $table) {
+            Schema::create('organizations', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name', 255)->index();
                 $table->timestamps();
@@ -46,7 +46,7 @@ class CreateOrganizationsTable extends Migration
 
             // $org = Organization::find(1);
             // $org && $org->delete();
-            Schema::drop('Organizations');
+            Schema::drop('organizations');
         });
     }
 }

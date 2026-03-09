@@ -10,9 +10,9 @@ class OrganizationsTableSeeder extends Seeder
         Organization::create([
             'name' => 'Demo',
         ]);
-        Organization::create([
-            'name' => 'MAV',
-        ]);
+        // Organization::create([
+        //     'name' => 'MAV',
+        // ]);
 
     }
 }

@@ -12,7 +12,7 @@ class CreateAgendaEventsTable extends Migration
      */
     public function up()
     {
-        Schema::create('AgendaEvents', function (Blueprint $table) {
+        Schema::create('agendaevents', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
             $table->text('description')->nullable();
@@ -41,6 +41,6 @@ class CreateAgendaEventsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('AgendaEvents');
+        Schema::drop('agendaevents');
     }
 }

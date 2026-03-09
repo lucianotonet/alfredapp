@@ -1,1 +1,3 @@
-<?php return 'local';
+<?php
+
+return 'local';

@@ -45,12 +45,12 @@ class User extends Eloquent implements ConfideUserInterface
 
     public function organization()
     {
-        return $this->belongsTo('Organization');
+        return $this->belongsTo('organization');
     }
 
     public function organizations()
     {
-        return $this->belongsToMany('Organization')->withTimestamps();
+        return $this->belongsToMany('organization')->withTimestamps();
     }
 
     public function isMemberOf($org)

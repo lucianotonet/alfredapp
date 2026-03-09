@@ -8,7 +8,7 @@ composer.lock
 
 *.log
 .env.*.php
-
+.env
 .env.php
 .DS_Store
 
