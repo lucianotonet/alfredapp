@@ -109,6 +109,7 @@ return [
     */
 
     'providers' => [
+        App\Providers\AuthServiceProvider::class,
 
         /*
          * Laravel Framework Service Providers...
@@ -197,6 +198,7 @@ return [
         'Validator' => 'Illuminate\Support\Facades\Validator',
         'View' => 'Illuminate\Support\Facades\View',
         'Form' => 'Collective\Html\FormFacade',
+        'Gate' => Illuminate\Support\Facades\Gate::class,
 
     ],
 
