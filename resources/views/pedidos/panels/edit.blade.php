@@ -31,14 +31,14 @@
                             </strong>
                             <p>
                                 
-                                {{ ( $pedido->cliente->telefone ) ? $pedido->cliente->telefone.'<br />' : ''; }}
-                                {{ ( $pedido->cliente->celular ) ? $pedido->cliente->celular.'<br />' : ''; }}
-                                {{ '<br />'; }}
-                                {{ ( $pedido->cliente->ie ) ? 'IE '.$pedido->cliente->ie.'<br />' : ''; }}                                
-                                {{ ( $pedido->cliente->endereco ) ? $pedido->cliente->endereco.'<br />' : ''; }}
-                                {{ ( $pedido->cliente->bairro ) ? 'Bairro '.$pedido->cliente->bairro.'<br />' : ''; }}
-                                {{ ( $pedido->cliente->cidade ) ? $pedido->cliente->cidade.' - '.$pedido->cliente->uf.'<br />' : ''; }}
-                                {{ ( $pedido->cliente->cep ) ? $pedido->cliente->cep.'<br />' : ''; }}
+                                {{ ( $pedido->cliente->telefone ) ? $pedido->cliente->telefone.'<br />' : '' }}
+                                {{ ( $pedido->cliente->celular ) ? $pedido->cliente->celular.'<br />' : '' }}
+                                {{ '<br />' }}
+                                {{ ( $pedido->cliente->ie ) ? 'IE '.$pedido->cliente->ie.'<br />' : '' }}                                
+                                {{ ( $pedido->cliente->endereco ) ? $pedido->cliente->endereco.'<br />' : '' }}
+                                {{ ( $pedido->cliente->bairro ) ? 'Bairro '.$pedido->cliente->bairro.'<br />' : '' }}
+                                {{ ( $pedido->cliente->cidade ) ? $pedido->cliente->cidade.' - '.$pedido->cliente->uf.'<br />' : '' }}
+                                {{ ( $pedido->cliente->cep ) ? $pedido->cliente->cep.'<br />' : '' }}
                                 
                             </p>
                             
