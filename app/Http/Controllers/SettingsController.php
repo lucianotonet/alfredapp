@@ -15,7 +15,7 @@ class SettingsController extends \BaseController
         // $settings->up();
 
         $settings = Config::get('settings');
-        $user_settings = Confide::user()->settings;
+        $user_settings = Auth::user()->settings;
 
         // Check if view exists
         if (! View::exists('settings.'.$module)) {
@@ -62,7 +62,7 @@ class SettingsController extends \BaseController
 
             $settings = Setting::where('setting_name', $config)->
                                 where('setting_type', 'settings')->
-                                where('user_id', Confide::user()->id)->
+                                where('user_id', Auth::user()->id)->
                                 orderBy('id', 'DESC')->get();
 
             if (Config::has('settings.'.$config)) {
@@ -81,7 +81,7 @@ class SettingsController extends \BaseController
 
                 if (! empty($value) and $setting->setting_value != $value) {
                     $setting->setting_value = $value;
-                    $setting->user_id = Confide::user()->id;
+                    $setting->user_id = Auth::user()->id;
                     $setting->save();
                 }
             }
@@ -96,7 +96,7 @@ class SettingsController extends \BaseController
                 if (Config::has('mail.'.$config)) {
                     $setting = Setting::where('setting_name', $config)->
                                         where('setting_type', 'mail')->
-                                        where('user_id', Confide::user()->id)->
+                                        where('user_id', Auth::user()->id)->
                                         orderBy('id', 'DESC')->first();
                     if (! $setting) {
                         $setting = new Setting;
@@ -111,7 +111,7 @@ class SettingsController extends \BaseController
 
                     if ($value != $setting->setting_value) {
                         $setting->setting_value = (string) $value;
-                        $setting->user_id = Confide::user()->id;
+                        $setting->user_id = Auth::user()->id;
                         $setting->save();
                     }
                 }
@@ -195,7 +195,7 @@ class SettingsController extends \BaseController
 
     public function reset()
     {
-        $settings = Setting::where('user_id', Confide::user()->id)->get();
+        $settings = Setting::where('user_id', Auth::user()->id)->get();
         foreach ($settings as $setting) {
             Setting::destroy($setting->id);
         }
