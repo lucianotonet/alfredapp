@@ -113,7 +113,6 @@ return [
 
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
 
-
         /*
          * Laravel Framework Service Providers...
          */
