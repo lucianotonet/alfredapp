@@ -80,7 +80,6 @@ Route::group(['middleware' => 'auth'], function () {
 });
 Route::get('conversas/create/{cliente_id}', ['as' => 'createconversa', 'uses' => 'ConversasController@create'])->middleware('auth');
 
-
 /*
 |--------------------------------------------------------------------------
 | Relatórios
@@ -96,8 +95,6 @@ Route::get('relatorios/{relatorio_id}/pdf', ['as' => 'relatorios.pdf', 'uses' =>
 Route::get('relatorios/{relatorio_id}/print', ['as' => 'relatorios.pdf', 'uses' => 'RelatoriosController@printThis']);
 Route::resource('relatorios', RelatoriosController::class);
 
-
-
 Route::when('relatorios*', 'auth', ['post', 'delete']);
 
 /*
@@ -108,7 +105,6 @@ Route::when('relatorios*', 'auth', ['post', 'delete']);
 Route::get('/', function () {
     return Redirect::to('agenda');
 });
-
 
 /*
 |--------------------------------------------------------------------------
@@ -134,7 +130,6 @@ Route::group(['middleware' => 'auth'], function () {
 Route::get('agenda/{id}/delete', ['uses' => 'AgendaEventsController@destroy'])->middleware('auth');
 Route::get('agenda/', ['uses' => 'AgendaController@index'])->middleware('auth');
 
-
 /*
 |--------------------------------------------------------------------------
 | FINANCEIRO
@@ -152,8 +147,6 @@ Route::group(['middleware' => 'auth'], function () {
 Route::get('financeiro/create/{type}', ['uses' => 'TransactionsController@create'])->middleware('auth');
 
 Route::get('financeiro/', ['uses' => 'TransactionsController@index'])->middleware('auth');
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -183,7 +176,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('fornecedors', FornecedorsController::class);
 });
 Route::resource('fornecedores', FornecedorsController::class);
-
 
 /*
 |--------------------------------------------------------------------------
@@ -257,8 +249,6 @@ Route::get('pedidos/{pedido_id}/pdf', ['as' => 'pedidos.pdf', 'uses' => 'Pedidos
 Route::get('pedidos/{pedido_id}/download', ['as' => 'pedidos.donwload', 'uses' => 'PedidosController@download'])->middleware('auth');
 Route::get('pedidos/{pedido_id}/print', ['as' => 'pedidos.printpreview', 'uses' => 'PedidosController@printPreview'])->middleware('auth');
 
-
-
 /*
 |--------------------------------------------------------------------------
 | EMAILS
@@ -271,7 +261,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 Route::get('emails/track/{id}', ['as' => 'email.track', 'uses' => 'EmailsController@track'])->middleware('auth');
 
-// 
+//
 
 /*
 |--------------------------------------------------------------------------
@@ -297,7 +287,6 @@ Route::get('print', function () {
 Route::get('print/{resource}', function ($resource) {
     return $resource;
 });
-
 
 /*
 |--------------------------------------------------------------------------
