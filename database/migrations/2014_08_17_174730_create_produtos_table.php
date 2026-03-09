@@ -14,6 +14,7 @@ class CreateProdutosTable extends Migration
             $table->integer('cod')->nullable();
             $table->text('unidade')->nullable();
             $table->text('detalhes')->nullable();
+            $table->text('foto')->nullable();
             $table->integer('category_id')->nullable();
             $table->timestamps();
         });

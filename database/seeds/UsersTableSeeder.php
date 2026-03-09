@@ -7,30 +7,29 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
 
-        DB::table('users')->truncate();
+        // DB::table('users')->truncate();
 
-        $usernames = ['tonetlds', 'demo', 'admin'];
+        // $usernames = ['tonetlds'];
 
-        foreach (Organization::all() as $org) {
+        // foreach (Organization::all() as $org) {
 
-            foreach ($usernames as $username) {
 
-                $username = $username.'-'.$org->name;
+                // $username = $username.'-'.$org->name;
 
                 User::create([
-                    'organization_id' => $org->id,
-                    'username' => $username,
-                    'email' => $username.'@lucianotonet.com',
-                    'password' => $username,
-                    'password_confirmation' => $username,
+                    'organization_id' => 1,
+                    'username' => 'tonetlds',
+                    'email' => 'tonetlds@gmail.com',
+                    'password' => 'password',                    
                     'confirmation_code' => null,
                     'remember_token' => null,
                     'confirmed' => true,
-                    'admin' => starts_with($username, 'admin'),
+                    'admin' => true,
                 ]);
-            }
+                
+            // }
 
-        }
+        // }
 
         // User::create([
         // 	'id' 				=> 1,
