@@ -1,8 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Hash;
 use Zizaco\Confide\ConfideUser;
 use Zizaco\Confide\ConfideUserInterface;
-use Illuminate\Support\Facades\Hash;
 
 class User extends Eloquent implements ConfideUserInterface
 {
@@ -94,5 +94,4 @@ class User extends Eloquent implements ConfideUserInterface
 
         return parent::save($options);
     }
-
 }
