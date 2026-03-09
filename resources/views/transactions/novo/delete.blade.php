@@ -1,4 +1,4 @@
-{{ Form::open(array('url' => 'financeiro/' . $transaction->id, 'class' => '')) }}
+{!! Form::open(array('url' => 'financeiro/' . $transaction->id, 'class' => '')) !!}
 	
 	<div class="panel-body bg-danger">
 				
@@ -66,4 +66,4 @@
 
 	<input type="hidden" name="_method" value="DELETE">
 
-{{ Form::close()}} 
+{!! Form::close() !!} 

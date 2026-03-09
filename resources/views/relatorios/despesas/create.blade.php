@@ -73,13 +73,13 @@
                                                             <strong>R$ {{$despesa->valor}}</strong>
                                                         </td>
                                                         <td>
-                                                            {{ Form::open(array('url' => 'despesas/' . $despesa->id, 'class' => '')) }}
+                                                            {!! Form::open(array('url' => 'despesas/' . $despesa->id, 'class' => '')) !!}
                                                                 <button class="btn-link" type="submit" onclick='javascript:return confirm("Deseja excluir este despesa?")' role="menuitem" href="">
                                                                     <span class="glyphicon glyphicon-remove pull-right text-danger"></span>
                                                                 </button> 
                                                                                                                                     
-                                                                {{ Form::hidden('_method', 'DELETE') }}
-                                                            {{ Form::close() }}    
+                                                                {!! Form::hidden('_method', 'DELETE') !!}
+                                                            {!! Form::close() !!}    
                                                         </td>
                                                     </tr>                                                    
                                                 @endforeach
@@ -102,10 +102,10 @@
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <hr style="border:1px dashed #dddddd;">
-                                        {{Form::open(array('url' => 'relatorios', 'id' => 'relatorio_create'))}}
-                                            {{Form::hidden('type','despesas')}}
+                                        {!! Form::open(array('url' => 'relatorios', 'id' => 'relatorio_create')) !!}
+                                            {!! Form::hidden('type','despesas') !!}
                                             <button type="submit" class="btn btn-primary btn-block despesa-fechar">FECHAR RELATÓRIO</button>
-                                        {{Form::close()}}
+                                        {!! Form::close() !!}
                                     </div>                
                                 </div>
                                     

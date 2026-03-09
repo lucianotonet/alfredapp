@@ -3,13 +3,13 @@
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h3 class="panel-title">Categoria</h3>
 	</div>
-	{{ Form::model($category, [ 'method' => 'PATCH', 'class' => 'form-horizontal', 'route' =>[ 'categories.update', $category->id ] ] ) }}
+	{!! Form::model($category, [ 'method' => 'PATCH', 'class' => 'form-horizontal', 'route' =>[ 'categories.update', $category->id ] ] ) !!}
 	
 	<div class="panel-body">	
 		<div class="form-group">
-			{{ Form::label('name', 'Nome:', array("class"=>"col-sm-2 control-label")) }}			 
+			{!! Form::label('name', 'Nome:', array("class"=>"col-sm-2 control-label")) !!}			 
 			<div class="col-sm-10">	
-				{{ Form::text('name', $category->name, ["class"=>"form-control", "required"=>'required']) }}
+				{!! Form::text('name', $category->name, ["class"=>"form-control", "required"=>'required']) !!}
 			</div>
 		</div>	
 	</div>
@@ -24,8 +24,8 @@
 		</div>
 	</div>			
 
-	{{ Form::hidden('owner_type', @$owner_type) }}
-	{{ Form::hidden('owner_id') }}
+	{!! Form::hidden('owner_type', @$owner_type) !!}
+	{!! Form::hidden('owner_id') !!}
 
-	{{ Form::close() }}		
+	{!! Form::close() !!}		
 </div>

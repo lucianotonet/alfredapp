@@ -3,7 +3,7 @@
 @section('content')
 
 	<!-- Custom styles -->
-	{{ HTML::style('css/tarefas.css') }}
+	{!! HTML::style('css/tarefas.css') !!}
     
     <div class="container">    
 		<div class="panel panel-primary">

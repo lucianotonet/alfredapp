@@ -3,7 +3,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h3 class="panel-title"><i class="icon-calendar"></i> Adicionar</h3>
     </div>
-    {{ Form::open(array('route' => 'tarefas.store', 'method' => 'POST', "class"=>"", "role"=>"form", "id"=>"tarefas_create" )) }}
+    {!! Form::open(array('route' => 'tarefas.store', 'method' => 'POST', "class"=>"", "role"=>"form", "id"=>"tarefas_create" )) !!}
 
     <div class="panel-body form-horizontal">
 
@@ -203,7 +203,7 @@
         </div>
 
     </div>  
-    {{ Form::close() }}
+    {!! Form::close() !!}
 </div>          
 
 

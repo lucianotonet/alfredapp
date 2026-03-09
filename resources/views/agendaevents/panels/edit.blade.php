@@ -3,7 +3,7 @@
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h3 class="panel-title"><i class="fa icon {{ $event->icon }}"></i> {{ $event->title }}</h3>
 	</div>
-	{{ Form::model($event, ['method' => 'PATCH', 'class'=>"form-horizontal", 'route' =>[ 'agenda.update', $event->id ] ] ) }}
+	{!! Form::model($event, ['method' => 'PATCH', 'class'=>"form-horizontal", 'route' =>[ 'agenda.update', $event->id ] ] ) !!}
 
 
 	<div class="panel-body form-horizontal">		
@@ -206,7 +206,7 @@
 
 	</div>	
 
-	{{ Form::close() }}
+	{!! Form::close() !!}
 </div>			
 
 

@@ -7,7 +7,7 @@
     </div>            
     <div class="list-group" id="movimentos">     
 
-    {{ Form::open(array('url' => 'movimentos')) }}
+    {!! Form::open(array('url' => 'movimentos')) !!}
 
         <div class="list-group-item">
             <div class="row">
@@ -44,7 +44,7 @@
             </div><!-- /.row -->         
          </div>
     
-    {{Form::close()}}   
+    {!! Form::close() !!}   
         
 
         <div id="movimento_desc" class="panel-collapse collapse collapsed bg-"> 
