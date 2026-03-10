@@ -96,8 +96,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('relatorios', RelatoriosController::class);
 });
 
-
-
 /*
 |--------------------------------------------------------------------------
 | HOME
