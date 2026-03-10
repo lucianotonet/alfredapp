@@ -9,9 +9,9 @@ class RouteServiceProvider extends ServiceProvider
 {
     protected $namespace = null;
 
-    public function boot(Router $router)
+    public function boot()
     {
-        parent::boot($router);
+        parent::boot();
     }
 
     public function map(Router $router)
