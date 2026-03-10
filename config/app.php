@@ -80,7 +80,7 @@ return [
 
     'key' => env('APP_KEY', 'SomeRandomString'),
 
-    'cipher' => MCRYPT_RIJNDAEL_128,
+    'cipher' => 'AES-256-CBC',
 
     /*
     |--------------------------------------------------------------------------
@@ -196,6 +196,7 @@ return [
         'View' => 'Illuminate\Support\Facades\View',
         'Form' => 'Collective\Html\FormFacade',
         'Gate' => Illuminate\Support\Facades\Gate::class,
+        'Notification' => Illuminate\Support\Facades\Notification::class,
 
     ],
     /*
@@ -209,5 +210,16 @@ return [
     |
     */
     'env' => env('APP_ENV', 'production'),
+    /*
+    |--------------------------------------------------------------------------
+    | Application Name
+    |--------------------------------------------------------------------------
+    |
+    | This value is the name of your application. This value is used when the
+    | framework needs to place the application's name in a notification or
+    | any other location as required by the application or its packages.
+    */
+    'name' => 'Laravel',
+    'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
 ];
