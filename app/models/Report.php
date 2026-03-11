@@ -26,7 +26,7 @@ class Report extends \Eloquent {
 
 
    public function getDates(){
-      return array('created_at');
+      return ['created_at'];
    }
 
 

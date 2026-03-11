@@ -38,17 +38,17 @@ class HomeController extends BaseController {
 	public function doLogin()
 	{	
 		// validate the info, create rules for the inputs
-		$rules = array(
+		$rules = [
 			'email'    => 'required|email', // make sure the email is an actual email
 			'password' => 'required|alphaNum|min:3' // password can only be alphanumeric and has to be greater than 3 characters
-		);
-		$messages = array(
+		];
+		$messages = [
 		    'validation.required'  => 'We need to know your e-mail address!',
 		    'same'    		       => 'The :attribute and :other must match.',
 		    'size'     	           => 'The :attribute must be exactly :size.',
 		    'between' 		       => 'The :attribute must be between :min - :max.',
 		    'in'      		       => 'The :attribute must be one of the following types: :values',
-		);
+		];
 
 		// run the validation rules on the inputs from the form
 		$validator = Validator::make(Input::all(), $rules, $messages);
@@ -62,10 +62,10 @@ class HomeController extends BaseController {
 		} else {
 
 			// create our user data for the authentication
-			$userdata = array(
+			$userdata = [
 				'email' 	=> Input::get('email'),
 				'password' 	=> Input::get('password')
-			);
+			];
 
 			// attempt to do the login
 			if (Auth::attempt($userdata)) {

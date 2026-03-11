@@ -6,9 +6,9 @@ class Tarefa extends \Eloquent {
 	public static $rules = [
 	];
 
-	public static $messages = array(
+	public static $messages = [
 		'required' => 'O :attribute é obrigatório.',
-		);
+		];
 
 	// Don't forget to fill this array
 	protected $fillable = [

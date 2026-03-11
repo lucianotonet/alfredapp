@@ -24,8 +24,8 @@ class AgendaController extends BaseController {
 		$data['prev'] = Input::has('prev') ? Input::get('prev') : 0;
 		$data['type'] = Input::has('type') ? Input::get('type') : NULL;
 
-		$tarefas 		= array();
-		$agendaevents 	= array();
+		$tarefas 		= [];
+		$agendaevents 	= [];
 
 		if( $data['type'] == 'tarefa' || $data['type'] == NULL ){
 			$tarefas = $this->getTarefas( $data );	
@@ -123,7 +123,7 @@ class AgendaController extends BaseController {
 		/*
 			LABELS
 		*/			
-		$labels 			= array();
+		$labels 			= [];
 		$labels['title'] 	= "HOJE";
 		switch ( $data['view'] ) {
 
