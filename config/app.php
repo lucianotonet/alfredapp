@@ -222,5 +222,17 @@ return [
     | any other location as required by the application or its packages.
     */
     'name' => env('APP_NAME', 'Laravel'),
+    'asset_url' => env('ASSET_URL', null),
+    /*
+    |--------------------------------------------------------------------------
+    | Faker Locale
+    |--------------------------------------------------------------------------
+    |
+    | This locale will be used by the Faker PHP library when generating fake
+    | data for your database seeds. For example, this will be used to get
+    | localized telephone numbers, street address information and more.
+    |
+    */
+    'faker_locale' => 'en_US',
 
 ];
