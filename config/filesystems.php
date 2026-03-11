@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => 'local',
+    'default' => env('FILESYSTEM_DRIVER', 'local'),
 
     /*
     |--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'cloud' => 's3',
+    'cloud' => env('FILESYSTEM_CLOUD', 's3'),
 
     /*
     |--------------------------------------------------------------------------
@@ -50,23 +50,24 @@ return [
 
         's3' => [
             'driver' => 's3',
-            'key' => 'your-key',
-            'secret' => 'your-secret',
-            'region' => 'your-region',
-            'bucket' => 'your-bucket',
+            'key' => env('AWS_KEY'),
+            'secret' => env('AWS_SECRET'),
+            'region' => env('AWS_REGION'),
+            'bucket' => env('AWS_BUCKET'),
         ],
 
         'rackspace' => [
             'driver' => 'rackspace',
             'username' => 'your-username',
-            'key' => 'your-key',
+            'key' => env('AWS_KEY'),
             'container' => 'your-container',
             'endpoint' => 'https://identity.api.rackspacecloud.com/v2.0/',
             'region' => 'IAD',
             'url_type' => 'publicURL',
         ],
         'ftp' => ['driver' => 'ftp', 'host' => 'ftp.example.com', 'username' => 'your-username', 'password' => 'your-password'],
-        'public' => ['driver' => 'local', 'root' => storage_path('app/public'), 'visibility' => 'public'],
+        'public' => ['driver' => 'local', 'root' => storage_path('app/public'),
+            'url' => env('APP_URL').'/storage', 'visibility' => 'public', 'url' => env('APP_URL').'/storage'],
 
     ],
 
