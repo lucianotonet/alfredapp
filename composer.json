@@ -54,7 +54,8 @@
             "abandoned": "ignore"
         },
         "allow-plugins": {
-            "kylekatarnls/update-helper": true
+            "kylekatarnls/update-helper": true,
+            "symfony/thanks": true
         }
     },
     "minimum-stability": "stable",
