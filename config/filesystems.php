@@ -50,16 +50,16 @@ return [
 
         's3' => [
             'driver' => 's3',
-            'key' => env('AWS_KEY'),
-            'secret' => env('AWS_SECRET'),
-            'region' => env('AWS_REGION'),
+            'key' => env('AWS_ACCESS_KEY_ID'),
+            'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            'region' => env('AWS_DEFAULT_REGION'),
             'bucket' => env('AWS_BUCKET'),
         ],
 
         'rackspace' => [
             'driver' => 'rackspace',
             'username' => 'your-username',
-            'key' => env('AWS_KEY'),
+            'key' => env('AWS_ACCESS_KEY_ID'),
             'container' => 'your-container',
             'endpoint' => 'https://identity.api.rackspacecloud.com/v2.0/',
             'region' => 'IAD',
