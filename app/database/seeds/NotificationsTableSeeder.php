@@ -15,10 +15,10 @@ class NotificationsTableSeeder extends Seeder {
 		{
 			Notification::create([				
 				'title'			=> $faker->text,
-				'owner_type'	=> $faker->randomElement($array = array('terefa','cliente','agendaevent')),
-				'owner_id'		=> $faker->randomElement($array = array(1,2,3,4,5,6,7,8,9,10)),
+				'owner_type'	=> $faker->randomElement($array = ['terefa','cliente','agendaevent']),
+				'owner_id'		=> $faker->randomElement($array = [1,2,3,4,5,6,7,8,9,10]),
 				'user_id'		=> '1',
-				'type'			=> $faker->randomElement($array = array('email','notification')),
+				'type'			=> $faker->randomElement($array = ['email','notification']),
 				'status'		=> $faker->boolean($chanceOfGettingTrue = 50),
 				'date'			=> $faker->dateTime($max = 'now'),
 			]);

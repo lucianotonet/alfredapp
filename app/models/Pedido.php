@@ -11,12 +11,12 @@ class Pedido extends \Eloquent {
     //   'itens'            => 'required'      
 	];
 
-   public static $messages = array(
+   public static $messages = [
              'required' => 'O campo :attribute não foi informado.',
-         );
+         ];
 
 	// Don't forget to fill this array
-	protected $fillable = array(
+	protected $fillable = [
                            'status',
                            'cliente_id',
                            'entrega_data',
@@ -29,7 +29,7 @@ class Pedido extends \Eloquent {
                            'total',
                            'obs',
                            'obs_adm'                     
-                        );
+                        ];
 
    public function cliente(){
       return $this->belongsTo('Cliente', 'cliente_id');

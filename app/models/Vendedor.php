@@ -3,7 +3,7 @@
 class Vendedor extends \Eloquent {	
 
    // Don't forget to fill this array
-   protected $fillable = array(
+   protected $fillable = [
                            'nome',
                            'empresa',
                            'endereco',
@@ -16,5 +16,5 @@ class Vendedor extends \Eloquent {
                            'email',
                            'ie',
                            'cnpj',
-                        );
+                        ];
 }

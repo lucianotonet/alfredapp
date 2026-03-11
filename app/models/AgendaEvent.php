@@ -6,9 +6,9 @@ class AgendaEvent extends \Eloquent {
 	public static $rules = [
 		'title' => 'required'
 	];
-	public static $messages = array(
+	public static $messages = [
                                   'required' => 'O :attribute é obrigatório.',
-                              );
+                              ];
 
 	// Don't forget to fill this array
 	protected $fillable = [
@@ -25,7 +25,7 @@ class AgendaEvent extends \Eloquent {
                            'owner_id', 
                         ];
 
-    protected $visible = array(
+    protected $visible = [
 	                           'title', 
 	                           'description', 
 	                           'icon', 	                           	                          
@@ -34,7 +34,7 @@ class AgendaEvent extends \Eloquent {
 	                           'time_start',
 	                           'time_end',  
 	                           'done'	                           
-	                        );
+	                        ];
 
 	public function category()
 	{

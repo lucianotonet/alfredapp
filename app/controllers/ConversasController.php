@@ -75,7 +75,7 @@ class ConversasController extends \BaseController {
          //return Conversa::create($data);
          if ($validator->fails())
          {
-            return Response::json(array('success' => false));
+            return Response::json(['success' => false]);
          }
 
          $conversa = Conversa::create($data);  

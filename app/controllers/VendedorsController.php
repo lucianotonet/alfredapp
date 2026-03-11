@@ -66,10 +66,10 @@ class VendedorsController extends \BaseController {
    {
       // Validator
       // leia mais sobre Validator em http://laravel.com/docs/validation      
-      $rules = array(
+      $rules = [
          // 'nome'       => 'required',
          // 'empresa'    => 'required'       
-      );
+      ];
       $validator = Validator::make(Input::all(), $rules);
       
       if ($validator->fails()) {
@@ -157,9 +157,9 @@ class VendedorsController extends \BaseController {
    {
       // validate
       // read more on validation at http://laravel.com/docs/validation
-      $rules = array(
+      $rules = [
          
-      );
+      ];
       $validator = Validator::make(Input::all(), $rules);
 
       // process the login

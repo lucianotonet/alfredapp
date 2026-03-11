@@ -12,7 +12,7 @@ class TransactionsTableSeeder extends Seeder {
 		foreach(range(1, 5) as $index)
 		{
 			// Receita
-            Transaction::create(array(
+            Transaction::create([
                 'user_id'           => 1,
                 'type'              => array_rand(['receita','despesa'], 1),
                 'description'       => array_rand(['Hospedagem','Empréstimo', "Aluguel"], 1),
@@ -24,7 +24,7 @@ class TransactionsTableSeeder extends Seeder {
                 'recurring_cycle'   => 2,
                 'owner_id'          => 1,
                 'owner_type'        => 'User'
-            ));
+            ]);
 		}
 	}
 

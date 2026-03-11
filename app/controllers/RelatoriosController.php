@@ -127,7 +127,7 @@ class RelatoriosController extends \BaseController {
 
 
 
-				return View::make('relatorios.despesas.create', array( 'despesas' => $despesas ) );
+				return View::make('relatorios.despesas.create', [ 'despesas' => $despesas ] );
 				break;
 			
 
@@ -143,15 +143,15 @@ class RelatoriosController extends \BaseController {
 				$clientes 		= Cliente::has('conversas', '>', 0)->with('conversas')->get();	
 				if( !Conversa::count() ){
 					// Alert
-					$alert[] = array(                     
+					$alert[] = [                     
 	 							'class'		=>	'alert-warning',
 	                            'message'   => '<strong><i class="fa fa-warning"></i></strong> Ainda não há nenhuma conversa cadastrada no sistema =(',	                           
-	                        );
+	                        ];
 					Session::flash('alerts', $alert);	
 					return Redirect::to( URL::previous() );   
 				}
 
-				$fieldClientes 	= array( 'all' => 'Todos' );
+				$fieldClientes 	= [ 'all' => 'Todos' ];
 				foreach ($clientes as $cliente) {
 					$fieldClientes[ $cliente->id ] = $cliente->nome;			
 				}
@@ -164,23 +164,23 @@ class RelatoriosController extends \BaseController {
 				
 			
 				// FILTERS
-				$filters = array(
+				$filters = [
 				            'clientes'  => $fieldClientes,
-				            'status'    => array( 	
+				            'status'    => [ 	
 				                            'all'			=>'Todas', 
 											'enviadas'		=>'Enviadas',
 											'nao-enviadas'	=>'Não enviadas'
-										),
-				            'from'		=> array(
+										],
+				            'from'		=> [
 
 				                            'min'	=> $fieldDate['min'],
 				                            'max'	=> $fieldDate['max'],
-				                        ),		            
-				            'to'		=> array(
+				                        ],		            
+				            'to'		=> [
 				                            'min'	=> $fieldDate['min'],
 				                            'max'	=> $fieldDate['max'],
-				                        )
-				        );
+				                        ]
+				        ];
 				
 
 				
@@ -248,7 +248,7 @@ class RelatoriosController extends \BaseController {
 
 					//Agrupa por cliente
 					$groups  			= $conversas->groupBy('cliente_id');
-					$clientes_conversas = array();
+					$clientes_conversas = [];
 					
 					foreach($groups as $cliente_id => $conversas){
 
@@ -284,7 +284,7 @@ class RelatoriosController extends \BaseController {
 
 
 
-				return View::make( 'relatorios.conversas.create', array( 'status' => $status, 'filters' => $filters, 'search_results' => $search_results, 'message' => $message, 'conversas' => $conversas, 'relatorio' => new Relatorio, 'clientes' => $clientes ) );				
+				return View::make( 'relatorios.conversas.create', [ 'status' => $status, 'filters' => $filters, 'search_results' => $search_results, 'message' => $message, 'conversas' => $conversas, 'relatorio' => new Relatorio, 'clientes' => $clientes ] );				
 				break;
 			
 			default:
@@ -319,7 +319,7 @@ class RelatoriosController extends \BaseController {
 			case 'despesas':
 
 				$despesas = Despesa::where('relatorio_id','<', 1)->get();
-				$despesas_ids = array();
+				$despesas_ids = [];
 
 				// MARCA DESPESAS COM O ID DO RELATÓRIO ( LAST REPORT )
 				foreach ($despesas as $despesa) {
@@ -333,7 +333,7 @@ class RelatoriosController extends \BaseController {
 				$relatorio->ids  = implode( ",", $despesas_ids );
 
 				// Alert
-				$alert[] = array(                     
+				$alert[] = [                     
 							'class' 	=> 'alert-success',
                             'message'   => '<strong><i class="fa fa-check"></i></strong> Relatório gerado com sucesso!',
                             // 'links'     =>  array(
@@ -342,7 +342,7 @@ class RelatoriosController extends \BaseController {
                             //                                            'link'   => url('relatorios', $relatorio->id)
                             //                                         )
                             //                )
-				        );
+				        ];
 				Session::flash('alerts', $alert);	
 
 				break;
@@ -377,16 +377,16 @@ class RelatoriosController extends \BaseController {
 				}
 				
 				// Alert
-				$alert[] = array(                     
+				$alert[] = [                     
  							'class'	=>	'alert-success',
                             'message'   => '<strong><i class="fa fa-check"></i></strong> Relatório de conversas gerado com sucesso!',
-                            'links'     =>  array(
-                                                'btn-success' => array(                                                                  
+                            'links'     =>  [
+                                                'btn-success' => [                                                                  
                                                                        'text'   => 'Ver relatório',
                                                                        'link'   => url('relatorios', $relatorio->id)
-                                                                    )
-                                            )
-                        );
+                                                                    ]
+                                            ]
+                        ];
 				Session::flash('alerts', $alert);	
 				break;
 
@@ -418,10 +418,10 @@ class RelatoriosController extends \BaseController {
 
 		if( !$relatorio ){
 			// Alert
-			$alert[] = array(                     
+			$alert[] = [                     
 					'class'		=> 'alert-warning',
                     'message'   => '<strong><i class="fa fa-warning"></i></strong> Relatório não encontrado'
-                );
+                ];
 			Session::flash('alerts', $alert);	
 			
 			return Redirect::to( URL::previous() );   
@@ -570,21 +570,21 @@ class RelatoriosController extends \BaseController {
 
 				// MARCA DESPESAS COM O ID DESTE RELATÓRIO (LAST REPORT)
 				$despesas_ids   = explode( ',', $relatorio->ids );				
-				$despesas 		= Despesa::whereIn( 'id', $despesas_ids )->update( array( 'relatorio_id' => $relatorio->id ) );
+				$despesas 		= Despesa::whereIn( 'id', $despesas_ids )->update( [ 'relatorio_id' => $relatorio->id ] );
 
 				//echo "<pre>"; print_r( $despesas ); echo "</pre>"; exit;
 
 				// Alert
-				$alert[] = array(                     
+				$alert[] = [                     
 							'class' 	=> 'alert-success',
                             'message'   => '<strong><i class="fa fa-check"></i></strong> Relatório atualizado!<br/><strong>'.$despesas.'</strong> Despesas marcadas como reportadas!',
-                            'links'     =>  array(
-                                                'btn-success' => array(                                                                  
+                            'links'     =>  [
+                                                'btn-success' => [                                                                  
                                                                        'text'   => 'Ver relatório',
                                                                        'link'   => url('relatorios', $relatorio->id)
-                                                                    )
-                                            )
-				        );				
+                                                                    ]
+                                            ]
+				        ];				
 				Session::flash('alerts', $alert);	
 
 				break;
@@ -645,10 +645,10 @@ class RelatoriosController extends \BaseController {
 
 		if( !$relatorio ){
 			// Alert
-			$alert[] = array(                     
+			$alert[] = [                     
 						'class' 	=> 'alert-danger',
                         'message'   => '<strong><i class="fa fa-warning"></i></strong> o relatório não existe!',                        
-			        );				
+			        ];				
 			Session::flash('alerts', $alert);
 
 			if( URL::previous() ) 	return Redirect::to( URL::previous() );
@@ -733,7 +733,7 @@ class RelatoriosController extends \BaseController {
 				//Agrupa por cliente
 				$groups  			= $relatorio->conversas->groupBy('cliente_id');
 
-				$clientes_conversas = array();
+				$clientes_conversas = [];
 				
 				foreach($groups as $cliente_id => $conversas){
 
@@ -806,7 +806,7 @@ class RelatoriosController extends \BaseController {
 				break;
 			
 			default:				
-				return $items = array();
+				return $items = [];
 				break;
 		}
 

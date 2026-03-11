@@ -16,7 +16,7 @@ class BaseController extends Controller {
 	}
 
 	protected function post_to_array($array){
-		$data = array();
+		$data = [];
 		foreach ($array as $value) {
 			$data[$value] = Input::get($value);
 		}

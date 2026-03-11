@@ -130,7 +130,7 @@ class TransactionsController extends \BaseController {
 
 
 		//MESSAGES
-		$info = array();
+		$info = [];
 
 	
 		/*
@@ -340,7 +340,7 @@ class TransactionsController extends \BaseController {
 		/*
 			DADOS PRA NAVEGAÇÃO
 		*/	
-		$navigation = array();
+		$navigation = [];
 		
 		$view = 'transactions.novo.lancamentos';
 		return View::make( $view, compact('transactions', 'transactions_days', 'view', 'title', 'data', 'balance', 'labels'));		
@@ -1069,7 +1069,7 @@ class TransactionsController extends \BaseController {
 
 
 		//MESSAGES
-		$info = array();
+		$info = [];
 
 	
 		/*
@@ -1223,7 +1223,7 @@ class TransactionsController extends \BaseController {
 		/*
 			DADOS PRA NAVEGAÇÃO
 		*/	
-		$navigation = array();
+		$navigation = [];
 		
 		$view = 'transactions.novo.relatorios';
 		return View::make( $view, compact('transactions', 'transactions_days', 'view', 'title', 'data', 'balance', 'labels'));		

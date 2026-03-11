@@ -8,7 +8,7 @@ class Fornecedor extends \Eloquent {
 	];
 
 	// Don't forget to fill this array
-   protected $fillable = array(
+   protected $fillable = [
                            'nome',
                            'empresa',
                            'endereco',
@@ -21,7 +21,7 @@ class Fornecedor extends \Eloquent {
                            'email',
                            'ie',
                            'cnpj',
-                        );
+                        ];
 
     public function pedidos(){
         return $this->hasMany('Pedido', 'fornecedor_id');

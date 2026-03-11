@@ -10,13 +10,13 @@ class TarefasTableSeeder extends Seeder {
 		$faker = Faker::create('pt_BR');
 
       $clientes = Cliente::all();
-      $clientes_id = array();
+      $clientes_id = [];
       foreach($clientes as $cliente){
          $clientes_id[] = $cliente['id'];
       }
 
       $conversas    = Conversa::all();
-      $conversas_id = array();
+      $conversas_id = [];
       foreach($conversas as $conversa){
          $conversas_id[] = $conversa['id'];
       }              
