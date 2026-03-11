@@ -135,6 +135,7 @@ return [
         'Illuminate\Translation\TranslationServiceProvider',
         'Illuminate\Validation\ValidationServiceProvider',
         'Illuminate\View\ViewServiceProvider',
+        Laravel\Tinker\TinkerServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -197,6 +198,7 @@ return [
         'Form' => 'Collective\Html\FormFacade',
         'Gate' => Illuminate\Support\Facades\Gate::class,
         'Notification' => Illuminate\Support\Facades\Notification::class,
+        'Broadcast' => Illuminate\Support\Facades\Broadcast::class,
 
     ],
     /*
@@ -219,7 +221,7 @@ return [
     | framework needs to place the application's name in a notification or
     | any other location as required by the application or its packages.
     */
-    'name' => 'Laravel',
+    'name' => env('APP_NAME', 'Laravel'),
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
 ];
