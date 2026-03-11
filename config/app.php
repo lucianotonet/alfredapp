@@ -222,6 +222,5 @@ return [
     | any other location as required by the application or its packages.
     */
     'name' => env('APP_NAME', 'Laravel'),
-    'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
 ];
